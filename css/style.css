@@ -185,16 +185,13 @@ code {
   #main {
     display: inline;
     float: left;
-    width: 52.307692307692314%;
+    width: 75.38461538461539%;
     margin: 0 0.769230769230769%;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1199px) {
   #main {
-    display: inline;
-    float: left;
-    width: 67.6923076923077%;
-    margin: 0 0.769230769230769%;
+    width: 100%;
   }
 }
 .archive-article-header a,
@@ -2140,10 +2137,4 @@ ol.toc {
 .highlight .code .type,
 .highlight .code .selector-id {
   font-weight: bold;
-}
-#main {
-  float: right;
-}
-#profile {
-  float: right;
 }
