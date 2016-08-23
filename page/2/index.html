@@ -149,7 +149,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                31
+                32
                 <span>posts</span>
             </div>
             <div class="article-info-block">
@@ -209,6 +209,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/23/解决未能验证-‘macOS-Sierra-Public-Beta/" class="title">解决未能验证 ‘macOS Sierra Public Beta&#39;</a></p>
+                            <p class="item-date"><time datetime="2016-08-23T02:18:23.000Z" itemprop="datePublished">2016-08-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/2016/08/18/走进-vue-和-react-的世界/" class="title">走进 vue 和 react 的世界</a></p>
                             <p class="item-date"><time datetime="2016-08-18T02:32:49.000Z" itemprop="datePublished">2016-08-18</time></p>
                         </div>
@@ -241,15 +250,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/06/29/potatso-fork-编译过程/" class="title">potatso fork 编译过程</a></p>
-                            <p class="item-date"><time datetime="2016-06-29T08:41:51.000Z" itemprop="datePublished">2016-06-29</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -268,7 +268,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">7</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">7</span></li></ul>
         </div>
     </div>
 
@@ -312,6 +312,128 @@
 
             
             <section id="main">
+    <article id="post-UIStackView-使用" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/06/17/UIStackView-使用/">UIStackView 使用</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/06/17/UIStackView-使用/">
+            <time datetime="2016-06-17T00:29:21.000Z" itemprop="datePublished">2016-06-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><a href="http://www.devtalking.com/articles/uistackview/" target="_blank" rel="external">原文 UIStackView小窥</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/06/17/UIStackView-使用/" data-id="cis6ug2qk0007zzy1sv1i6ldo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/06/17/UIStackView-使用/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/06/17/UIStackView-使用/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-WebKit-Safari-and-SafariViewController" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -360,7 +482,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/06/16/WebKit-Safari-and-SafariViewController/" data-id="cirzpzfsf000fdly1bzqvgo84" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/06/16/WebKit-Safari-and-SafariViewController/" data-id="cis6ug2qt000fzzy19szp3vct" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -481,7 +603,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/06/14/swift-for-in-循环和-while-循环/" data-id="cirzpzfsy000tdly1k91qbort" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/06/14/swift-for-in-循环和-while-循环/" data-id="cis6ug2ra000vzzy11zki45h9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -603,7 +725,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/06/13/这里迎WWDC-16/" data-id="cirzpzftn0019dly1dc4yqnik" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/06/13/这里迎WWDC-16/" data-id="cis6ug2ro0017zzy14e1i5rhu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -724,7 +846,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/06/01/NSArray-自定义查找的方式/" data-id="cirzpzfra0001dly14axch7ut" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/06/01/NSArray-自定义查找的方式/" data-id="cis6ug2ps0000zzy1vbfvepnx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -847,7 +969,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/06/01/Core-Data-fetch-cache-报错/" data-id="cirzpzfrd0002dly1hknq9ksk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/06/01/Core-Data-fetch-cache-报错/" data-id="cis6ug2q00001zzy19drufb9c" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -976,7 +1098,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/27/iOS-图片缓存策略/" data-id="cirzpzfsw000rdly1mm8pietz" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/27/iOS-图片缓存策略/" data-id="cis6ug2r5000qzzy1kfrw3qjg" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1097,7 +1219,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/25/collectionview自定义手动cell和storyboard创建cell/" data-id="cirzpzfsj000idly1afe8uecw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/25/collectionview自定义手动cell和storyboard创建cell/" data-id="cis6ug2qu000gzzy1o2sa5p3e" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1221,7 +1343,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/24/file-was-built-for-archive-which-is-not-the-architecture-being-linked-i386-解决方法/" data-id="cirzpzfso000kdly13vpjpxqc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/24/file-was-built-for-archive-which-is-not-the-architecture-being-linked-i386-解决方法/" data-id="cis6ug2qy000jzzy1dtt9zsj3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1342,7 +1464,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/23/iOS-iPv6-支持/" data-id="cirzpzfsr000odly1qsa2wy81" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/23/iOS-iPv6-支持/" data-id="cis6ug2r1000nzzy1oldxr9uu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1411,170 +1533,6 @@
             
     
         <a href="http://yoursite.com/2016/05/23/iOS-iPv6-支持/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/23/iOS-iPv6-支持/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-iOS-webview-使用百度地图定位" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/05/17/iOS-webview-使用百度地图定位/">iOS webview 使用百度地图定位</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/05/17/iOS-webview-使用百度地图定位/">
-            <time datetime="2016-05-17T09:00:14.000Z" itemprop="datePublished">2016-05-17</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>今天遇到需要用 webview 来定位显示地图的问题。</p>
-<p>同样的代码直接用 safari 就可以定位，明显有定位的权限弹窗提示；而 app 里就没有任何弹窗，点击定位后提示定位失败。</p>
-<p>这里有两个需要注意的地方，一个需要系统添加定位的框架；一个 iOS8 定位权限的获取。</p>
-<p>第一个就比较简单了，添加 coreloaction 框架就可以了。</p>
-<p>第二个需要两个步骤：</p>
-<ul>
-<li>plist 里定义权限声明<br>用 source edit 的方式编辑 plist，末尾添加 </li>
-</ul>
-<p>｀</p>
-<p><key>NSLocationAlwaysUsageDescription</key></p>
-<p><string></string></p>
-<p><key>NSLocationWhenInUseUsageDescription</key></p>
-<p><string></string><br>｀</p>
-<ul>
-<li>appdelegate 里代码获取权限<br>写代码，实现代理方法<br>｀<br>locationManager = [CLLocationManager new];<br>  locationManager.delegate = self;<br>  [locationManager requestAlwaysAuthorization];<br>  [locationManager requestWhenInUseAuthorization];<br>｀<br>｀</li>
-<li>(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {<br>  switch (status) {<pre><code>case kCLAuthorizationStatusDenied :
-{
-    // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-    UIAlertView *tempA = [[UIAlertView alloc]initWithTitle:@&quot;提醒&quot; message:@&quot;请在设置-隐私-定位服务中开启定位功能！&quot; delegate:nil cancelButtonTitle:@&quot;确定&quot; otherButtonTitles:nil];
-    [tempA show];
-}
-    break;
-case kCLAuthorizationStatusNotDetermined :
-    //根据自己的需求和plist中的字段调用requestWhenInUseAuthorization或requestAlwaysAuthorization
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [locationManager requestWhenInUseAuthorization];
-    }
-    break;
-case kCLAuthorizationStatusRestricted:
-{
-    // 提示用户出错原因，可按住Option键点击 kCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
-    UIAlertView *tempA = [[UIAlertView alloc]initWithTitle:@&quot;提醒&quot;
-                                                   message:@&quot;定位服务无法使用！&quot;
-                                                  delegate:nil
-                                         cancelButtonTitle:@&quot;确定&quot;
-                                         otherButtonTitles:nil, nil];
-    [tempA show];
-}
-    break;
-default:
-    break;
-</code></pre>  }<br>}<br>｀</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2016/05/17/iOS-webview-使用百度地图定位/" data-id="cirzpzfsu000pdly16dxx51mv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2016/05/17/iOS-webview-使用百度地图定位/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/17/iOS-webview-使用百度地图定位/">Comments</a>
     
 
         </footer>
