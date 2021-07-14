@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="早年因为没有记录的习惯，导致实现过一个自动生成 markdown link 的 popclip 插件找不到了，其中就用的 AppleScript 来实现的。那就从新出发。 Mac OS 上打开 Automater.app 然后新建”快捷操作”→”资源库下的实用工具”→”运行AppleScript”，就可以填入 AppleScript 脚本进行测试了。然后测试好的脚本可以放在 popclip 也可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AppleScript使用">
+<meta property="og:url" content="http://yoursite.com/AppleScript%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="早年因为没有记录的习惯，导致实现过一个自动生成 markdown link 的 popclip 插件找不到了，其中就用的 AppleScript 来实现的。那就从新出发。 Mac OS 上打开 Automater.app 然后新建”快捷操作”→”资源库下的实用工具”→”运行AppleScript”，就可以填入 AppleScript 脚本进行测试了。然后测试好的脚本可以放在 popclip 也可以">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-12T12:12:23.000Z">
+<meta property="article:modified_time" content="2021-07-14T07:50:35.302Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="AppleScript">
+<meta property="article:tag" content="Mac">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/AppleScript%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>AppleScript使用 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/AppleScript%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AppleScript使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-12 12:12:23" itemprop="dateCreated datePublished" datetime="2021-04-12T12:12:23+00:00">2021-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-14 07:50:35" itemprop="dateModified" datetime="2021-07-14T07:50:35+00:00">2021-07-14</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/AppleScript%E4%BD%BF%E7%94%A8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="AppleScript使用/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>早年因为没有记录的习惯，导致实现过一个自动生成 markdown link 的 popclip 插件找不到了，其中就用的 AppleScript 来实现的。<br>那就从新出发。</p>
+<p>Mac OS 上打开 Automater.app 然后新建”快捷操作”→”资源库下的实用工具”→”运行AppleScript”，就可以填入 AppleScript 脚本进行测试了。<br>然后测试好的脚本可以放在 popclip 也可以放在 alfred 里做成任务。</p>
+<ol>
+<li><a href="#基本操作">基本操作</a><ol>
+<li><a href="#打开一个safari新页签">打开一个safari新页签</a></li>
+<li><a href="#safari当前选中文字加上连接制作成-markdown-link">safari当前选中文字加上连接，制作成 markdown link</a></li>
+</ol>
+</li>
+<li><a href="#popclip">popclip</a><ol>
+<li><a href="#plist文件">plist文件</a></li>
+<li><a href="#applescript文件">AppleScript文件</a></li>
+<li><a href="#popclipext-文件夹重名">.popclipext 文件夹重名</a></li>
+</ol>
+</li>
+<li><a href="#alfred">alfred</a><ol>
+<li><a href="#使用-alfed-来实现切换-siri的语音选项">使用 alfed 来实现切换 siri的语音选项</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="打开一个safari新页签"><a href="#打开一个safari新页签" class="headerlink" title="打开一个safari新页签"></a>打开一个safari新页签</h3><figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 打开一个safari新页签</span></span><br><span class="line"><span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"Safari"</span></span><br><span class="line"> <span class="keyword">tell</span> window <span class="number">1</span></span><br><span class="line">  <span class="keyword">set</span> current <span class="literal">tab</span> <span class="keyword">to</span> (make new <span class="literal">tab</span> <span class="keyword">with</span> properties &#123;URL:<span class="string">"http://www.stackoverflow.com"</span>&#125;)</span><br><span class="line"> <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="safari当前选中文字加上连接，制作成-markdown-link"><a href="#safari当前选中文字加上连接，制作成-markdown-link" class="headerlink" title="safari当前选中文字加上连接，制作成 markdown link"></a>safari当前选中文字加上连接，制作成 markdown link</h3><figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- safari当前选中文字加上连接，制作成 markdown link</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"Safari"</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">running</span> <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">run</span></span><br><span class="line">  <span class="built_in">delay</span> <span class="number">0.5</span></span><br><span class="line"> <span class="keyword">end</span> <span class="keyword">if</span></span><br><span class="line"> <span class="built_in">activate</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- Back up clipboard contents:</span></span><br><span class="line"> <span class="keyword">set</span> savedClipboard <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"c"</span> using &#123;command down&#125;</span><br><span class="line"> <span class="built_in">delay</span> <span class="number">0.5</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line"> <span class="keyword">set</span> nameText <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"l"</span> using &#123;command down&#125;</span><br><span class="line"> <span class="built_in">delay</span> <span class="number">0.5</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line"> <span class="comment">-- Copy selected text to clipboard:</span></span><br><span class="line"> <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"c"</span> using &#123;command down&#125;</span><br><span class="line"> <span class="built_in">delay</span> <span class="number">0.5</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">set</span> theSelectedText <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- display dialog "[" &amp; name &amp; "](" &amp; theSelectedText &amp; ")"</span></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">set</span> <span class="built_in">the clipboard</span> <span class="keyword">to</span> <span class="string">"["</span> &amp; nameText &amp; <span class="string">"]("</span> &amp; theSelectedText &amp; <span class="string">")"</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="popclip"><a href="#popclip" class="headerlink" title="popclip"></a>popclip</h2><p>制作一个 popclip 插件，如果用的 AppleScript 脚本的话，需要三个步骤。</p>
+<ol>
+<li>plist文件，Config.plist</li>
+<li>AppleScript文件</li>
+<li>把上面两个文件放在一个文件夹下，并重命名文件夹为 .popclipext</li>
+</ol>
+<p>下面是一个浏览器直接提取 markdown 链接的例子，支持 firefox 和 safari，你也可以添加上 chrome，我的chrome卸载了所以两个就够了。</p>
+<h3 id="plist文件"><a href="#plist文件" class="headerlink" title="plist文件"></a>plist文件</h3><p>这里是配置文件，放一些配置信息，默认应该是 Config.plist。  </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">plist</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//Apple//DTD PLIST 1.0//EN"</span> <span class="meta-string">"http://www.apple.com/DTDs/PropertyList-1.0.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">"1.0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">key</span>&gt;</span>Actions<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">key</span>&gt;</span>AppleScript File<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">string</span>&gt;</span>mdLink.applescript<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">key</span>&gt;</span>Image File<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">string</span>&gt;</span>sirisay.png<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">key</span>&gt;</span>Long Running<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">key</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">string</span>&gt;</span>mdLink<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">key</span>&gt;</span>Extension Description<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">string</span>&gt;</span>siri say.<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">key</span>&gt;</span>Extension Identifier<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">string</span>&gt;</span>com.sseen.popclip.extension.mdLink<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">key</span>&gt;</span>Extension Name<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">string</span>&gt;</span>mdLink<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">key</span>&gt;</span>Required Software Version<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">integer</span>&gt;</span>701<span class="tag">&lt;/<span class="name">integer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="AppleScript文件"><a href="#AppleScript文件" class="headerlink" title="AppleScript文件"></a>AppleScript文件</h3><p>这就是执行的脚本，注意文件名和 plist 里的对应。<br>这里注意一点就是 AppleScript 里的 tell application 后面不能跟一个 variable，必须是一个显示的字符串才行。</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">global</span> frontApp, frontAppName, windowTitle</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> windowTitle <span class="keyword">to</span> <span class="string">""</span></span><br><span class="line"><span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span></span><br><span class="line"> <span class="keyword">set</span> frontApp <span class="keyword">to</span> <span class="keyword">first</span> <span class="built_in">application</span> process <span class="keyword">whose</span> <span class="built_in">frontmost</span> <span class="keyword">is</span> <span class="literal">true</span></span><br><span class="line"> <span class="keyword">set</span> frontAppName <span class="keyword">to</span> <span class="built_in">name</span> <span class="keyword">of</span> frontApp <span class="keyword">as</span> <span class="built_in">string</span></span><br><span class="line"> <span class="comment">-- display dialog frontAppName</span></span><br><span class="line"> <span class="keyword">if</span> (frontAppName = <span class="string">"Firefox"</span>) <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"Firefox"</span></span><br><span class="line">   <span class="built_in">activate</span></span><br><span class="line">   <span class="comment">-- Back up clipboard contents:</span></span><br><span class="line">   <span class="keyword">set</span> savedClipboard <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"c"</span> using &#123;command down&#125;</span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.2</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line">   <span class="keyword">set</span> nameText <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"l"</span> using &#123;command down&#125;</span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.2</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line">   <span class="comment">-- Copy selected text to clipboard:</span></span><br><span class="line">   <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"c"</span> using &#123;command down&#125;</span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.2</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">set</span> theSelectedText <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">-- display dialog "[" &amp; name &amp; "](" &amp; theSelectedText &amp; ")"</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">set</span> <span class="built_in">the clipboard</span> <span class="keyword">to</span> <span class="string">"["</span> &amp; nameText &amp; <span class="string">"]("</span> &amp; theSelectedText &amp; <span class="string">")"</span></span><br><span class="line">  <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"Safari"</span></span><br><span class="line">   <span class="built_in">activate</span></span><br><span class="line">   <span class="comment">-- Back up clipboard contents:</span></span><br><span class="line">   <span class="keyword">set</span> savedClipboard <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"c"</span> using &#123;command down&#125;</span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.2</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line">   <span class="keyword">set</span> nameText <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"l"</span> using &#123;command down&#125;</span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.2</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line">   <span class="comment">-- Copy selected text to clipboard:</span></span><br><span class="line">   <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> keystroke <span class="string">"c"</span> using &#123;command down&#125;</span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.2</span> <span class="comment">-- Without this, the clipboard may have stale data.</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">set</span> theSelectedText <span class="keyword">to</span> <span class="built_in">the clipboard</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">-- display dialog "[" &amp; name &amp; "](" &amp; theSelectedText &amp; ")"</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">set</span> <span class="built_in">the clipboard</span> <span class="keyword">to</span> <span class="string">"["</span> &amp; nameText &amp; <span class="string">"]("</span> &amp; theSelectedText &amp; <span class="string">")  "</span></span><br><span class="line">  <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"> <span class="keyword">end</span> <span class="keyword">if</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span></span><br><span class="line">     key code <span class="number">53</span></span><br><span class="line"> <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">return</span> &#123;frontAppName, windowTitle&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="popclipext-文件夹重名"><a href="#popclipext-文件夹重名" class="headerlink" title=".popclipext 文件夹重名"></a>.popclipext 文件夹重名</h3><p>放在一个文件夹下，重名如上后缀，双击就能添加到 popclipe。</p>
+<h2 id="alfred"><a href="#alfred" class="headerlink" title="alfred"></a>alfred</h2><h3 id="使用-alfed-来实现切换-siri的语音选项"><a href="#使用-alfed-来实现切换-siri的语音选项" class="headerlink" title="使用 alfed 来实现切换 siri的语音选项"></a>使用 alfed 来实现切换 siri的语音选项</h3><figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- us voice setting use sript</span></span><br><span class="line"><span class="comment">-- 使用 alfed 来实现切换 siri的语音选项</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">on</span> alfred_script(q)</span><br><span class="line">  <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Preferences"</span></span><br><span class="line"> <span class="built_in">activate</span></span><br><span class="line"> <span class="keyword">set</span> current pane <span class="keyword">to</span> pane <span class="string">"com.apple.preference.universalaccess"</span></span><br><span class="line"> <span class="keyword">get</span> <span class="keyword">the</span> <span class="built_in">name</span> <span class="keyword">of</span> <span class="keyword">every</span> anchor <span class="keyword">of</span> current pane</span><br><span class="line"> reveal anchor <span class="string">"TextToSpeech"</span> <span class="keyword">of</span> pane <span class="string">"com.apple.preference.universalaccess"</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span></span><br><span class="line"> <span class="keyword">tell</span> process <span class="string">"System Preferences"</span></span><br><span class="line">  <span class="keyword">set</span> visible <span class="keyword">to</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">-- return every UI element of front window</span></span><br><span class="line">  <span class="comment">-- return name of every UI element of front window</span></span><br><span class="line">  <span class="comment">-- return every UI element of window 1</span></span><br><span class="line">  <span class="comment">-- get name of every button of window 1</span></span><br><span class="line">  <span class="keyword">tell</span> group <span class="number">1</span> <span class="keyword">of</span> window <span class="number">1</span></span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.1</span></span><br><span class="line">   <span class="keyword">tell</span> pop up button <span class="number">1</span></span><br><span class="line">    click</span><br><span class="line">    <span class="built_in">delay</span> <span class="number">0.1</span></span><br><span class="line">    <span class="keyword">tell</span> menu <span class="number">1</span></span><br><span class="line">     click menu <span class="built_in">item</span> <span class="number">6</span></span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line">    <span class="built_in">delay</span> <span class="number">0.1</span></span><br><span class="line">    <span class="comment">-- click menu item "系统声音" of menu 1</span></span><br><span class="line">   <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line">  <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"> <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">end</span> alfred_script</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- jp voice setting use sript</span></span><br><span class="line"><span class="comment">-- 使用 alfed 来实现切换 siri的语音选项，使用 jp 语音</span></span><br><span class="line"><span class="keyword">on</span> alfred_script(q)</span><br><span class="line">  <span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Preferences"</span></span><br><span class="line"> <span class="built_in">activate</span></span><br><span class="line"> <span class="keyword">set</span> current pane <span class="keyword">to</span> pane <span class="string">"com.apple.preference.universalaccess"</span></span><br><span class="line"> <span class="keyword">get</span> <span class="keyword">the</span> <span class="built_in">name</span> <span class="keyword">of</span> <span class="keyword">every</span> anchor <span class="keyword">of</span> current pane</span><br><span class="line"> reveal anchor <span class="string">"TextToSpeech"</span> <span class="keyword">of</span> pane <span class="string">"com.apple.preference.universalaccess"</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">tell</span> <span class="built_in">application</span> <span class="string">"System Events"</span></span><br><span class="line"> <span class="keyword">tell</span> process <span class="string">"System Preferences"</span></span><br><span class="line">  <span class="keyword">set</span> visible <span class="keyword">to</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">-- return every UI element of front window</span></span><br><span class="line">  <span class="comment">-- return name of every UI element of front window</span></span><br><span class="line">  <span class="comment">-- return every UI element of window 1</span></span><br><span class="line">  <span class="comment">-- get name of every button of window 1</span></span><br><span class="line">  <span class="keyword">tell</span> group <span class="number">1</span> <span class="keyword">of</span> window <span class="number">1</span></span><br><span class="line">   <span class="built_in">delay</span> <span class="number">0.1</span></span><br><span class="line">   <span class="keyword">tell</span> pop up button <span class="number">1</span></span><br><span class="line">    click</span><br><span class="line">    <span class="built_in">delay</span> <span class="number">0.1</span></span><br><span class="line">    <span class="keyword">tell</span> menu <span class="number">1</span></span><br><span class="line">     click menu <span class="built_in">item</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line">    <span class="built_in">delay</span> <span class="number">0.1</span></span><br><span class="line">    <span class="comment">-- click menu item "系统声音" of menu 1</span></span><br><span class="line">   <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line">  <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"> <span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">tell</span></span><br><span class="line"><span class="keyword">end</span> alfred_script</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AppleScript/" rel="tag"># AppleScript</a>
+              <a href="/tags/Mac/" rel="tag"># Mac</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ARKit%E7%9B%B8%E5%85%B3/" rel="prev" title="ARKit相关">
+      <i class="fa fa-chevron-left"></i> ARKit相关
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Ebbinghaus%20forgetting%20curve%E9%81%97%E5%BF%98%E6%9B%B2%E7%BA%BF/" rel="next" title="Ebbinghaus forgetting curve遗忘曲线">
+      Ebbinghaus forgetting curve遗忘曲线 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开一个safari新页签"><span class="nav-number">1.1.</span> <span class="nav-text">打开一个safari新页签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#safari当前选中文字加上连接，制作成-markdown-link"><span class="nav-number">1.2.</span> <span class="nav-text">safari当前选中文字加上连接，制作成 markdown link</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#popclip"><span class="nav-number">2.</span> <span class="nav-text">popclip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#plist文件"><span class="nav-number">2.1.</span> <span class="nav-text">plist文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AppleScript文件"><span class="nav-number">2.2.</span> <span class="nav-text">AppleScript文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#popclipext-文件夹重名"><span class="nav-number">2.3.</span> <span class="nav-text">.popclipext 文件夹重名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alfred"><span class="nav-number">3.</span> <span class="nav-text">alfred</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-alfed-来实现切换-siri的语音选项"><span class="nav-number">3.1.</span> <span class="nav-text">使用 alfed 来实现切换 siri的语音选项</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/AppleScript%E4%BD%BF%E7%94%A8/";
+    this.page.identifier = "AppleScript使用/";
+    this.page.title = "AppleScript使用";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

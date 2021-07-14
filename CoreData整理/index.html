@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="看过几次 core data by tutorials 了，感觉每次用到还想重新看过，又是不整理的锅。core data by tutorials 7th now reading.  使用自带的core data NSManagedObject Subclass Core data stack 问题 must specify an inverse relationship background m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreData整理">
+<meta property="og:url" content="http://yoursite.com/CoreData%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="看过几次 core data by tutorials 了，感觉每次用到还想重新看过，又是不整理的锅。core data by tutorials 7th now reading.  使用自带的core data NSManagedObject Subclass Core data stack 问题 must specify an inverse relationship background m">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sseen.github.io/images/2021/2021-03-18-07-34-07.png">
+<meta property="article:published_time" content="2021-02-19T17:46:05.000Z">
+<meta property="article:modified_time" content="2021-07-14T07:50:35.302Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="CoreData">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sseen.github.io/images/2021/2021-03-18-07-34-07.png">
+
+<link rel="canonical" href="http://yoursite.com/CoreData%E6%95%B4%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CoreData整理 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/CoreData%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CoreData整理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-19 17:46:05" itemprop="dateCreated datePublished" datetime="2021-02-19T17:46:05+00:00">2021-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-14 07:50:35" itemprop="dateModified" datetime="2021-07-14T07:50:35+00:00">2021-07-14</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/CoreData%E6%95%B4%E7%90%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="CoreData整理/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>看过几次 core data by tutorials 了，感觉每次用到还想重新看过，又是不整理的锅。<br>core data by tutorials 7th now reading.</p>
+<ol>
+<li><a href="#使用自带的core-data">使用自带的core data</a></li>
+<li><a href="#nsmanagedobject-subclass">NSManagedObject Subclass</a></li>
+<li><a href="#core-data-stack">Core data stack</a></li>
+<li><a href="#问题">问题</a><ol>
+<li><a href="#must-specify-an-inverse-relationship">must specify an inverse relationship</a></li>
+<li><a href="#background-managed-object-context">background managed object context</a></li>
+<li><a href="#nspersistentcontainer-及-nsfetchedresultscontrollerdelegate">NSPersistentContainer 及 NSFetchedResultsControllerDelegate</a></li>
+<li><a href="#core-data-xcode-debug">core data xcode debug</a></li>
+</ol>
+</li>
+<li><a href="#参考">参考</a></li>
+</ol>
+<h2 id="使用自带的core-data"><a href="#使用自带的core-data" class="headerlink" title="使用自带的core data"></a>使用自带的core data</h2><p>Data Model editor<br>entity<br>attribute<br>relationship</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">save</span><span class="params">(name:String)</span></span> &#123;</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> appDelegate = <span class="type">UIApplication</span>.shared.delegate <span class="keyword">as</span>? <span class="type">AppDelegate</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> managedContext = appDelegate.persistentContainer.viewContext</span><br><span class="line">    <span class="keyword">let</span> entity = <span class="type">NSEntityDescription</span>.entity(forEntityName: <span class="string">"Person"</span>, <span class="keyword">in</span>: managedContext)!</span><br><span class="line">    <span class="keyword">let</span> person = <span class="type">NSManagedObject</span>(entity: entity, insertInto: managedContext)</span><br><span class="line"></span><br><span class="line">    person.setValue(name, forKeyPath: <span class="string">"name"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> managedContext.save()</span><br><span class="line">    people.append(person) &#125; <span class="keyword">catch</span> <span class="keyword">let</span> error <span class="keyword">as</span> <span class="type">NSError</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Could not save. \(error), \(error.userInfo)"</span>) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fetch</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">//1 </span></span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> appDelegate = <span class="type">UIApplication</span>.shared.delegate <span class="keyword">as</span>? <span class="type">AppDelegate</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    <span class="keyword">let</span> managedContext = appDelegate.persistentContainer.viewContext    </span><br><span class="line">    <span class="comment">//2 </span></span><br><span class="line">    <span class="keyword">let</span> fetchRequest = <span class="type">NSFetchRequest</span>&lt;<span class="type">NSManagedObject</span>&gt;(entityName: <span class="string">"Person"</span>)</span><br><span class="line">    <span class="comment">//3 </span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        people = <span class="keyword">try</span> managedContext.fetch(fetchRequest) </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">catch</span> <span class="keyword">let</span> error <span class="keyword">as</span> <span class="type">NSError</span> &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"Could not fetch. \(error), \(error.userInfo)"</span>) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NSManagedObject-Subclass"><a href="#NSManagedObject-Subclass" class="headerlink" title="NSManagedObject Subclass"></a>NSManagedObject Subclass</h2><p>就是model你的数据。<br>选中 <code>.xcdatamodeld</code> 然后生成 <code>create nsmanagedObject Subclass</code>。</p>
+<h2 id="Core-data-stack"><a href="#Core-data-stack" class="headerlink" title="Core data stack"></a>Core data stack</h2><p>iOS10 新加 NSPersistentContainer，可以管理下面四个属性</p>
+<ul>
+<li>NSManagedObjectModel，类似表结构，ruantime时候，把 xcdatamodel 编辑的文件初始化成 NSManagedObjectModel</li>
+<li>NSPersistentStore，读取写入存储，sqlite、json、xml、inmemory</li>
+<li>NSPersistentStoreCoordinator，介于 NSManagedObjectModel 和 NSPersistentStore 之间，多一层抽离可消除彼此细节依赖，使 NSManagedObjectModel 不用知道用了什么介质存储数据，只管存就行；而且如果你有多个持久化存储，那么持久化存储协调器向托管上下文提供了一个统一的接口。</li>
+<li>NSManagedObjectContext<ul>
+<li>管理所创建对象的生命周期</li>
+<li>管理对象必须有相应的context</li>
+<li>非线程安全，只能在统一线程中创建context和管理对象</li>
+</ul>
+</li>
+</ul>
+<p><code>2021-02-20 72</code>  </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CoreDataStack</span> </span>&#123;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">let</span> modelName: <span class="type">String</span></span><br><span class="line"><span class="keyword">init</span>(modelName: <span class="type">String</span>) &#123; <span class="keyword">self</span>.modelName = modelName &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> storeContainer: <span class="type">NSPersistentContainer</span> = &#123;</span><br><span class="line"><span class="keyword">let</span> container = <span class="type">NSPersistentContainer</span>(name: <span class="keyword">self</span>.modelName) container.loadPersistentStores &#123; (storeDescription, error) <span class="keyword">in</span> <span class="keyword">if</span> <span class="keyword">let</span> error = error <span class="keyword">as</span> <span class="type">NSError?</span> &#123; <span class="built_in">print</span>(<span class="string">"Unresolved error \(error), \(error.userInfo)"</span>) &#125; &#125; <span class="keyword">return</span> container &#125;()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> managedContext: <span class="type">NSManagedObjectContext</span> = &#123; <span class="keyword">return</span> <span class="keyword">self</span>.storeContainer.viewContext &#125;()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">saveContext</span> <span class="params">()</span></span> &#123; </span><br><span class="line">    <span class="keyword">guard</span> managedContext.hasChanges <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    <span class="keyword">do</span> &#123; <span class="keyword">try</span> managedContext.save() &#125; </span><br><span class="line">    <span class="keyword">catch</span> <span class="keyword">let</span> error <span class="keyword">as</span> <span class="type">NSError</span> </span><br><span class="line">    &#123;<span class="built_in">print</span>(<span class="string">"Unresolved error \(error), \(error.userInfo)"</span>) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="must-specify-an-inverse-relationship"><a href="#must-specify-an-inverse-relationship" class="headerlink" title="must specify an inverse relationship"></a>must specify an inverse relationship</h3><p><a href="https://stackoverflow.com/questions/764125/does-every-core-data-relationship-have-to-have-an-inverse" target="_blank" rel="noopener">Does every Core Data Relationship have to have an Inverse?</a><br>想象一个场景：</p>
+<ol>
+<li>entity 有个 relationship(non optional,并且不能删除 delete rule=deny) r  (没有inverse relationship)</li>
+<li>entity set r = oneR</li>
+<li>relationship 删除 oneR</li>
+<li>coredata save</li>
+<li>一般情况下我们会觉得肯定保存失败，但是结果确实可以。原因就是因为没有inverse，导致relationship变化的时候，并没有reflect到entity上，也就不会触发validation</li>
+</ol>
+<h3 id="background-managed-object-context"><a href="#background-managed-object-context" class="headerlink" title="background managed object context"></a>background managed object context</h3><p>background managed object context，每次都在 new context 所以全都是异步并发无序<br>performBackgroundTask，都在一个 context 里，异步但是有序队列</p>
+<h3 id="NSPersistentContainer-及-NSFetchedResultsControllerDelegate"><a href="#NSPersistentContainer-及-NSFetchedResultsControllerDelegate" class="headerlink" title="NSPersistentContainer 及 NSFetchedResultsControllerDelegate"></a>NSPersistentContainer 及 NSFetchedResultsControllerDelegate</h3><p>persistentStoreCoordinator fetch 的时候不会触发 delegate 方法，调试了半天。</p>
+<h3 id="core-data-xcode-debug"><a href="#core-data-xcode-debug" class="headerlink" title="core data xcode debug"></a>core data xcode debug</h3><p>xcode <code>scheme</code> 设置中 <code>Run → Arguments → Arguments passed on launch</code> 添加如下配置</p>
+<blockquote>
+<p>-com.apple.CoreData.SQLDebug 1 (1,2,3都可以，显示级别不一样)<br>-com.apple.CoreData.ConcurrencyDebug 1<br>-com.apple.CoreData.MigrationDebug 1</p>
+</blockquote>
+<p><img src="https://sseen.github.io/images/2021/2021-03-18-07-34-07.png" alt="cd"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://gist.github.com/beny/8313959" target="_blank" rel="noopener">core data debuge setting</a><br><a href="https://stackoverflow.com/questions/50647579/core-data-how-to-swap-nspersistentstores-and-inform-nsfetchedresultscontroller" target="_blank" rel="noopener">Core Data. How to swap NSPersistentStores and inform NSFetchedResultsController?</a><br><a href="https://gist.github.com/xavierchia/ef43abb270003ae63e5bbb7eb5404645" target="_blank" rel="noopener">Preload Sqlite data to Core Data</a><br><a href="https://stackoverflow.com/questions/59868393/swiftui-pagination-for-list-object" target="_blank" rel="noopener">SwiftUI pagination for List object</a><br><a href="https://www.avanderlee.com/swift/core-data-performance/" target="_blank" rel="noopener">Core Data Performance: 6 tips you should know</a><br><a href="https://medium.com/swift2go/fetching-remote-data-with-core-data-background-context-in-ios-app-224dad15ef6c" target="_blank" rel="noopener">Fetching Remote Data With Core Data Background Context in iOS App</a><br><a href="https://dzone.com/articles/coredata-crud-with-concurrency-in-swift-part-2-1" target="_blank" rel="noopener">CoreData: CRUD With Concurrency in Swift - Part 2</a><br><a href="https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/" target="_blank" rel="noopener">Closures Capture Semantics: Catch them all!</a><br><a href="https://duckrowing.com//2010/03/11/using-core-data-on-multiple-threads/" target="_blank" rel="noopener">Using Core Data on Multiple Threads</a><br><a href="https://medium.com/swift-india/functional-swift-closures-67459b812d0" target="_blank" rel="noopener">Functional Swift: Closures { }</a><br><a href="https://marcosantadev.com/capturing-values-swift-closures/" target="_blank" rel="noopener">Capturing Values In Swift Closures</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/CoreData/" rel="tag"># CoreData</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/win10%E7%9B%B8%E5%85%B3/" rel="prev" title="win10相关">
+      <i class="fa fa-chevron-left"></i> win10相关
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/WireGuard%E9%85%8D%E7%BD%AE/" rel="next" title="WireGuard配置">
+      WireGuard配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用自带的core-data"><span class="nav-number">1.</span> <span class="nav-text">使用自带的core data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSManagedObject-Subclass"><span class="nav-number">2.</span> <span class="nav-text">NSManagedObject Subclass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-data-stack"><span class="nav-number">3.</span> <span class="nav-text">Core data stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#must-specify-an-inverse-relationship"><span class="nav-number">4.1.</span> <span class="nav-text">must specify an inverse relationship</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#background-managed-object-context"><span class="nav-number">4.2.</span> <span class="nav-text">background managed object context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSPersistentContainer-及-NSFetchedResultsControllerDelegate"><span class="nav-number">4.3.</span> <span class="nav-text">NSPersistentContainer 及 NSFetchedResultsControllerDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#core-data-xcode-debug"><span class="nav-number">4.4.</span> <span class="nav-text">core data xcode debug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/CoreData%E6%95%B4%E7%90%86/";
+    this.page.identifier = "CoreData整理/";
+    this.page.title = "CoreData整理";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

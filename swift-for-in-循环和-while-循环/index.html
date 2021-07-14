@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="开始  系列 cgfloat rounded (.towardZero) (.down) (.up) (.toNearestOrAwayFromZero) (.toNearestOrEven) (.awayFromZero)   这是什么形式 for in with index optional string to int map、flatmap、compactmap enum 自定义print">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift for in 循环和 while 循环">
+<meta property="og:url" content="http://yoursite.com/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="开始  系列 cgfloat rounded (.towardZero) (.down) (.up) (.toNearestOrAwayFromZero) (.toNearestOrEven) (.awayFromZero)   这是什么形式 for in with index optional string to int map、flatmap、compactmap enum 自定义print">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-06-14T17:55:15.000Z">
+<meta property="article:modified_time" content="2021-07-14T07:50:35.298Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>swift for in 循环和 while 循环 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          swift for in 循环和 while 循环
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-14 17:55:15" itemprop="dateCreated datePublished" datetime="2016-06-14T17:55:15+00:00">2016-06-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-14 07:50:35" itemprop="dateModified" datetime="2021-07-14T07:50:35+00:00">2021-07-14</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="swift-for-in-循环和-while-循环/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>开始</p>
+<ol>
+<li><a href="#系列">系列</a><ol>
+<li><a href="#cgfloat-rounded">cgfloat rounded</a><ol>
+<li><a href="#towardzero">(.towardZero)</a></li>
+<li><a href="#down">(.down)</a></li>
+<li><a href="#up">(.up)</a></li>
+<li><a href="#tonearestorawayfromzero">(.toNearestOrAwayFromZero)</a></li>
+<li><a href="#tonearestoreven">(.toNearestOrEven)</a></li>
+<li><a href="#awayfromzero">(.awayFromZero)</a></li>
+</ol>
+</li>
+<li><a href="#这是什么形式">这是什么形式</a></li>
+<li><a href="#for-in-with-index">for in with index</a></li>
+<li><a href="#optional-string-to-int">optional string to int</a></li>
+<li><a href="#mapflatmapcompactmap">map、flatmap、compactmap</a></li>
+<li><a href="#enum">enum</a></li>
+<li><a href="#自定义print">自定义print</a></li>
+</ol>
+</li>
+<li><a href="#问题">问题</a></li>
+<li><a href="#参考">参考</a></li>
+</ol>
+<h2 id="系列"><a href="#系列" class="headerlink" title="系列"></a>系列</h2><h3 id="cgfloat-rounded"><a href="#cgfloat-rounded" class="headerlink" title="cgfloat rounded"></a>cgfloat rounded</h3><h4 id="towardZero"><a href="#towardZero" class="headerlink" title="(.towardZero)"></a>(.towardZero)</h4><p>x.rounded(.towardZero)，直接去掉小数部分，保留整数部分。类似same thing with Int(x).</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">3.000</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.001</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.499</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.500</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.999</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"></span><br><span class="line">-<span class="number">3.000</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.001</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.499</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.500</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.999</span>  -&gt;  -<span class="number">3.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="down"><a href="#down" class="headerlink" title="(.down)"></a>(.down)</h4><p>x.rounded(.down)，变小。类似 floor(x)</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">3.000</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.001</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.499</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.500</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.999</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"></span><br><span class="line">-<span class="number">3.000</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.001</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">3.499</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">3.500</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">3.999</span>  -&gt;  -<span class="number">4.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="up"><a href="#up" class="headerlink" title="(.up)"></a>(.up)</h4><p>x.rounded(.up)，变大。类似 ceil(x)</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">3.000</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.001</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">3.499</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">3.500</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">3.999</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"></span><br><span class="line">-<span class="number">3.000</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.001</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.499</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.500</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.999</span>  -&gt;  -<span class="number">3.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="toNearestOrAwayFromZero"><a href="#toNearestOrAwayFromZero" class="headerlink" title="(.toNearestOrAwayFromZero)"></a>(.toNearestOrAwayFromZero)</h4><p>x.rounded(.toNearestOrAwayFromZero)，四舍五入。也就是默认 x.rounded()</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">3.000</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.001</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.499</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.500</span>  -&gt;  <span class="number">4.0</span>  ***</span><br><span class="line"><span class="number">3.999</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"></span><br><span class="line">-<span class="number">3.000</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.001</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.499</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.500</span>  -&gt;  -<span class="number">4.0</span>  ***</span><br><span class="line">-<span class="number">3.999</span>  -&gt;  -<span class="number">4.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="toNearestOrEven"><a href="#toNearestOrEven" class="headerlink" title="(.toNearestOrEven)"></a>(.toNearestOrEven)</h4><p>x.rounded(.toNearestOrEven)<br>This is similar to toNearestOrAwayFromZero, except now the .5 values get rounded to the even whole number.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">3.000</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.001</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.499</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.500</span>  -&gt;  <span class="number">4.0</span>   ***</span><br><span class="line"><span class="number">3.999</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">4.500</span>  -&gt;  <span class="number">4.0</span>   ***</span><br><span class="line"></span><br><span class="line">-<span class="number">3.000</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.001</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.499</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.500</span>  -&gt;  -<span class="number">4.0</span>   ***</span><br><span class="line">-<span class="number">3.999</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">4.500</span>  -&gt;  -<span class="number">4.0</span>   ***</span><br></pre></td></tr></table></figure>
+
+<h4 id="awayFromZero"><a href="#awayFromZero" class="headerlink" title="(.awayFromZero)"></a>(.awayFromZero)</h4><p>x.rounded(.awayFromZero)，远离0</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">3.000</span>  -&gt;  <span class="number">3.0</span></span><br><span class="line"><span class="number">3.001</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">3.499</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">3.500</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"><span class="number">3.999</span>  -&gt;  <span class="number">4.0</span></span><br><span class="line"></span><br><span class="line">-<span class="number">3.000</span>  -&gt;  -<span class="number">3.0</span></span><br><span class="line">-<span class="number">3.001</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">3.499</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">3.500</span>  -&gt;  -<span class="number">4.0</span></span><br><span class="line">-<span class="number">3.999</span>  -&gt;  -<span class="number">4.0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="这是什么形式"><a href="#这是什么形式" class="headerlink" title="这是什么形式"></a>这是什么形式</h3><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 错误</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">var</span> oneBookEntity: <span class="type">Book</span> = &#123; () -&gt; <span class="type">Book</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">let</span> one = <span class="type">Book</span>(context: <span class="type">PersistenceController</span>.previewBook.container.viewContext)</span><br><span class="line">    <span class="keyword">return</span> one</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">var</span> oneBookEntity: <span class="type">Book</span> = &#123;</span><br><span class="line">    <span class="keyword">let</span> one = <span class="type">Book</span>(context: <span class="type">PersistenceController</span>.previewBook.container.viewContext)</span><br><span class="line">    <span class="keyword">return</span> one</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
+<h3 id="for-in-with-index"><a href="#for-in-with-index" class="headerlink" title="for in with index"></a>for in with index</h3><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">1</span>...<span class="number">5</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\(index) times 5 is \(index * 5)"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (index, element) <span class="keyword">in</span> list.enumerated() &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Item \(index): \(element)"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="optional-string-to-int"><a href="#optional-string-to-int" class="headerlink" title="optional string to int"></a>optional string to int</h3><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = (optionalString == <span class="literal">nil</span> || <span class="type">Int</span>(optionalString!) == <span class="literal">nil</span>) ? <span class="number">0</span> : <span class="type">Int</span>(optionalString!)!</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">toInt</span><span class="params">(s: String?)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> result = <span class="number">0</span></span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">let</span> str: <span class="type">String</span> = s,</span><br><span class="line">  i = <span class="type">Int</span>(str) &#123;</span><br><span class="line">      result = i</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="map、flatmap、compactmap"><a href="#map、flatmap、compactmap" class="headerlink" title="map、flatmap、compactmap"></a>map、flatmap、compactmap</h3><p>map 生成新的 array<br>flatmap 嵌套的 array 展开</p>
+<h3 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h3><p>In Swift 4.2, the CaseIterable protocol can be used for an enum with rawValues, but the string should match against the enum case labels:</p>
+<p>enum MyCode : String, CaseIterable {<br>    case one   = “uno”<br>    case two   = “dos”<br>    case three = “tres”<br>    static func withLabel(_ label: String) -&gt; MyCode? {<br>        return self.allCases.first{ “($0)” == label }<br>    }<br>}</p>
+<p>usage:</p>
+<p>print(MyCode.withLabel(“one”)) // Optional(MyCode.one)<br>print(MyCode(rawValue: “uno”))  // Optional(MyCode.one)</p>
+<h3 id="自定义print"><a href="#自定义print" class="headerlink" title="自定义print"></a>自定义print</h3><p>目前 swift 里已经没有宏定义了，可以在项目设置里添加下<br>Target→Build Settings→Other swift Flags 下面的 Debug 添加 <code>-D DEBUGLOG</code></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printX</span><span class="params">(<span class="number">_</span> message: <span class="keyword">Any</span>...,</span></span></span><br><span class="line"><span class="function"><span class="params">              file: String = #file,</span></span></span><br><span class="line"><span class="function"><span class="params">              method: String = #function,</span></span></span><br><span class="line"><span class="function"><span class="params">              line: Int = #line)</span></span> &#123;</span><br><span class="line">    #<span class="keyword">if</span> <span class="type">DEBUGLOG</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"\((file as NSString).lastPathComponent)[\(line)], \(method): \(message)"</span>)</span><br><span class="line">    #endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>import Foundation 是否必要</p>
+<blockquote>
+<p>If you want to work with Strings, Dates, etc you need to import Foundation.</p>
+<p>The Foundation framework provides a base layer of functionality for apps and frameworks, including data storage and persistence, text processing, date and time calculations, sorting and filtering, and networking.</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.hangge.com/blog/cache/detail_1869.html" target="_blank" rel="noopener">Swift - 第三方加密库CryptoSwift使用详解3（AES加密与解密）</a><br><a href="https://medium.com/@PhiJay/why-swift-enums-with-associated-values-cannot-have-a-raw-value-21e41d5ec11" target="_blank" rel="noopener">Why Swift Enums with Associated Values Cannot Have a Raw Value</a><br><a href="https://appventure.me/guides/advanced_practical_enum_examples/diving_in/methods_and_properties.html" target="_blank" rel="noopener">Advanced and Practical Enum usage in Swift超详细教程</a><br><a href="https://stackoverflow.com/questions/2667130/how-to-round-cgfloat" target="_blank" rel="noopener">How to round CGFloat</a><br><a href="https://gist.github.com/artemkrachulov/233d447594f7dc5ec0291a7124fc17e6" target="_blank" rel="noopener">Double-Float+Rounding.swift</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E8%BF%99%E9%87%8C%E8%BF%8EWWDC-16/" rel="prev" title="这里迎WWDC 16">
+      <i class="fa fa-chevron-left"></i> 这里迎WWDC 16
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/WebKit-Safari-and-SafariViewController/" rel="next" title="WebKit, Safari and SafariViewController">
+      WebKit, Safari and SafariViewController <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系列"><span class="nav-number">1.</span> <span class="nav-text">系列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cgfloat-rounded"><span class="nav-number">1.1.</span> <span class="nav-text">cgfloat rounded</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#towardZero"><span class="nav-number">1.1.1.</span> <span class="nav-text">(.towardZero)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#down"><span class="nav-number">1.1.2.</span> <span class="nav-text">(.down)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#up"><span class="nav-number">1.1.3.</span> <span class="nav-text">(.up)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toNearestOrAwayFromZero"><span class="nav-number">1.1.4.</span> <span class="nav-text">(.toNearestOrAwayFromZero)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toNearestOrEven"><span class="nav-number">1.1.5.</span> <span class="nav-text">(.toNearestOrEven)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awayFromZero"><span class="nav-number">1.1.6.</span> <span class="nav-text">(.awayFromZero)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这是什么形式"><span class="nav-number">1.2.</span> <span class="nav-text">这是什么形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in-with-index"><span class="nav-number">1.3.</span> <span class="nav-text">for in with index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optional-string-to-int"><span class="nav-number">1.4.</span> <span class="nav-text">optional string to int</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map、flatmap、compactmap"><span class="nav-number">1.5.</span> <span class="nav-text">map、flatmap、compactmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enum"><span class="nav-number">1.6.</span> <span class="nav-text">enum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义print"><span class="nav-number">1.7.</span> <span class="nav-text">自定义print</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/";
+    this.page.identifier = "swift-for-in-循环和-while-循环/";
+    this.page.title = "swift for in 循环和 while 循环";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
