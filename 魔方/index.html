@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="魔方（Rubik’s Cube)，刚毕业的时候第一家单位，第一次遇到一个玩魔方的小伙伴，那时候算是初次接触，不过随着后续他的离开就断掉了。不知道什么时候媳妇在哪里凑单搞了个二阶魔方，心血来潮想玩下，本来想着会简单很多，估计也是的，但是也找了不少地方，就一个 youtube 上的介绍很到位 【鸟杰魔方】二阶魔方基础教程，一条公式还原二阶，二阶看这个就够了。 万万没想到的是，想让媳妇把魔方拆了然后按照">
+<meta property="og:type" content="article">
+<meta property="og:title" content="魔方">
+<meta property="og:url" content="http://yoursite.com/%E9%AD%94%E6%96%B9/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="魔方（Rubik’s Cube)，刚毕业的时候第一家单位，第一次遇到一个玩魔方的小伙伴，那时候算是初次接触，不过随着后续他的离开就断掉了。不知道什么时候媳妇在哪里凑单搞了个二阶魔方，心血来潮想玩下，本来想着会简单很多，估计也是的，但是也找了不少地方，就一个 youtube 上的介绍很到位 【鸟杰魔方】二阶魔方基础教程，一条公式还原二阶，二阶看这个就够了。 万万没想到的是，想让媳妇把魔方拆了然后按照">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-27T00:28:13.000Z">
+<meta property="article:modified_time" content="2024-03-17T12:05:11.836Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="魔方">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/%E9%AD%94%E6%96%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>魔方 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/%E9%AD%94%E6%96%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          魔方
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-27 00:28:13" itemprop="dateCreated datePublished" datetime="2021-04-27T00:28:13+00:00">2021-04-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-17 12:05:11" itemprop="dateModified" datetime="2024-03-17T12:05:11+00:00">2024-03-17</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/%E9%AD%94%E6%96%B9/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="魔方/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>魔方（Rubik’s Cube)，刚毕业的时候第一家单位，第一次遇到一个玩魔方的小伙伴，那时候算是初次接触，不过随着后续他的离开就断掉了。<br>不知道什么时候媳妇在哪里凑单搞了个二阶魔方，心血来潮想玩下，本来想着会简单很多，估计也是的，但是也找了不少地方，就一个 youtube 上的介绍很到位 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vS6FwHeO9sw">【鸟杰魔方】二阶魔方基础教程，一条公式还原二阶</a>，二阶看这个就够了。</p>
+<p>万万没想到的是，想让媳妇把魔方拆了然后按照颜色装好，以免出现窜色的情况，但是晚上直接掰断了一角，只能等新的来了。</p>
+<p><code>2021-07-17</code><br>终于买了个魔方，顺利照着教程完成了，以后可以做示范了。</p>
+<h2 id="三阶魔方还原步骤"><a href="#三阶魔方还原步骤" class="headerlink" title="三阶魔方还原步骤"></a>三阶魔方还原步骤</h2><ol>
+<li>白色小花</li>
+<li>底部十字</li>
+<li>一面一层，靠近右就⬅️⬆️➡️⬇️，左就➡️⬆️⬅️⬇️</li>
+<li>一面两层，上面颜色左左手手法，转动整个魔方白色块对你，右手手法</li>
+<li>顶面十字，拐角，压，右手手法，拨回；一束一横，横放，压，两次右手手法，拨回；</li>
+<li>顶面复原，倒立魔方，右下脚没有黄色，两次右手，直到完成</li>
+<li>顶层脚块归位，两个脚块颜色相同的一面对你（没有的话，直接做脚块公式），脚块调整公式，黄色倒过来面对自己⬆️➡️⬆️底层转两下，⬇️⬅️⬆️底层两下⬇️⬇️</li>
+<li>顶层棱块归位，恢复的一层放后面，顶层棱块公式，⬆️➡️⬆️⬅️⬆️⬅️⬆️➡️⬇️➡️⬆️⬆️</li>
+</ol>
+<h2 id="四阶"><a href="#四阶" class="headerlink" title="四阶"></a>四阶</h2><p>四阶是二阶和三阶的结合体看作，中心块四个看作一个颜色就变成三阶。<br>目前来看除了前两步之外，其他跟三阶一样就可以了，还没遇到特殊情况，遇到再说。<br>还是要用的到的，下面四阶的方法都是上面三阶玩不下去不管用的时候需要参考的。</p>
+<ol>
+<li>中心块复原，找到目标色的对角空位，电梯送上去，换个位置，电梯回来；上黄，下白，蓝红绿橙</li>
+<li>合并棱块，棱块放在一个面上，如果没有对齐左⬆️⬅️后⬇️拨左⬇️左⬇️；对齐之后，上双➡️⬆️回⬅️⬇️拨上双⬅️</li>
+<li>现在就是三阶一样了，按照三阶公式开始，直到顶面十字</li>
+<li>顶面十字，这里和三阶有点不一样，没有十字的一边对你。右双⬆️右双⬆️后回后回⬅️⬅️、左双⬇️⬅️⬅️、右双⬇️⬅️⬅️、右双⬆️⬅️⬅️、压压右双⬆️、压压左双⬆️、后回后回右双⬇️右双⬇️</li>
+<li>顶层棱块<ol>
+<li>两种相对的颜色好了，就对着你放，⬆️⬅️⬇️⬅️⬆️⬅️⬅️⬇️</li>
+<li>两个相邻的颜色好了，一个放右手边，一个放后面，继续上面公式</li>
+</ol>
+</li>
+<li>顶层脚块，⬅️⬆️➡️左⬆️⬅️⬇️➡️左⬇️，两个脚块归位，没归位的对着你<ol>
+<li>脚块归位，3⬆️3⬆️⬅️⬅️3⬆️3⬆️上双⬅️上双⬅️3⬆️3⬆️上双⬅️上双⬅️</li>
+</ol>
+</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=j3wc4QV-JE8&list=PL35wh5t6ls0g-03Fz82MgpvNaDaW4zsaE&index=7">4x4四阶魔方一看就懂，超简单入门教程7：顶部十字面</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6sT58k6HYuk&list=PL35wh5t6ls0g-03Fz82MgpvNaDaW4zsaE&index=3">4x4四阶魔方一看就懂，超简单入门教程3：合并棱块</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vS6FwHeO9sw">【鸟杰魔方】二阶魔方基础教程，一条公式还原二阶</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%AD%94%E6%96%B9/" rel="tag"># 魔方</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/iOS%20Widget%E5%BC%80%E5%A7%8B/" rel="prev" title="iOS Widget开始">
+      <i class="fa fa-chevron-left"></i> iOS Widget开始
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/UICollectionView/" rel="next" title="UICollectionView">
+      UICollectionView <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E9%98%B6%E9%AD%94%E6%96%B9%E8%BF%98%E5%8E%9F%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">三阶魔方还原步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E9%98%B6"><span class="nav-number">2.</span> <span class="nav-text">四阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">210</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/%E9%AD%94%E6%96%B9/";
+    this.page.identifier = "魔方/";
+    this.page.title = "魔方";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
