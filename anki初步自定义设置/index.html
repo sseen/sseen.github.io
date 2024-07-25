@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="用 anki 记单词还是不错的，找到了这个仁兄分享的系列日语红宝书系列（匹配官方教材发音、带例句），感觉不错，但是使用习惯上稍微有点想要自己调整的地方，遂记录下来。 anki 显示的卡片可以自定义样式和内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="anki 初步自定义设置">
+<meta property="og:url" content="http://yoursite.com/anki%E5%88%9D%E6%AD%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="用 anki 记单词还是不错的，找到了这个仁兄分享的系列日语红宝书系列（匹配官方教材发音、带例句），感觉不错，但是使用习惯上稍微有点想要自己调整的地方，遂记录下来。 anki 显示的卡片可以自定义样式和内容">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-26T15:32:22.000Z">
+<meta property="article:modified_time" content="2024-07-25T14:10:17.773Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="anki">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/anki%E5%88%9D%E6%AD%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>anki 初步自定义设置 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/anki%E5%88%9D%E6%AD%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          anki 初步自定义设置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-26 15:32:22" itemprop="dateCreated datePublished" datetime="2024-04-26T15:32:22+00:00">2024-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-07-25 14:10:17" itemprop="dateModified" datetime="2024-07-25T14:10:17+00:00">2024-07-25</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/anki%E5%88%9D%E6%AD%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="anki初步自定义设置/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>用 anki 记单词还是不错的，找到了这个仁兄分享的系列<a target="_blank" rel="noopener" href="https://ankiweb.net/shared/by-author/452778955">日语红宝书系列（匹配官方教材发音、带例句）</a>，感觉不错，但是使用习惯上稍微有点想要自己调整的地方，遂记录下来。</p>
+<h2 id="anki-显示的卡片可以自定义样式和内容"><a href="#anki-显示的卡片可以自定义样式和内容" class="headerlink" title="anki 显示的卡片可以自定义样式和内容"></a>anki 显示的卡片可以自定义样式和内容</h2><p>编辑卡片情况下，styling 里可以自定义样式，这里就注意下暗黑模式就行<code>.nightMode</code>，比如：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.card</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">25px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">color</span>: black;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">25px</span>;</span><br><span class="line">	<span class="attribute">padding-top</span>: <span class="number">35px</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nightMode</span> <span class="selector-class">.Word</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#ddd</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.autoColor</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nightMode</span> <span class="selector-class">.autoColor</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#ddd</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: kt;</span><br><span class="line">	<span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;_kt.ttf&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: times;</span><br><span class="line">	<span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;_times.ttf&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: MS UI Gothic;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">	<span class="attribute">font-weight</span>: <span class="number">600</span>;</span><br><span class="line">	<span class="attribute">letter-spacing</span>: <span class="number">5px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">35px</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">35px</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">1px</span> <span class="number">0px</span> <span class="number">0px</span> <span class="number">0px</span>;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">0px</span> solid <span class="number">#b7d5eb</span>;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.R</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#b7d5eb</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#338eca</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.S</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#c1e7b8</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#56a844</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.D</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#f7c4b8</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#ec6c4f</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.POSR</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#338eca</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.POSS</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#56a844</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.POSD</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#ec6c4f</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.Word</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: MS Gothic;</span><br><span class="line">	<span class="attribute">letter-spacing</span>: <span class="number">1px</span>;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">35px</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">35px</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#303030</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">32px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.PhoneticSymbol</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: MS Gothic;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#555555</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nightMode</span> <span class="selector-class">.PhoneticSymbol</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: MS Gothic;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#777</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">h &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: calibri;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">28px</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#FFFFFF</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">2px</span> <span class="number">4px</span> <span class="number">4px</span> <span class="number">4px</span>;</span><br><span class="line">	<span class="attribute">display</span>: inline-block;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">6px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.Paraphrase</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: MS Gothic;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">25px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#2d2d2d</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">	<span class="attribute">display</span>: inline;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.En</span> &#123;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0em</span> <span class="number">0em</span> <span class="number">0em</span> <span class="number">0.2em</span>;</span><br><span class="line">	<span class="attribute">font-family</span>: calibri;</span><br><span class="line">	<span class="attribute">text-align</span>: justify;</span><br><span class="line">	<span class="selector-id">#text-align</span>: center;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">	<span class="attribute">text-indent</span>: <span class="number">0em</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#555555</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0.5em</span> <span class="number">0.5em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nightMode</span> <span class="selector-class">.En</span> &#123;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0em</span> <span class="number">0em</span> <span class="number">0em</span> <span class="number">0.2em</span>;</span><br><span class="line">	<span class="attribute">font-family</span>: calibri;</span><br><span class="line">	<span class="attribute">text-align</span>: justify;</span><br><span class="line">	<span class="selector-id">#text-align</span>: center;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">	<span class="attribute">text-indent</span>: <span class="number">0em</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#777</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0.5em</span> <span class="number">0.5em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.Ch</span> &#123;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0em</span> <span class="number">0em</span> <span class="number">0em</span> <span class="number">0.2em</span>;</span><br><span class="line">	<span class="attribute">font-family</span>: 微软雅黑;</span><br><span class="line">	<span class="attribute">text-align</span>: justify;</span><br><span class="line">	<span class="selector-id">#text-align</span>: center;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">	<span class="attribute">text-indent</span>: <span class="number">0em</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#555555</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0.5em</span> <span class="number">0.5em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.Zh</span> &#123;</span><br><span class="line">	<span class="attribute">margin</span>: -<span class="number">0.5em</span> <span class="number">0em</span> <span class="number">0em</span> <span class="number">0.2em</span>;</span><br><span class="line">	<span class="attribute">font-family</span>: 微软雅黑;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">	<span class="attribute">text-indent</span>: <span class="number">0em</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#555555</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">18px</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0.5em</span> <span class="number">0.5em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">	<span class="comment">/* 使用 Flexbox 布局 */</span></span><br><span class="line">	<span class="attribute">justify-content</span>: center;</span><br><span class="line">	<span class="comment">/* 水平居中 */</span></span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="comment">/* 可以根据实际需求设置宽度 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.hint</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: calibri;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: left;</span><br><span class="line">	# <span class="attribute">text-decoration</span>: none;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#444444</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">22px</span>;</span><br><span class="line">	# <span class="attribute">padding</span>: <span class="number">5px</span> <span class="number">10px</span> <span class="number">0px</span> <span class="number">10px</span>;</span><br><span class="line">	# <span class="attribute">display</span>: inline;</span><br><span class="line">	# <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#dcdcdc</span>;</span><br><span class="line">	# <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nightMode</span> <span class="selector-class">.hint</span> &#123;</span><br><span class="line">	<span class="attribute">font-family</span>: calibri;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: left;</span><br><span class="line">	<span class="attribute">white-space</span>: pre-wrap;</span><br><span class="line">	<span class="comment">/* 保持文本格式，并允许自动换行 */</span></span><br><span class="line">	# <span class="attribute">text-decoration</span>: none;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#777</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">22px</span>;</span><br><span class="line">	# <span class="attribute">padding</span>: <span class="number">5px</span> <span class="number">10px</span> <span class="number">0px</span> <span class="number">10px</span>;</span><br><span class="line">	# <span class="attribute">display</span>: inline;</span><br><span class="line">	# <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#dcdcdc</span>;</span><br><span class="line">	# <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">u &#123;</span><br><span class="line">	<span class="attribute">text-decoration</span>: none;</span><br><span class="line">	# <span class="attribute">background-color</span>: <span class="number">#ffff75</span>;</span><br><span class="line">	<span class="attribute">border-bottom</span>: <span class="number">2px</span> solid <span class="number">#ec6c4f</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">2px</span> <span class="number">0px</span> <span class="number">2px</span>;</span><br><span class="line">	<span class="attribute">display</span>: inline;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hr &#123;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">3px</span>;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">40%</span>;</span><br><span class="line">	<span class="attribute">display</span>: inline-block;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">0px</span> solid <span class="number">#ffffff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.win</span> hr &#123;</span><br><span class="line">	<span class="attribute">vertical-align</span>: middle;</span><br><span class="line">	<span class="attribute">margin-right</span>: <span class="number">0.2em</span>;</span><br><span class="line">	<span class="attribute">margin-left</span>: <span class="number">0.2em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mac</span> hr &#123;</span><br><span class="line">	<span class="attribute">vertical-align</span>: middle;</span><br><span class="line">	<span class="attribute">margin-right</span>: <span class="number">0.2em</span>;</span><br><span class="line">	<span class="attribute">margin-left</span>: <span class="number">0.2em</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然也能写 js 脚步来控制内容和样式，一般就是在卡片的正面或者反面的地方，反面多点，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>=ss&gt;</span><br><span class="line">	&#123;&#123;<span class="title class_">FrontSide</span>&#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;<span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">Word</span>&gt;</span>&#123;&#123;假名&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">&lt;p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">PhoneticSymbol</span>&gt;</span>&#123;&#123;声调&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;br&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">autoColor</span> <span class="attr">style</span>=<span class="string">&#x27;font-family: calibri; font-size: 20px;&#x27;</span>&gt;</span>&#123;&#123;中文释义&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">autoColor</span> <span class="attr">style</span>=<span class="string">&#x27;font-family:calibri; font-size: 20px;&#x27;</span>&gt;</span>&#123;&#123;日文释义&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;p&gt;</span><br><span class="line">	&lt;br&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">En</span> <span class="attr">style</span>=<span class="string">&quot;border-left: 3px solid #56a844;&quot;</span>&gt;</span>&#123;&#123;furigana:例句&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#123;&#123;#例句翻译&#125;&#125; &lt;div <span class="keyword">class</span>=<span class="title class_">Zh</span> style=<span class="string">&quot;border-left: 3px solid #4c991b;&quot;</span>&gt;&#123;&#123;例句翻译&#125;&#125;&lt;<span class="regexp">/div&gt;&#123;&#123;/</span>例句翻译&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;&#123;#同音&#125;&#125;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">hr</span> <span class="attr">class</span>=<span class="string">POSS</span> <span class="attr">style</span>=<span class="string">&quot;width:100%&quot;</span> ; /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">container</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">hint</span>&gt;</span>&#123;&#123;同音&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#123;&#123;/同音&#125;&#125;</span><br><span class="line">&#123;&#123;#惯用/関係&#125;&#125;</span><br><span class="line">&lt;hr <span class="keyword">class</span>=<span class="variable constant_">POSS</span> style=<span class="string">&quot;width:100%&quot;</span> ; /&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">container</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">hint</span>&gt;</span>&#123;&#123;惯用/関係&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#123;&#123;<span class="regexp">/惯用/</span>関係&#125;&#125;</span><br><span class="line">&#123;&#123;发音&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">	<span class="comment">//document.addEventListener(&#x27;DOMContentLoaded&#x27;, function() &#123;</span></span><br><span class="line">	<span class="keyword">var</span> content = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.ss&quot;</span>);  <span class="comment">// 假设&#x27;.card-content&#x27;是你的卡片内容的容器</span></span><br><span class="line">	<span class="comment">// 首先，找到类名为 &#x27;a&#x27; 的 div</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 然后，找到这个 div 内的第一个 a 标签</span></span><br><span class="line">	<span class="keyword">var</span> link = content.<span class="title function_">querySelector</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果确实找到了 a 标签，从其父元素中移除它</span></span><br><span class="line">	<span class="keyword">if</span> (link) &#123;</span><br><span class="line">		link.<span class="property">parentNode</span>.<span class="title function_">removeChild</span>(link);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//alert(content.innerHTML)</span></span><br><span class="line">	<span class="comment">//&#125;);</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/anki/" rel="tag"># anki</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/MacOS%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8/" rel="prev" title="MacOS 窗口管理器">
+      <i class="fa fa-chevron-left"></i> MacOS 窗口管理器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E7%95%AA%E8%8C%84%E6%97%B6%E9%92%9F%E6%95%B4%E7%90%86/" rel="next" title="番茄时钟整理">
+      番茄时钟整理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#anki-%E6%98%BE%E7%A4%BA%E7%9A%84%E5%8D%A1%E7%89%87%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E5%92%8C%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">anki 显示的卡片可以自定义样式和内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">218</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/anki%E5%88%9D%E6%AD%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE/";
+    this.page.identifier = "anki初步自定义设置/";
+    this.page.title = "anki 初步自定义设置";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
