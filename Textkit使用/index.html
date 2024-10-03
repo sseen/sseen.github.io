@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="貌似 yytext 也实现了 Textkit 类似的功能，只是目前不维护了，跑了一个微博的 demo 还能继续研究，后面也发到这里。想想要是用 SwiftUI 继续集成类似的功能，感觉有点怕怕的，果断新开项目来继续走，SwiftUI继续维护在简单的项目里好了。  Textkit 问题 行高偶然不一致 boundingRect(forGlyphRange 不准   参考">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Textkit使用">
+<meta property="og:url" content="http://yoursite.com/Textkit%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="貌似 yytext 也实现了 Textkit 类似的功能，只是目前不维护了，跑了一个微博的 demo 还能继续研究，后面也发到这里。想想要是用 SwiftUI 继续集成类似的功能，感觉有点怕怕的，果断新开项目来继续走，SwiftUI继续维护在简单的项目里好了。  Textkit 问题 行高偶然不一致 boundingRect(forGlyphRange 不准   参考">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-30T12:24:10.000Z">
+<meta property="article:modified_time" content="2024-10-03T14:23:47.702Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Textkit">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/Textkit%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Textkit使用 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Textkit%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Textkit使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-30 12:24:10" itemprop="dateCreated datePublished" datetime="2021-03-30T12:24:10+00:00">2021-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-03 14:23:47" itemprop="dateModified" datetime="2024-10-03T14:23:47+00:00">2024-10-03</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/Textkit%E4%BD%BF%E7%94%A8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Textkit使用/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>貌似 yytext 也实现了 Textkit 类似的功能，只是目前不维护了，跑了一个微博的 demo 还能继续研究，后面也发到这里。<br>想想要是用 SwiftUI 继续集成类似的功能，感觉有点怕怕的，果断新开项目来继续走，SwiftUI继续维护在简单的项目里好了。</p>
+<ol>
+<li><a href="#textkit">Textkit</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a><ol>
+<li><a href="#%E8%A1%8C%E9%AB%98%E5%81%B6%E7%84%B6%E4%B8%8D%E4%B8%80%E8%87%B4">行高偶然不一致</a></li>
+<li><a href="#boundingrectforglyphrange-%E4%B8%8D%E5%87%86">boundingRect(forGlyphRange 不准</a></li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ol>
+<h2 id="Textkit"><a href="#Textkit" class="headerlink" title="Textkit"></a>Textkit</h2><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="行高偶然不一致"><a href="#行高偶然不一致" class="headerlink" title="行高偶然不一致"></a>行高偶然不一致</h3><p>paragraphstyle 设置 lineheightmutiple，但是有的行高明显不够。</p>
+<h3 id="boundingRect-forGlyphRange-不准"><a href="#boundingRect-forGlyphRange-不准" class="headerlink" title="boundingRect(forGlyphRange 不准"></a>boundingRect(forGlyphRange 不准</h3><p><code>2021-04-16</code> <code>fixed</code><br>boundingRect(forGlyphRange 也就是<code>func boundingRect(forGlyphRange glyphRange: NSRange, in container: NSTextContainer) -&gt; CGRect</code>，得不到正确的 rect，我遇到的是文字超过一定长度后，稳定重现。<br><code>2021-04-20</code>👆上面的问题，貌似不存在了，主要原因是特殊控制字符插入顺序有错乱导致的，终于搞定了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>找到 SwiftyAttributes 用swift的方式来使用 attributedstring，如果有机会可以看看 <a target="_blank" rel="noopener" href="https://github.com/eddiekaiger/SwiftyAttributes/blob/master/SwiftyAttributes/Sources/common/Attribute.swift">enum 封装</a></p>
+<p>竟然找到了这个神奇的标注方法，厉害了。<a target="_blank" rel="noopener" href="https://github.com/shinjukunian/SimpleFurigana">太牛啤了SimpleFurigana</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903631162966029">WWDC 2018：TextKit 最佳实践</a><br><a target="_blank" rel="noopener" href="https://gist.github.com/HarryGoodwin/4528d6419915258e54b2f8c804687808">Attributed string bullet points - Swift</a><br><a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextUILayer/Tasks/SetTextMargins.html">Setting Text Margins</a><br><a target="_blank" rel="noopener" href="http://www.localizingjapan.com/blog/2012/01/20/regular-expressions-for-japanese-text/">Regular Expressions for Japanese Text</a><br><a target="_blank" rel="noopener" href="https://gist.github.com/ryanmcgrath/982242">JapaneseRegex.js</a><br><a target="_blank" rel="noopener" href="https://github.com/Rightpoint/BonMot">bonmot</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/46690337/display-japanese-text-with-furigana-in-uilabel">Display japanese Text with furigana in UILabel</a><br><a target="_blank" rel="noopener" href="https://github.com/shinjukunian/SimpleFurigana">太牛啤SimpleFurigana</a><br><a target="_blank" rel="noopener" href="https://github.com/lingochamp/FuriganaTextView">textkit实现FuriganaTextView</a><br><a target="_blank" rel="noopener" href="https://medium.com/kinandcartacreated/making-uilabel-accessible-5f3d5c342df4">很像我的诉求自定义Making UILabel Accessible</a><br><a target="_blank" rel="noopener" href="https://github.com/eddiekaiger/SwiftyAttributes">SwiftyAttributes</a><br><a target="_blank" rel="noopener" href="https://github.com/mayoff/contour">文字背景，剔除空白Contour of a Union of Iso-Oriented Rectangles</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16362407/nsattributedstring-background-color-and-rounded-corners">NSAttributedString background color and rounded corners</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/23479039/align-text-before-a-tab-stop-to-the-right-and-after-it-to-the-left">Align text before a tab stop to the right, and after it to the left</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/Textkit/" rel="tag"># Textkit</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/SceneDelegate%E5%88%A0%E9%99%A4%E6%96%B9%E6%B3%95/" rel="prev" title="SceneDelegate删除方法">
+      <i class="fa fa-chevron-left"></i> SceneDelegate删除方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/iOS%20UI%E6%94%B6%E9%9B%86%E4%BF%A1%E6%81%AF/" rel="next" title="iOS UI收集信息">
+      iOS UI收集信息 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Textkit"><span class="nav-number">1.</span> <span class="nav-text">Textkit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E9%AB%98%E5%81%B6%E7%84%B6%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="nav-number">2.1.</span> <span class="nav-text">行高偶然不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#boundingRect-forGlyphRange-%E4%B8%8D%E5%87%86"><span class="nav-number">2.2.</span> <span class="nav-text">boundingRect(forGlyphRange 不准</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">203</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">219</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/Textkit%E4%BD%BF%E7%94%A8/";
+    this.page.identifier = "Textkit使用/";
+    this.page.title = "Textkit使用";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
