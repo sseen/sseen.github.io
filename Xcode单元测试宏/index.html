@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="因为有时候测试的需要，想要改变主代码里的某些全局变量，这时候就想要一个 testing 类似 debug 的宏就解决了不是。updated，自己感觉没有用起来，然后把代码放到setup方法里规避掉了。 xcode code coverage json 报告">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode单元测试宏">
+<meta property="og:url" content="http://yoursite.com/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="因为有时候测试的需要，想要改变主代码里的某些全局变量，这时候就想要一个 testing 类似 debug 的宏就解决了不是。updated，自己感觉没有用起来，然后把代码放到setup方法里规避掉了。 xcode code coverage json 报告">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sseen.github.io/images/2021/2021-11-03-21-28-07.png">
+<meta property="og:image" content="https://sseen.github.io/images/2021/2021-11-03-21-31-43.png">
+<meta property="og:image" content="http://yoursite.com/2021-11-03-21-32-36.png">
+<meta property="article:published_time" content="2021-11-03T19:45:22.000Z">
+<meta property="article:modified_time" content="2024-12-05T00:40:26.182Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Xcode">
+<meta property="article:tag" content="单元测试">
+<meta property="article:tag" content="宏">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sseen.github.io/images/2021/2021-11-03-21-28-07.png">
+
+<link rel="canonical" href="http://yoursite.com/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Xcode单元测试宏 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Xcode单元测试宏
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-11-03 19:45:22" itemprop="dateCreated datePublished" datetime="2021-11-03T19:45:22+00:00">2021-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-05 00:40:26" itemprop="dateModified" datetime="2024-12-05T00:40:26+00:00">2024-12-05</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Xcode单元测试宏/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>因为有时候测试的需要，想要改变主代码里的某些全局变量，这时候就想要一个 testing 类似 debug 的宏就解决了不是。<br>updated，自己感觉没有用起来，然后把代码放到setup方法里规避掉了。</p>
+<h2 id="xcode-code-coverage-json-报告"><a href="#xcode-code-coverage-json-报告" class="headerlink" title="xcode code coverage json 报告"></a>xcode code coverage json 报告</h2><p>xcode 自己的代码覆盖率集成在 xcode 上，如何取得文字版的报告呢。<br>如下，每次 <code>command + u</code> 后都会生成一个 <code>*.xcresult</code> 在 build log 里可以找到路径，然后执行如下命令生成。</p>
+<p><code>xcrun xccov view --report --json xx.xcresult &gt; ~/Desktop/test.json</code></p>
+<h2 id="xcode-test-plans"><a href="#xcode-test-plans" class="headerlink" title="xcode test plans"></a>xcode test plans</h2><p>解决多个target测试的问题（比如unittest 和 uiunittest），这样覆盖率可以计算到一起了。</p>
+<h2 id="单元测试宏方法"><a href="#单元测试宏方法" class="headerlink" title="单元测试宏方法"></a>单元测试宏方法</h2><h3 id="方法一，Xcode-Conditional-Compilation-for-Unit-Test-Targets"><a href="#方法一，Xcode-Conditional-Compilation-for-Unit-Test-Targets" class="headerlink" title="方法一，Xcode Conditional Compilation for Unit-Test Targets"></a>方法一，Xcode Conditional Compilation for Unit-Test Targets</h3><p>借由这个机会熟悉下xcode相关的定制。</p>
+<p>When writing unit test cases, you need to distinguish between real use and test runs in your code from time to time. For example, you might want to send all requests to a test server, instead of the production server.</p>
+<p>One possibility to do this is to introduce a boolean property to the class, which you use in all methods that need to differ for testing:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">-(<span class="built_in">NSString</span> *)serverUrl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">self</span>.testing) ? kServerUrlTestServer : kServerUrlProductionServer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>That’s what I’ve been doing until now, but I don’t like this approach. In order to be able to set the property in the test case, it has to be publicly writeable, which gives rise to potential subtle bugs in case it’s incorrectly set. A better solution would be to define a separate testing interface with a category. Still, you’d have an extra state in your class especially for the tests.全局变量的风险有点高</p>
+<h4 id="Preprocessor-Macros"><a href="#Preprocessor-Macros" class="headerlink" title="Preprocessor-Macros"></a>Preprocessor-Macros</h4><p>Originally, I tried to use a preprocessor statement for this purpose:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">-(<span class="built_in">NSString</span> *)serverUrl</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> TESTING==1</span></span><br><span class="line"><span class="meta">#<span class="keyword">warning</span> Testmode</span></span><br><span class="line">    <span class="keyword">return</span> IVTestConstants.serverUrlTestServer;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="keyword">return</span> IVTestConstants.serverUrlProductionServer;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>I just could not figure out how to configure Xcode such that TESTING had the correct value for both, normal compilation and unit tests, though. I’ve asked this question on stackoverflow, but to no avail.</p>
+<p>If you want to know what the difficulties were, checkout my question on <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9370390/xcode-preprocessor-macros-for-conditional-debug-test-code">stackoverflow</a>.</p>
+<p>Basically, it comes down to this: The unit-test target has the whole app as a target dependency, so if you define a preprocessor macro for the unit-test target, it has no effect on the source files that are compiled in the app target.参考我试的第二种方式，就是这样，不起作用</p>
+<p>I was watching WWDC Session 401 (Xcode Core Concepts) today, and when they talked about schemes, it dawned on me that this could be the solution to my problem.</p>
+<h4 id="Schemes-to-the-Rescue"><a href="#Schemes-to-the-Rescue" class="headerlink" title="Schemes to the Rescue"></a>Schemes to the Rescue</h4><p>So here’s how you set up Xcode:</p>
+<ol>
+<li><p>Add a new configuration named ‘Testing’: Go to the project settings, make sure to select the project (and not a target yet). Open up the Info-pane and click the ‘+’<br><img src="https://sseen.github.io/images/2021/2021-11-03-21-28-07.png" alt="1"></p>
+</li>
+<li><p>Add a preprocessor macro to the build settings: Now go to the Build Target, open up the Build Settings and find the Preprocessor Macros option. Add the define TESTING&#x3D;0 for the configurations Debug and Release and TESTING&#x3D;1 for the configuration Testing<br><img src="https://sseen.github.io/images/2021/2021-11-03-21-31-43.png" alt="2"></p>
+</li>
+<li><p>Edit the test-scheme to use testing as build configuration: Open up the Edit Schemes view, select the Test scheme and choose the Info tab. As Build Configuration choose the new Testing configuration that you created in step 1.（updated，这一步好像可以不用设置，自己设置的以后，测试报错了，一直提示Could not find test host for xxx: 但是明明测试target已经钩上main target了）<br><img src="/2021-11-03-21-32-36.png" alt="3"></p>
+</li>
+</ol>
+<p>I’ve provided a simple sample project on <a target="_blank" rel="noopener" href="https://github.com/iv-mexx/UnitTestConditionalCompilation">github</a> that demonstrates the complete set-up.</p>
+<h3 id="方法二，建立了unittest的target的pch文件"><a href="#方法二，建立了unittest的target的pch文件" class="headerlink" title="方法二，建立了unittest的target的pch文件"></a>方法二，建立了unittest的target的pch文件</h3><p>不行。<br>在pch文件里定义类似 UNITTEST，然后在主target使用。<br>这个方案想想简单，但是实际用起来没有效果，每次都用的 UNITTEST 相关的值，主target虽然没有直接定义 UNITTEST 但是还是会走这个判断。  </p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://medium.com/ynap-tech/managing-ios-build-configurations-and-schemes-for-xctest-791e5ae22484">Managing iOS Build Configurations and Schemes for XCTest</a><br><a target="_blank" rel="noopener" href="https://innovaptor.com/blog/2013/09/02/xcode-preprocessor-macros-for-test-code/">Xcode Conditional Compilation for Unit-Test Targets</a><br><a target="_blank" rel="noopener" href="https://useyourloaf.com/blog/faster-app-setup-for-unit-tests/">Faster App Setup For Unit Tests</a>  </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Xcode/" rel="tag"># Xcode</a>
+              <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag"># 单元测试</a>
+              <a href="/tags/%E5%AE%8F/" rel="tag"># 宏</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/M1%E7%BC%96%E8%AF%91/" rel="prev" title="M1编译">
+      <i class="fa fa-chevron-left"></i> M1编译
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/UITest/" rel="next" title="UITest">
+      UITest <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xcode-code-coverage-json-%E6%8A%A5%E5%91%8A"><span class="nav-number">1.</span> <span class="nav-text">xcode code coverage json 报告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xcode-test-plans"><span class="nav-number">2.</span> <span class="nav-text">xcode test plans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">单元测试宏方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%8CXcode-Conditional-Compilation-for-Unit-Test-Targets"><span class="nav-number">3.1.</span> <span class="nav-text">方法一，Xcode Conditional Compilation for Unit-Test Targets</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Preprocessor-Macros"><span class="nav-number">3.1.1.</span> <span class="nav-text">Preprocessor-Macros</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Schemes-to-the-Rescue"><span class="nav-number">3.1.2.</span> <span class="nav-text">Schemes to the Rescue</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%8C%E5%BB%BA%E7%AB%8B%E4%BA%86unittest%E7%9A%84target%E7%9A%84pch%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">方法二，建立了unittest的target的pch文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/";
+    this.page.identifier = "Xcode单元测试宏/";
+    this.page.title = "Xcode单元测试宏";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
