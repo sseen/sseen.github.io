@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="很简单的场景下想添加一个点击事件，但是没有反应，onTap 没有执行，但是如果把 onTap 换成 doubleTap 就可以了，这是为什么呢？ gpt 给出的分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter的onTap没有反应">
+<meta property="og:url" content="http://yoursite.com/Flutter%E7%9A%84onTap%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="很简单的场景下想添加一个点击事件，但是没有反应，onTap 没有执行，但是如果把 onTap 换成 doubleTap 就可以了，这是为什么呢？ gpt 给出的分析">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-19T10:32:56.000Z">
+<meta property="article:modified_time" content="2024-12-09T00:54:30.118Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="GestureDetector">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/Flutter%E7%9A%84onTap%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Flutter的onTap没有反应 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Flutter%E7%9A%84onTap%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter的onTap没有反应
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-19 10:32:56" itemprop="dateCreated datePublished" datetime="2023-04-19T10:32:56+00:00">2023-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-09 00:54:30" itemprop="dateModified" datetime="2024-12-09T00:54:30+00:00">2024-12-09</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/Flutter%E7%9A%84onTap%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Flutter的onTap没有反应/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>很简单的场景下想添加一个点击事件，但是没有反应，onTap 没有执行，但是如果把 onTap 换成 doubleTap 就可以了，这是为什么呢？</p>
+<h2 id="gpt-给出的分析"><a href="#gpt-给出的分析" class="headerlink" title="gpt 给出的分析"></a>gpt 给出的分析</h2><p>如果你使用 GestureDetector 的 onTap 事件没有反应，这可能是由于以下原因：</p>
+<ol>
+<li><p>没有子组件：GestureDetector 必须有一个非空子组件。请确保你为 GestureDetector 提供了一个子组件，例如 Text、Container 等。</p>
+ <figure class="highlight dart"><table><tr><td class="code"><pre><span class="line">GestureDetector(</span><br><span class="line">onTap: () &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;GestureDetector tapped&#x27;</span>);</span><br><span class="line">&#125;,</span><br><span class="line">child: Container(</span><br><span class="line">    width: <span class="number">100</span>,</span><br><span class="line">    height: <span class="number">100</span>,</span><br><span class="line">    color: Colors.blue,</span><br><span class="line">    child: Center(child: Text(<span class="string">&#x27;Tap Me&#x27;</span>)),</span><br><span class="line">),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子组件尺寸太小：请确保 GestureDetector 的子组件尺寸足够大，以便用户可以轻松地触摸。如果子组件（如 Text）太小，可以使用 Container 或 SizedBox 来增加其尺寸。</p>
+</li>
+<li><p>嵌套在其他组件中：请检查 GestureDetector 是否被其他手势识别组件（如 ListView、PageView、InkWell 等）覆盖。在这种情况下，上层组件可能会拦截手势事件，导致 GestureDetector 无法响应。如果需要，可以使用 HitTestBehavior 属性来调整手势识别的行为。</p>
+</li>
+<li><p>使用 InkWell 替换 GestureDetector：在某些情况下，你可能会希望使用 InkWell 来替换 GestureDetector。InkWell 是一个具有涟漪效果的 Material Design 风格的组件，可以在用户触摸时提供视觉反馈。</p>
+ <figure class="highlight dart"><table><tr><td class="code"><pre><span class="line">InkWell(</span><br><span class="line">onTap: () &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;InkWell tapped&#x27;</span>);</span><br><span class="line">&#125;,</span><br><span class="line">child: Container(</span><br><span class="line">    width: <span class="number">100</span>,</span><br><span class="line">    height: <span class="number">100</span>,</span><br><span class="line">    color: Colors.blue,</span><br><span class="line">    child: Center(child: Text(<span class="string">&#x27;Tap Me&#x27;</span>)),</span><br><span class="line">),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>如果你在实际项目中遇到问题，请提供更多关于你的项目和实现的详细信息，以便我们能够为你提供更具体的帮助。</p>
+<h2 id="自分析"><a href="#自分析" class="headerlink" title="自分析"></a>自分析</h2><ol>
+<li>试下 hitTestBehavior 属性，设置为 opaque，说是可以解决问题，但是没有。</li>
+<li>发现是 UiKitView 和 PlatformViewLink 的问题，需要原生那边提供点击手势传过来才行。</li>
+</ol>
+<h2 id="gpt-继续分析"><a href="#gpt-继续分析" class="headerlink" title="gpt 继续分析"></a>gpt 继续分析</h2><p>分两个 prompt 来完成。</p>
+<h3 id="1-flutter-PlatformViewLink-或者-UiKitView-如何响应-gesture"><a href="#1-flutter-PlatformViewLink-或者-UiKitView-如何响应-gesture" class="headerlink" title="1 . flutter PlatformViewLink 或者 UiKitView 如何响应 gesture"></a>1 . flutter PlatformViewLink 或者 UiKitView 如何响应 gesture</h3><p>在Flutter中，PlatformViewLink 和 UiKitView 可以在应用程序中嵌入原生视图。为了响应原生视图上的手势，您需要在原生视图（例如AndroidView或UiKitView）中配置手势识别。以下是如何为UiKitView添加手势识别的示例。</p>
+<p>首先，为iOS平台创建一个原生视图，例如CustomView。<br>在 ios&#x2F;Runner&#x2F;CustomView.swift 文件中：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomView</span>: <span class="title class_ inherited__">UIView</span> &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">init</span>(<span class="params">frame</span>: <span class="type">CGRect</span>) &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(frame: frame)</span><br><span class="line">        <span class="keyword">self</span>.backgroundColor <span class="operator">=</span> <span class="type">UIColor</span>.red</span><br><span class="line">        <span class="keyword">self</span>.isUserInteractionEnabled <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">        <span class="keyword">let</span> tapGesture <span class="operator">=</span> <span class="type">UITapGestureRecognizer</span>(target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(handleTap(<span class="keyword">_</span>:)))</span><br><span class="line">        <span class="keyword">self</span>.addGestureRecognizer(tapGesture)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">required</span> <span class="keyword">init?</span>(<span class="params">coder</span>: <span class="type">NSCoder</span>) &#123;</span><br><span class="line">        <span class="built_in">fatalError</span>(<span class="string">&quot;init(coder:) has not been implemented&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">handleTap</span>(<span class="keyword">_</span> <span class="params">sender</span>: <span class="type">UITapGestureRecognizer</span>) &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;CustomView tapped&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，我们创建了一个名为 CustomView 的原生视图，并为其添加了一个点击手势识别器。当点击视图时，控制台将打印 “CustomView tapped”。</p>
+<p>注册原生视图工厂。<br>在 ios&#x2F;Runner&#x2F;AppDelegate.swift 文件中：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Flutter</span><br><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomViewFactory</span>: <span class="title class_ inherited__">NSObject</span>, <span class="title class_ inherited__">FlutterPlatformViewFactory</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">create</span>(<span class="params">withFrame</span> <span class="params">frame</span>: <span class="type">CGRect</span>, <span class="params">viewIdentifier</span> <span class="params">viewId</span>: <span class="type">Int64</span>, <span class="params">arguments</span> <span class="params">args</span>: <span class="keyword">Any</span><span class="operator">?</span>) -&gt; <span class="type">FlutterPlatformView</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">CustomViewPlatformView</span>(frame: frame)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomViewPlatformView</span>: <span class="title class_ inherited__">NSObject</span>, <span class="title class_ inherited__">FlutterPlatformView</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> customView: <span class="type">CustomView</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(<span class="params">frame</span>: <span class="type">CGRect</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.customView <span class="operator">=</span> <span class="type">CustomView</span>(frame: frame)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">view</span>() -&gt; <span class="type">UIView</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> customView</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">registerCustomView</span>(<span class="keyword">_</span> <span class="params">registrar</span>: <span class="type">FlutterPluginRegistrar</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> factory <span class="operator">=</span> <span class="type">CustomViewFactory</span>()</span><br><span class="line">    registrar.register(factory, withId: <span class="string">&quot;custom_view&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AppDelegate</span>: <span class="title class_ inherited__">FlutterAppDelegate</span> &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">application</span>(<span class="keyword">_</span> <span class="params">application</span>: <span class="type">UIApplication</span>, <span class="params">didFinishLaunchingWithOptions</span> <span class="params">launchOptions</span>: [<span class="type">UIApplication</span>.<span class="params">LaunchOptionsKey</span>: <span class="keyword">Any</span>]<span class="operator">?</span>) -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> controller: <span class="type">FlutterViewController</span> <span class="operator">=</span> window<span class="operator">?</span>.rootViewController <span class="keyword">as!</span> <span class="type">FlutterViewController</span></span><br><span class="line">        <span class="keyword">let</span> registry <span class="operator">=</span> controller <span class="keyword">as!</span> <span class="type">FlutterPluginRegistry</span></span><br><span class="line">        registerCustomView(registry)</span><br><span class="line">        </span><br><span class="line">        <span class="type">GeneratedPluginRegistrant</span>.register(with: <span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.application(application, didFinishLaunchingWithOptions: launchOptions)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们创建了一个名为 CustomViewFactory 的原生视图工厂，并在 AppDelegate 类中注册它。</p>
+<p>在 Flutter 代码中使用 UiKitView。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/cupertino.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  runApp(MyApp());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: Scaffold(</span><br><span class="line">        appBar: AppBar(</span><br><span class="line">          title: Text(<span class="string">&#x27;UiKitView Gesture Example&#x27;</span>),</span><br><span class="line">        ),</span><br><span class="line">        body: Center(</span><br><span class="line">          child: Container(</span><br><span class="line">            width: <span class="number">200</span>,</span><br><span class="line">            height: <span class="number">200</span>,</span><br><span class="line">            child: UiKitView(</span><br><span class="line">              viewType: <span class="string">&#x27;custom_view&#x27;</span>,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，我们使用 UiKitView 来显示原生视图 CustomView。我们通过在 UiKitView 中设置 viewType 参数为 custom_view 来告诉 Flutter 使用我们之前注册的原生视图工厂。这将在屏幕上显示一个红色的矩形区域，当您点击这个区域时，iOS 原生代码中的 handleTap 函数将被调用，并在控制台中打印 “CustomView tapped”。</p>
+<p>对于 Android 平台和 PlatformViewLink，实现步骤类似。您需要在 Android 的原生代码中创建一个原生视图，为其添加手势识别器，然后在 Flutter 代码中使用 PlatformViewLink 和 AndroidView 来显示原生视图。</p>
+<p>当使用原生视图时，要注意性能影响。原生视图会创建一个叠加层，这可能会影响应用程序的性能。请确保仅在需要使用原生组件的情况下使用 PlatformViewLink、UiKitView 或 AndroidView。在其他情况下，请尽量使用 Flutter 的组件。</p>
+<h3 id="2-iOS-handletap-如何传到-flutter，也就是如何获取原生那部分的点击"><a href="#2-iOS-handletap-如何传到-flutter，也就是如何获取原生那部分的点击" class="headerlink" title="2 . iOS handletap 如何传到 flutter，也就是如何获取原生那部分的点击"></a>2 . iOS handletap 如何传到 flutter，也就是如何获取原生那部分的点击</h3><p>要将 iOS 原生视图中的点击事件传递到 Flutter，您需要使用 MethodChannel。MethodChannel 是 Flutter 与原生代码之间进行通信的一种机制。以下是一个示例，展示了如何将 CustomView 中的点击事件传递到 Flutter 代码。</p>
+<ol>
+<li>在 ios&#x2F;Runner&#x2F;CustomView.swift 文件中，添加 MethodChannel 以触发点击事件：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> Flutter</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomView</span>: <span class="title class_ inherited__">UIView</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> channel: <span class="type">FlutterMethodChannel</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">init</span>(<span class="params">frame</span>: <span class="type">CGRect</span>) &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(frame: frame)</span><br><span class="line">        <span class="keyword">self</span>.backgroundColor <span class="operator">=</span> <span class="type">UIColor</span>.red</span><br><span class="line">        <span class="keyword">self</span>.isUserInteractionEnabled <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">        <span class="keyword">let</span> tapGesture <span class="operator">=</span> <span class="type">UITapGestureRecognizer</span>(target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(handleTap(<span class="keyword">_</span>:)))</span><br><span class="line">        <span class="keyword">self</span>.addGestureRecognizer(tapGesture)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">required</span> <span class="keyword">init?</span>(<span class="params">coder</span>: <span class="type">NSCoder</span>) &#123;</span><br><span class="line">        <span class="built_in">fatalError</span>(<span class="string">&quot;init(coder:) has not been implemented&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">setMethodChannel</span>(<span class="keyword">_</span> <span class="params">channel</span>: <span class="type">FlutterMethodChannel</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.channel <span class="operator">=</span> channel</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">handleTap</span>(<span class="keyword">_</span> <span class="params">sender</span>: <span class="type">UITapGestureRecognizer</span>) &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;CustomView tapped&quot;</span>)</span><br><span class="line">        channel<span class="operator">?</span>.invokeMethod(<span class="string">&quot;customViewTapped&quot;</span>, arguments: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们为 CustomView 添加了一个 MethodChannel 属性，并在点击事件处理器 handleTap 中调用 invokeMethod 方法。</p>
+<ol start="2">
+<li>在 ios&#x2F;Runner&#x2F;AppDelegate.swift 文件中，将 MethodChannel 传递给原生视图：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomViewPlatformView</span>: <span class="title class_ inherited__">NSObject</span>, <span class="title class_ inherited__">FlutterPlatformView</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> customView: <span class="type">CustomView</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(<span class="params">frame</span>: <span class="type">CGRect</span>, <span class="params">viewId</span>: <span class="type">Int64</span>, <span class="params">registrar</span>: <span class="type">FlutterPluginRegistrar</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.customView <span class="operator">=</span> <span class="type">CustomView</span>(frame: frame)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> channel <span class="operator">=</span> <span class="type">FlutterMethodChannel</span>(name: <span class="string">&quot;custom_view_<span class="subst">\(viewId)</span>&quot;</span>, binaryMessenger: registrar.messenger())</span><br><span class="line">        customView.setMethodChannel(channel)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">view</span>() -&gt; <span class="type">UIView</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> customView</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">registerCustomView</span>(<span class="keyword">_</span> <span class="params">registrar</span>: <span class="type">FlutterPluginRegistrar</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> factory <span class="operator">=</span> <span class="type">CustomViewFactory</span>(registrar: registrar)</span><br><span class="line">    registrar.register(factory, withId: <span class="string">&quot;custom_view&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们更新了 CustomViewPlatformView 的构造函数，将 MethodChannel 传递给原生视图。</p>
+<ol start="3">
+<li>在 Flutter 代码中设置 MethodChannel 并监听原生点击事件：</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/cupertino.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  runApp(MyApp());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _MyAppState createState() =&gt; _MyAppState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_MyAppState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">MyApp</span>&gt; </span>&#123;</span><br><span class="line">  <span class="built_in">int</span> _viewId = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: Scaffold(</span><br><span class="line">        appBar: AppBar(</span><br><span class="line">          title: Text(<span class="string">&#x27;UiKitView Gesture Example&#x27;</span>),</span><br><span class="line">        ),</span><br><span class="line">        body: Center(</span><br><span class="line">          child: Container(</span><br><span class="line">            width: <span class="number">200</span>,</span><br><span class="line">            height: <span class="number">200</span>,</span><br><span class="line">            child: UiKitView(</span><br><span class="line">              viewType: <span class="string">&#x27;custom_view&#x27;</span>,</span><br><span class="line">              onPlatformViewCreated: (<span class="built_in">int</span> viewId) &#123;</span><br><span class="line">                _viewId = viewId;</span><br><span class="line">                _setUpMethodChannel(viewId);</span><br><span class="line">              &#125;,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> _setUpMethodChannel(<span class="built_in">int</span> viewId) &#123;</span><br><span class="line">    <span class="keyword">final</span> methodChannel = MethodChannel(<span class="string">&#x27;custom_view_<span class="subst">$viewId</span>&#x27;</span>);</span><br><span class="line">    methodChannel.setMethodCallHandler(_handleMethodCall);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Future&lt;<span class="keyword">void</span>&gt; _handleMethodCall(MethodCall call) <span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (call.method) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;customViewTapped&#x27;</span>:</span><br><span class="line">        _onCustomViewTapped();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> PlatformException(</span><br><span class="line">        code: <span class="string">&#x27;Unimplemented&#x27;</span>,</span><br><span class="line">        details: <span class="string">&quot;The method &#x27;<span class="subst">$&#123;call.method&#125;</span>&#x27; is not implemented.&quot;</span>,</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> _onCustomViewTapped() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;CustomView tapped in Flutter&#x27;</span>);</span><br><span class="line">        <span class="comment">// You can do whatever you want here, like showing a SnackBar or updating the UI.</span></span><br><span class="line">        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(<span class="string">&#x27;CustomView tapped&#x27;</span>)),);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，我们更新了 <code>MyApp</code> 以使其成为一个有状态的组件，并在 <code>UiKitView</code> 的 <code>onPlatformViewCreated</code> 回调中设置了 <code>MethodChannel</code>。<code>_handleMethodCall</code> 函数用于处理从原生代码发送的方法调用。当接收到 <code>customViewTapped</code> 方法时，我们调用 <code>_onCustomViewTapped</code> 函数，并显示一个 <code>SnackBar</code>。</p>
+<p>现在，在点击原生 <code>CustomView</code> 时，点击事件将传递到 Flutter 代码，显示一个 <code>SnackBar</code> 并在控制台中打印 “CustomView tapped in Flutter”。您可以根据需要在 <code>_onCustomViewTapped</code> 函数中添加任何其他操作。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Flutter/" rel="tag"># Flutter</a>
+              <a href="/tags/GestureDetector/" rel="tag"># GestureDetector</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/cron%E6%89%A7%E8%A1%8Cpython%E8%84%9A%E6%9C%AC%E9%97%AE%E9%A2%98/" rel="prev" title="cron执行python脚本问题">
+      <i class="fa fa-chevron-left"></i> cron执行python脚本问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Telegram%20Bot%20API/" rel="next" title="Telegram Bot API">
+      Telegram Bot API <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gpt-%E7%BB%99%E5%87%BA%E7%9A%84%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">gpt 给出的分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">自分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpt-%E7%BB%A7%E7%BB%AD%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">gpt 继续分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-flutter-PlatformViewLink-%E6%88%96%E8%80%85-UiKitView-%E5%A6%82%E4%BD%95%E5%93%8D%E5%BA%94-gesture"><span class="nav-number">3.1.</span> <span class="nav-text">1 . flutter PlatformViewLink 或者 UiKitView 如何响应 gesture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-iOS-handletap-%E5%A6%82%E4%BD%95%E4%BC%A0%E5%88%B0-flutter%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%8E%9F%E7%94%9F%E9%82%A3%E9%83%A8%E5%88%86%E7%9A%84%E7%82%B9%E5%87%BB"><span class="nav-number">3.2.</span> <span class="nav-text">2 . iOS handletap 如何传到 flutter，也就是如何获取原生那部分的点击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">223</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/Flutter%E7%9A%84onTap%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94/";
+    this.page.identifier = "Flutter的onTap没有反应/";
+    this.page.title = "Flutter的onTap没有反应";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
