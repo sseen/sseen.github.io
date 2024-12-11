@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="鼎鼎大名的telegram，前后不知道编译几次了，虽然都成功了，一是基本编译完就相当于看完源码😂，二是也没有记录编译的过程，部分内容是重复的。看自己这次能走到哪里，希望比编译完成走的远一点。隔天上午终于编译成功了，这次不会随便升级系统和xcode了。 环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="telegram不知多少次的重编译">
+<meta property="og:url" content="http://yoursite.com/telegram%E4%B8%8D%E7%9F%A5%E5%A4%9A%E5%B0%91%E6%AC%A1%E7%9A%84%E9%87%8D%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="鼎鼎大名的telegram，前后不知道编译几次了，虽然都成功了，一是基本编译完就相当于看完源码😂，二是也没有记录编译的过程，部分内容是重复的。看自己这次能走到哪里，希望比编译完成走的远一点。隔天上午终于编译成功了，这次不会随便升级系统和xcode了。 环境">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-13T18:48:30.000Z">
+<meta property="article:modified_time" content="2024-12-11T05:23:48.122Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="telegram">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/telegram%E4%B8%8D%E7%9F%A5%E5%A4%9A%E5%B0%91%E6%AC%A1%E7%9A%84%E9%87%8D%E7%BC%96%E8%AF%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>telegram不知多少次的重编译 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/telegram%E4%B8%8D%E7%9F%A5%E5%A4%9A%E5%B0%91%E6%AC%A1%E7%9A%84%E9%87%8D%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          telegram不知多少次的重编译
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-13 18:48:30" itemprop="dateCreated datePublished" datetime="2021-01-13T18:48:30+00:00">2021-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-11 05:23:48" itemprop="dateModified" datetime="2024-12-11T05:23:48+00:00">2024-12-11</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/telegram%E4%B8%8D%E7%9F%A5%E5%A4%9A%E5%B0%91%E6%AC%A1%E7%9A%84%E9%87%8D%E7%BC%96%E8%AF%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="telegram不知多少次的重编译/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>鼎鼎大名的telegram，前后不知道编译几次了，虽然都成功了，一是基本编译完就相当于看完源码😂，二是也没有记录编译的过程，部分内容是重复的。<br>看自己这次能走到哪里，希望比编译完成走的远一点。<br>隔天上午终于编译成功了，这次不会随便升级系统和xcode了。</p>
+<p>环境</p>
+<ul>
+<li><code>big sur 11.1</code></li>
+<li><code>xcode 12.3</code></li>
+<li><code>telegram v7.2</code></li>
+<li><code>buck version 47bf9aaad4fe33fd913f62737f7e581454f80b01</code></li>
+</ul>
+<p>目录</p>
+<ol>
+<li><a href="#java-11%E4%BB%A5%E5%8F%8A%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2">JAVA 11以及版本切换</a></li>
+<li><a href="#buck-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8">BUCK 安装使用</a></li>
+<li><a href="#watchman-%E5%AE%89%E8%A3%85">WatchMan 安装</a></li>
+<li><a href="#telegram-%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E5%8F%8A%E7%BC%96%E8%AF%91">Telegram 源码下载及编译</a><ol>
+<li><a href="#%E7%94%9F%E6%88%90-telegram_buckxcworkspace">生成 <code>Telegram_Buck.xcworkspace</code></a></li>
+<li><a href="#%E6%89%93%E5%BC%80%E7%94%9F%E6%88%90%E7%9A%84-workspace-%E7%84%B6%E5%90%8E-build">打开生成的 workspace 然后 build</a></li>
+</ol>
+</li>
+</ol>
+<h3 id="JAVA-11以及版本切换"><a href="#JAVA-11以及版本切换" class="headerlink" title="JAVA 11以及版本切换"></a>JAVA 11以及版本切换</h3><p>使用 homebrew 安装 openjdk</p>
+<ol>
+<li><p>添加到brew<br><code>brew tap adoptopenjdk/openjdk</code></p>
+</li>
+<li><p>查看jdk版本<br><code>brew search jdk</code></p>
+</li>
+<li><p>install</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew cask install adoptopenjdk8     <span class="comment">##Install JDK 8`</span></span><br><span class="line">brew cask install adoptopenjdk9     <span class="comment">##Install JDK 9  </span></span><br><span class="line">brew cask install adoptopenjdk10    <span class="comment">##Install JDK 10  </span></span><br><span class="line">brew cask install adoptopenjdk11    <span class="comment">##Install JDK 11  </span></span><br><span class="line">brew cask install adoptopenjdk12    <span class="comment">##Install JDK 12  </span></span><br><span class="line">brew cask install adoptopenjdk13    <span class="comment">##Install JDK 13  </span></span><br><span class="line">brew cask install adoptopenjdk14    <span class="comment">##Install JDK 14  </span></span><br><span class="line">brew cask install adoptopenjdk15    <span class="comment">##Install JDK 15  </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看当前 java 版本</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ java -version</span><br><span class="line">openjdk version <span class="string">&quot;11.0.9.1&quot;</span> 2020-11-04</span><br><span class="line">OpenJDK Runtime Environment AdoptOpenJDK (build 11.0.9.1+1)</span><br><span class="line">OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.9.1+1, mixed mode)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>java版本切换</p>
+<ol>
+<li><p>查看当前已安装的java版本</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ /usr/libexec/java_home -V </span><br><span class="line">Matching Java Virtual Machines (2):</span><br><span class="line"> 11.0.9.1 (x86_64) <span class="string">&quot;AdoptOpenJDK&quot;</span> - <span class="string">&quot;AdoptOpenJDK 11&quot;</span> /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home</span><br><span class="line"> 1.8.0_265 (x86_64) <span class="string">&quot;AdoptOpenJDK&quot;</span> - <span class="string">&quot;AdoptOpenJDK 8&quot;</span> /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home</span><br><span class="line"> /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备切换脚本，放到当前shell配置文件里，用的 zsh，放在 <code>~/.zshrc</code></p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">export JAVA_8_HOME=$(/usr/libexec/java_home -v1.<span class="number">8</span>)</span><br><span class="line">export JAVA_11_HOME=$(/usr/libexec/java_home -v11)</span><br><span class="line">alias java8=<span class="string">&#x27;export JAVA_HOME=$JAVA_8_HOME&#x27;</span></span><br><span class="line">alias java11=<span class="string">&#x27;export JAVA_HOME=$JAVA_11_HOME&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生效配置文件及切换版本</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$source</span> ~/.zshrc</span><br><span class="line"><span class="variable">$java8</span> <span class="comment">#切换到 8</span></span><br><span class="line"><span class="variable">$java11</span> <span class="comment">#切换到 11</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="BUCK-安装使用"><a href="#BUCK-安装使用" class="headerlink" title="BUCK 安装使用"></a>BUCK 安装使用</h3><p>到目前为止<code>2021-01-14</code>，使用 homebrew 安装 BUCK 都是失败的。<br>搜索发现可以使用直接预编译好的版本。</p>
+<blockquote>
+<p>Addepar currently maintains a Java 11 &#x2F; Python2 fork of Buck: <a target="_blank" rel="noopener" href="https://github.com/Addepar/buck/releases/tag/v2">avalible buck link</a>. This might be helpful.</p>
+</blockquote>
+<p>下载这个版本，然后 <code>chmod 755 buck.pex</code> 就可以直接执行了。<br>之前是使用 <code>buck</code> 现在直接用 <code>buck.pex</code> 比较麻烦的是带上下载地址的路径，因为没有安装到系统路径，所以需要指定路径比如 <code>~/Downloads/buck.pex</code></p>
+<h3 id="WatchMan-安装"><a href="#WatchMan-安装" class="headerlink" title="WatchMan 安装"></a>WatchMan 安装</h3><p>这个还是简单的，使用 homebrew 直接搞定。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$brew</span> update</span><br><span class="line"><span class="variable">$brew</span> install watchman</span><br></pre></td></tr></table></figure>
+
+<h3 id="Telegram-源码下载及编译"><a href="#Telegram-源码下载及编译" class="headerlink" title="Telegram 源码下载及编译"></a>Telegram 源码下载及编译</h3><p>可以指定版本下载，这次使用的是 7.2  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --recursive --branch release-7.2  https://github.com/TelegramMessenger/Telegram-iOS.git</span><br><span class="line"><span class="built_in">cd</span> telegram-ios</span><br></pre></td></tr></table></figure>
+
+<p>下载完成后，开始编译。<br>参考经典的两个链接 <a target="_blank" rel="noopener" href="https://github.com/TelegramMessenger/Telegram-iOS/issues/219#issuecomment-570533746">#219</a> 和 <a target="_blank" rel="noopener" href="https://itnext.io/build-and-run-telegram-ios-on-xcode-12-x-simulator-2aff89c25a9f">Build and Run Telegram-iOS v7.2 in Xcode 12.x Simulator</a></p>
+<h4 id="生成-Telegram-Buck-xcworkspace"><a href="#生成-Telegram-Buck-xcworkspace" class="headerlink" title="生成 Telegram_Buck.xcworkspace"></a>生成 <code>Telegram_Buck.xcworkspace</code></h4><ol>
+<li><p>Insert before include Utils.makefile in the <strong>Makefile</strong> file:</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> BUCK=buck</span><br><span class="line"><span class="keyword">export</span> TELEGRAM_ENV_SET=1</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_CODE_SIGN_IDENTITY=iPhone Distribution: Digital Fortress LLC (C67CF9S4VU)</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_CODE_SIGN_IDENTITY=iPhone Distribution: Digital Fortress LLC (C67CF9S4VU)</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_TEAM=C67CF9S4VU</span><br><span class="line"><span class="keyword">export</span> API_ID=8</span><br><span class="line"><span class="keyword">export</span> API_HASH=7245de8e747a0d6fbe11f7cc14fcc0bb</span><br><span class="line"><span class="keyword">export</span> BUNDLE_ID=ph.telegra.Telegraph</span><br><span class="line"><span class="keyword">export</span> IS_INTERNAL_BUILD=false</span><br><span class="line"><span class="keyword">export</span> IS_APPSTORE_BUILD=true</span><br><span class="line"><span class="keyword">export</span> APPSTORE_ID=686449807</span><br><span class="line"><span class="keyword">export</span> APP_SPECIFIC_URL_SCHEME=tgapp</span><br><span class="line"><span class="keyword">export</span> BUILD_NUMBER=199</span><br><span class="line"><span class="keyword">export</span> ENTITLEMENTS_APP=Telegram-iOS/Telegram-iOS-AppStoreLLC.entitlements</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_APP=match Development ph.telegra.Telegraph</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_APP=match AppStore ph.telegra.Telegraph</span><br><span class="line"><span class="keyword">export</span> ENTITLEMENTS_EXTENSION_SHARE=Share/Share-AppStoreLLC.entitlements</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_EXTENSION_SHARE=match Development ph.telegra.Telegraph.Share</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_EXTENSION_SHARE=match AppStore ph.telegra.Telegraph.Share</span><br><span class="line"><span class="keyword">export</span> ENTITLEMENTS_EXTENSION_WIDGET=Widget/Widget-AppStoreLLC.entitlements</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_EXTENSION_WIDGET=match Development ph.telegra.Telegraph.Widget</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_EXTENSION_WIDGET=match AppStore ph.telegra.Telegraph.Widget</span><br><span class="line"><span class="keyword">export</span> ENTITLEMENTS_EXTENSION_NOTIFICATIONSERVICE=NotificationService/NotificationService-AppStoreLLC.entitlements</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_EXTENSION_NOTIFICATIONSERVICE=match Development ph.telegra.Telegraph.NotificationService</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_EXTENSION_NOTIFICATIONSERVICE=match AppStore ph.telegra.Telegraph.NotificationService</span><br><span class="line"><span class="keyword">export</span> ENTITLEMENTS_EXTENSION_NOTIFICATIONCONTENT=NotificationContent/NotificationContent-AppStoreLLC.entitlements</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_EXTENSION_NOTIFICATIONCONTENT=match Development ph.telegra.Telegraph.NotificationContent</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_EXTENSION_NOTIFICATIONCONTENT=match AppStore ph.telegra.Telegraph.NotificationContent</span><br><span class="line"><span class="keyword">export</span> ENTITLEMENTS_EXTENSION_INTENTS=SiriIntents/SiriIntents-AppStoreLLC.entitlements</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_EXTENSION_INTENTS=match Development ph.telegra.Telegraph.SiriIntents</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_EXTENSION_INTENTS=match AppStore ph.telegra.Telegraph.SiriIntents</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_WATCH_APP=match Development ph.telegra.Telegraph.watchkitapp</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_WATCH_APP=match AppStore ph.telegra.Telegraph.watchkitapp</span><br><span class="line"><span class="keyword">export</span> DEVELOPMENT_PROVISIONING_PROFILE_WATCH_EXTENSION=match Development ph.telegra.Telegraph.watchkitapp.watchkitextension</span><br><span class="line"><span class="keyword">export</span> DISTRIBUTION_PROVISIONING_PROFILE_WATCH_EXTENSION=match AppStore ph.telegra.Telegraph.watchkitapp.watchkitextension</span><br><span class="line"><span class="keyword">export</span> BUILDBOX_DIR=buildbox</span><br><span class="line"><span class="keyword">export</span> CODESIGNING_PROFILES_VARIANT=appstore</span><br><span class="line"><span class="keyword">export</span> PACKAGE_METHOD=appstore</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Insert in SHARED_CONFIGS of <strong>Config&#x2F;utils.bzl</strong> file:</p>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="comment">diff --git a/Config/utils.bzl b/Config/utils.bzl</span></span><br><span class="line"><span class="comment">index ca0271275..26570381c 100644</span></span><br><span class="line"><span class="comment">--- a/Config/utils.bzl</span></span><br><span class="line"><span class="comment">+++ b/Config/utils.bzl</span></span><br><span class="line"><span class="meta">@@ -50,6 +50,7 @@</span> SHARED_CONFIGS = &#123;</span><br><span class="line">    &quot;ONLY_ACTIVE_ARCH&quot;: &quot;YES&quot;,</span><br><span class="line">    &quot;LD_RUNPATH_SEARCH_PATHS&quot;: &quot;@executable_path/Frameworks&quot;,</span><br><span class="line">    &quot;ENABLE_BITCODE&quot;: &quot;NO&quot;,</span><br><span class="line"><span class="addition">+    &quot;DEAD_CODE_STRIPPING&quot;: &quot;YES&quot;,</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>mozjpeg</strong> 修改, Inside third-party&#x2F;mozjpeg&#x2F;BUCK, it declares two targets of arm64 andarmv7. We can change armv7 to x86_64 as we don’t need armv7 in Simulator and on most devices.</p>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="comment">diff --git a/third-party/mozjpeg/BUCK b/third-party/mozjpeg/BUCK</span></span><br><span class="line"><span class="comment">index 379603ce4..708e0201f 100644</span></span><br><span class="line"><span class="comment">--- a/third-party/mozjpeg/BUCK</span></span><br><span class="line"><span class="comment">+++ b/third-party/mozjpeg/BUCK</span></span><br><span class="line"><span class="meta">@@ -48,7 +48,7 @@</span> genrule(</span><br><span class="line">cp $BUILD_DIR/mozjpeg/jmorecfg.h &quot;$OUT/Public/mozjpeg/&quot;</span><br><span class="line">cp $BUILD_DIR/build/jconfig.h &quot;$OUT/Public/mozjpeg/&quot;</span><br><span class="line"></span><br><span class="line"><span class="deletion">-    BUILD_ARCH=&quot;armv7&quot;</span></span><br><span class="line"><span class="addition">+    BUILD_ARCH=&quot;x86_64&quot;</span></span><br><span class="line"></span><br><span class="line">BUILD_DIR=&quot;$OUT/$BUILD_ARCH&quot;</span><br><span class="line">rm -rf &quot;$BUILD_DIR&quot;</span><br><span class="line"><span class="meta">@@ -62,8 +62,8 @@</span> genrule(</span><br><span class="line"></span><br><span class="line">PATH=&quot;$PATH:$CMAKE_DIR/bin&quot; sh $BUILD_DIR/build-mozjpeg-buck.sh $BUILD_ARCH &quot;$BUILD_DIR/mozjpeg&quot; &quot;$BUILD_DIR&quot;</span><br><span class="line"></span><br><span class="line"><span class="deletion">-    lipo -create $OUT/arm64/build/libjpeg.a $OUT/armv7/build/libjpeg.a -output $OUT/Public/lib/libjpeg.a</span></span><br><span class="line"><span class="deletion">-    lipo -create $OUT/arm64/build/libturbojpeg.a $OUT/armv7/build/libturbojpeg.a -output $OUT/Public/lib/libturbojpeg.a</span></span><br><span class="line"><span class="addition">+    lipo -create $OUT/arm64/build/libjpeg.a $OUT/x86_64/build/libjpeg.a -output $OUT/Public/lib/libjpeg.a</span></span><br><span class="line"><span class="addition">+    lipo -create $OUT/arm64/build/libturbojpeg.a $OUT/x86_64/build/libturbojpeg.a -output $OUT/Public/lib/libturbojpeg.a</span></span><br><span class="line">&quot;&quot;&quot;,</span><br><span class="line">out = &quot;libmozjpeg&quot;,</span><br><span class="line">visibility = [</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>webrtc-ios</strong> 修改。</p>
+<blockquote>
+<p>Telegram-iOS builds its video calls upon webrtc-ios, which is a gigantic module imported this year. It’s supposed to be built to a framework by buck before generating workspace files. Unfortunately, the code in the official repo doesn’t compile with Xcode 12.x and doesn’t support thex86_64 target.</p>
+<p>The first change is on a python script find_sdk.py which is a part of webrtc-ios build system. It helps to locate the SDK path in Xcode.app. The original regular expression ^MacOSX(10.\d+).sdk$ doesn’t work against Xcode 12.x, as the SDK pathname has been changed to Contents&#x2F;Developer&#x2F;Platforms&#x2F;MacOSX.platform&#x2F;Developer&#x2F;SDKs&#x2F;MacOSX11.0.sdk. We need to change the expression to ^MacOSX(1[01].\d+).sdk$, which matches both MacOSX10 and MacOSX11 SDK names.</p>
+</blockquote>
+ <figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="comment">diff --git a/third-party/webrtc/webrtc-ios/src/build/mac/find_sdk.py b/third-party/webrtc/webrtc-ios/src/build/mac/find_sdk.py</span></span><br><span class="line"><span class="comment">index 38c28832..44cb85c0 100755</span></span><br><span class="line"><span class="comment">--- a/third-party/webrtc/webrtc-ios/src/build/mac/find_sdk.py</span></span><br><span class="line"><span class="comment">+++ b/third-party/webrtc/webrtc-ios/src/build/mac/find_sdk.py</span></span><br><span class="line"><span class="meta">@@ -88,7 +88,7 @@</span> def main():</span><br><span class="line">    raise SdkError(&#x27;Install Xcode, launch it, accept the license &#x27; +</span><br><span class="line">    &#x27;agreement, and run `sudo xcode-select -s /path/to/Xcode.app` &#x27; +</span><br><span class="line">    &#x27;to continue.&#x27;)</span><br><span class="line"><span class="deletion">-  sdks = [re.findall(&#x27;^MacOSX(10\.\d+)\.sdk$&#x27;, s) for s in os.listdir(sdk_dir)]</span></span><br><span class="line"><span class="addition">+  sdks = [re.findall(&#x27;^MacOSX(1[01]\.\d+)\.sdk$&#x27;, s) for s in os.listdir(sdk_dir)]</span></span><br><span class="line">sdks = [s[0] for s in sdks if s]  # [[&#x27;10.5&#x27;], [&#x27;10.6&#x27;]] =&gt; [&#x27;10.5&#x27;, &#x27;10.6&#x27;]</span><br><span class="line">sdks = [s for s in sdks  # [&#x27;10.5&#x27;, &#x27;10.6&#x27;] =&gt; [&#x27;10.6&#x27;]</span><br><span class="line">        if parse_version(s) &gt;= parse_version(min_sdk_version)]</span><br></pre></td></tr></table></figure>
+
+<p> The other fix is to add x86_64 target as following:</p>
+ <figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="comment">diff --git a/third-party/webrtc/BUCK b/third-party/webrtc/BUCK</span></span><br><span class="line"><span class="comment">index 6762598ed..28bd2f3bd 100644</span></span><br><span class="line"><span class="comment">--- a/third-party/webrtc/BUCK</span></span><br><span class="line"><span class="comment">+++ b/third-party/webrtc/BUCK</span></span><br><span class="line"><span class="meta">@@ -37,11 +37,11 @@</span> genrule(</span><br><span class="line"></span><br><span class="line">    sh $SRCDIR/build-webrtc-buck.sh &quot;$BUILD_DIR&quot; $BUILD_ARCH</span><br><span class="line"></span><br><span class="line"><span class="deletion">-    BUILD_ARCH=arm</span></span><br><span class="line"><span class="addition">+    BUILD_ARCH=x64</span></span><br><span class="line"></span><br><span class="line"><span class="deletion">-    BUILD_DIR_ARMV7=&quot;$SRCDIR/$BUILD_ARCH&quot;</span></span><br><span class="line"><span class="addition">+    BUILD_DIR_X64=&quot;$SRCDIR/$BUILD_ARCH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="deletion">-    BUILD_DIR=&quot;$BUILD_DIR_ARMV7&quot;</span></span><br><span class="line"><span class="addition">+    BUILD_DIR=&quot;$BUILD_DIR_X64&quot;</span></span><br><span class="line"></span><br><span class="line">    rm -rf &quot;$BUILD_DIR&quot;</span><br><span class="line">    mkdir -p &quot;$BUILD_DIR&quot;</span><br><span class="line"><span class="meta">@@ -61,7 +61,7 @@</span> genrule(</span><br><span class="line">    sh $SRCDIR/build-webrtc-buck.sh &quot;$BUILD_DIR&quot; $BUILD_ARCH</span><br><span class="line"></span><br><span class="line">    mkdir -p &quot;$OUT&quot;</span><br><span class="line"><span class="deletion">-    lipo -create &quot;$BUILD_DIR_ARMV7/webrtc-ios/src/out/ios/obj/sdk/libframework_objc_static.a&quot; &quot;$BUILD_DIR_ARM64/webrtc-ios/src/out/ios_64/obj/sdk/libframework_objc_static.a&quot; -output &quot;$OUT/libframework_objc_static.a&quot;</span></span><br><span class="line"><span class="addition">+    lipo -create &quot;$BUILD_DIR_X64/webrtc-ios/src/out/ios_sim/obj/sdk/libframework_objc_static.a&quot; &quot;$BUILD_DIR_ARM64/webrtc-ios/src/out/ios_64/obj/sdk/libframework_objc_static.a&quot; -output &quot;$OUT/libframework_objc_static.a&quot;</span></span><br><span class="line">&quot;&quot;&quot;,</span><br><span class="line">    out = &quot;libwebrtc&quot;,</span><br><span class="line">    visibility = [&quot;PUBLIC&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成 workspace file <code>make project</code></p>
+</li>
+</ol>
+<h4 id="打开生成的-workspace-然后-build"><a href="#打开生成的-workspace-然后-build" class="headerlink" title="打开生成的 workspace 然后 build"></a>打开生成的 workspace 然后 build</h4><p>编译的时候会遇到这个问题，主要是 pointerInteraction.swift 导致的，这里提供一个改正好的文件内容，提供参考，主要是注释掉相关语句。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Undefined symbols <span class="keyword">for</span> architecture x86_64:</span><br><span class="line">  <span class="string">&quot;static UIKit.UIPointerShape.defaultCornerRadius.getter : CoreGraphics.CGFloat&quot;</span>, referenced from:</span><br><span class="line">      Display.(PointerInteractionImpl <span class="keyword">in</span> _B39DD7E7F85F24DF4F7212BCFE28692F).pointerInteraction(_: __C.UIPointerInteraction, styleFor: __C.UIPointerRegion) -&gt; __C.UIPointerStyle? <span class="keyword">in</span> PointerInteraction.o</span><br><span class="line">  <span class="string">&quot;enum case for UIKit.UIPointerShape.roundedRect(UIKit.UIPointerShape.Type) -&gt; (__C.CGRect, CoreGraphics.CGFloat) -&gt; UIKit.UIPointerShape&quot;</span>, referenced from:</span><br><span class="line">      Display.(PointerInteractionImpl <span class="keyword">in</span> _B39DD7E7F85F24DF4F7212BCFE28692F).pointerInteraction(_: __C.UIPointerInteraction, styleFor: __C.UIPointerRegion) -&gt; __C.UIPointerStyle? <span class="keyword">in</span> PointerInteraction.o</span><br><span class="line">  <span class="string">&quot;enum case for UIKit.UIPointerEffect.highlight(UIKit.UIPointerEffect.Type) -&gt; (__C.UITargetedPreview) -&gt; UIKit.UIPointerEffect&quot;</span>, referenced from:</span><br><span class="line">      Display.(PointerInteractionImpl <span class="keyword">in</span> _B39DD7E7F85F24DF4F7212BCFE28692F).pointerInteraction(_: __C.UIPointerInteraction, styleFor: __C.UIPointerRegion) -&gt; __C.UIPointerStyle? <span class="keyword">in</span> PointerInteraction.o</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> AsyncDisplayKit</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">PointerStyle</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> `default`</span><br><span class="line">    <span class="keyword">case</span> rectangle(<span class="type">CGSize</span>)</span><br><span class="line">    <span class="keyword">case</span> circle</span><br><span class="line">    <span class="keyword">case</span> caret</span><br><span class="line">    <span class="keyword">case</span> lift</span><br><span class="line">    <span class="keyword">case</span> hover</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@available</span>(<span class="keyword">iOSApplicationExtension</span> <span class="number">13.4</span>, <span class="keyword">iOS</span> <span class="number">13.4</span>, <span class="operator">*</span>)</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">PointerInteractionImpl</span>: <span class="title class_ inherited__">NSObject</span>, <span class="title class_ inherited__">UIPointerInteractionDelegate</span> &#123;</span><br><span class="line">    <span class="comment">// weak var pointerInteraction: UIPointerInteraction?</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// private let style: PointerStyle</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// private let willEnter: () -&gt; Void</span></span><br><span class="line">    <span class="comment">// private let willExit: () -&gt; Void</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// init(style: PointerStyle, willEnter: @escaping () -&gt; Void, willExit: @escaping () -&gt; Void) &#123;</span></span><br><span class="line">    <span class="comment">//     self.style = style</span></span><br><span class="line">    <span class="comment">//     self.willEnter = willEnter</span></span><br><span class="line">    <span class="comment">//     self.willExit = willExit</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment">//     super.init()</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// deinit &#123;</span></span><br><span class="line">    <span class="comment">//     if let pointerInteraction = self.pointerInteraction &#123;</span></span><br><span class="line">    <span class="comment">//         pointerInteraction.view?.removeInteraction(pointerInteraction)</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">setup</span>(<span class="params">view</span>: <span class="type">UIView</span>) &#123;</span><br><span class="line">        <span class="comment">// let pointerInteraction = UIPointerInteraction(delegate: self)</span></span><br><span class="line">        <span class="comment">// view.addInteraction(pointerInteraction)</span></span><br><span class="line">        <span class="comment">// self.pointerInteraction = pointerInteraction</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -&gt; UIPointerStyle? &#123;</span></span><br><span class="line">    <span class="comment">//     var pointerStyle: UIPointerStyle? = nil</span></span><br><span class="line">    <span class="comment">//     if let interactionView = interaction.view &#123;</span></span><br><span class="line">    <span class="comment">//         let targetedPreview = UITargetedPreview(view: interactionView)</span></span><br><span class="line">    <span class="comment">//         switch self.style &#123;</span></span><br><span class="line">    <span class="comment">//             case .default:</span></span><br><span class="line">    <span class="comment">//                 let horizontalPadding: CGFloat = 10.0</span></span><br><span class="line">    <span class="comment">//                 let verticalPadding: CGFloat = 4.0</span></span><br><span class="line">    <span class="comment">//                 let minHeight: CGFloat = 40.0</span></span><br><span class="line">    <span class="comment">//                 let size: CGSize = CGSize(width: targetedPreview.size.width + horizontalPadding * 2.0, height: max(minHeight, targetedPreview.size.height + verticalPadding * 2.0))</span></span><br><span class="line">    <span class="comment">//                 pointerStyle = UIPointerStyle(effect: .highlight(targetedPreview), shape: .roundedRect(CGRect(origin: CGPoint(x: targetedPreview.view.center.x - size.width / 2.0, y: targetedPreview.view.center.y - size.height / 2.0), size: size), radius: UIPointerShape.defaultCornerRadius))</span></span><br><span class="line">    <span class="comment">//             case let .rectangle(size):</span></span><br><span class="line">    <span class="comment">//                 pointerStyle = UIPointerStyle(effect: .highlight(targetedPreview), shape: .roundedRect(CGRect(origin: CGPoint(x: targetedPreview.view.center.x - size.width / 2.0, y: targetedPreview.view.center.y - size.height / 2.0), size: size), radius: UIPointerShape.defaultCornerRadius))</span></span><br><span class="line">    <span class="comment">//             case .circle:</span></span><br><span class="line">    <span class="comment">//                 let maxSide = max(targetedPreview.size.width, targetedPreview.size.height)</span></span><br><span class="line">    <span class="comment">//                 pointerStyle = UIPointerStyle(effect: .highlight(targetedPreview), shape: .path(UIBezierPath(ovalIn: CGRect(origin: CGPoint(), size: CGSize(width: maxSide, height: maxSide)))))</span></span><br><span class="line">    <span class="comment">//             case .caret:</span></span><br><span class="line">    <span class="comment">//                 pointerStyle = UIPointerStyle(shape: .verticalBeam(length: 24.0), constrainedAxes: .vertical)</span></span><br><span class="line">    <span class="comment">//             case .lift:</span></span><br><span class="line">    <span class="comment">//                 pointerStyle = UIPointerStyle(effect: .lift(targetedPreview))</span></span><br><span class="line">    <span class="comment">//             case .hover:</span></span><br><span class="line">    <span class="comment">//                 pointerStyle = UIPointerStyle(effect: .hover(targetedPreview, preferredTintMode: .none, prefersShadow: false, prefersScaledContent: false))</span></span><br><span class="line">    <span class="comment">//         &#125;</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">//     return pointerStyle</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// func pointerInteraction(_ interaction: UIPointerInteraction, willEnter region: UIPointerRegion, animator: UIPointerInteractionAnimating) &#123;</span></span><br><span class="line">    <span class="comment">//     guard let _ = interaction.view else &#123;</span></span><br><span class="line">    <span class="comment">//         return</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     animator.addAnimations &#123;</span></span><br><span class="line">    <span class="comment">//         self.willEnter()</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">//  &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// func pointerInteraction(_ interaction: UIPointerInteraction, willExit region: UIPointerRegion, animator: UIPointerInteractionAnimating) &#123;</span></span><br><span class="line">    <span class="comment">//     guard let _ = interaction.view else &#123;</span></span><br><span class="line">    <span class="comment">//         return</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     animator.addAnimations &#123;</span></span><br><span class="line">    <span class="comment">//         self.willExit()</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">PointerInteraction</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> impl: <span class="type">AnyObject</span>?</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> style: <span class="type">PointerStyle</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> willEnter: () -&gt; <span class="type">Void</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> willExit: () -&gt; <span class="type">Void</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@available</span>(<span class="keyword">iOSApplicationExtension</span> <span class="number">13.4</span>, <span class="keyword">iOS</span> <span class="number">13.4</span>, <span class="operator">*</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">withImpl</span>(<span class="keyword">_</span> <span class="params">f</span>: (<span class="type">PointerInteractionImpl</span>) -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">        <span class="comment">// if self.impl == nil &#123;</span></span><br><span class="line">        <span class="comment">//     self.impl = PointerInteractionImpl(style: self.style, willEnter: self.willEnter, willExit: self.willExit)</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">// f(self.impl as! PointerInteractionImpl)</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">convenience</span> <span class="keyword">init</span>(<span class="params">node</span>: <span class="type">ASDisplayNode</span>, <span class="params">style</span>: <span class="type">PointerStyle</span> <span class="operator">=</span> .default, <span class="params">willEnter</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span> <span class="operator">=</span> &#123;&#125;, <span class="params">willExit</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span> <span class="operator">=</span> &#123;&#125;) &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(view: node.view, style: style, willEnter: willEnter, willExit: willExit)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(<span class="params">view</span>: <span class="type">UIView</span>, <span class="params">style</span>: <span class="type">PointerStyle</span> <span class="operator">=</span> .default, <span class="params">willEnter</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span> <span class="operator">=</span> &#123;&#125;, <span class="params">willExit</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span> <span class="operator">=</span> &#123;&#125;) &#123;</span><br><span class="line">        <span class="keyword">self</span>.style <span class="operator">=</span> style</span><br><span class="line">        <span class="keyword">self</span>.willEnter <span class="operator">=</span> willEnter</span><br><span class="line">        <span class="keyword">self</span>.willExit <span class="operator">=</span> willExit</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">#available</span>(<span class="keyword">iOSApplicationExtension</span> <span class="number">13.4</span>, <span class="keyword">iOS</span> <span class="number">13.4</span>, <span class="operator">*</span>) &#123;</span><br><span class="line">            <span class="keyword">self</span>.withImpl &#123; impl <span class="keyword">in</span></span><br><span class="line">                impl.setup(view: view)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/telegram/" rel="tag"># telegram</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E7%B1%BBLinux%E8%A3%85%E6%9C%BA%E5%B8%B8%E7%94%A82/" rel="prev" title="类Linux装机常用2">
+      <i class="fa fa-chevron-left"></i> 类Linux装机常用2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/OC%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="next" title="OC问题记录">
+      OC问题记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JAVA-11%E4%BB%A5%E5%8F%8A%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">JAVA 11以及版本切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BUCK-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">BUCK 安装使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WatchMan-%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">WatchMan 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Telegram-%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E5%8F%8A%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">Telegram 源码下载及编译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90-Telegram-Buck-xcworkspace"><span class="nav-number">4.1.</span> <span class="nav-text">生成 Telegram_Buck.xcworkspace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%94%9F%E6%88%90%E7%9A%84-workspace-%E7%84%B6%E5%90%8E-build"><span class="nav-number">4.2.</span> <span class="nav-text">打开生成的 workspace 然后 build</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">223</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/telegram%E4%B8%8D%E7%9F%A5%E5%A4%9A%E5%B0%91%E6%AC%A1%E7%9A%84%E9%87%8D%E7%BC%96%E8%AF%91/";
+    this.page.identifier = "telegram不知多少次的重编译/";
+    this.page.title = "telegram不知多少次的重编译";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

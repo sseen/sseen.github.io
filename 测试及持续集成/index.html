@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="现如今鉴于环境的问题，work from home 的职缺多了起来，软件开发中的 wfh 需要的特别技能就显现出来了。  unit test 单元测试 code Coverage 代码覆盖率 Continuous Integration CI 持续集成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="测试及持续集成">
+<meta property="og:url" content="http://yoursite.com/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="现如今鉴于环境的问题，work from home 的职缺多了起来，软件开发中的 wfh 需要的特别技能就显现出来了。  unit test 单元测试 code Coverage 代码覆盖率 Continuous Integration CI 持续集成">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-15T13:24:05.000Z">
+<meta property="article:modified_time" content="2024-12-11T05:23:48.126Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="CI">
+<meta property="article:tag" content="Test">
+<meta property="article:tag" content="XCTest">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>测试及持续集成 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          测试及持续集成
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-15 13:24:05" itemprop="dateCreated datePublished" datetime="2021-06-15T13:24:05+00:00">2021-06-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-11 05:23:48" itemprop="dateModified" datetime="2024-12-11T05:23:48+00:00">2024-12-11</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="测试及持续集成/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>现如今鉴于环境的问题，work from home 的职缺多了起来，软件开发中的 wfh 需要的特别技能就显现出来了。</p>
+<ul>
+<li><code>unit test</code> 单元测试</li>
+<li><code>code Coverage</code> 代码覆盖率</li>
+<li><code>Continuous Integration</code> CI 持续集成</li>
+</ul>
+<ol>
+<li><a href="#%E6%B5%8B%E8%AF%95">测试</a><ol>
+<li><a href="#%E5%B9%B6%E8%A1%8C%E6%89%A7%E8%A1%8C-uitest">并行执行 uitest</a></li>
+<li><a href="#%E4%B8%8D%E8%A6%81%E6%AF%8F%E6%AC%A1%E6%B5%8B%E8%AF%95%E8%BF%9Euitest%E4%B9%9F%E4%B8%80%E8%B5%B7%E6%89%A7%E8%A1%8C">不要每次测试连uitest也一起执行</a></li>
+<li><a href="#%E6%AF%8F%E4%B8%AA%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6%E9%83%BD%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%B5%8B%E8%AF%95target%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%AA%E8%B4%B9%E4%BA%8B">每个测试文件都添加到测试target是不是太费事</a></li>
+</ol>
+</li>
+<li><a href="#%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90">持续集成</a><ol>
+<li><a href="#2021-06-17%E7%9B%AE%E5%89%8D-circle-ci-%E5%8F%AA%E6%94%AF%E6%8C%81-fastlane-match-%E7%9A%84%E6%96%B9%E5%BC%8F%E7%AE%A1%E7%90%86-code-sign"><code>2021-06-17</code>目前 circle ci 只支持 Fastlane Match 的方式管理 code sign</a></li>
+</ol>
+</li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a><ol>
+<li><a href="#code-coverage-report">code coverage report</a></li>
+<li><a href="#circleci-%E6%AD%A3%E5%88%99">circleci 正则</a></li>
+<li><a href="#circleci-cache">circleci cache</a></li>
+<li><a href="#ci-%E7%8E%AF%E5%A2%83%E9%87%8C%E9%83%A8%E7%BD%B2-error-missing-private-key-for-signing-certificate-failed-to-locate-the-private-key-matching-certificate-xxxx-in-the-keychain">ci 环境里部署 <code>error: Missing private key for signing certificate. Failed to locate the private key matching certificate &quot;xxxx&quot; in the keychain.</code></a></li>
+<li><a href="#testable-import-objective-c">@testable import objective c</a></li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a><ol>
+<li><a href="#unit-test">unit test</a></li>
+<li><a href="#ci--cd">ci &amp; cd</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="并行执行-uitest"><a href="#并行执行-uitest" class="headerlink" title="并行执行 uitest"></a>并行执行 uitest</h3><p>找了下方法还是比较容易操作的，但是ci上可能不容易要试过。<a target="_blank" rel="noopener" href="https://aztristian.medium.com/parallelizing-ui-tests-for-ios-applications-4343779c9181">Parallelizing UI Tests for iOS Applications</a>  </p>
+<h3 id="不要每次测试连uitest也一起执行"><a href="#不要每次测试连uitest也一起执行" class="headerlink" title="不要每次测试连uitest也一起执行"></a>不要每次测试连uitest也一起执行</h3><p>在 scheme 里 <code>test → info → 勾掉 ui test</code></p>
+<h3 id="每个测试文件都添加到测试target是不是太费事"><a href="#每个测试文件都添加到测试target是不是太费事" class="headerlink" title="每个测试文件都添加到测试target是不是太费事"></a>每个测试文件都添加到测试target是不是太费事</h3><p>When you create a Unit Testing Bundle(Unit Testing target) for testing application you have two options:</p>
+<ol>
+<li><p>Enable Allow testing Host Application APIs<br><code>General -&gt; Host Application &lt;app_name&gt;-&gt; &gt;check&lt; Allow testing Host Application APIs</code>  </p>
+<ul>
+<li>slow build</li>
+</ul>
+</li>
+<li><p>Add every app’s tested file into Target Membership</p>
+<ul>
+<li>you should take care of classes dependencies which are used into testable class(they should be added too)</li>
+</ul>
+</li>
+</ol>
+<p>When you write a test and no one option was not enabled you can get</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Undefined symbol: nominal type descriptor for &lt;class_name&gt;</span><br><span class="line">Undefined symbol: type metadata accessor for&lt;class_name&gt;&lt;/class_name&gt;&lt;/class_name&gt;&lt;/app_name&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h2><h3 id="2021-06-17目前-circle-ci-只支持-Fastlane-Match-的方式管理-code-sign"><a href="#2021-06-17目前-circle-ci-只支持-Fastlane-Match-的方式管理-code-sign" class="headerlink" title="2021-06-17目前 circle ci 只支持 Fastlane Match 的方式管理 code sign"></a><code>2021-06-17</code>目前 circle ci 只支持 Fastlane Match 的方式管理 code sign</h3><blockquote>
+<p>Note: CircleCI only officially supports Fastlane Match for codesigning. Other methods may be used, but are not guaranteed to work and are unsupported.</p>
+</blockquote>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="code-coverage-report"><a href="#code-coverage-report" class="headerlink" title="code coverage report"></a>code coverage report</h3><p>测试报告，尤其是含有代码覆盖率的报告，如何在ci的环境里也能生成。</p>
+<p><strong>slather</strong><br>这个貌似用的人最多，但是调试了半天，本地都跑不起来。错误一般都是类似这种 <code>&quot;find_binary_files&quot;: No product binary found</code>，最后也没找到解决办法。</p>
+<p><strong>xcov</strong><br>因为 <code>slather</code> 的失败，转而找到了这个方式<br>很快的本地直接就跑好了，大喜感觉靠谱多了，但是跑到 ci 环境里确出现了一个恼人的问题 <code>ould not find option &#39;workspace&#39; in the list of available options:</code>，很难查到原因，又耽误了半天。<br>开始升级了 fastlane 试试看，不行；最后也是试出了解决方法也就是 <code>bundle update</code>，也是，也就是环境的问题了。</p>
+<p><a target="_blank" rel="noopener" href="https://tech.recruit-mp.co.jp/mobile/post-15290/">CircleCI 2.0 + fastlane + Slather でコードカバレッジの変化を Slack に通知する</a>  </p>
+<h3 id="circleci-正则"><a href="#circleci-正则" class="headerlink" title="circleci 正则"></a>circleci 正则</h3><p>circleci 提供了一种区分branch的方法，可以用来区分branch来做任务</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">workflows:</span></span><br><span class="line">  <span class="attr">version:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">build_to_testflight:</span></span><br><span class="line">    <span class="attr">jobs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">buildDevelop:</span> <span class="comment"># only for develope branch</span></span><br><span class="line">          <span class="attr">filters:</span>  <span class="comment"># using regex filters requires the entire branch to match</span></span><br><span class="line">            <span class="attr">branches:</span></span><br><span class="line">              <span class="attr">only:</span> <span class="string">/^[^0-9]*/</span> <span class="comment"># only branches matching the below regex filters will run</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">buildBeta:</span> <span class="comment"># for release branch</span></span><br><span class="line">          <span class="attr">filters:</span>  <span class="comment"># using regex filters requires the entire branch to match</span></span><br><span class="line">            <span class="attr">branches:</span></span><br><span class="line">              <span class="attr">only:</span> <span class="string">/^[0-9]*/</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">buildProduct:</span> <span class="comment"># for release branch</span></span><br><span class="line">          <span class="attr">filters:</span>  <span class="comment"># using regex filters requires the entire branch to match</span></span><br><span class="line">            <span class="attr">branches:</span></span><br><span class="line">              <span class="attr">only:</span> <span class="string">/^[0-9]*/</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html">java.util.regex Class Pattern</a><br><a target="_blank" rel="noopener" href="https://circleci.com/docs/2.0/workflows/">Using Workflows to Schedule Jobs</a>  </p>
+<h3 id="circleci-cache"><a href="#circleci-cache" class="headerlink" title="circleci cache"></a>circleci cache</h3><p>用了cache后，出现了很多问题，基本上都是环境没有准备好导致的。<br>可以先用 <code>brew doctor</code> 看看问题<br>然后我这里是需要 <code>brew link</code> 相关的 package<br>然后 <code>brew link a b c</code> 基本上就可以了</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cache brew install</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">restore_cache:</span></span><br><span class="line">          <span class="attr">keys:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">homebrew-v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">cache</span> <span class="string">check</span> <span class="string">for</span> <span class="string">package</span> <span class="string">stuff</span> <span class="string">&amp;</span> <span class="string">install/setup</span> <span class="string">if</span> <span class="string">not</span> <span class="string">cached</span></span><br><span class="line">          <span class="attr">command:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            brew update</span></span><br><span class="line"><span class="string">            # 处理icon图片相关</span></span><br><span class="line"><span class="string">            [ ! -d /usr/local/Cellar/librsvg ] &amp;&amp; brew install librsvg &amp;&amp; echo &quot;done installing librsvg&quot;</span></span><br><span class="line"><span class="string">            [ ! -d /usr/local/Cellar/imagemagick ] &amp;&amp; brew install imagemagick &amp;&amp; echo &quot;done installing imagemagick&quot;</span></span><br><span class="line"><span class="string">            # 此目录并没有保存</span></span><br><span class="line"><span class="string">            # ls -al /usr/local/opt</span></span><br><span class="line"><span class="string">            ls -al /usr/local/Cellar/imagemagick</span></span><br><span class="line"><span class="string">            ls -al /usr/local/Cellar/librsvg</span></span><br><span class="line"><span class="string">            echo $PATH</span></span><br><span class="line"><span class="string">            echo $BASH_ENV</span></span><br><span class="line"><span class="string">            echo &#x27;export PATH=&quot;/usr/local/Cellar/imagemagick/7.1.0-2_1/bin:$PATH&quot;&#x27; &gt;&gt; $BASH_ENV</span></span><br><span class="line"><span class="string">            echo &#x27;export PATH=&quot;/usr/local/Cellar/librsvg/2.50.7/bin:$PATH&quot;&#x27; &gt;&gt; $BASH_ENV</span></span><br><span class="line"><span class="string">            echo $SHELL</span></span><br><span class="line"><span class="string">            echo $PATH</span></span><br><span class="line"><span class="string">            echo $BASH_ENV</span></span><br><span class="line"><span class="string">            source $BASH_ENV</span></span><br><span class="line"><span class="string">            # rsvg-convert -v</span></span><br><span class="line"><span class="string">            # magick -version</span></span><br><span class="line"><span class="string">            brew cleanup</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">save_cache:</span></span><br><span class="line">          <span class="attr">key:</span> <span class="string">homebrew-v1</span></span><br><span class="line">          <span class="attr">paths:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">/Users/distiller/Library/Caches/Homebrew</span> <span class="comment">#shorten brew update</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">/usr/local/Homebrew</span> <span class="comment">#shorten brew update</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">/usr/local/opt</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">/usr/local/Cellar</span> <span class="comment">#shorten brew install</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ci-环境里部署-error-Missing-private-key-for-signing-certificate-Failed-to-locate-the-private-key-matching-certificate-quot-xxxx-quot-in-the-keychain"><a href="#ci-环境里部署-error-Missing-private-key-for-signing-certificate-Failed-to-locate-the-private-key-matching-certificate-quot-xxxx-quot-in-the-keychain" class="headerlink" title="ci 环境里部署 error: Missing private key for signing certificate. Failed to locate the private key matching certificate &quot;xxxx&quot; in the keychain."></a>ci 环境里部署 <code>error: Missing private key for signing certificate. Failed to locate the private key matching certificate &quot;xxxx&quot; in the keychain.</code></h3><p>这个问题已经持续了大半天了，不知道还要多久解决，感觉定位到了 keychain 上，但还没搞定哈。<br>终于还是解决 <a target="_blank" rel="noopener" href="https://docs.fastlane.tools/advanced/other/#manually-manage-the-fastlane-match-repo">Manually manage the fastlane match Repo</a> ，还是官方的文档靠谱。</p>
+<p>先保存下有用的连接：<br><a target="_blank" rel="noopener" href="https://docs.fastlane.tools/advanced/other/#manually-manage-the-fastlane-match-repo">Manually manage the fastlane match Repo</a><br><a target="_blank" rel="noopener" href="https://medium.com/well-red/github-actions-fastlane-ios-1f6d43cce726">Github actions + Fastlane + iOS &#x3D; ❤</a><br><a target="_blank" rel="noopener" href="https://medium.com/coletiv-stories/ios-continuous-deployment-with-fastlane-36892ab66cb0">iOS Continuous Deployment with Fastlane 🚀</a><br><a target="_blank" rel="noopener" href="https://github.community/t/macos-keychain-access/16371">macos keychain access</a>  </p>
+<h3 id="testable-import-objective-c"><a href="#testable-import-objective-c" class="headerlink" title="@testable import objective c"></a>@testable import objective c</h3><p>在 swift 里可以直接集成 main target 所有的方法，这样就不用一个个将要测试的文件勾选到测试 target 里了，当然这种方式方便了，就是build速度上会有影响。<br>但是如果是 oc 项目没有 @testable 关键字使用的话，应该怎么弄？<br>这里给出了答案 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/21911168/when-do-app-sources-need-to-be-included-in-test-targets/22024428#22024428">When do app sources need to be included in test targets?</a>  </p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><h3 id="unit-test"><a href="#unit-test" class="headerlink" title="unit test"></a>unit test</h3><p><a target="_blank" rel="noopener" href="https://clean-swift.com/how-to-make-your-unit-tests-run-faster/">How to make your unit tests run faster</a>  </p>
+<h3 id="ci-amp-cd"><a href="#ci-amp-cd" class="headerlink" title="ci &amp; cd"></a>ci &amp; cd</h3><p><a target="_blank" rel="noopener" href="https://andreaslydemann.com/set-up-cd-for-ios-apps-using-travis-ci-and-fastlane/">iOS Continuous Deployment Using Travis CI and Fastlane</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903726524661767">使用fastlane match自动和手动管理证书</a><br><a target="_blank" rel="noopener" href="https://byteable.dev/build-and-deploy-your-ios-app-with-github-actions-and-fastlane-48c328cc5541">Build and Deploy your iOS app with Github Actions and Fastlane</a><br><a target="_blank" rel="noopener" href="https://medium.com/thefork/ios-ci-cd-with-github-actions-e4504228c9d">iOS CI&#x2F;CD with GitHub Actions</a><br><a target="_blank" rel="noopener" href="https://preece.dev/2020/06/ios-testflight-deploy-with-github-actions/">iOS TestFlight Deploy With GitHub Actions</a><br><a target="_blank" rel="noopener" href="https://iandrew.space/2019-07-04/%E8%8B%B9%E6%9E%9C%E5%BC%80%E5%8F%91%E6%9C%80%E4%BE%BF%E6%8D%B7%E7%9A%84%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88XcodeServer">苹果开发最便捷的持续集成方案—Xcode Server</a><br><a target="_blank" rel="noopener" href="https://www.lambdatest.com/blog/circleci-vs-gitlab/">CircleCI Vs. GitLab: Choosing The Right CI&#x2F;CD Tool并且这图表也太好看了</a><br><a target="_blank" rel="noopener" href="https://joejiangblog.wordpress.com/2017/12/15/migrate-to-circleci-2-0-in-ios-with-fastlane/">migrate to circleci 2.0 in iOS with fastlane</a><br><a target="_blank" rel="noopener" href="https://www.appcoda.com.tw/continuous-delivery/">Fastlane&#x2F;Jenkins：一人團隊也用得上的 Continuous Delivery 系統</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jacksundatashare/p/5083352.html">代码覆盖率 (Code Coverage)从简到繁 (一)</a>  </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CI/" rel="tag"># CI</a>
+              <a href="/tags/Test/" rel="tag"># Test</a>
+              <a href="/tags/XCTest/" rel="tag"># XCTest</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Apple%E5%86%85%E8%B4%AD%E7%9B%B8%E5%85%B3/" rel="prev" title="Apple内购和订阅">
+      <i class="fa fa-chevron-left"></i> Apple内购和订阅
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%87%AA%E5%8A%A8%E5%8C%96Fastlane/" rel="next" title="测试及持续集成自动化Fastlane">
+      测试及持续集成自动化Fastlane <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%89%A7%E8%A1%8C-uitest"><span class="nav-number">1.1.</span> <span class="nav-text">并行执行 uitest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E6%AF%8F%E6%AC%A1%E6%B5%8B%E8%AF%95%E8%BF%9Euitest%E4%B9%9F%E4%B8%80%E8%B5%B7%E6%89%A7%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">不要每次测试连uitest也一起执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6%E9%83%BD%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%B5%8B%E8%AF%95target%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%AA%E8%B4%B9%E4%BA%8B"><span class="nav-number">1.3.</span> <span class="nav-text">每个测试文件都添加到测试target是不是太费事</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">持续集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2021-06-17%E7%9B%AE%E5%89%8D-circle-ci-%E5%8F%AA%E6%94%AF%E6%8C%81-Fastlane-Match-%E7%9A%84%E6%96%B9%E5%BC%8F%E7%AE%A1%E7%90%86-code-sign"><span class="nav-number">2.1.</span> <span class="nav-text">2021-06-17目前 circle ci 只支持 Fastlane Match 的方式管理 code sign</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-coverage-report"><span class="nav-number">3.1.</span> <span class="nav-text">code coverage report</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#circleci-%E6%AD%A3%E5%88%99"><span class="nav-number">3.2.</span> <span class="nav-text">circleci 正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#circleci-cache"><span class="nav-number">3.3.</span> <span class="nav-text">circleci cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ci-%E7%8E%AF%E5%A2%83%E9%87%8C%E9%83%A8%E7%BD%B2-error-Missing-private-key-for-signing-certificate-Failed-to-locate-the-private-key-matching-certificate-quot-xxxx-quot-in-the-keychain"><span class="nav-number">3.4.</span> <span class="nav-text">ci 环境里部署 error: Missing private key for signing certificate. Failed to locate the private key matching certificate &quot;xxxx&quot; in the keychain.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#testable-import-objective-c"><span class="nav-number">3.5.</span> <span class="nav-text">@testable import objective c</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unit-test"><span class="nav-number">4.1.</span> <span class="nav-text">unit test</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ci-amp-cd"><span class="nav-number">4.2.</span> <span class="nav-text">ci &amp; cd</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">223</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/";
+    this.page.identifier = "测试及持续集成/";
+    this.page.title = "测试及持续集成";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
