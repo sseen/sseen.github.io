@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="可能历史上也有入门过，但这次应该不同，需要掌握从头开始构建的方法，不然只改页面也有点机械了。 pnpm vs npm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue初">
+<meta property="og:url" content="http://yoursite.com/Vue%E5%88%9D/index.html">
+<meta property="og:site_name" content="许笋的blog">
+<meta property="og:description" content="可能历史上也有入门过，但这次应该不同，需要掌握从头开始构建的方法，不然只改页面也有点机械了。 pnpm vs npm">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-04T11:12:53.000Z">
+<meta property="article:modified_time" content="2024-12-19T09:01:32.153Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/Vue%E5%88%9D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Vue初 | 许笋的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">许笋的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">小平房</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Vue%E5%88%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue初
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-04 11:12:53" itemprop="dateCreated datePublished" datetime="2024-12-04T11:12:53+00:00">2024-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-19 09:01:32" itemprop="dateModified" datetime="2024-12-19T09:01:32+00:00">2024-12-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/Vue%E5%88%9D/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Vue初/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>可能历史上也有入门过，但这次应该不同，需要掌握从头开始构建的方法，不然只改页面也有点机械了。</p>
+<h2 id="pnpm-vs-npm"><a href="#pnpm-vs-npm" class="headerlink" title="pnpm vs npm"></a>pnpm vs npm</h2><p>我感觉一句话总结。pnpm 更适合 Monorepo。</p>
+<blockquote>
+<p>什么是 Monorepo？<br>Monorepo 指的是将多个相关项目或模块的代码存储在同一个版本控制仓库中的策略。相比于将每个项目分散在不同的仓库中，Monorepo 有以下优势：</p>
+</blockquote>
+<blockquote>
+<p>统一依赖管理：所有项目共享相同的依赖版本，避免版本冲突。<br>代码复用：不同项目之间可以方便地共享和复用代码。<br>简化协作：开发者只需管理一个仓库，简化了协作流程。<br>一致的构建和测试流程：可以统一配置构建和测试工具，提高效率。<br>然而，管理 Monorepo 也带来了一些挑战，如依赖管理复杂、构建时间较长等。pnpm 通过其工作区功能，有效地解决了这些问题。</p>
+</blockquote>
+<p><strong>npm</strong> 和 <strong>pnpm</strong> 都是 Node.js 生态系统中流行的包管理器，用于管理项目的依赖包。虽然它们的基本功能相似，但在性能、存储机制和功能特性上存在一些显著差异。以下将详细介绍两者的区别以及如何在 Ubuntu 系统上安装它们。</p>
+<hr>
+<h2 id="一、什么是-npm-和-pnpm"><a href="#一、什么是-npm-和-pnpm" class="headerlink" title="一、什么是 npm 和 pnpm"></a>一、什么是 npm 和 pnpm</h2><h3 id="npm（Node-Package-Manager）"><a href="#npm（Node-Package-Manager）" class="headerlink" title="npm（Node Package Manager）"></a>npm（Node Package Manager）</h3><ul>
+<li><strong>简介</strong>：npm 是 Node.js 官方推荐的包管理器，随 Node.js 一起安装。它用于管理 JavaScript 代码包（即 Node.js 模块）的安装、更新和卸载。</li>
+<li><strong>特点</strong>：<ul>
+<li>广泛使用，拥有庞大的包生态系统。</li>
+<li>简单易用，适合大多数开发需求。</li>
+<li>支持版本管理和依赖关系管理。</li>
+</ul>
+</li>
+</ul>
+<h3 id="pnpm（Performant-npm）"><a href="#pnpm（Performant-npm）" class="headerlink" title="pnpm（Performant npm）"></a>pnpm（Performant npm）</h3><ul>
+<li><strong>简介</strong>：pnpm 是一个高性能的包管理器，旨在解决 npm 和 yarn 在依赖管理中的一些效率和存储问题。它通过独特的存储机制显著提高了安装速度和磁盘空间利用率。</li>
+<li><strong>特点</strong>：<ul>
+<li><strong>高效存储</strong>：使用内容寻址和硬链接技术，避免重复存储相同的依赖包。</li>
+<li><strong>快速安装</strong>：由于优化的存储方式，依赖安装速度更快。</li>
+<li><strong>严格的依赖管理</strong>：确保项目依赖的一致性，减少“依赖地狱”问题。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="二、npm-和-pnpm-的主要区别"><a href="#二、npm-和-pnpm-的主要区别" class="headerlink" title="二、npm 和 pnpm 的主要区别"></a>二、npm 和 pnpm 的主要区别</h2><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>npm</strong></th>
+<th><strong>pnpm</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>安装速度</strong></td>
+<td>相对较慢，尤其在大型项目中</td>
+<td>更快，利用缓存和并行安装机制</td>
+</tr>
+<tr>
+<td><strong>磁盘空间</strong></td>
+<td>可能会有重复存储，导致占用较多磁盘空间</td>
+<td>高效利用磁盘，通过硬链接减少重复存储</td>
+</tr>
+<tr>
+<td><strong>依赖管理</strong></td>
+<td>使用扁平化依赖树，可能导致依赖冲突</td>
+<td>使用严格的依赖树，减少冲突和不一致性</td>
+</tr>
+<tr>
+<td><strong>工作区支持</strong></td>
+<td>原生支持有限，需要借助第三方工具</td>
+<td>内置工作区支持，方便管理多包项目</td>
+</tr>
+<tr>
+<td><strong>配置复杂度</strong></td>
+<td>配置简单，适合大多数场景</td>
+<td>配置略微复杂，但提供更多高级功能</td>
+</tr>
+<tr>
+<td><strong>社区和生态</strong></td>
+<td>拥有庞大的社区和丰富的插件生态</td>
+<td>社区不断壮大，但相比 npm 生态稍显不足</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="vite-vs-vue"><a href="#vite-vs-vue" class="headerlink" title="vite vs vue"></a>vite vs vue</h2><p>vite是构建工具，对比于 vue-cli 或者 webpack 等工具，vite 的构建速度更快。<br>vue是框架，对比于 react 或者 angular 等框架</p>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 创建项目目录</span></span><br><span class="line"><span class="built_in">mkdir</span> my-admin</span><br><span class="line"><span class="built_in">cd</span> my-admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 使用 Vite 创建 Vue 项目</span></span><br><span class="line">pnpm create vite my-admin --template vue-ts</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 安装基础依赖</span></span><br><span class="line">pnpm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 安装必要的依赖包</span></span><br><span class="line">pnpm add ant-design-vue@4 </span><br><span class="line">pnpm add pinia vue-router@4 @vueuse/core</span><br><span class="line">pnpm add -D unocss @unocss/preset-uno @unocss/preset-icons</span><br><span class="line">pnpm add -D sass typescript @types/node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 运行项目</span></span><br><span class="line">pnpm dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. 打包项目</span></span><br><span class="line">pnpm build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7. 部署项目</span></span><br><span class="line">pnpm build &amp;&amp; pnpm preview</span><br></pre></td></tr></table></figure>
+
+<p>my-admin&#x2F;<br>├── src&#x2F;<br>│   ├── api&#x2F;           # API 请求<br>│   ├── assets&#x2F;        # 静态资源<br>│   ├── components&#x2F;    # 公共组件<br>│   ├── layouts&#x2F;       # 布局组件<br>│   ├── router&#x2F;        # 路由配置<br>│   ├── stores&#x2F;        # Pinia 状态管理<br>│   ├── styles&#x2F;        # 样式文件<br>│   ├── types&#x2F;         # TypeScript 类型定义<br>│   ├── utils&#x2F;         # 工具函数<br>│   └── views&#x2F;         # 页面组件<br>├── .env               # 环境变量<br>├── .env.development   # 开发环境变量<br>├── .env.production    # 生产环境变量<br>├── vite.config.ts     # Vite 配置<br>├── tsconfig.json      # TypeScript 配置<br>└── package.json       # 项目配置</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/PowerPlatform%20Code%20Collection/" rel="prev" title="PowerPlatform Code Collection">
+      <i class="fa fa-chevron-left"></i> PowerPlatform Code Collection
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/JAVASCRIPT%20JSON%E6%98%A0%E5%B0%84/" rel="next" title="JAVASCRIPT JSON映射">
+      JAVASCRIPT JSON映射 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pnpm-vs-npm"><span class="nav-number">1.</span> <span class="nav-text">pnpm vs npm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-npm-%E5%92%8C-pnpm"><span class="nav-number">2.</span> <span class="nav-text">一、什么是 npm 和 pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm%EF%BC%88Node-Package-Manager%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">npm（Node Package Manager）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm%EF%BC%88Performant-npm%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">pnpm（Performant npm）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81npm-%E5%92%8C-pnpm-%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">二、npm 和 pnpm 的主要区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vite-vs-vue"><span class="nav-number">4.</span> <span class="nav-text">vite vs vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">构建</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">212</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">226</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sseen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sseengithubio.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/Vue%E5%88%9D/";
+    this.page.identifier = "Vue初/";
+    this.page.title = "Vue初";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sseengithubio.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
