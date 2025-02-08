@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="纵想刚毕业时候，还要破解用可以列编辑的一款文档软件（名字我都忘了哈哈）。现如今各种免费收费的编辑功能强大的软件很多，vscode 和 sublime text 算是佼佼者。 vscode 开源插件比较多可以定制化很多功能。sublime text 速度更快，字体渲染完美，默认配色更是一级棒。以下是自己使用中比较喜欢的设置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vscode 使用总结">
+<meta property="og:url" content="https://sseen.github.io/vscode_%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="纵想刚毕业时候，还要破解用可以列编辑的一款文档软件（名字我都忘了哈哈）。现如今各种免费收费的编辑功能强大的软件很多，vscode 和 sublime text 算是佼佼者。 vscode 开源插件比较多可以定制化很多功能。sublime text 速度更快，字体渲染完美，默认配色更是一级棒。以下是自己使用中比较喜欢的设置。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sseen.github.io/images/2020/2020-12-14-15-45-30.png">
+<meta property="og:image" content="https://sseen.github.io/images/2020/2020-12-14-15-43-37.png">
+<meta property="og:image" content="https://sseen.github.io/images/2020/2020-12-13-22-24-00.png">
+<meta property="og:image" content="https://sseen.github.io/images/2020/2020-09-30-16-09-45.png">
+<meta property="article:published_time" content="2020-09-30T15:45:45.000Z">
+<meta property="article:modified_time" content="2025-02-08T17:23:24.729Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="vscode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sseen.github.io/images/2020/2020-12-14-15-45-30.png">
+
+
+<link rel="canonical" href="https://sseen.github.io/vscode_%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/vscode_%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/","path":"vscode_使用总结/","title":"vscode 使用总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vscode 使用总结 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode-%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.</span> <span class="nav-text">vscode 快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%88%AB%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">特别设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#outline-copy"><span class="nav-number">4.1.</span> <span class="nav-text">outline copy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#increment-selection"><span class="nav-number">4.2.</span> <span class="nav-text">increment selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#paste-json-as-code"><span class="nav-number">4.3.</span> <span class="nav-text">paste json as code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#snippets"><span class="nav-number">5.1.</span> <span class="nav-text">snippets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macOS-%E5%A4%8D%E5%88%B6%E5%9B%BE%E7%89%87%E5%88%B0%E5%89%AA%E8%B4%B4%E6%9D%BF%EF%BC%8Cmarkdown-%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87"><span class="nav-number">5.2.</span> <span class="nav-text">macOS 复制图片到剪贴板，markdown 文件添加图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlens-%E5%85%B3%E9%97%AD%E4%B8%80%E9%A1%B9%E7%83%A6%E4%BA%BA%E7%9A%84%E6%8F%90%E7%A4%BA"><span class="nav-number">5.3.</span> <span class="nav-text">Gitlens 关闭一项烦人的提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#markdown-%E6%96%87%E4%BB%B6%E4%B9%9F%E5%8F%AF%E4%BB%A5-auto-complete"><span class="nav-number">5.4.</span> <span class="nav-text">markdown 文件也可以 auto complete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%91%94%E6%AF%8F%E4%B8%AA%E7%AA%97%E5%8F%A3%E4%B8%80%E4%B8%AA%E4%B8%BB%E9%A2%98"><span class="nav-number">5.5.</span> <span class="nav-text">👔每个窗口一个主题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">240</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">267</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/vscode_%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vscode 使用总结 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vscode 使用总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-09-30 15:45:45" itemprop="dateCreated datePublished" datetime="2020-09-30T15:45:45+00:00">2020-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-02-08 17:23:24" itemprop="dateModified" datetime="2025-02-08T17:23:24+00:00">2025-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>纵想刚毕业时候，还要破解用可以列编辑的一款文档软件（名字我都忘了哈哈）。现如今各种免费收费的编辑功能强大的软件很多，vscode 和 sublime text 算是佼佼者。</p>
+<p>vscode 开源插件比较多可以定制化很多功能。<br>sublime text 速度更快，字体渲染完美，默认配色更是一级棒。<br>以下是自己使用中比较喜欢的设置。</p>
+<p>突然发现 vscode 真的是一个操作系统了，感觉很多东西都可以集成进来了。<br>今天加了<code>insert date string</code>插件直接插入日期，以前都用 alfred 或者专门的软件来实现的，然后又搜索了<code>snippet</code>关键词，真是啥都有，本来想着有没有定制组装字符串功能的，一看反倒是看到了更多的可能。</p>
+<h2 id="vscode-快捷键"><a href="#vscode-快捷键" class="headerlink" title="vscode 快捷键"></a>vscode 快捷键</h2><p>写下经常用到的几个快捷键。<code>2020-12-22</code><br>意外发现 <code>markdown all in one</code> 插件真的好用，还能自动生成目录结构；然后又加上了几个 <code>markdown table</code> 的插件，真是够厉害的，生态是完胜 <code>sublime text</code>，能有什么办法呢？  </p>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>keys</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>删除当前行</td>
+<td><code>cmd``shift``k</code></td>
+</tr>
+<tr>
+<td>复制当前行</td>
+<td><code>opt``shift``up⬆️或者down⬇️</code></td>
+</tr>
+<tr>
+<td>选择行列模式</td>
+<td><code>alt``shift``i</code></td>
+</tr>
+<tr>
+<td>移动行</td>
+<td><code>alt``up⬆️或者down⬇️</code></td>
+</tr>
+</tbody></table>
+<p><strong>sublime 快捷键也记录在这里</strong> <code>2021-06-04</code>  </p>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>keys</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>快速选择多文本手动，鼠标选中文本</td>
+<td><code>cmd</code> <code>d</code></td>
+</tr>
+<tr>
+<td>快速选择多文本，选择行列模式</td>
+<td><code>cmd</code> <code>ctrl</code> <code>g</code></td>
+</tr>
+<tr>
+<td>列模式，鼠标选中多行</td>
+<td><code>cmd</code> <code>shift</code> <code>l</code></td>
+</tr>
+<tr>
+<td>列模式，多行选择</td>
+<td><code>option</code> <code>鼠标左键</code></td>
+</tr>
+<tr>
+<td>列模式，单个选择</td>
+<td><code>cmd</code> <code>鼠标左键</code></td>
+</tr>
+</tbody></table>
+<h2 id="特别设置"><a href="#特别设置" class="headerlink" title="特别设置"></a>特别设置</h2><ul>
+<li>标签栏全部展开，而不是水平滚动  <code>&quot;workbench.editor.wrapTabs&quot;: true</code></li>
+<li>避免 markdown lint 部分警告  <code>&quot;MD046&quot;: false</code> </li>
+<li>打开的文件列表，<code> &quot;explorer.openEditors.visible&quot;: 1,</code></li>
+</ul>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><ul>
+<li>博客编辑主题。<code>&quot;workbench.colorTheme&quot;: &quot;Gruvbox Dark Hard&quot;</code></li>
+<li>代码编辑主题。<code>&quot;workbench.colorTheme&quot;: &quot;One Monokai 80s&quot;</code></li>
+<li>sublime text 4 theme</li>
+<li>theme, theme darker, one dark pro</li>
+</ul>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ul>
+<li>huacnlee.autocorrect，保存的时候，自动 markdown 中英文分隔</li>
+</ul>
+<h3 id="outline-copy"><a href="#outline-copy" class="headerlink" title="outline copy"></a>outline copy</h3><p>outline 的内容导出来可以拷贝，插件<code>list-symbols</code></p>
+<h3 id="increment-selection"><a href="#increment-selection" class="headerlink" title="increment selection"></a>increment selection</h3><p>竟然还有这种神器，选择后，直接添加数列在最后，用在带 rawvalue 的 enum 上特别合适</p>
+<h3 id="paste-json-as-code"><a href="#paste-json-as-code" class="headerlink" title="paste json as code"></a>paste json as code</h3><p>可以快速生成 model 代码，做一个 app 完成这个功能就感觉完败了，没有这个轻量（不需要安装，更新更方便不需要审核）<br>Supports TypeScript, Python, Go, Ruby, C#, Java, Swift, Rust, Kotlin, C++, Flow, Objective-C, JavaScript, Elm, and JSON Schema.</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="snippets"><a href="#snippets" class="headerlink" title="snippets"></a>snippets</h3><p>自带的 snippets 可以自己创建，真是方便，vscode 真是字符处理的终极方案</p>
+<h3 id="macOS-复制图片到剪贴板，markdown-文件添加图片"><a href="#macOS-复制图片到剪贴板，markdown-文件添加图片" class="headerlink" title="macOS 复制图片到剪贴板，markdown 文件添加图片"></a>macOS 复制图片到剪贴板，markdown 文件添加图片</h3><p><code>2020-12-21 18:27</code><br>markdown 文件添加图片的格式有点特别的，操作比较复杂，使用了两个插件来处理 <code>markdown paste</code> 和 <code>paste image from local pc</code>。<br>除了需要装 <code>pngpaste</code> 之外，还有一个比较棘手的问题是，这两个插件要求插入的图片在剪贴板上。<br>macOS 是有专门的方法截图到剪贴板但是多个图片的话一个一个处理难免有点不灵活，有没有可以让图片复制到剪贴板的方法，这样就可以灵活处理了？<br>前后尝试了几次，时间跨度有些时日了，最后终于无法忍受不灵活，找到了方法。<br>先上链接 <a target="_blank" rel="noopener" href="http://www.alecjacobson.com/weblog/?p=3816">Copy image file to clipboard</a>  </p>
+<p>原理是 oc 程序编译后命令行使用，细节如下。<br>代码如下：</p>
+<pre class="language-objective-c" data-language="objective-c"><code class="language-objective-c">#import &lt;Foundation&#x2F;Foundation.h&gt;
+#import &lt;Cocoa&#x2F;Cocoa.h&gt;
+#import &lt;unistd.h&gt;
+BOOL copy_to_clipboard(NSString *path)
+&#123;
+  &#x2F;&#x2F; http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;2681630&#x2F;how-to-read-png-image-to-nsimage
+  NSImage * image;
+  if([path isEqualToString:@&quot;-&quot;])
+  &#123;
+    &#x2F;&#x2F; http:&#x2F;&#x2F;caiustheory.com&#x2F;read-standard-input-using-objective-c 
+    NSFileHandle *input &#x3D; [NSFileHandle fileHandleWithStandardInput];
+    image &#x3D; [[NSImage alloc] initWithData:[input readDataToEndOfFile]];
+  &#125;else
+  &#123; 
+    image &#x3D;  [[NSImage alloc] initWithContentsOfFile:path];
+  &#125;
+  &#x2F;&#x2F; http:&#x2F;&#x2F;stackoverflow.com&#x2F;a&#x2F;18124824&#x2F;148668
+  BOOL copied &#x3D; false;
+  if (image !&#x3D; nil)
+  &#123;
+    NSPasteboard *pasteboard &#x3D; [NSPasteboard generalPasteboard];
+    [pasteboard clearContents];
+    NSArray *copiedObjects &#x3D; [NSArray arrayWithObject:image];
+    copied &#x3D; [pasteboard writeObjects:copiedObjects];
+    [pasteboard release];
+  &#125;
+  [image release];
+  return copied;
+&#125;
+
+int main(int argc, char * const argv[])
+&#123;
+  NSAutoreleasePool *pool &#x3D; [[NSAutoreleasePool alloc] init];
+  if(argc&lt;2)
+  &#123;
+    printf(&quot;Usage:\n\n&quot;
+      &quot;Copy file to clipboard:\n    .&#x2F;impbcopy path&#x2F;to&#x2F;file\n\n&quot;
+      &quot;Copy stdin to clipboard:\n    cat &#x2F;path&#x2F;to&#x2F;file | .&#x2F;impbcopy -&quot;);
+    return EXIT_FAILURE;
+  &#125;
+  NSString *path&#x3D; [NSString stringWithUTF8String:argv[1]];
+  BOOL success &#x3D; copy_to_clipboard(path);
+  [pool release];
+  return (success?EXIT_SUCCESS:EXIT_FAILURE);
+&#125;
+</code></pre>
+
+<p>然后编译</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">gcc <span class="token parameter variable">-Wall</span> <span class="token parameter variable">-g</span> <span class="token parameter variable">-O3</span> <span class="token parameter variable">-ObjC</span> <span class="token parameter variable">-framework</span> Foundation <span class="token parameter variable">-framework</span> AppKit <span class="token parameter variable">-o</span> impbcopy impbcopy.m</code></pre>
+
+<p>使用命令：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">./impbcopy path/to/file.png
+<span class="token comment">#或者</span>
+<span class="token function">cat</span> path/to/file.jpg <span class="token operator">|</span> ./impbcopy -</code></pre>
+
+<h3 id="Gitlens-关闭一项烦人的提示"><a href="#Gitlens-关闭一项烦人的提示" class="headerlink" title="Gitlens 关闭一项烦人的提示"></a>Gitlens 关闭一项烦人的提示</h3><p><code>2020-12-14</code><br>不知道啥时候开始有这个了，太烦人，看别人的图<br><img src="https://sseen.github.io/images/2020/2020-12-14-15-45-30.png" alt="annoy"><br>解决方法就是这里，<code>Ctrl+Shift+P =&gt; &quot;Gitlens:Open Settings&quot; Ctrl+F for &quot;Git Code lens&quot; Deselect the line.</code>勾掉这个设置。<br><img src="https://sseen.github.io/images/2020/2020-12-14-15-43-37.png" alt="lens"></p>
+<h3 id="markdown-文件也可以-auto-complete"><a href="#markdown-文件也可以-auto-complete" class="headerlink" title="markdown 文件也可以 auto complete"></a>markdown 文件也可以 auto complete</h3><p><code>2020-12-13</code><br>类似各种文件后缀都可以自动提示了，开心。<br><code>&quot;editor.quickSuggestions&quot;: true</code>这个最简单。<br><img src="https://sseen.github.io/images/2020/2020-12-13-22-24-00.png" alt="mk"></p>
+<h3 id="👔每个窗口一个主题"><a href="#👔每个窗口一个主题" class="headerlink" title="👔每个窗口一个主题"></a>👔每个窗口一个主题</h3><p>尤其开始使用 vscode 编写 markdown 后，这种需求很强烈。因为代码编辑喜欢用 monokai 这种类似 sublime text 风格的，但是用来写 markdown 一片片的白色文字看起来眼睛太痛了。<br>于是找到了这个：</p>
+<blockquote>
+<p>You can have a different theme per workspace&#x2F;folder by adjusting the workbench.colorTheme in the workspace settings.  </p>
+<ol>
+<li>Open a new VSCode window.</li>
+<li>Open the project folder where you would like to have a different color theme.</li>
+<li>Navigate to File &gt; Preferences &gt; Settings.</li>
+<li>Select the “Workspace Settings” tab at the top of the settings screen. Anything you edit in here will now be specific to this workspace.</li>
+<li>Search for “colorTheme” and select the color theme you would like for this specific workspace.</li>
+</ol>
+<p><img src="https://sseen.github.io/images/2020/2020-09-30-16-09-45.png" alt="i"></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vscode/" rel="tag"># vscode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/iMac_5k_15%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%87%BA%E7%8E%B0%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E9%97%AE%E9%A2%98/" rel="prev" title="iMac 5k 15 系统重装出现问号文件夹问题">
+                  <i class="fa fa-angle-left"></i> iMac 5k 15 系统重装出现问号文件夹问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/macOS%E6%96%B0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="next" title="macOS新环境配置">
+                  macOS新环境配置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
