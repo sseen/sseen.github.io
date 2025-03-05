@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="也是借着 GitHub Copilot 免费额度的东风，我最近开始尝试自定义 Git 的 Commit Message 格式。这样可以让团队的 Commit Message 更加统一，也方便后续的代码 review 和版本管理。 这里顺带说下，这个东风也是靠着 cursor 等的竞争，而且截止到今天 2024-12-24，自动生成的功能确实离 cursor 差的不是一点点，尤其是上下文的能力。 比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义 GitHub Copilot 的 Commit Message 格式">
+<meta property="og:url" content="https://sseen.github.io/%E8%87%AA%E5%AE%9A%E4%B9%89%20GitHub%20Copilot%20%E7%9A%84%20Commit%20Message%20%E6%A0%BC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="也是借着 GitHub Copilot 免费额度的东风，我最近开始尝试自定义 Git 的 Commit Message 格式。这样可以让团队的 Commit Message 更加统一，也方便后续的代码 review 和版本管理。 这里顺带说下，这个东风也是靠着 cursor 等的竞争，而且截止到今天 2024-12-24，自动生成的功能确实离 cursor 差的不是一点点，尤其是上下文的能力。 比">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-24T10:31:10.000Z">
+<meta property="article:modified_time" content="2025-03-05T06:09:34.625Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="GitHub Copilot">
+<meta property="article:tag" content="Commit Message">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/%E8%87%AA%E5%AE%9A%E4%B9%89%20GitHub%20Copilot%20%E7%9A%84%20Commit%20Message%20%E6%A0%BC%E5%BC%8F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/%E8%87%AA%E5%AE%9A%E4%B9%89%20GitHub%20Copilot%20%E7%9A%84%20Commit%20Message%20%E6%A0%BC%E5%BC%8F/","path":"自定义 GitHub Copilot 的 Commit Message 格式/","title":"自定义 GitHub Copilot 的 Commit Message 格式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>自定义 GitHub Copilot 的 Commit Message 格式 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#commit-message-emoji-%E5%89%8D%E7%BC%80"><span class="nav-number">1.</span> <span class="nav-text">commit message emoji 前缀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-vscode-%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">使用 vscode 的配置文件设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-gitmessage-txt-%E6%8F%90%E4%BA%A4%E6%A8%A1%E6%9D%BF-commit-message-template"><span class="nav-number">3.</span> <span class="nav-text">使用 gitmessage.txt 提交模板 (commit message template)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitmessage-txt-%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">gitmessage.txt 示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">使用方式</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">277</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/%E8%87%AA%E5%AE%9A%E4%B9%89%20GitHub%20Copilot%20%E7%9A%84%20Commit%20Message%20%E6%A0%BC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="自定义 GitHub Copilot 的 Commit Message 格式 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自定义 GitHub Copilot 的 Commit Message 格式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-24 10:31:10" itemprop="dateCreated datePublished" datetime="2024-12-24T10:31:10+00:00">2024-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-05 06:09:34" itemprop="dateModified" datetime="2025-03-05T06:09:34+00:00">2025-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>也是借着 GitHub Copilot 免费额度的东风，我最近开始尝试自定义 Git 的 Commit Message 格式。这样可以让团队的 Commit Message 更加统一，也方便后续的代码 review 和版本管理。<br>
+这里顺带说下，这个东风也是靠着 cursor 等的竞争，而且截止到今天 2024-12-24，自动生成的功能确实离 cursor 差的不是一点点，尤其是上下文的能力。<br>
+比如一个变量的修改，width 和 height，如果你改成了 aWidth，基本上 Copilot 只能识别到一行也就是光标行的内容，而 cursor 可以识别到后续三四处的地方，这个差距还是很明显的。更厉害的是，还没移动到紧接着的 height 行，也是改成 aHeight，Cursor 就已经能识别到了，这是代差啊。</p>
+<p>目前 GitHub Copilot 并没有提供一个「一键式」的配置项来固定生成某种格式的 commit message，但我们可以通过一些技巧来“引导”Copilot 生成符合预期格式的提交信息。</p>
+<p>本文提供的可定制的 commit message 方法，实现内容如下：</p>
+<ol>
+<li>固定的提交信息格式，如 <code>feat: 添加用户登录功能</code>。</li>
+<li>自带 emoji 图标，如 <code>🚀 feat: 添加用户登录功能</code>。</li>
+<li>支持自动翻译成日文，如 <code>🚀 feat: 追加ユーザーログイン機能</code>。</li>
+</ol>
+<h2 id="commit-message-emoji-前缀">commit message emoji 前缀</h2>
+<ul>
+<li>除了 vscode 可以在设置里设置 emoji 前缀，还可以在 github.copilot.chat.commitMessageGeneration.instructions 里设置。</li>
+<li>使用 git hook 机制也可以，更通用一点</li>
+</ul>
+<p>使用步骤：</p>
+<ol>
+<li>
+<p>每个项目下（说是可以全局设置但是因为 gitmessage 全局配置，然后没有生效的原因，所以每个项目下都要设置）</p>
+</li>
+<li>
+<p>如果您想根据不同的 commit type 自动匹配不同的 emoji，我们可以通过 Git Hook 来实现：</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建或编辑 prepare-commit-msg hook</span>
+<span class="token function">vim</span> .git/hooks/prepare-commit-msg</code></pre>
+<p>添加以下内容：</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token assign-left variable">COMMIT_MSG_FILE</span><span class="token operator">=</span><span class="token variable">$1</span>
+<span class="token assign-left variable">COMMIT_SOURCE</span><span class="token operator">=</span><span class="token variable">$2</span>
+
+<span class="token comment"># 如果是通过编辑器提交的 commit</span>
+<span class="token comment"># 先把 if 注释掉，调试半天原来是没有进入这个分支</span>
+<span class="token comment"># if [ -z "$COMMIT_SOURCE" ]; then</span>
+    <span class="token comment"># 读取当前的 commit 消息</span>
+    <span class="token assign-left variable">TEMP_MSG</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> <span class="token string">"<span class="token variable">$COMMIT_MSG_FILE</span>"</span><span class="token variable">)</span></span>
+
+    <span class="token comment"># 如果 commit 消息以 emoji 开头，那么不添加 emoji</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable">$TEMP_MSG</span> <span class="token operator">=~</span> ^<span class="token punctuation">[</span>^<span class="token punctuation">[</span>:alnum:<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+    
+    <span class="token comment"># 根据 commit type 选择对应的 emoji</span>
+    <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$TEMP_MSG</span>"</span> <span class="token keyword">in</span>
+        <span class="token string">"feat"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"✨ "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"fix"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"🔧 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"bug"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"🐛 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"docs"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"📚 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"style"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"💎 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"refactor"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"♻️ "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"perf"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"⚡️ "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"test"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"🚨 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"chore"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"⚙️ "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token string">"merge"</span>*<span class="token punctuation">)</span> <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"🍰 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        *<span class="token punctuation">)</span>  <span class="token assign-left variable">EMOJI</span><span class="token operator">=</span><span class="token string">"🎉 "</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token keyword">esac</span>
+    
+    <span class="token comment"># 将 emoji 添加到消息开头</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$EMOJI</span><span class="token variable">$TEMP_MSG</span>"</span> <span class="token operator">></span> <span class="token string">"<span class="token variable">$COMMIT_MSG_FILE</span>"</span>
+<span class="token comment"># fi</span></code></pre>
+<p>然后添加执行权限：</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x .git/hooks/prepare-commit-msg</code></pre>
+</li>
+<li>
+<p>强制全局设置 hook 文件<br>
+这样就能全局生效了，不用每个项目都设置。话说 git message 没有强制的设置，不过设置 hook 可以强制执行。</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> ~/.githooks
+<span class="token function">git</span> config <span class="token parameter variable">--global</span> core.hooksPath ~/.githooks
+<span class="token function">cp</span> .git/hooks/prepare-commit-msg ~/.githooks/prepare-commit-msg</code></pre>
+</li>
+</ol>
+<p>常用的 emoji 对应关系：</p>
+<ul>
+<li>✨ (feat): 新功能</li>
+<li>🐛 (fix): 修复</li>
+<li>📚 (docs): 文档</li>
+<li>💎 (style): 格式</li>
+<li>♻️ (refactor): 重构</li>
+<li>⚡️ (perf): 性能优化</li>
+<li>🚨 (test): 测试</li>
+<li>⚙️ (chore): 构建/工具</li>
+</ul>
+<p>您想使用哪种方式？我可以帮您调整 emoji 的选择或进一步定制模板。</p>
+<h2 id="使用-vscode-的配置文件设置">使用 vscode 的配置文件设置</h2>
+<p>本来是想要定制下提交的 emoji 图标，没想到连翻译也一起搞定了，还是佩服自己😂。<br>
+使用 github.copilot.chat.commitMessageGeneration.instructions</p>
+<pre class="language-none"><code class="language-none">&#123;
+    &quot;github.copilot.chat.commitMessageGeneration.instructions&quot;: [
+        &#123;
+            &#x2F;&#x2F; 其他配置 ...
+            
+            &quot;text&quot;: &quot;Please write the commit message in English, and Japanese. In the Japanese part, include furigana (in parentheses) for each kanji, and for any foreign loanwords, write them in katakana followed by the original word in parentheses. For example:修正(しゅうせい)メモリ(memory). This way, the kanji has its corresponding hiragana reading, and the loanword is clearly identified in katakana along with the original term. Finally, Insert the  emojis at the beginning of commit message.Please choose emojis according to the Gitmoji guidelines. Each commit message should include the relevant Gitmoji icon that best represents the type of change.&quot;
+          &#125;
+          
+    ],
+&#125;</code></pre>
+<h2 id="使用-gitmessage-txt-提交模板-commit-message-template">使用 gitmessage.txt 提交模板 (commit message template)</h2>
+<p>Git 原生就支持<strong>自定义提交信息模板</strong>，我们可以利用这个功能为 Copilot 提供上下文，让它更加“乖巧”地填充。操作步骤如下：</p>
+<ol>
+<li>
+<p>在项目根目录创建一个 <code>.gitmessage.txt</code>，并写入你的“理想模板”，比如：</p>
+<pre class="language-none"><code class="language-none"># Commit message template (Conventional Commits)
+
+&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+&lt;BLANK LINE&gt;
+- 这里补充详细描述，原因、方案等
+- 支持多行
+&lt;BLANK LINE&gt;
+BREAKING CHANGE: &lt;如果有破坏性更新则填写，否则删除此行&gt;</code></pre>
+</li>
+<li>
+<p>在你的全局或者项目级 <code>.gitconfig</code> 中加入：</p>
+<p><code>git config --global --edit</code></p>
+<pre class="language-none"><code class="language-none">[commit]
+    template &#x3D; .gitmessage.txt</code></pre>
+<p>这样每次 <code>git commit</code> 时，编辑器会自动加载这个模板。Copilot 也会看到这些“上下文”，更容易给出格式化的建议。</p>
+</li>
+<li>
+<p>提交时同样先在模板上方或合适位置输入一些对本次变更的描述，或者留空让 Copilot 自行猜测，然后让 Copilot 补全。它就会尽量按照模板格式来生成提交消息。</p>
+</li>
+</ol>
+<p>目前 Copilot 不支持在插件里直接“固定”它的输出格式，但通过<strong>模板 + 上下文</strong>的思路，可以显著提高它生成的提交信息与既定规范的贴合度。</p>
+<ul>
+<li><strong>核心思路</strong>就是：给 Copilot 提供尽可能清晰、完整的上下文（模板、注释、示例），让它在自动补全时向你期望的方向靠拢。</li>
+<li>Git 自带的提交模板功能可以很好地为 Copilot 提供“范本”参考。</li>
+<li>如果需要更严格的管控，推荐结合 Commitizen / commitlint / husky 等工具来自动化管理。</li>
+</ul>
+<p>祝你定制出满意的 Commit Message！</p>
+<h2 id="gitmessage-txt-示例">gitmessage.txt 示例</h2>
+<p>下面给出一个常见的、基于 <strong>Conventional Commits</strong> 规范的 <code>.gitmessage.txt</code> 示例。将它放在项目根目录，然后在 <code>.gitconfig</code> 中设置 <code>template = .gitmessage.txt</code>，即可在每次执行 <code>git commit</code> 时，自动加载此模板。</p>
+<pre class="language-none"><code class="language-none"># -------------- .gitmessage.txt Example --------------
+# NOTE: Remove or comment out these lines in an actual commit,
+#       or they may appear in the final commit message.
+#
+# Commit Message Format: &lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+#
+# Possible &lt;type&gt; values include (but are not limited to):
+#   feat:     A new feature
+#   fix:      A bug fix
+#   docs:     Documentation changes
+#   style:    Code formatting (does not affect runtime)
+#   refactor: Code restructuring without changing functionality
+#   perf:     Performance improvements
+#   test:     Adding or updating tests
+#   chore:    Changes to build process or auxiliary tools
+#
+# &lt;scope&gt; (optional) indicates the section of the codebase your changes affect,
+#   e.g., auth, UI, database, etc.
+#
+# &lt;subject&gt; is a concise description of the change.
+#   Keep it short and imperative, e.g., &quot;Add user login feature&quot;
+#
+# Example: feat(login): add user authentication flow
+#
+# ------------------------------------------------------
+
+&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+
+# Provide an extended description of the changes below:
+# ----------------------------------------------------
+- 
+
+# If this commit introduces a breaking change, add details below.
+# Otherwise, remove or comment out the line.
+BREAKING CHANGE:
+</code></pre>
+<h3 id="使用方式">使用方式</h3>
+<ol>
+<li>在项目根目录创建 <code>.gitmessage.txt</code> 文件，并将以上内容粘贴至其中。</li>
+<li>在全局或项目级 <code>.gitconfig</code> 中添加如下配置：<pre class="language-ini" data-language="ini"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">commit</span><span class="token punctuation">]</span></span>
+    <span class="token key attr-name">template</span> <span class="token punctuation">=</span> <span class="token value attr-value">.gitmessage.txt</span></code></pre>
+</li>
+<li>以后执行 <code>git commit</code> 时就会自动调用这个模 a 板文件。</li>
+<li>根据实际需要，在 <code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</code>、<code>- </code>、<code>BREAKING CHANGE: </code> 等位置填写内容。</li>
+<li>保存后退出编辑器，即可完成规范化的提交信息。</li>
+</ol>
+<p>这样，即使不使用任何额外工具，也能让自己或团队的提交信息更加统一、易读，同时还能在提交阶段通过 Copilot 或其他辅助插件来自动补全、完善这份模板。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+              <a href="/tags/GitHub-Copilot/" rel="tag"># GitHub Copilot</a>
+              <a href="/tags/Commit-Message/" rel="tag"># Commit Message</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" rel="prev" title="Flutter状态管理">
+                  <i class="fa fa-angle-left"></i> Flutter状态管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/MacOS%E8%A3%85%E6%9C%BA%E5%AE%9E%E7%94%A8/" rel="next" title="MacOS装机实用">
+                  MacOS装机实用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

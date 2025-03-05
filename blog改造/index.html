@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="用了差不多五年了，博客的样式和功能都有些落后了，所以决定稍微改进一下。 本来想用按照这个 打造 Github Issue 到 Hexo 部署自动工作流  来改造，也很喜欢 github issue 这样的形式，既解决了评论和图片的问题，又解决了博客的部署问题。 但是想想编辑有点麻烦，还必须用网页登陆，没有顺手的编辑器，所以还是在原来的基础上进行改造。 基于 github 的评论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="blog 改造">
+<meta property="og:url" content="https://sseen.github.io/blog%E6%94%B9%E9%80%A0/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="用了差不多五年了，博客的样式和功能都有些落后了，所以决定稍微改进一下。 本来想用按照这个 打造 Github Issue 到 Hexo 部署自动工作流  来改造，也很喜欢 github issue 这样的形式，既解决了评论和图片的问题，又解决了博客的部署问题。 但是想想编辑有点麻烦，还必须用网页登陆，没有顺手的编辑器，所以还是在原来的基础上进行改造。 基于 github 的评论">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sseen.github.io/blog%E6%94%B9%E9%80%A0/blog%E6%94%B9%E9%80%A0/TranscodedWallpaper.jpg">
+<meta property="article:published_time" content="2025-01-23T16:24:34.000Z">
+<meta property="article:modified_time" content="2025-03-05T06:09:34.627Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sseen.github.io/blog%E6%94%B9%E9%80%A0/blog%E6%94%B9%E9%80%A0/TranscodedWallpaper.jpg">
+
+
+<link rel="canonical" href="https://sseen.github.io/blog%E6%94%B9%E9%80%A0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/blog%E6%94%B9%E9%80%A0/","path":"blog改造/","title":"blog 改造"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>blog 改造 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-github-%E7%9A%84%E8%AF%84%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">基于 github 的评论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%9B%BE%E7%89%87"><span class="nav-number">3.</span> <span class="nav-text">内置图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE"><span class="nav-number">4.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#markdown-%E7%94%9F%E6%88%90%E6%8F%92%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">markdown 生成插件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">277</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/blog%E6%94%B9%E9%80%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="blog 改造 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          blog 改造
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-01-23 16:24:34" itemprop="dateCreated datePublished" datetime="2025-01-23T16:24:34+00:00">2025-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-05 06:09:34" itemprop="dateModified" datetime="2025-03-05T06:09:34+00:00">2025-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>用了差不多五年了，博客的样式和功能都有些落后了，所以决定稍微改进一下。<br>
+本来想用按照这个 <a target="_blank" rel="noopener" href="https://github.com/flytam/blog/issues/27">打造 Github Issue 到 Hexo 部署自动工作流 </a> 来改造，也很喜欢 github issue 这样的形式，既解决了评论和图片的问题，又解决了博客的部署问题。<br>
+但是想想编辑有点麻烦，还必须用网页登陆，没有顺手的编辑器，所以还是在原来的基础上进行改造。</p>
+<h2 id="基于-github-的评论">基于 github 的评论</h2>
+<p><code>update 2025-01-25</code><br>
+utterances 的配置需要在博客的配置文件里加上 url 不然登录完成后回调会回不到博客。<br>
+utterances 的主题配置可以设置 <code>preferred-color-scheme</code> 来设置主题颜色，默认是跟随系统。</p>
+<p>本来打算用 gitalk 但是发现有个更好的，还不回泄漏 id 和 key，那就是 utterances。</p>
+<h2 id="主题">主题</h2>
+<p><code>update 2025-01-26</code></p>
+<blockquote>
+<p>看到 markdown-preview-enhanced 插件里有个theme可以选vue.css，这个样式的挺好看的，如何把这个样式用到 hexo的next主题里<br>
+找了下 <code>/Users/xxx/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.15/crossnote/styles/prism_theme/vue.css</code>，简单把代码复制到 <code>source/_data/styles.styl</code> 里是不行的，需要翻译成 stylus 语法。改后试了下，整个更文艺一些，但是颜色什么的还没上来，后面继续研究。</p>
+</blockquote>
+<p>之前用的是旧的<a target="_blank" rel="noopener" href="https://theme-next.org/index.html">hexo-theme-next</a>，五年了原来的项目都不维护了，有个新的分支也就是<a target="_blank" rel="noopener" href="https://theme-next.js.org">hexo-theme-next</a>，还好熟悉的配方，继续用吧。</p>
+<p>后面可以看看这个😂。之前用的是 <a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">hexo-theme-next</a>，但是感觉有点臃肿，所以打算换成 <a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">hexo-theme-butterfly</a>。这个感觉有点清新，算是年轻人的风格，有时间体验下。</p>
+<h2 id="内置图片">内置图片</h2>
+<p><code>update 2025-01-23 17:00:00</code><br>
+还是要启用，不然之前的链接就不作用了，但是文件夹生成后自己可以不用，或者最后统一删除掉，看看时间会给什么答案。</p>
+<p>这个也没什么搜了一下，还是几年前就有的方案，配置文件里设置 post_asset_folder 就可以，但是每个文章都建一个文件夹，感觉也没有必要，所以还是手动建一个文件夹放图片，效果是一样的。</p>
+<p>建议在博客年份目录下按季度建立文件夹来存放图片，这样更有条理且便于管理。</p>
+<p><img src="./blog%E6%94%B9%E9%80%A0/TranscodedWallpaper.jpg" alt="image"></p>
+<p>比如这里只要参照这同样的链接，就能展示出来图片。点击查看：<a href="/wallpaper%E5%A3%81%E7%BA%B8/" title="wallpaper 壁纸">壁纸</a></p>
+<h2 id="标签">标签</h2>
+<p>之前一直没有开启 tags，打开都是错误页面，这次配置了 tags，并用了云标签，效果还不错。<br>
+备注下，还是默认关闭了 autocorrect 插件的 format on save，太耽误事了，把标签里的英文逗号都改成中文逗号了，影响 tags 生成。</p>
+<h2 id="markdown-生成插件">markdown 生成插件</h2>
+<p>发现有时候加粗的文字，并没有完整显示，切换了 markdown 生成插件，就可以了。</p>
+<pre class="language-none"><code class="language-none">npm un hexo-renderer-marked --save
+npm i hexo-renderer-markdown-it --save</code></pre>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/blog/" rel="tag"># blog</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Stargate%20Project/" rel="prev" title="Stargate Project">
+                  <i class="fa fa-angle-left"></i> Stargate Project
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Meta%20genai%20org%20in%20panic%20mode/" rel="next" title="Meta genai org in panic mode">
+                  Meta genai org in panic mode <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

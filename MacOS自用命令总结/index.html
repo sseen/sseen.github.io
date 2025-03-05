@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="自己常用的 Mac 命令，记录一下。  📟命令部分  文件或者文件夹加密 重命名之添加后缀 finder hexo 相关命令 其他 如何删除长路径的文件 命令行移动复制，带进度条，速度   💾配置部分  oh-my-zsh 提示 Insecure completion-dependent directories detected macOS壁纸路径   ⌨️操作部分  🍋复制图片到剪贴板【这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MacOS自用命令及操作总结">
+<meta property="og:url" content="https://sseen.github.io/MacOS%E8%87%AA%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="自己常用的 Mac 命令，记录一下。  📟命令部分  文件或者文件夹加密 重命名之添加后缀 finder hexo 相关命令 其他 如何删除长路径的文件 命令行移动复制，带进度条，速度   💾配置部分  oh-my-zsh 提示 Insecure completion-dependent directories detected macOS壁纸路径   ⌨️操作部分  🍋复制图片到剪贴板【这">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-10T23:06:39.000Z">
+<meta property="article:modified_time" content="2025-03-05T06:09:34.617Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="MacOS">
+<meta property="article:tag" content="命令">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="grep">
+<meta property="article:tag" content="unzip">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/MacOS%E8%87%AA%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/MacOS%E8%87%AA%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/","path":"MacOS自用命令总结/","title":"MacOS自用命令及操作总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MacOS自用命令及操作总结 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9F%E5%91%BD%E4%BB%A4%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">📟命令部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%88%96%E8%80%85%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8A%A0%E5%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">文件或者文件夹加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E4%B9%8B%E6%B7%BB%E5%8A%A0%E5%90%8E%E7%BC%80"><span class="nav-number">1.2.</span> <span class="nav-text">重命名之添加后缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#finder"><span class="nav-number">1.3.</span> <span class="nav-text">finder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">hexo 相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.5.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E9%95%BF%E8%B7%AF%E5%BE%84%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">1.6.</span> <span class="nav-text">如何删除长路径的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A7%BB%E5%8A%A8%E5%A4%8D%E5%88%B6%EF%BC%8C%E5%B8%A6%E8%BF%9B%E5%BA%A6%E6%9D%A1%EF%BC%8C%E9%80%9F%E5%BA%A6"><span class="nav-number">1.7.</span> <span class="nav-text">命令行移动复制，带进度条，速度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%BE%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">💾配置部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#oh-my-zsh-%E6%8F%90%E7%A4%BA-Insecure-completion-dependent-directories-detected"><span class="nav-number">2.1.</span> <span class="nav-text">oh-my-zsh 提示 Insecure completion-dependent directories detected</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macOS%E5%A3%81%E7%BA%B8%E8%B7%AF%E5%BE%84"><span class="nav-number">2.2.</span> <span class="nav-text">macOS壁纸路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%8C%A8%EF%B8%8F%E6%93%8D%E4%BD%9C%E9%83%A8%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">⌨️操作部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8D%8B%E5%A4%8D%E5%88%B6%E5%9B%BE%E7%89%87%E5%88%B0%E5%89%AA%E8%B4%B4%E6%9D%BF%E3%80%90%E8%BF%99%E9%83%A8%E5%88%86%E5%85%88%E6%89%93%E9%97%AE%E5%8F%B7%EF%BC%8Cbig-sur-%E5%A5%BD%E5%83%8F%E6%9C%89%E7%82%B9%E9%97%AE%E9%A2%98%E3%80%82%E3%80%91"><span class="nav-number">3.1.</span> <span class="nav-text">🍋复制图片到剪贴板【这部分先打问号，big sur 好像有点问题。】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8D%8F%E5%87%BA%E7%8E%B0%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%8C%85%E6%8B%AC%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B9%8B%E7%B1%BB%E7%9A%84%EF%BC%8C%E6%9C%89%E5%87%A0%E4%B8%AA%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.</span> <span class="nav-text">🍏出现无法启动的时候，包括问号文件夹之类的，有几个操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8D%8E%E9%80%81%E4%BF%AEMac%E5%89%8D-%E4%B8%87%E8%83%BD%E7%9A%84%E4%B8%A4%E4%B8%AA%E8%87%AA%E6%95%91%E6%96%B9%E6%B3%95%EF%BC%9A%E9%87%8D%E7%BD%AE-NVRAM%EF%BC%88PRAM%EF%BC%89%E4%B8%8E-%E9%87%8D%E7%BD%AE-SMC"><span class="nav-number">3.3.</span> <span class="nav-text">🍎送修Mac前 万能的两个自救方法：重置 NVRAM（PRAM）与 重置 SMC</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">277</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/MacOS%E8%87%AA%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MacOS自用命令及操作总结 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MacOS自用命令及操作总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-09-10 23:06:39" itemprop="dateCreated datePublished" datetime="2020-09-10T23:06:39+00:00">2020-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-05 06:09:34" itemprop="dateModified" datetime="2025-03-05T06:09:34+00:00">2025-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>自己常用的 Mac 命令，记录一下。</p>
+<ol>
+<li><a href="#%E5%91%BD%E4%BB%A4%E9%83%A8%E5%88%86">📟命令部分</a>
+<ol>
+<li><a href="#%E6%96%87%E4%BB%B6%E6%88%96%E8%80%85%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8A%A0%E5%AF%86">文件或者文件夹加密</a></li>
+<li><a href="#%E9%87%8D%E5%91%BD%E5%90%8D%E4%B9%8B%E6%B7%BB%E5%8A%A0%E5%90%8E%E7%BC%80">重命名之添加后缀</a></li>
+<li><a href="#finder">finder</a></li>
+<li><a href="#hexo-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4">hexo 相关命令</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E9%95%BF%E8%B7%AF%E5%BE%84%E7%9A%84%E6%96%87%E4%BB%B6">如何删除长路径的文件</a></li>
+<li><a href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A7%BB%E5%8A%A8%E5%A4%8D%E5%88%B6%E5%B8%A6%E8%BF%9B%E5%BA%A6%E6%9D%A1%E9%80%9F%E5%BA%A6">命令行移动复制，带进度条，速度</a></li>
+</ol>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86">💾配置部分</a>
+<ol>
+<li><a href="#oh-my-zsh-%E6%8F%90%E7%A4%BA-insecure-completion-dependent-directories-detected">oh-my-zsh 提示 Insecure completion-dependent directories detected</a></li>
+<li><a href="#macos%E5%A3%81%E7%BA%B8%E8%B7%AF%E5%BE%84">macOS壁纸路径</a></li>
+</ol>
+</li>
+<li><a href="#%EF%B8%8F%E6%93%8D%E4%BD%9C%E9%83%A8%E5%88%86">⌨️操作部分</a>
+<ol>
+<li><a href="#%E5%A4%8D%E5%88%B6%E5%9B%BE%E7%89%87%E5%88%B0%E5%89%AA%E8%B4%B4%E6%9D%BF%E8%BF%99%E9%83%A8%E5%88%86%E5%85%88%E6%89%93%E9%97%AE%E5%8F%B7big-sur-%E5%A5%BD%E5%83%8F%E6%9C%89%E7%82%B9%E9%97%AE%E9%A2%98">🍋复制图片到剪贴板【这部分先打问号，big sur 好像有点问题。】</a></li>
+<li><a href="#%E5%87%BA%E7%8E%B0%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%8C%85%E6%8B%AC%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B9%8B%E7%B1%BB%E7%9A%84%E6%9C%89%E5%87%A0%E4%B8%AA%E6%93%8D%E4%BD%9C">🍏出现无法启动的时候，包括问号文件夹之类的，有几个操作</a></li>
+<li><a href="#%E9%80%81%E4%BF%AEmac%E5%89%8D-%E4%B8%87%E8%83%BD%E7%9A%84%E4%B8%A4%E4%B8%AA%E8%87%AA%E6%95%91%E6%96%B9%E6%B3%95%E9%87%8D%E7%BD%AE-nvrampram%E4%B8%8E-%E9%87%8D%E7%BD%AE-smc">🍎送修Mac前 万能的两个自救方法：重置 NVRAM（PRAM）与 重置 SMC</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="📟命令部分">📟命令部分</h2>
+<h3 id="文件或者文件夹加密">文件或者文件夹加密</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 加密文件夹</span>
+<span class="token function">zip</span> <span class="token parameter variable">-er</span> ./archive.zip ./backup
+<span class="token comment"># 加密文件</span>
+<span class="token function">zip</span> <span class="token parameter variable">-e</span> 
+<span class="token comment"># 预览删除空文件夹</span>
+<span class="token function">find</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-type</span> d <span class="token parameter variable">-empty</span> <span class="token parameter variable">-print</span>
+<span class="token comment"># 删除空文件夹</span>
+<span class="token function">find</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-type</span> d <span class="token parameter variable">-empty</span> <span class="token parameter variable">-delete</span></code></pre>
+<h3 id="重命名之添加后缀">重命名之添加后缀</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 统一添加png后缀</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> *<span class="token punctuation">;</span> <span class="token keyword">do</span> <span class="token function">mv</span> <span class="token string">"<span class="token variable">$i</span>"</span> <span class="token string">"<span class="token variable">$i</span>.png"</span><span class="token punctuation">;</span> <span class="token keyword">done</span></code></pre>
+<h3 id="finder">finder</h3>
+<p>隐藏桌面图标<br>
+<code>defaults write com.apple.finder CreateDesktop -bool FALSE; killall Finder</code><br>
+显示桌面图标<br>
+<code>defaults write com.apple.finder CreateDesktop -bool TRUE; killall Finder</code></p>
+<h3 id="hexo-相关命令">hexo 相关命令</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># hexo</span>
+<span class="token comment"># 带目录的新建文章</span>
+hexo new <span class="token parameter variable">-p</span> <span class="token number">2020</span>/MacOS自用命令总结 MacOS自用命令总结
+<span class="token comment"># 发现新建标题带.无法生成正确的文章，必须手动添加.md</span>
+hexo new <span class="token parameter variable">-p</span> <span class="token number">2020</span>/<span class="token string">"React.js入门篇.md"</span> <span class="token string">"React.js入门篇"</span></code></pre>
+<h3 id="其他">其他</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 打包的时候带上时间后缀</span>
+<span class="token function">git</span> archive <span class="token parameter variable">-o</span> <span class="token punctuation">..</span>/project_tm<span class="token variable"><span class="token variable">`</span><span class="token function">date</span> +%m%d%H%M<span class="token variable">`</span></span>.zip medical0808
+<span class="token comment"># 打包的时候带上时间和git commit hash短前缀</span>
+<span class="token function">git</span> archive <span class="token parameter variable">-o</span> ~/Desktop/workspace/project_<span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">date</span> +<span class="token string">"%m%d"</span><span class="token variable">`</span></span>"</span>_<span class="token variable"><span class="token variable">$(</span><span class="token function">git</span> rev-parse <span class="token parameter variable">--short</span> HEAD<span class="token variable">)</span></span>.zip master
+<span class="token comment"># 查看压缩包内容</span>
+<span class="token function">unzip</span> <span class="token parameter variable">-vl</span> <span class="token punctuation">..</span>/archive.zip
+<span class="token comment"># grep</span>
+<span class="token comment"># 找到多个匹配项输出，这里有 id 和 dwmc 两行</span>
+<span class="token function">grep</span> <span class="token parameter variable">-w</span> <span class="token string">"id\|dwmc"</span> ~/Documents/list.json
+<span class="token comment"># grep 找到匹配项，包括目标行的上一行</span>
+<span class="token function">grep</span> <span class="token parameter variable">-B</span> <span class="token number">1</span> <span class="token string">"match pattern"</span> ~/Documents/listAll.txt
+<span class="token comment"># 只显示当前目录的文件夹大小而不显示子文件夹</span>
+<span class="token function">du</span> <span class="token parameter variable">-h</span> <span class="token parameter variable">-d</span> <span class="token number">1</span>
+<span class="token comment"># 删除长路径的文件夹，尤其是无限嵌套循环的目录，rm -rf 都不行的时候</span>
+<span class="token builtin class-name">echo</span> *<span class="token operator">|</span><span class="token function">xargs</span> <span class="token function">rm</span> <span class="token parameter variable">-rf</span>
+<span class="token comment"># How to use 'find' to return parent directory，找到文件的文件夹路径，不包括文件名</span>
+<span class="token function">find</span> /   <span class="token parameter variable">-name</span> <span class="token string">'myfile'</span> <span class="token parameter variable">-type</span> f <span class="token parameter variable">-exec</span> <span class="token function">dirname</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre>
+<h3 id="如何删除长路径的文件">如何删除长路径的文件</h3>
+<h3 id="命令行移动复制，带进度条，速度">命令行移动复制，带进度条，速度</h3>
+<p>There isn’t. See here as to why. Although it does more than you need, rsync has a --progress parameter. The -a will keep permissions,etc, and -h will be human readable.<br>
+<code>rsync -ah --progress &lt;source destination&gt;</code><br>
+如果目标路径有非法字符的话可以这样<br>
+<code>rsync -ah --progress user@xx.xx.xx.xx:&quot;&lt;source destination&gt;&quot; &lt;destination path&gt;</code><br>
+也就是用引号括起来。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Pictures/1.jpg
+      <span class="token number">2</span>.13M <span class="token number">100</span>%    <span class="token number">2</span>.28MB/s    <span class="token number">0</span>:00:00 <span class="token punctuation">(</span>xfr<span class="token comment">#5898, to-chk=1/5905)</span>
+Pictures/2.jpg
+      <span class="token number">1</span>.68M <span class="token number">100</span>%    <span class="token number">1</span>.76MB/s    <span class="token number">0</span>:00:00 <span class="token punctuation">(</span>xfr<span class="token comment">#5899, to-chk=0/5905)</span></code></pre>
+<h2 id="💾配置部分">💾配置部分</h2>
+<h3 id="oh-my-zsh-提示-Insecure-completion-dependent-directories-detected">oh-my-zsh 提示 Insecure completion-dependent directories detected</h3>
+<ol>
+<li>
+<p>在<code>.zshrc</code>文件首行添加</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># setting</span>
+<span class="token variable">$&#123;ZSH_DISABLE_COMPFIX<span class="token operator">:=</span>true&#125;</span></code></pre>
+</li>
+<li>
+<p>然后运行 <code>source ~/.zshrc</code></p>
+</li>
+</ol>
+<h3 id="macOS壁纸路径">macOS壁纸路径</h3>
+<p>macOS壁纸路径是<code>/System/Library/Desktop Pictures</code></p>
+<h2 id="⌨️操作部分">⌨️操作部分</h2>
+<h3 id="🍋复制图片到剪贴板【这部分先打问号，big-sur-好像有点问题。】">🍋复制图片到剪贴板【这部分先打问号，big sur 好像有点问题。】</h3>
+<p>初看这个标题好像没什么了不起的，不就是 <code>command + c</code> 么，其实不是。<br>
+一般我们截图的时候如果直接想要保留在剪贴板而不是放在桌面，会用到这个截图快捷键 + control 就可以了，类似 <code>Shift+Control+Command+4</code> 能通过拖动鼠标来截取部分屏幕，并复制图片到剪贴板。<br>
+但是，你想在截图里标注一些内容然后再复制到剪贴板呢？<br>
+找到了这个方法，使用的就是 alfred 的 <code>keyword to applescript</code>：</p>
+<blockquote>
+<p>最近使用Mac中的Alfred实现一个截图复制到剪贴板的功能，这个命令比较特殊，记录一下。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/usr/bin/osascript</span>
+on run args
+<span class="token builtin class-name">set</span> the clipboard to POSIX <span class="token function">file</span> <span class="token punctuation">(</span>first item of args<span class="token punctuation">)</span>
+<span class="token builtin class-name">return</span> the clipboard
+end</code></pre>
+</blockquote>
+<h3 id="🍏出现无法启动的时候，包括问号文件夹之类的，有几个操作">🍏出现无法启动的时候，包括问号文件夹之类的，有几个操作</h3>
+<ol>
+<li>开机按 command + R，这时候可以抹盘安装随机附送的系统版本，比如15年是el captain。</li>
+<li>开机按 command + option + R，这时候是可以抹盘安装最新的兼容版本，比如catalina。</li>
+<li>开机按 command + option + shift + R，自己没用，类似 1。</li>
+<li>开机长按 option 这时候可以选择启动盘。</li>
+</ol>
+<h3 id="🍎送修Mac前-万能的两个自救方法：重置-NVRAM（PRAM）与-重置-SMC">🍎送修Mac前 万能的两个自救方法：重置 NVRAM（PRAM）与 重置 SMC</h3>
+<p>如标题所示。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MacOS/" rel="tag"># MacOS</a>
+              <a href="/tags/%E5%91%BD%E4%BB%A4/" rel="tag"># 命令</a>
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+              <a href="/tags/grep/" rel="tag"># grep</a>
+              <a href="/tags/unzip/" rel="tag"># unzip</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/sed%E5%91%BD%E4%BB%A4%E5%9C%A8macos%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="sed命令在macos环境下的使用">
+                  <i class="fa fa-angle-left"></i> sed命令在macos环境下的使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/iMac_5k_15%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%87%BA%E7%8E%B0%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E9%97%AE%E9%A2%98/" rel="next" title="iMac 5k 15 系统重装出现问号文件夹问题">
+                  iMac 5k 15 系统重装出现问号文件夹问题 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
