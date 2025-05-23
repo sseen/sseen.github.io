@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="公司发的是 windows 电脑，之前一直用 mac，现在又要用 windows 了，记录下环境配置。 本来突发奇想是不是可以装个 linux 环境不也可以，因为实在受不了 powershell 环境，不过后来用了 wsl2，感觉还是可以的，然后 windows 办公套件的话 linux 又不方便感觉，所以还是算了。 powershell 配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows 环境记录">
+<meta property="og:url" content="https://sseen.github.io/windows%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="公司发的是 windows 电脑，之前一直用 mac，现在又要用 windows 了，记录下环境配置。 本来突发奇想是不是可以装个 linux 环境不也可以，因为实在受不了 powershell 环境，不过后来用了 wsl2，感觉还是可以的，然后 windows 办公套件的话 linux 又不方便感觉，所以还是算了。 powershell 配置">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-04T09:59:17.000Z">
+<meta property="article:modified_time" content="2025-05-23T01:37:08.603Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="powershell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/windows%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/windows%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95/","path":"windows环境记录/","title":"windows 环境记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>windows 环境记录 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#powershell-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">powershell 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#oh-my-posh"><span class="nav-number">1.1.</span> <span class="nav-text">oh-my-posh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">常用软件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">258</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">295</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/windows%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="windows 环境记录 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          windows 环境记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-04 09:59:17" itemprop="dateCreated datePublished" datetime="2023-10-04T09:59:17+00:00">2023-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-23 01:37:08" itemprop="dateModified" datetime="2025-05-23T01:37:08+00:00">2025-05-23</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>公司发的是 windows 电脑，之前一直用 mac，现在又要用 windows 了，记录下环境配置。<br>
+本来突发奇想是不是可以装个 linux 环境不也可以，因为实在受不了 powershell 环境，不过后来用了 wsl2，感觉还是可以的，然后 windows 办公套件的话 linux 又不方便感觉，所以还是算了。</p>
+<h2 id="powershell-配置">powershell 配置</h2>
+<p>类似其他 shell 一样，有个启动配置文件 <code>~\OneDrive\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code>，可以在这里配置一些启动命令，比如 oh-my-posh 的启动命令。</p>
+<pre class="language-powershell" data-language="powershell"><code class="language-powershell"><span class="token comment"># 配置了 oh-my-posh 和 PSReadLine用来记录命令历史</span>
+oh-my-posh init pwsh <span class="token operator">--</span>config <span class="token string">"<span class="token variable">$env</span>:POSH_THEMES_PATH\M365Princess.omp.json"</span> <span class="token punctuation">|</span> <span class="token function">Invoke-Expression</span>
+<span class="token function">Import-Module</span> PSReadLine
+<span class="token function">Set-PSReadLineOption</span> <span class="token operator">-</span>MaximumHistoryCount 4096
+<span class="token function">Set-PSReadLineOption</span> <span class="token operator">-</span>HistorySavePath ~\<span class="token punctuation">.</span>ps_history</code></pre>
+<h3 id="oh-my-posh">oh-my-posh</h3>
+<p>美化命令行提示符，可以在<a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/windows">这里</a>查看安装和配置。</p>
+<h3 id="常用命令">常用命令</h3>
+<ul>
+<li><code>ii .</code> 在当前目录打开资源管理器</li>
+<li><code>#</code>开头或者<code>ctrl r</code>搜索历史命令</li>
+</ul>
+<h2 id="常用软件">常用软件</h2>
+<ul>
+<li>Vysor。可以在电脑上显示手机屏幕，投屏，录屏，还可以控制手机，用来截图还是方便的，iOS 和 Android 都支持。（ 2025-03-27 更新，第一次知道一个安卓的投屏软件，scrcpy 也挺好用的，可以投屏，录屏，控制手机，不过需要手机支持，而且需要安装 adb 工具，这个工具在 windows 上需要安装安卓 sdk 才能使用，所以还是用这个吧，毕竟支持的设备多，而且可以投屏，录屏，控制手机，还是很方便的。）</li>
+<li>Flameshot。截图工具，可以截图后编辑，这个也是超级好用，尤其是交互很棒，跨平台，mac、windows、linux 都支持。</li>
+<li>Mactype。字体渲染工具，windows 的字体渲染实在是太难看了，这个工具可以让字体看起来更舒服，不过有点卡顿，不过还是可以接受的。</li>
+<li><a target="_blank" rel="noopener" href="http://Snip.Do">Snip.Do</a>。一个类似 popclip 的工具，可以在选中文字后弹出菜单，然后选择操作，比如翻译、搜索等等，比不过 popclip 还是差点，不过也还可以。</li>
+<li>Ditto。剪贴板工具，可以保存多个剪贴板，还可以搜索。</li>
+<li>7zip。就不说了鼎鼎大名。</li>
+<li>Everything。文件搜索工具，可以快速搜索文件，比 windows 自带的快多了。很早之前就用过，怀旧意味。</li>
+<li>BlueStacks。安卓模拟器，可以在电脑上运行安卓应用，性能是真的可以。</li>
+<li>Geek uninstaller。卸载工具，可以卸载软件的同时清理残留文件，比 windows 自带的卸载程序好用多了。</li>
+<li>Optimizer 一款好用的 Windows 高级配置工具，增强 Windows 上的隐私和安全性。建议在 Windows 新安装后使用，以实现最大的隐私和安全性效益。根据您的 Windows 版本，优化器还可以帮助您应用特定的系统调整。<a target="_blank" rel="noopener" href="https://github.com/hellzerg/optimizer">https://github.com/hellzerg/optimizer</a></li>
+<li>sharex。截图工具，开源主要是能滚动截图。</li>
+<li>pot 跨平台翻译 <a target="_blank" rel="noopener" href="https://github.com/pot-app/pot-desktop">GitHub - pot-app/pot-desktop: 🌈一个跨平台的划词翻译和 OCR 软件 | A cross-platform software for text translation and recognize.</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/powershell/" rel="tag"># powershell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%20performance%20optimization/" rel="prev" title="Flutter performance optimization">
+                  <i class="fa fa-angle-left"></i> Flutter performance optimization
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Flutter%E5%8F%91%E5%8C%85%E8%AE%B0%E5%BD%95/" rel="next" title="Flutter 发包记录">
+                  Flutter 发包记录 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
