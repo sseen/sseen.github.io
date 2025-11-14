@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文详细介绍了我的 Cursor 编辑器配置，包括编辑器设置和扩展插件，帮助你快速搭建高效的开发环境。 ai洋洋洒洒写了一大堆，删了一半没用的，我只关注其实两个部分：编辑器设置和扩展插件。  📋 目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cursor&#x2F;VSCode Angular完整开发环境配置指南">
+<meta property="og:url" content="https://sseen.github.io/VSCode%20Angular%E5%AE%8C%E6%95%B4%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="本文详细介绍了我的 Cursor 编辑器配置，包括编辑器设置和扩展插件，帮助你快速搭建高效的开发环境。 ai洋洋洒洒写了一大堆，删了一半没用的，我只关注其实两个部分：编辑器设置和扩展插件。  📋 目录">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-04T14:02:39.000Z">
+<meta property="article:modified_time" content="2025-11-14T09:09:20.631Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="Cursor">
+<meta property="article:tag" content="VSCode">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/VSCode%20Angular%E5%AE%8C%E6%95%B4%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/VSCode%20Angular%E5%AE%8C%E6%95%B4%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/","path":"VSCode Angular完整开发环境配置指南/","title":"Cursor/VSCode Angular完整开发环境配置指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cursor/VSCode Angular完整开发环境配置指南 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">📋 目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E7%BC%96%E8%BE%91%E5%99%A8%E8%AE%BE%E7%BD%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">🎯 编辑器设置配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84-settings-json"><span class="nav-number">2.1.</span> <span class="nav-text">完整的 settings.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%A6%81%E7%82%B9%E8%AF%B4%E6%98%8E"><span class="nav-number">2.2.</span> <span class="nav-text">配置要点说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%BC%96%E8%BE%91%E5%99%A8%E6%A0%B8%E5%BF%83%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 编辑器核心设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E4%BF%9D%E8%AF%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 代码质量保证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Git-%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. Git 工作流优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="nav-number">2.2.4.</span> <span class="nav-text">4. 文件管理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8C-%E5%B7%B2%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95%E5%88%97%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">🔌 已安装扩展列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E5%90%AF%E7%94%A8%E7%9A%84%E6%89%A9%E5%B1%95%EF%BC%8830%E4%B8%AA%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">当前启用的扩展（30个）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cursor-%E6%A0%B8%E5%BF%83%E6%89%A9%E5%B1%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">Cursor 核心扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E4%B8%8E%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">3.1.2.</span> <span class="nav-text">代码质量与格式化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E4%B8%8E%E5%9B%BE%E6%A0%87"><span class="nav-number">3.1.3.</span> <span class="nav-text">主题与图标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">3.1.4.</span> <span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7"><span class="nav-number">3.1.5.</span> <span class="nav-text">生产力工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94"><span class="nav-number">3.1.6.</span> <span class="nav-text">特殊用途</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%B2%E7%A6%81%E7%94%A8%E7%9A%84%E6%89%A9%E5%B1%95%EF%BC%8812%E4%B8%AA%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">已禁用的扩展（12个）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">📝 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.1.</span> <span class="nav-text">适用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9A-%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">📚 相关资源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">271</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">312</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/VSCode%20Angular%E5%AE%8C%E6%95%B4%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Cursor/VSCode Angular完整开发环境配置指南 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cursor/VSCode Angular完整开发环境配置指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-11-04 14:02:39" itemprop="dateCreated datePublished" datetime="2025-11-04T14:02:39+00:00">2025-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-11-14 09:09:20" itemprop="dateModified" datetime="2025-11-14T09:09:20+00:00">2025-11-14</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>本文详细介绍了我的 Cursor 编辑器配置，包括编辑器设置和扩展插件，帮助你快速搭建高效的开发环境。<br>
+ai洋洋洒洒写了一大堆，删了一半没用的，我只关注其实两个部分：编辑器设置和扩展插件。</p>
+</blockquote>
+<h2 id="📋-目录">📋 目录</h2>
+<ul>
+<li><a href="#%E7%BC%96%E8%BE%91%E5%99%A8%E8%AE%BE%E7%BD%AE%E9%85%8D%E7%BD%AE">编辑器设置配置</a></li>
+<li><a href="#%E5%B7%B2%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95%E5%88%97%E8%A1%A8">已安装扩展列表</a></li>
+</ul>
+<hr>
+<h2 id="🎯-编辑器设置配置">🎯 编辑器设置配置</h2>
+<h3 id="完整的-settings-json">完整的 settings.json</h3>
+<p>以下是按功能分类的完整配置文件：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token comment">// ========== Editor Settings ==========</span>
+  <span class="token property">"editor.wordWrap"</span><span class="token operator">:</span> <span class="token string">"on"</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"esbenp.prettier-vscode"</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.fontLigatures"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.minimap.enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.fontFamily"</span><span class="token operator">:</span> <span class="token string">"'JetBrains Mono',Source Han Code JP, meirio,'Courier New', monospace,'Google Sans Code','Consolas ligaturized v3',Consolas, 'Courier New', monospace"</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.fontSize"</span><span class="token operator">:</span> <span class="token number">13</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.semanticHighlighting.enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.semanticTokenColorCustomizations"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"rules"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"*.declaration"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"fontStyle"</span><span class="token operator">:</span> <span class="token string">"underline"</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token property">"error"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"underline"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token property">"warning"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"underline"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.language.colorizedBracketPairs"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.dropIntoEditor.preferences"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.indentSize"</span><span class="token operator">:</span> <span class="token string">"tabSize"</span><span class="token punctuation">,</span>
+  <span class="token property">"editor.formatOnSave"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Workbench Settings ==========</span>
+  <span class="token property">"workbench.colorTheme"</span><span class="token operator">:</span> <span class="token string">"GitHub Dark Dimmed"</span><span class="token punctuation">,</span>
+  <span class="token property">"workbench.iconTheme"</span><span class="token operator">:</span> <span class="token string">"file-icons"</span><span class="token punctuation">,</span>
+  <span class="token property">"workbench.colorCustomizations"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editorError.foreground"</span><span class="token operator">:</span> <span class="token string">"#ff0000"</span><span class="token punctuation">,</span>
+    <span class="token property">"eslint.problemForeground"</span><span class="token operator">:</span> <span class="token string">"#ff9900cc"</span><span class="token punctuation">,</span>
+    <span class="token property">"eslint.warningForeground"</span><span class="token operator">:</span> <span class="token string">"#ffcc00cc"</span><span class="token punctuation">,</span>
+    <span class="token property">"eslint.infoForeground"</span><span class="token operator">:</span> <span class="token string">"#00a2ffcc"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== File Settings ==========</span>
+  <span class="token property">"files.autoSave"</span><span class="token operator">:</span> <span class="token string">"onFocusChange"</span><span class="token punctuation">,</span>
+  <span class="token property">"files.trimTrailingWhitespace"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"files.insertFinalNewline"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Git Settings ==========</span>
+  <span class="token property">"git.enableSmartCommit"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"git.autoStash"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"[git-commit]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.rulers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">72</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.wordWrap"</span><span class="token operator">:</span> <span class="token string">"off"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Terminal Settings ==========</span>
+  <span class="token property">"terminal.integrated.useWslProfiles"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"terminal.integrated.defaultProfile.windows"</span><span class="token operator">:</span> <span class="token string">"Git Bash"</span><span class="token punctuation">,</span>
+  <span class="token property">"terminal.integrated.profiles.windows"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"Git Bash"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"C:\\Program Files\\Git\\bin\\bash.exe"</span><span class="token punctuation">,</span>
+      <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"--login"</span><span class="token punctuation">,</span> <span class="token string">"-i"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Code Formatting ==========</span>
+  <span class="token property">"[typescript]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"esbenp.prettier-vscode"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"[javascript]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"esbenp.prettier-vscode"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"[html]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"vscode.html-language-features"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"[css]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"esbenp.prettier-vscode"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"[json]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"vscode.json-language-features"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"[jsonc]"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"editor.defaultFormatter"</span><span class="token operator">:</span> <span class="token string">"vscode.json-language-features"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"prettier.requireConfig"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Code Actions on Save ==========</span>
+  <span class="token property">"editor.codeActionsOnSave"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"source.organizeImports"</span><span class="token operator">:</span> <span class="token string">"explicit"</span><span class="token punctuation">,</span>
+    <span class="token property">"source.fixAll"</span><span class="token operator">:</span> <span class="token string">"explicit"</span><span class="token punctuation">,</span>
+    <span class="token property">"source.fixAll.eslint"</span><span class="token operator">:</span> <span class="token string">"explicit"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"notebook.codeActionsOnSave"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Import Management ==========</span>
+  <span class="token property">"javascript.updateImportsOnFileMove.enabled"</span><span class="token operator">:</span> <span class="token string">"always"</span><span class="token punctuation">,</span>
+  <span class="token property">"typescript.updateImportsOnFileMove.enabled"</span><span class="token operator">:</span> <span class="token string">"always"</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== ESLint Configuration ==========</span>
+  <span class="token property">"eslint.alwaysShowStatus"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"eslint.validate"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"typescript"</span><span class="token punctuation">,</span>
+    <span class="token string">"typescriptreact"</span><span class="token punctuation">,</span>
+    <span class="token string">"javascript"</span><span class="token punctuation">,</span>
+    <span class="token string">"javascriptreact"</span><span class="token punctuation">,</span>
+    <span class="token string">"html"</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== ErrorLens Extension ==========</span>
+  <span class="token property">"errorLens.statusBarMessageEnabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"errorLens.gutterIconsEnabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"errorLens.fontStyleItalic"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"errorLens.errorBackground"</span><span class="token operator">:</span> <span class="token string">"#ff000015"</span><span class="token punctuation">,</span>
+  <span class="token property">"errorLens.warningBackground"</span><span class="token operator">:</span> <span class="token string">"#ffcc0015"</span><span class="token punctuation">,</span>
+  <span class="token property">"errorLens.infoBackground"</span><span class="token operator">:</span> <span class="token string">"#00a2ff15"</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== CSS &amp; Tailwind ==========</span>
+  <span class="token property">"css.validate"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"headwind.runOnSave"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Diff Editor ==========</span>
+  <span class="token property">"diffEditor.ignoreTrimWhitespace"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Outline Settings ==========</span>
+  <span class="token property">"outline.showProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"outline.showVariables"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"outline.showFunctions"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// ========== Cursor AI Settings ==========</span>
+  <span class="token property">"cursor.cpp.disabledLanguages"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"plaintext"</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="配置要点说明">配置要点说明</h3>
+<h4 id="1-编辑器核心设置">1. 编辑器核心设置</h4>
+<ul>
+<li><strong>字体</strong>: JetBrains Mono（支持连字）</li>
+<li><strong>自动换行</strong>: 启用</li>
+<li><strong>代码格式化</strong>: 保存时自动格式化</li>
+<li><strong>语义高亮</strong>: 声明加下划线，错误和警告也有下划线标记</li>
+</ul>
+<h4 id="2-代码质量保证">2. 代码质量保证</h4>
+<ul>
+<li><strong>ESLint</strong>: 实时检查代码质量</li>
+<li><strong>Prettier</strong>: 统一代码风格</li>
+<li><strong>ErrorLens</strong>: 行内显示错误和警告</li>
+<li><strong>保存时操作</strong>: 自动整理导入、修复所有问题</li>
+</ul>
+<h4 id="3-Git-工作流优化">3. Git 工作流优化</h4>
+<ul>
+<li><strong>Smart Commit</strong>: 智能提交</li>
+<li><strong>Auto Stash</strong>: 自动储藏</li>
+<li><strong>Commit 规则</strong>: 50/72 字符限制</li>
+</ul>
+<h4 id="4-文件管理">4. 文件管理</h4>
+<ul>
+<li><strong>自动保存</strong>: 焦点改变时保存</li>
+<li><strong>清理空白</strong>: 自动删除行尾空白</li>
+<li><strong>文件结尾换行</strong>: 自动添加</li>
+</ul>
+<hr>
+<h2 id="🔌-已安装扩展列表">🔌 已安装扩展列表</h2>
+<h3 id="当前启用的扩展（30个）">当前启用的扩展（30个）</h3>
+<h4 id="Cursor-核心扩展">Cursor 核心扩展</h4>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cursor Browser Automation</td>
+<td>1.0.0</td>
+<td>MCP 浏览器自动化服务器</td>
+</tr>
+<tr>
+<td>Cursor Shadow Workspace</td>
+<td>1.0.0</td>
+<td>AI 代理代码优化的隐藏工作区</td>
+</tr>
+<tr>
+<td>Cursor MCP</td>
+<td>0.0.1</td>
+<td>Model Context Protocol 支持</td>
+</tr>
+<tr>
+<td>Cursor Retrieval</td>
+<td>0.0.1</td>
+<td>索引和检索处理</td>
+</tr>
+</tbody>
+</table>
+<h4 id="代码质量与格式化">代码质量与格式化</h4>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESLint</td>
+<td>3.0.16</td>
+<td>JavaScript/TypeScript 代码检查</td>
+</tr>
+<tr>
+<td>Prettier</td>
+<td>11.0.0</td>
+<td>代码格式化工具</td>
+</tr>
+<tr>
+<td>Stylelint</td>
+<td>1.5.3</td>
+<td>CSS/SCSS 代码检查</td>
+</tr>
+<tr>
+<td>Error Lens</td>
+<td>3.26.0</td>
+<td>行内显示错误和警告</td>
+</tr>
+<tr>
+<td>Pretty TypeScript Errors</td>
+<td>0.6.3</td>
+<td>美化 TypeScript 错误信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="主题与图标">主题与图标</h4>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Catppuccin for VSCode</td>
+<td>3.18.1</td>
+<td>🦌 柔和的粉彩主题</td>
+</tr>
+<tr>
+<td>Catppuccin Icons</td>
+<td>1.26.0</td>
+<td>🦊 配套图标主题</td>
+</tr>
+<tr>
+<td>One Dark Pro</td>
+<td>3.19.0</td>
+<td>Atom 经典暗色主题</td>
+</tr>
+<tr>
+<td>Simple icons</td>
+<td>1.16.0</td>
+<td>简约图标主题</td>
+</tr>
+</tbody>
+</table>
+<h4 id="开发工具">开发工具</h4>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitLens</td>
+<td>17.6.2</td>
+<td>Git 增强工具</td>
+</tr>
+<tr>
+<td>Angular Language Service</td>
+<td>20.3.0</td>
+<td>Angular 模板编辑器服务</td>
+</tr>
+<tr>
+<td>Tailwind CSS IntelliSense</td>
+<td>0.14.28</td>
+<td>Tailwind CSS 智能提示</td>
+</tr>
+<tr>
+<td>Path Intellisense</td>
+<td>2.10.0</td>
+<td>文件路径自动完成</td>
+</tr>
+<tr>
+<td>CSS Navigation</td>
+<td>2.8.1</td>
+<td>CSS 代码导航和补全</td>
+</tr>
+</tbody>
+</table>
+<h4 id="生产力工具">生产力工具</h4>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TabOut</td>
+<td>0.2.2</td>
+<td>Tab 键跳出括号和引号</td>
+</tr>
+<tr>
+<td>Color Highlight</td>
+<td>2.8.0</td>
+<td>高亮显示颜色代码</td>
+</tr>
+<tr>
+<td>Indent Rainbow</td>
+<td>8.3.1</td>
+<td>彩虹缩进标记</td>
+</tr>
+<tr>
+<td>Select Quotes</td>
+<td>0.0.2</td>
+<td>快速选择引号内内容</td>
+</tr>
+<tr>
+<td>Export Your Extensions</td>
+<td>2.0.0</td>
+<td>导出/导入扩展配置</td>
+</tr>
+<tr>
+<td>Path Autocomplete</td>
+<td>1.25.0</td>
+<td>路径自动补全</td>
+</tr>
+</tbody>
+</table>
+<h4 id="特殊用途">特殊用途</h4>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kuroshiro for VSCode</td>
+<td>1.0.1</td>
+<td>日语假名转换工具</td>
+</tr>
+</tbody>
+</table>
+<h3 id="已禁用的扩展（12个）">已禁用的扩展（12个）</h3>
+<p>这些扩展已安装但未启用，可根据需要启用：</p>
+<ul>
+<li><strong>主题类</strong>: Nord, Tokyo Night, GitHub Theme, Nord Deep</li>
+<li><strong>功能类</strong>: HTML Snippets, PostCSS, Kotlin, Angular CLI</li>
+<li><strong>工具类</strong>: Save All, Sequential Number, Angular Material Icon Picker</li>
+<li><strong>Cursor</strong>: File Service, NDJSON Ingest, Worktree TextMate, Cursor Themes</li>
+</ul>
+<hr>
+<h2 id="📝-总结">📝 总结</h2>
+<p>这套配置方案的核心理念：</p>
+<ol>
+<li><strong>自动化优先</strong>: 保存时自动格式化、修复、整理</li>
+<li><strong>视觉增强</strong>: 错误行内显示、颜色高亮、缩进彩虹</li>
+<li><strong>代码质量</strong>: ESLint + Prettier + Stylelint 三重保障</li>
+<li><strong>Git 集成</strong>: GitLens 强化版本控制体验</li>
+<li><strong>Cursor AI</strong>: 充分利用 AI 辅助编程能力</li>
+</ol>
+<h3 id="适用场景">适用场景</h3>
+<ul>
+<li>✅ TypeScript/JavaScript 全栈开发</li>
+<li>✅ React/Angular 前端开发</li>
+<li>✅ Tailwind CSS 样式开发</li>
+<li>✅ Git 团队协作</li>
+<li>✅ AI 辅助编程</li>
+</ul>
+<hr>
+<h2 id="📚-相关资源">📚 相关资源</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cursor.sh/docs">Cursor 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/">VSCode 扩展市场</a></li>
+<li><a target="_blank" rel="noopener" href="https://prettier.io/docs/en/configuration.html">Prettier 配置指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://eslint.org/docs/rules/">ESLint 规则文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://tailwindcss.com/docs">Tailwind CSS 文档</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/Cursor/" rel="tag"># Cursor</a>
+              <a href="/tags/VSCode/" rel="tag"># VSCode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Android%20WebView%20Checkbox%20%E7%82%B9%E5%87%BB%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%BB%9A%E5%8A%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/" rel="prev" title="Android WebView Checkbox 点击导致页面滚动问题分析">
+                  <i class="fa fa-angle-left"></i> Android WebView Checkbox 点击导致页面滚动问题分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/SwiftUI%20WKWebView%20%E7%9B%B8%E6%9C%BA%E9%9B%86%E6%88%90%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/" rel="next" title="SwiftUI WKWebView 相机集成完整指南">
+                  SwiftUI WKWebView 相机集成完整指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
