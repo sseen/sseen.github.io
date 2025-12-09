@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="感觉是真的晚了，那么多曾经花了很多时间研究的东西，都没有留下任何痕迹😂🦪  卸载 libreoffice xfce hidpi linxu 桌面版本及server gnome terminal 样式 zsh &amp; oh-my-zsh chob 汇聚软件搜索 vlc 播放列表显示文件名 dpkg 安装依赖 安装 vmwaretools 查看网速 nethogs UI优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类Linux装机常用">
+<meta property="og:url" content="https://sseen.github.io/%E7%B1%BBLinux%E8%A3%85%E6%9C%BA%E5%B8%B8%E7%94%A8/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="感觉是真的晚了，那么多曾经花了很多时间研究的东西，都没有留下任何痕迹😂🦪  卸载 libreoffice xfce hidpi linxu 桌面版本及server gnome terminal 样式 zsh &amp; oh-my-zsh chob 汇聚软件搜索 vlc 播放列表显示文件名 dpkg 安装依赖 安装 vmwaretools 查看网速 nethogs UI优化">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-26T08:57:22.000Z">
+<meta property="article:modified_time" content="2025-12-09T04:16:26.050Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/%E7%B1%BBLinux%E8%A3%85%E6%9C%BA%E5%B8%B8%E7%94%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/%E7%B1%BBLinux%E8%A3%85%E6%9C%BA%E5%B8%B8%E7%94%A8/","path":"类Linux装机常用/","title":"类Linux装机常用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>类Linux装机常用 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD-libreoffice"><span class="nav-number">1.</span> <span class="nav-text">卸载 libreoffice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xfce-hidpi"><span class="nav-number">2.</span> <span class="nav-text">xfce hidpi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linxu-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%9C%AC%E5%8F%8Aserver"><span class="nav-number">3.</span> <span class="nav-text">linxu 桌面版本及server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gnome-terminal-%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">gnome terminal 样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh-oh-my-zsh"><span class="nav-number">5.</span> <span class="nav-text">zsh &amp; oh-my-zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chob-%E6%B1%87%E8%81%9A%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2"><span class="nav-number">6.</span> <span class="nav-text">chob 汇聚软件搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vlc-%E6%92%AD%E6%94%BE%E5%88%97%E8%A1%A8%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-number">7.</span> <span class="nav-text">vlc 播放列表显示文件名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dpkg-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">8.</span> <span class="nav-text">dpkg 安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-vmwaretools"><span class="nav-number">9.</span> <span class="nav-text">安装 vmwaretools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%80%9F-nethogs"><span class="nav-number">10.</span> <span class="nav-text">查看网速 nethogs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI%E4%BC%98%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">UI优化</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">322</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/%E7%B1%BBLinux%E8%A3%85%E6%9C%BA%E5%B8%B8%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="类Linux装机常用 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          类Linux装机常用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-26 08:57:22" itemprop="dateCreated datePublished" datetime="2020-12-26T08:57:22+00:00">2020-12-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-09 04:16:26" itemprop="dateModified" datetime="2025-12-09T04:16:26+00:00">2025-12-09</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>感觉是真的晚了，那么多曾经花了很多时间研究的东西，都没有留下任何痕迹😂🦪</p>
+<ol>
+<li><a href="#%E5%8D%B8%E8%BD%BD-libreoffice">卸载 libreoffice</a></li>
+<li><a href="#xfce-hidpi">xfce hidpi</a></li>
+<li><a href="#linxu-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%9C%AC%E5%8F%8Aserver">linxu 桌面版本及server</a></li>
+<li><a href="#gnome-terminal-%E6%A0%B7%E5%BC%8F">gnome terminal 样式</a></li>
+<li><a href="#zsh--oh-my-zsh">zsh &amp; oh-my-zsh</a></li>
+<li><a href="#chob-%E6%B1%87%E8%81%9A%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2">chob 汇聚软件搜索</a></li>
+<li><a href="#vlc-%E6%92%AD%E6%94%BE%E5%88%97%E8%A1%A8%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E5%90%8D">vlc 播放列表显示文件名</a></li>
+<li><a href="#dpkg-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96">dpkg 安装依赖</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-vmwaretools">安装 vmwaretools</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%80%9F-nethogs">查看网速 nethogs</a></li>
+<li><a href="#ui%E4%BC%98%E5%8C%96">UI优化</a></li>
+</ol>
+<h3 id="卸载-libreoffice">卸载 libreoffice</h3>
+<p>有时候会自带了这些软件，但是并不需要</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># This will remove LibreOffice and its dependencies. Next is to clear out the local repository of LibreOffice packages.</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> remove <span class="token parameter variable">--purge</span> libreoffice*
+<span class="token function">sudo</span> <span class="token function">apt</span> clean
+<span class="token comment"># Clear all LibreOffice dependencies that are orphaned – no longer required.</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> autoremove
+</code></pre>
+<h3 id="xfce-hidpi">xfce hidpi</h3>
+<p>这里可以设置高dpi的效果，另外还有一项地方可以直接设置dpi，</p>
+<blockquote>
+<p>Did you…?</p>
+<ol>
+<li>Go to Settings Manager &gt; Appearance &gt; Settings &gt; Window Scaling and select 2 as the scaling factor. 设置管理器 &gt; 外观 &gt; 设置 &gt; 窗口缩放</li>
+<li>Go to Settings Manager &gt; Window Manager &gt; Style and select Default-xhdpi theme.<br>
+The steps above would set 2x scaled resolution for Xfce and other GTK 3 apps. 设置管理器 &gt; 窗口管理器 &gt; 样式，选择主题，选择 default-xhdpi，然后改窗口标题大小</li>
+</ol>
+</blockquote>
+<h3 id="linxu-桌面版本及server">linxu 桌面版本及server</h3>
+<p>应该不会再像上学时候那样装机玩了，一般就是装起来然后卸载重新装，只是不停的重复装而没有使用。<br>
+server 追求稳定（即便个人使用到最后又何尝不是呢）推荐 debian 和 centos<br>
+所以相对应的个人版就可以选择 ubuntu 和 fedora，简单点<br>
+其他都没用过也说不上来，装着玩也说不上好坏哈</p>
+<p><code>2021-01-04</code><br>
+mx linux，基于 debian，可体验 kde 版本，装机完700兆左右内存；<br>
+linux mint，基于 ubuntu，可体验 gnome，装机完1400兆左右内存；<br>
+她们两个极其相似，都有各自的系统管理软件，mx 甚至有 conky 人性化管理，比我当初自己摸索方便多了，那是就浪费时间在这个地方了，想想也可能是开源社区流行后，尤其是 github，大家可以方便分享，然后水准都提高不少。<br>
+她们两个都还有 xfce 版本，但是目前 xfce 高分辨率也就是 scale 支持 retina 屏幕还不行。</p>
+<h3 id="gnome-terminal-样式">gnome terminal 样式</h3>
+<p><code>2020-12-28</code><br>
+今天虚拟机试了下 ubuntu 20.4 发现各种挺顺利的，可用性提高了不少比之前，我应该是 12 左右用过吧，还在上学的时候。<br>
+设置下这个终端的样式吧，用了 Gogh，应该是可以用在各个终端的 theme 解决方案，厉害的。</p>
+<blockquote>
+<p>遇到一个问题，怎么都设置不上去，发现这里必须是 Default 的文件描述，中文的不行，重命名就可以了<br>
+Close your terminal. Re-open the terminal.<br>
+Go to Edit —&gt; Preferences —&gt; Profiles.<br>
+Create NEW profile called “Default”.<br>
+Close the terminal. Re-open the terminal.<br>
+Confirm “Default” is still listed in your profiles.<br>
+If it is, run the Gogh script again.</p>
+</blockquote>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> dconf-cli uuid-runtime
+<span class="token function">bash</span> <span class="token parameter variable">-c</span> <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">wget</span> -qO- https://git.io/vQgMr<span class="token variable">)</span></span>"</span>
+
+<span class="token comment"># 我用的两款</span>
+flat <span class="token number">48</span>
+ToyChest <span class="token number">182</span></code></pre>
+<h3 id="zsh-oh-my-zsh">zsh &amp; oh-my-zsh</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">zsh</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">git</span>
+<span class="token function">wget</span> https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh <span class="token parameter variable">-O</span> - <span class="token operator">|</span> <span class="token function">sh</span>
+chsh <span class="token parameter variable">-s</span> /usr/bin/zsh</code></pre>
+<p>.zshrc<br>
+修改theme为 agnoster<br>
+plugin 添加 z。</p>
+<p>powerline字体</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token number">1</span>
+<span class="token function">wget</span> https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+<span class="token function">wget</span> https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+
+<span class="token number">2</span>
+<span class="token function">mv</span> PowerlineSymbols.otf ~/.local/share/fonts/
+
+<span class="token number">3</span>
+fc-cache <span class="token parameter variable">-vf</span> ~/.local/share/fonts/
+
+<span class="token number">4</span>
+<span class="token function">mv</span> <span class="token number">10</span>-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+</code></pre>
+<h3 id="chob-汇聚软件搜索">chob 汇聚软件搜索</h3>
+<p>没想到 linux 发展的挺多的，大学的时候疯狂装 ubuntu 系统到现在，好久没用了。<br>
+最明显的就是软件安装方便了，出现个种linux都能兼容用的软件安装方式。<br>
+Flatpak 和 Snap 今天遇到的两个，搜了下 chob 可以汇聚搜索，不错。</p>
+<p>有科普了下 apt 和 snap 的区别，都是出自 ubuntu 公司，snap 基于虚拟容器的概念，解决了 linux 安装软件依赖的问题。</p>
+<blockquote>
+<p>apt？<br>
+虽然也是巨大的进步，但是终究是出现交叉编译依赖的复杂关系，导致系统的不可控</p>
+<ul>
+<li>各软件，环境相互依赖，交叉编译</li>
+<li>可重用模块</li>
+</ul>
+<p>snap ？<br>
+是Canonical公司发布的全新的软件包管理方式，它类似一个容器拥有一个应用程序所有的文件和库，各个应用程序之间完全独立。所以使用snap包的好处就是它解决了应用程序之间的依赖问题，使应用程序之间更容易管理。但是由此带来的问题就是它占用更多的磁盘空间。</p>
+<ul>
+<li>各个软件独立</li>
+<li>增加磁盘空间</li>
+</ul>
+</blockquote>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># chob</span>
+<span class="token function">wget</span> https://github.com/MuhammedKpln/chob/releases/download/0.3.5/chob-linux
+<span class="token function">chmod</span> +x chob-linux
+./chob-linux <span class="token function">vim</span> <span class="token comment"># 搜索vim相关</span>
+
+<span class="token comment"># snap</span>
+snap list
+snap <span class="token function">find</span>
+snap run vlc
+<span class="token function">sudo</span> snap refresh firefox
+<span class="token comment"># 更新全部</span>
+<span class="token function">sudo</span> snap refresh all
+
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> snapd
+<span class="token function">sudo</span> snap <span class="token function">install</span> vlc
+<span class="token function">sudo</span> snap remove vlc
+
+<span class="token comment"># apt</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> remove snapd
+<span class="token function">sudo</span> <span class="token function">apt</span> autoremove
+<span class="token function">apt</span> list <span class="token parameter variable">--installed</span>
+</code></pre>
+<h3 id="vlc-播放列表显示文件名">vlc 播放列表显示文件名</h3>
+<p>vlc 播放器添加目录播放的时候，播放列表默认是视频文件的 metadata 里的 title，而不是文件名</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://forum.videolan.org/viewtopic.php?f=2&amp;t=124688">Display Filename in playlist &amp; initial playback of video</a><br>
+by Props » 09 Mar 2015 22:51</p>
+<ol>
+<li>Find and rename (or delete) the directory and sub-directories, meta, found here:<br>
+%Program Files%\VideoLAN\VLC\lua\meta\</li>
+<li>Under Tools -&gt; Preferences -&gt; Show Settings “All” -&gt; Playlist<br>
+Unchecked “Automatically Preparse files” &amp; “Allow metadata network access”</li>
+<li>Under Tools -&gt; Preferences -&gt; Show Settings “All” -&gt; Input / Codecs<br>
+At the bottom, next to “Change title according to current media”, Change it to, or add $.</li>
+<li>重启 restart vlc</li>
+</ol>
+</blockquote>
+<h3 id="dpkg-安装依赖">dpkg 安装依赖</h3>
+<p>一般安装deb包的时候，用 <code>dpkg -i name.deb</code><br>
+但有时候遇到依赖问题后，先用 <code>sudo apt install -f</code>，再用上面那句就行。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> dpkg <span class="token parameter variable">-i</span> firefox.deb
+<span class="token function">sudo</span> dpkg <span class="token parameter variable">-l</span> <span class="token comment"># list </span>
+<span class="token function">sudo</span> dpkg <span class="token parameter variable">-r</span> firefox <span class="token comment"># remove</span></code></pre>
+<h3 id="安装-vmwaretools">安装 vmwaretools</h3>
+<p>首先，点击安装 vmwaretools<br>
+然后，挂载出来目录以后，拷贝其中的gz压缩文件到 /tmp 解压缩 <code>tar -zxvf VMwareTools-10.3.22-15902021.tar.gz</code><br>
+最后，命令行运行压缩目录重的 pl 文件就可以，记得 sudo。然后一路按回车就行，重启搞定。</p>
+<h3 id="查看网速-nethogs">查看网速 nethogs</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> nethogs
+nethogs</code></pre>
+<h3 id="UI优化">UI优化</h3>
+<p>gui调整设置工具<br>
+<code>sudo apt install dconf-editor</code></p>
+<p>整体界面缩放<br>
+<code>gsettings set org.gnome.desktop.interface scaling-factor 2</code></p>
+<p>文字缩放<br>
+<code>gsettings set org.gnome.desktop.interface text-scaling-factor 1.5</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/web%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953-javascript/" rel="prev" title="web前端学习记录3-javascript">
+                  <i class="fa fa-angle-left"></i> web前端学习记录3-javascript
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E9%9A%BE%E4%BA%BA%E9%9A%BE%E4%BA%8B/" rel="next" title="难人难事">
+                  难人难事 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
