@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一个应该很常见的场景，一个接口请求list，初期是空的，请求成功后，需要更新list，然后UI会重新build，但是这个时候，如果你想在请求的时候，手动设置 state 为 loading，表示正在请求，这个时候就会报错。 使用的技术栈：  riverpodhooks riverpod_annotation freezed flutter_riverpod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter Provider&#39;s state error">
+<meta property="og:url" content="https://sseen.github.io/Flutter%20Provider's%20state%20error/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="一个应该很常见的场景，一个接口请求list，初期是空的，请求成功后，需要更新list，然后UI会重新build，但是这个时候，如果你想在请求的时候，手动设置 state 为 loading，表示正在请求，这个时候就会报错。 使用的技术栈：  riverpodhooks riverpod_annotation freezed flutter_riverpod">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-05T09:48:53.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.827Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="Provider">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Flutter%20Provider's%20state%20error/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Flutter%20Provider's%20state%20error/","path":"Flutter Provider's state error/","title":"Flutter Provider's state error"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter Provider's state error | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#EN"><span class="nav-number">1.</span> <span class="nav-text">EN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-this-happens"><span class="nav-number">2.</span> <span class="nav-text">Why this happens</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-fix"><span class="nav-number">3.</span> <span class="nav-text">How to fix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Move-provider-modifications-outside-widget-life-cycles"><span class="nav-number">3.1.</span> <span class="nav-text">1. Move provider modifications outside widget life cycles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Use-a-post-build-callback-to-delay-the-update"><span class="nav-number">3.2.</span> <span class="nav-text">2. Use a post-build callback to delay the update</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recap"><span class="nav-number">4.</span> <span class="nav-text">Recap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JP"><span class="nav-number">5.</span> <span class="nav-text">JP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%81%AA%E3%81%9C%E3%81%93%E3%81%AEError%E3%81%8C-ruby-%E8%B5%B7-rp-rp-rt-%E3%81%8A-rt-rp-rp-ruby-%E3%81%8D%E3%82%8B%E3%81%AE%E3%81%8B"><span class="nav-number">5.1.</span> <span class="nav-text">なぜこのErrorが起(お)きるのか</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BE%E7%AD%96-%E3%81%9F%E3%81%84%E3%81%95%E3%81%8F"><span class="nav-number">5.2.</span> <span class="nav-text">対策(たいさく)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%81%BE%E3%81%A8%E3%82%81"><span class="nav-number">5.3.</span> <span class="nav-text">まとめ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JP-2"><span class="nav-number">6.</span> <span class="nav-text">JP 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HookConsumerWidget%E3%81%AE%E5%A0%B4%E5%90%88"><span class="nav-number">6.1.</span> <span class="nav-text">HookConsumerWidgetの場合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88"><span class="nav-number">6.2.</span> <span class="nav-text">ポイント</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%81%BE%E3%81%A8%E3%82%81-2"><span class="nav-number">6.3.</span> <span class="nav-text">まとめ</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Flutter%20Provider's%20state%20error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter Provider's state error | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter Provider's state error
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-05 09:48:53" itemprop="dateCreated datePublished" datetime="2025-03-05T09:48:53+00:00">2025-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>一个应该很常见的场景，一个接口请求list，初期是空的，请求成功后，需要更新list，然后UI会重新build，但是这个时候，如果你想在请求的时候，手动设置 state 为 loading，表示正在请求，这个时候就会报错。<br>
+使用的技术栈：</p>
+<ul>
+<li>riverpodhooks</li>
+<li>riverpod_annotation</li>
+<li>freezed</li>
+<li>flutter_riverpod</li>
+</ul>
+<blockquote>
+<p>Tried to modify a provider while the widget tree was building.<br>
+If you are encountering this error, chances are you tried to modify a provider<br>
+以后会尽量用日语来写，为了练习日语。</p>
+</blockquote>
+<h2 id="EN">EN</h2>
+<p>This error happens when you try to change a provider’s state inside a widget’s life cycle (for example, inside <code>build</code>, <code>initState</code>, <code>dispose</code>, <code>didUpdateWidget</code>, or <code>didChangeDependencies</code>). Riverpod (or Flutter’s <code>provider</code> package) requires that you not directly modify state during these phases, because it can lead to inconsistent or unintended UI states.</p>
+<hr>
+<h2 id="Why-this-happens">Why this happens</h2>
+<p>In Flutter, widgets can rebuild multiple times for all kinds of reasons (e.g., a parent changed, you rotated the device, etc.). If you modify the state in the middle of a build:</p>
+<ul>
+<li>You risk triggering more rebuilds before the UI has finished its current update.</li>
+<li>You could cause <strong>inconsistent states</strong> if multiple widgets depend on the same provider but rebuild at slightly different times.</li>
+</ul>
+<p>As a result, Riverpod/Provider actively prevents you from modifying a provider during these critical moments and throws the error you’re seeing.</p>
+<hr>
+<h2 id="How-to-fix">How to fix</h2>
+<h3 id="1-Move-provider-modifications-outside-widget-life-cycles">1. Move provider modifications outside widget life cycles</h3>
+<p>The simplest and often <em>best</em> solution is to initiate the provider update in response to a user action or an asynchronous event (like an API call), rather than in <code>build</code> or <code>initState</code>. For example, call:</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token class-name">ElevatedButton</span><span class="token punctuation">(</span>
+  onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// This is allowed because it’s in a callback</span>
+    ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>yourProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Update Provider'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>This way, the provider is updated <em>after</em> the build, not <em>during</em> it.</p>
+<h3 id="2-Use-a-post-build-callback-to-delay-the-update">2. Use a post-build callback to delay the update</h3>
+<p>If you truly need to modify a provider as soon as the widget builds (for example, you need an initial fetch), you can schedule the update <em>after</em> the first build completes by using a callback such as <code>Future(() &#123; ... &#125;)</code> or <code>WidgetsBinding.instance.addPostFrameCallback</code>. For instance:</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token metadata function">@override</span>
+<span class="token keyword">void</span> <span class="token function">initState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">initState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Schedules the provider update to run AFTER the current frame</span>
+  <span class="token class-name">WidgetsBinding</span><span class="token punctuation">.</span>instance<span class="token punctuation">.</span><span class="token function">addPostFrameCallback</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>yourProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>This tells Flutter to wait until the current widget tree build is finished before modifying the provider’s state, which avoids the error.</p>
+<hr>
+<h2 id="Recap">Recap</h2>
+<ol>
+<li><strong>Never</strong> call <code>ref.read(...)</code> or <code>context.read(...)</code> to change a provider directly inside <code>build</code>, <code>initState</code>, or other life-cycle methods.</li>
+<li>Instead, <strong>use an external event</strong> like a button press, or <strong>schedule</strong> the update to happen <strong>after</strong> the current build (via a future or <code>addPostFrameCallback</code>).</li>
+</ol>
+<p>Following these guidelines ensures your app state remains consistent and helps avoid tricky rebuild and state management issues.</p>
+<h2 id="JP">JP</h2>
+<p><ruby>Flutter<rp>(</rp><rt></rt><rp>)</rp></ruby>や<ruby>Riverpod<rp>(</rp><rt></rt><rp>)</rp></ruby>のProviderを<ruby>使用<rp>(</rp><rt>しよう</rt><rp>)</rp></ruby>して<ruby>開発<rp>(</rp><rt>かいはつ</rt><rp>)</rp></ruby>している<ruby>際<rp>(</rp><rt>さい</rt><rp>)</rp></ruby>に、<br>
+「Tried to modify a provider while the widget tree was building…」という<br>
+<ruby>Error<rp>(</rp><rt>エラー</rt><rp>)</rp></ruby>が<ruby>出<rp>(</rp><rt>で</rt><rp>)</rp></ruby>る<ruby>場合<rp>(</rp><rt>ばあい</rt><rp>)</rp></ruby>があります。<br>
+これは<ruby>Widget<rp>(</rp><rt>ウィジェット</rt><rp>)</rp></ruby>の<ruby>ライフサイクル<rp>(</rp><rt></rt><rp>)</rp></ruby>(Life-cycle)――<br>
+たとえば<code>build</code>・<code>initState</code>・<code>dispose</code>・<code>didUpdateWidget</code>・<code>didChangeDependencies</code>などの<ruby>タイミング<rp>(</rp><rt></rt><rp>)</rp></ruby>(Timing)で<br>
+Providerの<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>(State)を<ruby>直接<rp>(</rp><rt>ちょくせつ</rt><rp>)</rp></ruby>変更(へんこう)してしまうと<ruby>発生<rp>(</rp><rt>はっせい</rt><rp>)</rp></ruby>する<ruby>問題<rp>(</rp><rt>もんだい</rt><rp>)</rp></ruby>です。</p>
+<hr>
+<h3 id="なぜこのErrorが-ruby-起-rp-rp-rt-お-rt-rp-rp-ruby-きるのか">なぜこのErrorが<ruby>起<rp>(</rp><rt>お</rt><rp>)</rp></ruby>きるのか</h3>
+<p><ruby>Widget<rp>(</rp><rt>ウィジェット</rt><rp>)</rp></ruby>の<ruby>描画<rp>(</rp><rt>びょうが</rt><rp>)</rp></ruby>（<code>build</code>）<ruby>処理<rp>(</rp><rt>しょり</rt><rp>)</rp></ruby>は<ruby>頻繁<rp>(</rp><rt>ひんぱん</rt><rp>)</rp></ruby>に<ruby>呼<rp>(</rp><rt>よ</rt><rp>)</rp></ruby>ばれます。<br>
+その<ruby>途中<rp>(</rp><rt>とちゅう</rt><rp>)</rp></ruby>で<ruby>Provider<rp>(</rp><rt></rt><rp>)</rp></ruby>を<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>すると、<br>
+ほかの<ruby>Widget<rp>(</rp><rt>ウィジェット</rt><rp>)</rp></ruby>との<ruby>整合<rp>(</rp><rt>せいごう</rt><rp>)</rp></ruby>が<ruby>崩<rp>(</rp><rt>くず</rt><rp>)</rp></ruby>れ、<br>
+<ruby>画面<rp>(</rp><rt>がめん</rt><rp>)</rp></ruby>（<ruby>UI<rp>(</rp><rt></rt><rp>)</rp></ruby>(User Interface))が<ruby>不正<rp>(</rp><rt>ふせい</rt><rp>)</rp></ruby>な<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>になる<ruby>恐<rp>(</rp><rt>おそ</rt><rp>)</rp></ruby>れがあります。<br>
+そのため、<ruby>内部<rp>(</rp><rt>ないぶ</rt><rp>)</rp></ruby>で<ruby>再描画<rp>(</rp><rt>さいびょうが</rt><rp>)</rp></ruby>の<ruby>制御<rp>(</rp><rt>せいぎょ</rt><rp>)</rp></ruby>を<ruby>行<rp>(</rp><rt>おこな</rt><rp>)</rp></ruby>っている<br>
+<ruby>Riverpod<rp>(</rp><rt></rt><rp>)</rp></ruby>や<ruby>Provider<rp>(</rp><rt></rt><rp>)</rp></ruby>は、<br>
+こうした<ruby>誤用<rp>(</rp><rt>ごよう</rt><rp>)</rp></ruby>が<ruby>起<rp>(</rp><rt>お</rt><rp>)</rp></ruby>きた<ruby>際<rp>(</rp><rt>さい</rt><rp>)</rp></ruby>に<br>
+<ruby>警告<rp>(</rp><rt>けいこく</rt><rp>)</rp></ruby>(Warning)としてこのErrorを<ruby>投げ<rp>(</rp><rt>な</rt><rp>)</rp></ruby>てくれます。</p>
+<hr>
+<h3 id="対策-たいさく">対策(たいさく)</h3>
+<ol>
+<li>
+<p><strong>（<ruby>推奨<rp>(</rp><rt>すいしょう</rt><rp>)</rp></ruby>）<ruby>ライフサイクル<rp>(</rp><rt></rt><rp>)</rp></ruby>内(ない)での変更(へんこう)を避(さ)ける</strong></p>
+<ul>
+<li>たとえば<code>onPressed</code>など、<ruby>ユーザー<rp>(</rp><rt></rt><rp>)</rp></ruby>(User)の<ruby>操作<rp>(</rp><rt>そうさ</rt><rp>)</rp></ruby>や<br>
+<ruby>非同期<rp>(</rp><rt>ひどうき</rt><rp>)</rp></ruby>(Asynchronous)の<ruby>イベント<rp>(</rp><rt></rt><rp>)</rp></ruby>(Event)が<ruby>完了<rp>(</rp><rt>かんりょう</rt><rp>)</rp></ruby>した<ruby>後<rp>(</rp><rt>あと</rt><rp>)</rp></ruby>に<br>
+Providerを<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>するように<ruby>設計<rp>(</rp><rt>せっけい</rt><rp>)</rp></ruby>しましょう。</li>
+</ul>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// ButtonのonPressed内でProviderを更新</span>
+<span class="token class-name">ElevatedButton</span><span class="token punctuation">(</span>
+  onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>yourProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Update Provider'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+</li>
+<li>
+<p><strong>どうしても初期化(しょきか)で設定(せってい)が必要(ひつよう)な場合(ばあい)</strong></p>
+<ul>
+<li><code>initState</code>や<code>didChangeDependencies</code>などですぐにProviderを<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>したい<ruby>場合<rp>(</rp><rt>ばあい</rt><rp>)</rp></ruby>は、<br>
+<ruby>ビルド<rp>(</rp><rt></rt><rp>)</rp></ruby>(Build)が<ruby>完了<rp>(</rp><rt>かんりょう</rt><rp>)</rp></ruby>してから<ruby>実行<rp>(</rp><rt>じっこう</rt><rp>)</rp></ruby>するよう<br>
+<code>WidgetsBinding.instance.addPostFrameCallback</code>などを<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>い、<br>
+<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>の<ruby>タイミング<rp>(</rp><rt></rt><rp>)</rp></ruby>を<ruby>遅<rp>(</rp><rt>おく</rt><rp>)</rp></ruby>らせる<ruby>方法<rp>(</rp><rt>ほうほう</rt><rp>)</rp></ruby>があります。</li>
+</ul>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token metadata function">@override</span>
+<span class="token keyword">void</span> <span class="token function">initState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">initState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token class-name">WidgetsBinding</span><span class="token punctuation">.</span>instance<span class="token punctuation">.</span><span class="token function">addPostFrameCallback</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ビルド完了後にProviderを更新</span>
+    ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>yourProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="まとめ">まとめ</h3>
+<ul>
+<li>Providerの<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>を<ruby>直接<rp>(</rp><rt>ちょくせつ</rt><rp>)</rp></ruby>変(か)える<ruby>処理<rp>(</rp><rt>しょり</rt><rp>)</rp></ruby>は、<br>
+<code>build</code>・<code>initState</code>・<code>dispose</code>など<br>
+<ruby>Widget<rp>(</rp><rt>ウィジェット</rt><rp>)</rp></ruby>の<ruby>ライフサイクル<rp>(</rp><rt></rt><rp>)</rp></ruby>内で<ruby>行<rp>(</rp><rt>おこな</rt><rp>)</rp></ruby>うと<br>
+<ruby>UI<rp>(</rp><rt></rt><rp>)</rp></ruby>が<ruby>不安定<rp>(</rp><rt>ふあんてい</rt><rp>)</rp></ruby>になる<ruby>恐<rp>(</rp><rt>おそ</rt><rp>)</rp></ruby>れがあり、Errorが<ruby>発生<rp>(</rp><rt>はっせい</rt><rp>)</rp></ruby>します。</li>
+<li><ruby>基本<rp>(</rp><rt>きほん</rt><rp>)</rp></ruby>はユーザー<ruby>操作<rp>(</rp><rt>そうさ</rt><rp>)</rp></ruby>や<ruby>非同期<rp>(</rp><rt>ひどうき</rt><rp>)</rp></ruby>処理(しょり)の<ruby>完了<rp>(</rp><rt>かんりょう</rt><rp>)</rp></ruby>後(あと)など、<br>
+<ruby>ライフサイクル<rp>(</rp><rt></rt><rp>)</rp></ruby>(Life-cycle)の<ruby>外<rp>(</rp><rt>そと</rt><rp>)</rp></ruby>でProviderを<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>するよう<ruby>注意<rp>(</rp><rt>ちゅうい</rt><rp>)</rp></ruby>しましょう。</li>
+<li><ruby>初期化<rp>(</rp><rt>しょきか</rt><rp>)</rp></ruby>時やどうしても必要(ひつよう)なタイミングでは、<br>
+<code>WidgetsBinding.instance.addPostFrameCallback</code>や<code>Future(() &#123; … &#125;)</code>を<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>い、<br>
+<ruby>一度<rp>(</rp><rt>いちど</rt><rp>)</rp></ruby>ビルドが<ruby>完<rp>(</rp><rt>かん</rt><rp>)</rp></ruby>了してから<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>することで<br>
+<ruby>安全<rp>(</rp><rt>あんぜん</rt><rp>)</rp></ruby>に<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>を<ruby>保<rp>(</rp><rt>たも</rt><rp>)</rp></ruby>つことができます。</li>
+</ul>
+<p>こうした<ruby>対策<rp>(</rp><rt>たいさく</rt><rp>)</rp></ruby>を<ruby>取<rp>(</rp><rt>と</rt><rp>)</rp></ruby>ることで、<br>
+「Tried to modify a provider while the widget tree was building…」という<br>
+Errorを<ruby>回避<rp>(</rp><rt>かいひ</rt><rp>)</rp></ruby>でき、<br>
+<ruby>安定<rp>(</rp><rt>あんてい</rt><rp>)</rp></ruby>した<ruby>UI<rp>(</rp><rt></rt><rp>)</rp></ruby>を<ruby>保<rp>(</rp><rt>たも</rt><rp>)</rp></ruby>つことができます。</p>
+<h2 id="JP-2">JP 2</h2>
+<p><ruby>Riverpod<rp>(</rp><rt></rt><rp>)</rp></ruby>の<ruby>Hook<rp>(</rp><rt>フック</rt><rp>)</rp></ruby>(Hook)を<ruby>使用<rp>(</rp><rt>しよう</rt><rp>)</rp></ruby>して<ruby>開発<rp>(</rp><rt>かいはつ</rt><rp>)</rp></ruby>している<ruby>場合<rp>(</rp><rt>ばあい</rt><rp>)</rp></ruby>でも、<br>
+<ruby>基本<rp>(</rp><rt>きほん</rt><rp>)</rp></ruby>は<ruby>前述<rp>(</rp><rt>ぜんじゅつ</rt><rp>)</rp></ruby>の<ruby>注意点<rp>(</rp><rt>ちゅういてん</rt><rp>)</rp></ruby>(Point)と<ruby>同<rp>(</rp><rt>おな</rt><rp>)</rp></ruby>じです。<br>
+つまり、<ruby>Widget<rp>(</rp><rt>ウィジェット</rt><rp>)</rp></ruby>の<ruby>build<rp>(</rp><rt></rt><rp>)</rp></ruby><ruby>中<rp>(</rp><rt>ちゅう</rt><rp>)</rp></ruby>や<ruby>ライフサイクル<rp>(</rp><rt></rt><rp>)</rp></ruby>(Life-cycle)の<ruby>処理<rp>(</rp><rt>しょり</rt><rp>)</rp></ruby>の<ruby>途中<rp>(</rp><rt>とちゅう</rt><rp>)</rp></ruby>で、<br>
+<ruby>Provider<rp>(</rp><rt></rt><rp>)</rp></ruby>を<ruby>直接<rp>(</rp><rt>ちょくせつ</rt><rp>)</rp></ruby>更新(こうしん)しないようにすることが<ruby>大切<rp>(</rp><rt>たいせつ</rt><rp>)</rp></ruby>です。</p>
+<hr>
+<h3 id="HookConsumerWidgetの場合">HookConsumerWidgetの場合</h3>
+<p><ruby>Riverpod<rp>(</rp><rt></rt><rp>)</rp></ruby>と<ruby>Flutter<rp>(</rp><rt></rt><rp>)</rp></ruby>のHookを<ruby>組<rp>(</rp><rt>く</rt><rp>)</rp></ruby>み<ruby>合わせ<rp>(</rp><rt>あ</rt><rp>)</rp></ruby>(Combine)て<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>う<ruby>際<rp>(</rp><rt>さい</rt><rp>)</rp></ruby>は、<br>
+<ruby>画面<rp>(</rp><rt>がめん</rt><rp>)</rp></ruby>(Screen/Page)を<ruby>定義<rp>(</rp><rt>ていぎ</rt><rp>)</rp></ruby>する<ruby>時<rp>(</rp><rt>とき</rt><rp>)</rp></ruby>に<code>HookConsumerWidget</code>を<ruby>継承<rp>(</rp><rt>けいしょう</rt><rp>)</rp></ruby>(Inherit)すると<ruby>便利<rp>(</rp><rt>べんり</rt><rp>)</rp></ruby>です。<br>
+<ruby>以下<rp>(</rp><rt>いか</rt><rp>)</rp></ruby>の<ruby>例<rp>(</rp><rt>れい</rt><rp>)</rp></ruby>では、<br>
+<code>useEffect</code>を<ruby>利用<rp>(</rp><rt>りよう</rt><rp>)</rp></ruby>(Use)して、<ruby>初回<rp>(</rp><rt>しょかい</rt><rp>)</rp></ruby>ビルド<ruby>完了<rp>(</rp><rt>かんりょう</rt><rp>)</rp></ruby>(Complete)<ruby>後<rp>(</rp><rt>あと</rt><rp>)</rp></ruby>に<br>
+<ruby>Provider<rp>(</rp><rt></rt><rp>)</rp></ruby>の<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>を<ruby>変更<rp>(</rp><rt>へんこう</rt><rp>)</rp></ruby>(Update)している<ruby>例<rp>(</rp><rt>れい</rt><rp>)</rp></ruby>です。</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter_riverpod/flutter_riverpod.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter_hooks/flutter_hooks.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token comment">// なにかしらのProviderを定義（StateNotifierProviderなど）</span>
+<span class="token keyword">final</span> yourProvider <span class="token operator">=</span> <span class="token class-name">StateNotifierProvider</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">YourNotifier</span><span class="token punctuation">,</span> <span class="token class-name">YourState</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">(</span>ref<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token class-name">YourNotifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">YourNotifier</span> <span class="token keyword">extends</span> <span class="token class-name">StateNotifier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">YourState</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  <span class="token class-name">YourNotifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token class-name">YourState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">void</span> <span class="token function">updateSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 状態を更新する処理</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">YourState</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 状態管理のためのプロパティなど</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ExamplePage</span> <span class="token keyword">extends</span> <span class="token class-name">HookConsumerWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token class-name">ExamplePage</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token class-name">Key</span><span class="token operator">?</span> key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">,</span> <span class="token class-name">WidgetRef</span> ref<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 状態を監視</span>
+    <span class="token keyword">final</span> state <span class="token operator">=</span> ref<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span>yourProvider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// build完了後に一度だけProviderを更新したい場合などにuseEffectを使用</span>
+    <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token class-name">Future</span><span class="token punctuation">.</span><span class="token function">microtask</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>yourProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment">// dispose時の処理が必要なければnull</span>
+      <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>
+        title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'HookConsumerWidget Example'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'State: </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">state</span></span><span class="token string">'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="ポイント">ポイント</h3>
+<ol>
+<li>
+<p><strong><ruby>build<rp>(</rp><rt></rt><rp>)</rp></ruby>の<ruby>中<rp>(</rp><rt>なか</rt><rp>)</rp></ruby>で<ruby>直接<rp>(</rp><rt>ちょくせつ</rt><rp>)</rp></ruby>Providerを更新しない</strong></p>
+<ul>
+<li>かわりに<code>useEffect</code>・<code>Future(() &#123; … &#125;)</code>・<code>WidgetsBinding.instance.addPostFrameCallback</code>などを<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>って<br>
+<ruby>ビルド<rp>(</rp><rt></rt><rp>)</rp></ruby>(Build)が<ruby>終<rp>(</rp><rt>お</rt><rp>)</rp></ruby>わった<ruby>後<rp>(</rp><rt>あと</rt><rp>)</rp></ruby>にProviderの<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>を<ruby>変更<rp>(</rp><rt>へんこう</rt><rp>)</rp></ruby>します。</li>
+</ul>
+</li>
+<li>
+<p><strong><ruby>ユーザー<rp>(</rp><rt></rt><rp>)</rp></ruby>(User)の<ruby>操作<rp>(</rp><rt>そうさ</rt><rp>)</rp></ruby>や<ruby>イベント<rp>(</rp><rt></rt><rp>)</rp></ruby>(Event)に<ruby>応<rp>(</rp><rt>おう</rt><rp>)</rp></ruby>じて更新する</strong></p>
+<ul>
+<li><code>onPressed</code>などの<ruby>コールバック<rp>(</rp><rt></rt><rp>)</rp></ruby>(Callback)の<ruby>中<rp>(</rp><rt>なか</rt><rp>)</rp></ruby>で<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>する<ruby>分<rp>(</rp><rt>ぶん</rt><rp>)</rp></ruby>には<ruby>問題<rp>(</rp><rt>もんだい</rt><rp>)</rp></ruby>ありません。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="まとめ-2">まとめ</h3>
+<ul>
+<li><ruby>HookConsumerWidget<rp>(</rp><rt></rt><rp>)</rp></ruby>を<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>った<ruby>場合<rp>(</rp><rt>ばあい</rt><rp>)</rp></ruby>も、<br>
+<ruby>ライフサイクル<rp>(</rp><rt></rt><rp>)</rp></ruby>（<ruby>build<rp>(</rp><rt></rt><rp>)</rp></ruby>など）の<ruby>途中<rp>(</rp><rt>とちゅう</rt><rp>)</rp></ruby>で<br>
+Providerを<ruby>変更<rp>(</rp><rt>へんこう</rt><rp>)</rp></ruby>しないように<ruby>注意<rp>(</rp><rt>ちゅうい</rt><rp>)</rp></ruby>することが<ruby>重要<rp>(</rp><rt>じゅうよう</rt><rp>)</rp></ruby>です。</li>
+<li><code>useEffect</code>を<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>うことで<ruby>初回<rp>(</rp><rt>しょかい</rt><rp>)</rp></ruby>ビルド<ruby>完了<rp>(</rp><rt>かんりょう</rt><rp>)</rp></ruby>後(あと)に<ruby>Provider<rp>(</rp><rt></rt><rp>)</rp></ruby>を<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>でき、<br>
+<ruby>不要<rp>(</rp><rt>ふよう</rt><rp>)</rp></ruby>な<ruby>タイミング<rp>(</rp><rt></rt><rp>)</rp></ruby>(Timing)での<ruby>変更<rp>(</rp><rt>へんこう</rt><rp>)</rp></ruby>を<ruby>避<rp>(</rp><rt>さ</rt><rp>)</rp></ruby>けられます。</li>
+<li><ruby>ユーザー<rp>(</rp><rt></rt><rp>)</rp></ruby>(User)の<ruby>操作<rp>(</rp><rt>そうさ</rt><rp>)</rp></ruby>に<ruby>応<rp>(</rp><rt>おう</rt><rp>)</rp></ruby>じて<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>を<ruby>変更<rp>(</rp><rt>へんこう</rt><rp>)</rp></ruby>する<ruby>処理<rp>(</rp><rt>しょり</rt><rp>)</rp></ruby>も<ruby>同様<rp>(</rp><rt>どうよう</rt><rp>)</rp></ruby>で、<br>
+<code>onPressed</code>など<ruby>ビルド<rp>(</rp><rt></rt><rp>)</rp></ruby>の<ruby>外<rp>(</rp><rt>そと</rt><rp>)</rp></ruby>の<ruby>タイミング<rp>(</rp><rt></rt><rp>)</rp></ruby>で<ruby>更新<rp>(</rp><rt>こうしん</rt><rp>)</rp></ruby>すれば<ruby>安全<rp>(</rp><rt>あんぜん</rt><rp>)</rp></ruby>に<ruby>状態<rp>(</rp><rt>じょうたい</rt><rp>)</rp></ruby>を<ruby>保<rp>(</rp><rt>たも</rt><rp>)</rp></ruby>てます。</li>
+</ul>
+<p>これらを<ruby>徹底<rp>(</rp><rt>てってい</rt><rp>)</rp></ruby>することで、<br>
+「Tried to modify a provider while the widget tree was building…」という<ruby>Error<rp>(</rp><rt>エラー</rt><rp>)</rp></ruby>の<ruby>発生<rp>(</rp><rt>はっせい</rt><rp>)</rp></ruby>を<ruby>防<rp>(</rp><rt>ふせ</rt><rp>)</rp></ruby>ぎ、<br>
+<ruby>安定<rp>(</rp><rt>あんてい</rt><rp>)</rp></ruby>した<ruby>UI<rp>(</rp><rt></rt><rp>)</rp></ruby>(User Interface)を<ruby>構築<rp>(</rp><rt>こうちく</rt><rp>)</rp></ruby>(Build)できます。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Flutter/" rel="tag"># Flutter</a>
+              <a href="/tags/Provider/" rel="tag"># Provider</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Aws%20CouldFormation%20%E3%81%A8%20CDK/" rel="prev" title="AWS CloudFormation と CDK">
+                  <i class="fa fa-angle-left"></i> AWS CloudFormation と CDK
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Flutter%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96%E5%B9%B6%E7%94%9F%E6%88%90/" rel="next" title="Flutter 自定义序列化并生成">
+                  Flutter 自定义序列化并生成 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

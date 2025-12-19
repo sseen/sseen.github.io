@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="之前项目用过provider，但是最近看到riverpod和GetX也很火，所以想对比一下这三个状态管理库。 下面我们用「计数器」这样一个简单的例子，分别展示 Provider、Riverpod 和 GetX 在 Flutter 中如何做状态管理，并在最后进行对比总结。这些示例都力求最小可运行，方便你快速上手。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter状态管理">
+<meta property="og:url" content="https://sseen.github.io/Flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="之前项目用过provider，但是最近看到riverpod和GetX也很火，所以想对比一下这三个状态管理库。 下面我们用「计数器」这样一个简单的例子，分别展示 Provider、Riverpod 和 GetX 在 Flutter 中如何做状态管理，并在最后进行对比总结。这些示例都力求最小可运行，方便你快速上手。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-23T16:33:13.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.825Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/","path":"Flutter状态管理/","title":"Flutter状态管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter状态管理 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Provider"><span class="nav-number">1.</span> <span class="nav-text">一、Provider</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">1.1.</span> <span class="nav-text">1. 添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA-ChangeNotifier-%E8%AE%A1%E6%95%B0%E5%99%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2. 定义一个 ChangeNotifier (计数器示例)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9C%A8%E6%A0%B9%E9%83%A8%E6%B3%A8%E5%85%A5-Provider"><span class="nav-number">1.3.</span> <span class="nav-text">3. 在根部注入 Provider</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Riverpod"><span class="nav-number">2.</span> <span class="nav-text">二、Riverpod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96-2"><span class="nav-number">2.1.</span> <span class="nav-text">1. 添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%8A%B6%E6%80%81%E6%88%96-Provider"><span class="nav-number">2.2.</span> <span class="nav-text">2. 定义一个状态或 Provider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9C%A8%E6%A0%B9%E9%83%A8%E5%8C%85%E8%A3%B9-ProviderScope"><span class="nav-number">2.3.</span> <span class="nav-text">3. 在根部包裹 ProviderScope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9C%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E8%AF%BB%E5%86%99%E7%8A%B6%E6%80%81"><span class="nav-number">2.4.</span> <span class="nav-text">4. 在页面中读写状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81GetX"><span class="nav-number">3.</span> <span class="nav-text">三、GetX</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96-3"><span class="nav-number">3.1.</span> <span class="nav-text">1. 添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%8E%A7%E5%88%B6%E5%99%A8-%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">2. 定义一个控制器 (计数器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9C%A8%E6%A0%B9%E9%83%A8%E6%88%96%E9%A1%B5%E9%9D%A2%E4%B8%AD%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">3. 在根部或页面中初始化控制器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%89%E8%80%85%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四、三者对比总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">混合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%93%AA%E4%B8%AA%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">什么时候用哪个？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter状态管理 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter状态管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-23 16:33:13" itemprop="dateCreated datePublished" datetime="2024-12-23T16:33:13+00:00">2024-12-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>之前项目用过provider，但是最近看到riverpod和GetX也很火，所以想对比一下这三个状态管理库。</p>
+<p>下面我们用「<strong>计数器</strong>」这样一个简单的例子，分别展示 <strong>Provider</strong>、<strong>Riverpod</strong> 和 <strong>GetX</strong> 在 Flutter 中如何做状态管理，并在最后进行对比总结。这些示例都力求<strong>最小可运行</strong>，方便你快速上手。</p>
+<hr>
+<h2 id="一、Provider">一、Provider</h2>
+<p><strong>原理</strong>：基于 Flutter 内置的 InheritedWidget + <code>ChangeNotifier</code>，由 Remi Rousselet 开发，是 Flutter 社区使用最广泛的状态管理方案之一。</p>
+<h3 id="1-添加依赖">1. 添加依赖</h3>
+<p>在 <code>pubspec.yaml</code> 中：</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dependencies</span><span class="token punctuation">:</span>
+  <span class="token key atrule">flutter</span><span class="token punctuation">:</span>
+    <span class="token key atrule">sdk</span><span class="token punctuation">:</span> flutter
+  <span class="token key atrule">provider</span><span class="token punctuation">:</span> ^6.0.0</code></pre>
+<h3 id="2-定义一个-ChangeNotifier-计数器示例">2. 定义一个 <code>ChangeNotifier</code> (计数器示例)</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Counter</span> <span class="token keyword">extends</span> <span class="token class-name">ChangeNotifier</span> <span class="token punctuation">&#123;</span>
+  int _value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  int <span class="token keyword">get</span> value <span class="token operator">=</span><span class="token operator">></span> _value<span class="token punctuation">;</span>
+
+  <span class="token keyword">void</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    _value<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token function">notifyListeners</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 通知UI刷新</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="3-在根部注入-Provider">3. 在根部注入 Provider</h3>
+<p>在 <code>main.dart</code>：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:provider/provider.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'counter.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">runApp</span><span class="token punctuation">(</span>
+    <span class="token class-name">ChangeNotifierProvider</span><span class="token punctuation">(</span>
+      create<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">Counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      child<span class="token punctuation">:</span> <span class="token class-name">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">MaterialApp</span><span class="token punctuation">(</span>
+      home<span class="token punctuation">:</span> <span class="token class-name">ProviderDemoPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ProviderDemoPage</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">final</span> counter <span class="token operator">=</span> <span class="token class-name">Provider</span><span class="token punctuation">.</span>of<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Counter</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Provider Demo'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Value: </span><span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token expression">counter<span class="token punctuation">.</span>value</span><span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">,</span> style<span class="token punctuation">:</span> <span class="token class-name">TextStyle</span><span class="token punctuation">(</span>fontSize<span class="token punctuation">:</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      floatingActionButton<span class="token punctuation">:</span> <span class="token class-name">FloatingActionButton</span><span class="token punctuation">(</span>
+        onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> counter<span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">Icons</span><span class="token punctuation">.</span>add<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li>运行后，每点击 FAB，<code>counter.increment()</code> -&gt; <code>notifyListeners()</code> -&gt; 重建 <code>Text(...)</code>。</li>
+</ul>
+<hr>
+<h2 id="二、Riverpod">二、Riverpod</h2>
+<p><strong>原理</strong>：由 Provider 作者推出的下一代方案，不依赖 BuildContext，提供更灵活的 Provider 体系和更好的测试体验。</p>
+<h3 id="1-添加依赖-2">1. 添加依赖</h3>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dependencies</span><span class="token punctuation">:</span>
+  <span class="token key atrule">flutter</span><span class="token punctuation">:</span>
+    <span class="token key atrule">sdk</span><span class="token punctuation">:</span> flutter
+  <span class="token key atrule">flutter_riverpod</span><span class="token punctuation">:</span> ^2.3.6</code></pre>
+<h3 id="2-定义一个状态或-Provider">2. 定义一个状态或 Provider</h3>
+<p>最简单用 <code>StateProvider&lt;int&gt;</code>：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter_riverpod/flutter_riverpod.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token comment">// 一个最简单的StateProvider，初始为0</span>
+<span class="token keyword">final</span> counterProvider <span class="token operator">=</span> <span class="token class-name">StateProvider</span><span class="token generics"><span class="token punctuation">&lt;</span>int<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">(</span>ref<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="3-在根部包裹-ProviderScope">3. 在根部包裹 <code>ProviderScope</code></h3>
+<p>在 <code>main.dart</code>：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter_riverpod/flutter_riverpod.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'counter_provider.dart'</span></span><span class="token punctuation">;</span> <span class="token comment">// 上面定义的</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">runApp</span><span class="token punctuation">(</span>
+    <span class="token class-name">ProviderScope</span><span class="token punctuation">(</span>child<span class="token punctuation">:</span> <span class="token class-name">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 必须有ProviderScope</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">MaterialApp</span><span class="token punctuation">(</span>
+      home<span class="token punctuation">:</span> <span class="token class-name">RiverpodDemoPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="4-在页面中读写状态">4. 在页面中读写状态</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">class</span> <span class="token class-name">RiverpodDemoPage</span> <span class="token keyword">extends</span> <span class="token class-name">ConsumerWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">,</span> <span class="token class-name">WidgetRef</span> ref<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">final</span> count <span class="token operator">=</span> ref<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span>counterProvider<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 读出当前值</span>
+
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Riverpod Demo'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Value: </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">count</span></span><span class="token string">'</span></span><span class="token punctuation">,</span> style<span class="token punctuation">:</span> <span class="token class-name">TextStyle</span><span class="token punctuation">(</span>fontSize<span class="token punctuation">:</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      floatingActionButton<span class="token punctuation">:</span> <span class="token class-name">FloatingActionButton</span><span class="token punctuation">(</span>
+        onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          <span class="token comment">// 改值</span>
+          <span class="token keyword">final</span> notifier <span class="token operator">=</span> ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>counterProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          notifier<span class="token punctuation">.</span>state<span class="token operator">++</span><span class="token punctuation">;</span> 
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">Icons</span><span class="token punctuation">.</span>add<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<hr>
+<h2 id="三、GetX">三、GetX</h2>
+<p><strong>原理</strong>：一个集成路由管理、依赖注入和状态管理的多功能库。状态管理部分可以通过 <code>GetBuilder</code>、<code>GetxController</code>、<code>Obx</code>(Rx变量) 等多种方式来实现。</p>
+<h3 id="1-添加依赖-3">1. 添加依赖</h3>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dependencies</span><span class="token punctuation">:</span>
+  <span class="token key atrule">flutter</span><span class="token punctuation">:</span>
+    <span class="token key atrule">sdk</span><span class="token punctuation">:</span> flutter
+  <span class="token key atrule">get</span><span class="token punctuation">:</span> ^4.6.5</code></pre>
+<h3 id="2-定义一个控制器-计数器">2. 定义一个控制器 (计数器)</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:get/get.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">CounterController</span> <span class="token keyword">extends</span> <span class="token class-name">GetxController</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 用一个 RxInt 管理状态</span>
+  <span class="token keyword">var</span> count <span class="token operator">=</span> <span class="token number">0.</span>obs<span class="token punctuation">;</span>
+
+  <span class="token keyword">void</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    count<span class="token punctuation">.</span>value<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="3-在根部或页面中初始化控制器">3. 在根部或页面中初始化控制器</h3>
+<p>GetX 常见做法：直接 <code>Get.put()</code>，或者放到Bindings里，这里用最简写法：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:get/get.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'counter_controller.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">runApp</span><span class="token punctuation">(</span><span class="token class-name">GetMaterialApp</span><span class="token punctuation">(</span>
+    home<span class="token punctuation">:</span> <span class="token class-name">GetXDemoPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">GetXDemoPage</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 通过 Get.put() 获取controller实例</span>
+  <span class="token keyword">final</span> <span class="token class-name">CounterController</span> controller <span class="token operator">=</span> <span class="token class-name">Get</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">CounterController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'GetX Demo'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+        <span class="token comment">// 使用 Obx 来监听变化</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Obx</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">Text</span><span class="token punctuation">(</span>
+              <span class="token string-literal"><span class="token string">'Value: </span><span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token expression">controller<span class="token punctuation">.</span>count<span class="token punctuation">.</span>value</span><span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">,</span>
+              style<span class="token punctuation">:</span> <span class="token class-name">TextStyle</span><span class="token punctuation">(</span>fontSize<span class="token punctuation">:</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      floatingActionButton<span class="token punctuation">:</span> <span class="token class-name">FloatingActionButton</span><span class="token punctuation">(</span>
+        onPressed<span class="token punctuation">:</span> controller<span class="token punctuation">.</span>increment<span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">Icons</span><span class="token punctuation">.</span>add<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li>当 <code>controller.increment()</code> 修改了 <code>count.value</code>，所有使用了 <code>Obx(() =&gt; ...)</code> 并监听 <code>count</code> 的界面会自动刷新。</li>
+</ul>
+<hr>
+<h2 id="四、三者对比总结">四、三者对比总结</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Provider</strong></th>
+<th><strong>Riverpod</strong></th>
+<th><strong>GetX</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>原理</strong></td>
+<td>基于 InheritedWidget + ChangeNotifier</td>
+<td>独立的 Provider 体系；无 BuildContext 依赖</td>
+<td>自带路由管理、依赖注入、状态管理等一体化解决方案</td>
+</tr>
+<tr>
+<td><strong>使用方式</strong></td>
+<td>在根部用 Provider(s)，子 Widget 里用 <code>Provider.of</code> 或 <code>Consumer</code></td>
+<td>在根部用 <code>ProviderScope</code>；组件中 <code>ref.watch</code> / <code>ref.read</code></td>
+<td>通过 <code>GetMaterialApp</code> 启动，并用 <code>Get.put</code>、<code>Obx</code>、<code>GetBuilder</code>、<code>Rx</code> 等模式</td>
+</tr>
+<tr>
+<td><strong>学习曲线</strong></td>
+<td>上手较快，文档多；适合初中小项目</td>
+<td>概念稍多但更灵活；更易测试、无上下文限制</td>
+<td>功能非常多（路由、DI、状态管理），满足“全家桶”需求；入门简单，API 较多需谨慎使用</td>
+</tr>
+<tr>
+<td><strong>测试性</strong></td>
+<td>需要构建 Widget 树或 Mock Context</td>
+<td>更好测试，可用 <code>ProviderContainer</code> 覆盖或模拟状态</td>
+<td>可以直接测试控制器 (如 <code>CounterController</code>)；mock 相对简单，但需注意路由/依赖注入部分</td>
+</tr>
+<tr>
+<td><strong>依赖注入</strong></td>
+<td>需手动声明 <code>Provider</code>，层层嵌套</td>
+<td>Provider + ref.notifier 等，声明式注入</td>
+<td>自带 <code>Get.put()</code>、<code>Get.lazyPut()</code> 等依赖注入，或用 Bindings</td>
+</tr>
+<tr>
+<td><strong>社区生态</strong></td>
+<td>很多项目和教程；Flutter 官方文档也常引用</td>
+<td>新一代状态管理，逐渐流行；作者同一人（Remi）</td>
+<td>国外、国内社区都很火；Star 很多，但也有对“大而全”包不够精细化的争议</td>
+</tr>
+<tr>
+<td><strong>典型场景</strong></td>
+<td>小中型项目，喜欢 <code>ChangeNotifier</code> 简单模式</td>
+<td>中大型项目，对可测试性、灵活依赖注入要求高</td>
+<td>需要路由管理 + 状态管理 + 依赖注入一次搞定，或者喜欢 “命令式”的编程风格</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="混合使用">混合使用</h2>
+<p>是的，在 Flutter 开发中，<code>Provider</code>、<code>Riverpod</code> 和 <code>GetX</code> 可以根据项目需求混合使用。每个框架都有其独特的优势，适用于不同的场景。通过合理组合它们，可以发挥各自的长处，提升开发效率和代码可维护性。</p>
+<p><strong>混合使用的建议</strong>：</p>
+<ul>
+<li>
+<p><strong>职责分离</strong>：在项目中混合使用多个状态管理库时，要清晰地划分每个库的职责，避免冗余。建议使用 <code>GetX</code> 处理局部或 UI 层的状态，而让 <code>Riverpod</code> 处理数据层的复杂逻辑。</p>
+</li>
+<li>
+<p><strong>避免冗余的状态管理</strong>：在项目中混合使用多个状态管理库时，要清晰地划分每个库的职责，避免冗余。建议使用 <code>GetX</code> 处理局部或 UI 层的状态，而让 <code>Riverpod</code> 处理数据层的复杂逻辑。</p>
+</li>
+<li>
+<p><strong>性能考虑</strong>：两者的性能都很优异，但在状态较为复杂或频繁变动时，可能需要根据实际场景选择更适合的框架。比如，<code>GetX</code> 更擅长处理频繁的 UI 状态更新，<code>Riverpod</code> 则适合异步数据处理和全局状态的维护。</p>
+</li>
+<li>
+<p><strong>团队协作</strong>：在混合使用这些框架时，确保团队成员都熟悉各自的工作原理和最佳实践，以保持代码的一致性和可维护性。</p>
+</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<p>以下是一个将 <code>GetX</code> 和 <code>Riverpod</code> 混合使用的简单示例：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:get/get.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter_riverpod/flutter_riverpod.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token comment">// 定义一个 Riverpod 的 StateProvider 来管理计数状态</span>
+<span class="token keyword">final</span> counterProvider <span class="token operator">=</span> <span class="token class-name">StateProvider</span><span class="token punctuation">(</span><span class="token punctuation">(</span>ref<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">runApp</span><span class="token punctuation">(</span>
+    <span class="token class-name">ProviderScope</span><span class="token punctuation">(</span>
+      child<span class="token punctuation">:</span> <span class="token class-name">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">GetMaterialApp</span><span class="token punctuation">(</span>
+      title<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'GetX and Riverpod Demo'</span></span><span class="token punctuation">,</span>
+      home<span class="token punctuation">:</span> <span class="token class-name">HomePage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">HomePage</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Home Page'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Column</span><span class="token punctuation">(</span>
+          mainAxisAlignment<span class="token punctuation">:</span> <span class="token class-name">MainAxisAlignment</span><span class="token punctuation">.</span>center<span class="token punctuation">,</span>
+          children<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+            <span class="token comment">// 使用 Riverpod 管理的状态来更新界面</span>
+            <span class="token class-name">Consumer</span><span class="token punctuation">(</span>
+              builder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">,</span> ref<span class="token punctuation">,</span> child<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">final</span> count <span class="token operator">=</span> ref<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span>counterProvider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Riverpod Count: </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">count</span></span><span class="token string">'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token class-name">SizedBox</span><span class="token punctuation">(</span>height<span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token comment">// 使用 GetX 来处理路由导航</span>
+            <span class="token class-name">ElevatedButton</span><span class="token punctuation">(</span>
+              onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Get</span><span class="token punctuation">.</span><span class="token function">to</span><span class="token punctuation">(</span><span class="token class-name">SecondPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+              child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Go to Second Page'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      floatingActionButton<span class="token punctuation">:</span> <span class="token class-name">Consumer</span><span class="token punctuation">(</span>
+        builder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">,</span> ref<span class="token punctuation">,</span> child<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          <span class="token keyword">return</span> <span class="token class-name">FloatingActionButton</span><span class="token punctuation">(</span>
+            onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+              <span class="token comment">// 使用 Riverpod 更新计数状态</span>
+              ref<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>counterProvider<span class="token punctuation">.</span>notifier<span class="token punctuation">)</span><span class="token punctuation">.</span>state<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            child<span class="token punctuation">:</span> <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">Icons</span><span class="token punctuation">.</span>add<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">SecondPage</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Second Page'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">ElevatedButton</span><span class="token punctuation">(</span>
+          onPressed<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Get</span><span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 使用 GetX 处理返回操作</span>
+          <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+          child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Back to Home'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>在这个示例中，<code>Riverpod</code> 被用于状态管理，而 <code>GetX</code> 被用于路由管理。这种组合利用了 <code>Riverpod</code> 的类型安全和灵活性，以及 <code>GetX</code> 的简洁路由管理功能。</p>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>
+<p><strong>学习成本</strong>：混合使用多个框架可能增加学习成本。确保团队成员熟悉所使用框架的概念和用法，以避免开发过程中的混乱。</p>
+</li>
+<li>
+<p><strong>文档和社区支持</strong>：在选择和混合使用框架时，参考官方文档和社区资源，以获取最佳实践和支持。</p>
+</li>
+</ul>
+<p>总的来说，<code>Provider</code>、<code>Riverpod</code> 和 <code>GetX</code> 可以根据项目需求进行混合使用。关键在于明确每个框架的职责范围，合理分工，充分发挥各自优势，以实现高效的状态管理和路由控制。</p>
+<h2 id="什么时候用哪个？">什么时候用哪个？</h2>
+<ul>
+<li><strong>Provider</strong>：如果你偏好在 Flutter 官方文档中能看到大量 Provider 示例，或已有 Provider 的使用基础，并且项目规模不算很大，Provider 就够用了。</li>
+<li><strong>Riverpod</strong>：想要更清晰的无上下文状态管理、更强的可测试性、复杂依赖注入（如网络、数据库、repo 等层层 Provider）时，推荐 Riverpod。</li>
+<li><strong>GetX</strong>：除了状态管理，还想统一管理路由、依赖注入、SnackBar 等；喜欢书写简洁、API 丰富的库，那么 GetX 是一个一站式的解决方案。</li>
+</ul>
+<p>最终选择取决于<strong>团队偏好</strong>、<strong>项目规模</strong>、<strong>个人对不同风格的熟悉度</strong>。</p>
+<p>祝你在 Flutter 中愉快地使用 Provider、Riverpod 或 GetX 来管理状态！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Flutter/" rel="tag"># Flutter</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%E7%94%BB%E9%9D%A2%E7%BC%A9%E6%94%BE%E5%B9%B3%E7%A7%BB/" rel="prev" title="Flutter画面缩放平移">
+                  <i class="fa fa-angle-left"></i> Flutter画面缩放平移
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E8%87%AA%E5%AE%9A%E4%B9%89%20GitHub%20Copilot%20%E7%9A%84%20Commit%20Message%20%E6%A0%BC%E5%BC%8F/" rel="next" title="自定义 GitHub Copilot 的 Commit Message 格式">
+                  自定义 GitHub Copilot 的 Commit Message 格式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

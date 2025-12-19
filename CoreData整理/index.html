@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="看过几次 core data by tutorials 了，感觉每次用到还想重新看过，又是不整理的锅。 core data by tutorials 7th now reading.  使用自带的core data NSManagedObject Subclass Core data stack 问题  must specify an inverse relationship background">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreData整理">
+<meta property="og:url" content="https://sseen.github.io/CoreData%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="看过几次 core data by tutorials 了，感觉每次用到还想重新看过，又是不整理的锅。 core data by tutorials 7th now reading.  使用自带的core data NSManagedObject Subclass Core data stack 问题  must specify an inverse relationship background">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sseen.github.io/images/2021/2021-03-18-07-34-07.png">
+<meta property="article:published_time" content="2021-02-19T17:46:05.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.820Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="CoreData">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sseen.github.io/images/2021/2021-03-18-07-34-07.png">
+
+
+<link rel="canonical" href="https://sseen.github.io/CoreData%E6%95%B4%E7%90%86/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/CoreData%E6%95%B4%E7%90%86/","path":"CoreData整理/","title":"CoreData整理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CoreData整理 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84core-data"><span class="nav-number">1.</span> <span class="nav-text">使用自带的core data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSManagedObject-Subclass"><span class="nav-number">2.</span> <span class="nav-text">NSManagedObject Subclass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-data-stack"><span class="nav-number">3.</span> <span class="nav-text">Core data stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#must-specify-an-inverse-relationship"><span class="nav-number">4.1.</span> <span class="nav-text">must specify an inverse relationship</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#background-managed-object-context"><span class="nav-number">4.2.</span> <span class="nav-text">background managed object context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSPersistentContainer-%E5%8F%8A-NSFetchedResultsControllerDelegate"><span class="nav-number">4.3.</span> <span class="nav-text">NSPersistentContainer 及 NSFetchedResultsControllerDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#core-data-xcode-debug"><span class="nav-number">4.4.</span> <span class="nav-text">core data xcode debug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/CoreData%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CoreData整理 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CoreData整理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-19 17:46:05" itemprop="dateCreated datePublished" datetime="2021-02-19T17:46:05+00:00">2021-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>看过几次 core data by tutorials 了，感觉每次用到还想重新看过，又是不整理的锅。<br>
+core data by tutorials 7th now reading.</p>
+<ol>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84core-data">使用自带的core data</a></li>
+<li><a href="#nsmanagedobject-subclass">NSManagedObject Subclass</a></li>
+<li><a href="#core-data-stack">Core data stack</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a>
+<ol>
+<li><a href="#must-specify-an-inverse-relationship">must specify an inverse relationship</a></li>
+<li><a href="#background-managed-object-context">background managed object context</a></li>
+<li><a href="#nspersistentcontainer-%E5%8F%8A-nsfetchedresultscontrollerdelegate">NSPersistentContainer 及 NSFetchedResultsControllerDelegate</a></li>
+<li><a href="#core-data-xcode-debug">core data xcode debug</a></li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ol>
+<h2 id="使用自带的core-data">使用自带的core data</h2>
+<p>Data Model editor<br>
+entity<br>
+attribute<br>
+relationship</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">save</span><span class="token punctuation">(</span>name<span class="token punctuation">:</span><span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">guard</span> <span class="token keyword">let</span> appDelegate <span class="token operator">=</span> <span class="token class-name">UIApplication</span><span class="token punctuation">.</span>shared<span class="token punctuation">.</span>delegate <span class="token keyword">as</span><span class="token operator">?</span> <span class="token class-name">AppDelegate</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">let</span> managedContext <span class="token operator">=</span> appDelegate<span class="token punctuation">.</span>persistentContainer<span class="token punctuation">.</span>viewContext
+    <span class="token keyword">let</span> entity <span class="token operator">=</span> <span class="token class-name">NSEntityDescription</span><span class="token punctuation">.</span><span class="token function">entity</span><span class="token punctuation">(</span>forEntityName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Person"</span></span><span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> managedContext<span class="token punctuation">)</span><span class="token operator">!</span>
+    <span class="token keyword">let</span> person <span class="token operator">=</span> <span class="token class-name">NSManagedObject</span><span class="token punctuation">(</span>entity<span class="token punctuation">:</span> entity<span class="token punctuation">,</span> insertInto<span class="token punctuation">:</span> managedContext<span class="token punctuation">)</span>
+
+    person<span class="token punctuation">.</span><span class="token function">setValue</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> forKeyPath<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"name"</span></span><span class="token punctuation">)</span>
+
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> managedContext<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    people<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token keyword">let</span> error <span class="token keyword">as</span> <span class="token class-name">NSError</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Could not save. </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">, </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error<span class="token punctuation">.</span>userInfo</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function-definition function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//1 </span>
+    <span class="token keyword">guard</span> <span class="token keyword">let</span> appDelegate <span class="token operator">=</span> <span class="token class-name">UIApplication</span><span class="token punctuation">.</span>shared<span class="token punctuation">.</span>delegate <span class="token keyword">as</span><span class="token operator">?</span> <span class="token class-name">AppDelegate</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> managedContext <span class="token operator">=</span> appDelegate<span class="token punctuation">.</span>persistentContainer<span class="token punctuation">.</span>viewContext    
+    <span class="token comment">//2 </span>
+    <span class="token keyword">let</span> fetchRequest <span class="token operator">=</span> <span class="token class-name">NSFetchRequest</span><span class="token operator">&lt;</span><span class="token class-name">NSManagedObject</span><span class="token operator">></span><span class="token punctuation">(</span>entityName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Person"</span></span><span class="token punctuation">)</span>
+    <span class="token comment">//3 </span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        people <span class="token operator">=</span> <span class="token keyword">try</span> managedContext<span class="token punctuation">.</span><span class="token function">fetch</span><span class="token punctuation">(</span>fetchRequest<span class="token punctuation">)</span> 
+        <span class="token punctuation">&#125;</span> 
+        <span class="token keyword">catch</span> <span class="token keyword">let</span> error <span class="token keyword">as</span> <span class="token class-name">NSError</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Could not fetch. </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">, </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error<span class="token punctuation">.</span>userInfo</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="NSManagedObject-Subclass">NSManagedObject Subclass</h2>
+<p>就是model你的数据。<br>
+选中 <code>.xcdatamodeld</code> 然后生成 <code>create nsmanagedObject Subclass</code>。</p>
+<h2 id="Core-data-stack">Core data stack</h2>
+<p>iOS10 新加 NSPersistentContainer，可以管理下面四个属性</p>
+<ul>
+<li>NSManagedObjectModel，类似表结构，ruantime时候，把 xcdatamodel 编辑的文件初始化成 NSManagedObjectModel</li>
+<li>NSPersistentStore，读取写入存储，sqlite、json、xml、inmemory</li>
+<li>NSPersistentStoreCoordinator，介于 NSManagedObjectModel 和 NSPersistentStore 之间，多一层抽离可消除彼此细节依赖，使 NSManagedObjectModel 不用知道用了什么介质存储数据，只管存就行；而且如果你有多个持久化存储，那么持久化存储协调器向托管上下文提供了一个统一的接口。</li>
+<li>NSManagedObjectContext
+<ul>
+<li>管理所创建对象的生命周期</li>
+<li>管理对象必须有相应的context</li>
+<li>非线程安全，只能在统一线程中创建context和管理对象</li>
+</ul>
+</li>
+</ul>
+<p><code>2021-02-20 72</code></p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">class</span> <span class="token class-name">CoreDataStack</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span> <span class="token keyword">let</span> modelName<span class="token punctuation">:</span> <span class="token class-name">String</span>
+<span class="token keyword">init</span><span class="token punctuation">(</span>modelName<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">self</span><span class="token punctuation">.</span>modelName <span class="token operator">=</span> modelName <span class="token punctuation">&#125;</span>
+
+<span class="token keyword">private</span> <span class="token keyword">lazy</span> <span class="token keyword">var</span> storeContainer<span class="token punctuation">:</span> <span class="token class-name">NSPersistentContainer</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">let</span> container <span class="token operator">=</span> <span class="token class-name">NSPersistentContainer</span><span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>modelName<span class="token punctuation">)</span> container<span class="token punctuation">.</span>loadPersistentStores <span class="token punctuation">&#123;</span> <span class="token punctuation">(</span>storeDescription<span class="token punctuation">,</span> error<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token keyword">if</span> <span class="token keyword">let</span> error <span class="token operator">=</span> error <span class="token keyword">as</span> <span class="token class-name">NSError</span><span class="token operator">?</span> <span class="token punctuation">&#123;</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Unresolved error </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">, </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error<span class="token punctuation">.</span>userInfo</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span> <span class="token keyword">return</span> container <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">lazy</span> <span class="token keyword">var</span> managedContext<span class="token punctuation">:</span> <span class="token class-name">NSManagedObjectContext</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token keyword">self</span><span class="token punctuation">.</span>storeContainer<span class="token punctuation">.</span>viewContext <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function-definition function">saveContext</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+    <span class="token keyword">guard</span> managedContext<span class="token punctuation">.</span>hasChanges <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span> <span class="token keyword">try</span> managedContext<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span> 
+    <span class="token keyword">catch</span> <span class="token keyword">let</span> error <span class="token keyword">as</span> <span class="token class-name">NSError</span> 
+    <span class="token punctuation">&#123;</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Unresolved error </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">, </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error<span class="token punctuation">.</span>userInfo</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="问题">问题</h2>
+<h3 id="must-specify-an-inverse-relationship">must specify an inverse relationship</h3>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/764125/does-every-core-data-relationship-have-to-have-an-inverse">Does every Core Data Relationship have to have an Inverse?</a><br>
+想象一个场景：</p>
+<ol>
+<li>entity 有个 relationship(non optional,并且不能删除 delete rule=deny) r  (没有inverse relationship)</li>
+<li>entity set r = oneR</li>
+<li>relationship 删除 oneR</li>
+<li>coredata save</li>
+<li>一般情况下我们会觉得肯定保存失败，但是结果确实可以。原因就是因为没有inverse，导致relationship变化的时候，并没有reflect到entity上，也就不会触发validation</li>
+</ol>
+<h3 id="background-managed-object-context">background managed object context</h3>
+<p>background managed object context，每次都在 new context 所以全都是异步并发无序<br>
+performBackgroundTask，都在一个 context 里，异步但是有序队列</p>
+<h3 id="NSPersistentContainer-及-NSFetchedResultsControllerDelegate">NSPersistentContainer 及 NSFetchedResultsControllerDelegate</h3>
+<p>persistentStoreCoordinator fetch 的时候不会触发 delegate 方法，调试了半天。</p>
+<h3 id="core-data-xcode-debug">core data xcode debug</h3>
+<p>xcode <code>scheme</code> 设置中 <code>Run → Arguments → Arguments passed on launch</code> 添加如下配置</p>
+<blockquote>
+<p>-com.apple.CoreData.SQLDebug 1 (1,2,3都可以，显示级别不一样)<br>
+-com.apple.CoreData.ConcurrencyDebug 1<br>
+-com.apple.CoreData.MigrationDebug 1</p>
+</blockquote>
+<p><img src="https://sseen.github.io/images/2021/2021-03-18-07-34-07.png" alt="cd"></p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/beny/8313959">core data debuge setting</a><br>
+<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/50647579/core-data-how-to-swap-nspersistentstores-and-inform-nsfetchedresultscontroller">Core Data. How to swap NSPersistentStores and inform NSFetchedResultsController?</a><br>
+<a target="_blank" rel="noopener" href="https://gist.github.com/xavierchia/ef43abb270003ae63e5bbb7eb5404645">Preload Sqlite data to Core Data</a><br>
+<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/59868393/swiftui-pagination-for-list-object">SwiftUI pagination for List object</a><br>
+<a target="_blank" rel="noopener" href="https://www.avanderlee.com/swift/core-data-performance/">Core Data Performance: 6 tips you should know</a><br>
+<a target="_blank" rel="noopener" href="https://medium.com/swift2go/fetching-remote-data-with-core-data-background-context-in-ios-app-224dad15ef6c">Fetching Remote Data With Core Data Background Context in iOS App</a><br>
+<a target="_blank" rel="noopener" href="https://dzone.com/articles/coredata-crud-with-concurrency-in-swift-part-2-1">CoreData: CRUD With Concurrency in Swift - Part 2</a><br>
+<a target="_blank" rel="noopener" href="https://alisoftware.github.io/swift/closures/2016/07/25/closure-capture-1/">Closures Capture Semantics: Catch them all!</a><br>
+<a target="_blank" rel="noopener" href="https://duckrowing.com//2010/03/11/using-core-data-on-multiple-threads/">Using Core Data on Multiple Threads</a><br>
+<a target="_blank" rel="noopener" href="https://medium.com/swift-india/functional-swift-closures-67459b812d0">Functional Swift: Closures { }</a><br>
+<a target="_blank" rel="noopener" href="https://marcosantadev.com/capturing-values-swift-closures/">Capturing Values In Swift Closures</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/CoreData/" rel="tag"># CoreData</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/win10%E7%9B%B8%E5%85%B3/" rel="prev" title="win10相关">
+                  <i class="fa fa-angle-left"></i> win10相关
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/WireGuard%E9%85%8D%E7%BD%AE/" rel="next" title="WireGuard配置">
+                  WireGuard配置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

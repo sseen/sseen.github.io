@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近发现了一个很有意思的东西，就是 Telegram Bot API，不知道什么时候添加了一个 Using a Local Bot API Server  的功能，可以自己搭建一个 Telegram Bot API 的服务器，实现发大文件2G的功能，官方bot发文件有50兆的限制。 使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Telegram Bot API">
+<meta property="og:url" content="https://sseen.github.io/Telegram%20Bot%20API/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="最近发现了一个很有意思的东西，就是 Telegram Bot API，不知道什么时候添加了一个 Using a Local Bot API Server  的功能，可以自己搭建一个 Telegram Bot API 的服务器，实现发大文件2G的功能，官方bot发文件有50兆的限制。 使用">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-24T11:24:24.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.824Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Telegram">
+<meta property="article:tag" content="Bot">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Telegram%20Bot%20API/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Telegram%20Bot%20API/","path":"Telegram Bot API/","title":"Telegram Bot API"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Telegram Bot API | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c-internal-compiler-error-Killed-program-cc1plus"><span class="nav-number">2.1.</span> <span class="nav-text">c++: internal compiler error: Killed (program cc1plus)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0swap"><span class="nav-number">2.1.1.</span> <span class="nav-text">增加swap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#client-loop-send-disconnect-Broken-pipe"><span class="nav-number">2.2.</span> <span class="nav-text">client_loop: send disconnect: Broken pipe</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#screen"><span class="nav-number">2.2.1.</span> <span class="nav-text">screen</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Telegram%20Bot%20API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Telegram Bot API | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Telegram Bot API
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-24 11:24:24" itemprop="dateCreated datePublished" datetime="2023-04-24T11:24:24+00:00">2023-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近发现了一个很有意思的东西，就是 Telegram Bot API，不知道什么时候添加了一个 <a target="_blank" rel="noopener" href="https://core.telegram.org/bots/api#using-a-local-bot-api-server">Using a Local Bot API Server</a>  的功能，可以自己搭建一个 Telegram Bot API 的服务器，实现发大文件2G的功能，官方bot发文件有50兆的限制。</p>
+<h2 id="使用">使用</h2>
+<ol>
+<li>
+<p>编译 bot api server</p>
+</li>
+<li>
+<p>运行需要先去<a target="_blank" rel="noopener" href="https://my.telegram.org">官网</a> ，登录后，点API development tools可以看到你的api-id和api-hash，这个要记下来，留在后面备用。</p>
+</li>
+<li>
+<p>启动 bot api server <code>telegram-bot-api --api-id=&lt;arg&gt; --api-hash=&lt;arg&gt; --local -l /var/logs/tgserver.log -v 3</code></p>
+</li>
+<li>
+<p>发送文件，这里直接发送文件而不是先上传到你本地server。<code>curl -v -F chat_id=&quot;&lt;chat_id&gt;&quot; -F video=&quot;file://&lt;/home/hd/my.mp4&gt;&quot; -F supports_streaming=true -F caption=&quot;my.mp4&quot; http://localhost:8081/bot&lt;token&gt;/sendVideo</code>，如果你想调分辨率需要设置 height 和 width 参数，具体参数可以看<a target="_blank" rel="noopener" href="https://core.telegram.org/bots/api#sendvideo">这里</a>。</p>
+</li>
+<li>
+<p>仔细看返回信息</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash">*   Trying <span class="token number">127.0</span>.0.1<span class="token punctuation">..</span>.
+* TCP_NODELAY <span class="token builtin class-name">set</span>
+* Connected to localhost <span class="token punctuation">(</span><span class="token number">127.0</span>.0.1<span class="token punctuation">)</span> port <span class="token number">8081</span> <span class="token punctuation">(</span><span class="token comment">#0)</span>
+<span class="token operator">></span> POST /bot<span class="token operator">&lt;</span>you_token<span class="token operator">></span>/sendVideo HTTP/1.1
+<span class="token operator">></span> Host: localhost:8081
+<span class="token operator">></span> User-Agent: curl/7.64.1
+<span class="token operator">></span> Accept: */*
+<span class="token operator">></span> Content-Length: <span class="token number">558</span>
+<span class="token operator">></span> Content-Type: multipart/form-data<span class="token punctuation">;</span> <span class="token assign-left variable">boundary</span><span class="token operator">=</span>------------------------f7dec8eebe228600
+<span class="token operator">></span>
+* We are completely uploaded and fine</code></pre>
+<p>这就说明，local server直接从本地取文件发送了。你可以tail下log，看到它在后台正在使劲的发送中。</p>
+ <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">tail</span> <span class="token parameter variable">-F</span> tgserver.log </code></pre>
+</li>
+</ol>
+<h2 id="问题">问题</h2>
+<p>主要问题出现在编译上，macOS 倒是很顺利，用了十多分钟；但是我的vps配置太低，编译速度太慢而且内存太低所以遇到了下面两个问题。</p>
+<h3 id="c-internal-compiler-error-Killed-program-cc1plus">c++: internal compiler error: Killed (program cc1plus)</h3>
+<p>这个一搜索直接找到就是内存不够，开始我增加了2g的swap还是不够，最后索性增加了4g的swap，然后就编译成功了。</p>
+<h4 id="增加swap">增加swap</h4>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#可以通过临时使用交换分区来解决：</span>
+
+<span class="token function">sudo</span> <span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>/dev/zero <span class="token assign-left variable">of</span><span class="token operator">=</span>/swapfile <span class="token assign-left variable">bs</span><span class="token operator">=</span>64M <span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">16</span> 
+<span class="token comment">#count的大小就是增加的swap空间的大小，64M是块大小，所以空间大小是bs*count=1024MB </span>
+<span class="token function">sudo</span> <span class="token function">mkswap</span> /swapfile <span class="token comment">#把刚才空间格式化成swap格式 </span>
+<span class="token function">sudo</span> <span class="token function">swapon</span> /swapfile <span class="token comment">#使用刚才创建的swap空间</span>
+
+<span class="token comment">#在编译完成后，最好可以关闭（释放）交换空间</span>
+<span class="token function">sudo</span> swapoff /swapfile 
+<span class="token function">sudo</span> <span class="token function">rm</span> /swapfile</code></pre>
+<h3 id="client-loop-send-disconnect-Broken-pipe">client_loop: send disconnect: Broken pipe</h3>
+<p>因为本身配置低，导致命令执行时间太长，所以会出现这个问题，选择用screen命令，然后在后台执行，然后就可以了。</p>
+<h4 id="screen">screen</h4>
+<p>好像还有个tmux可以解决这类问题，但是之前用过screen，所以用screen。但是之前一直没有总结，现在有gpt了，就顺便总结下。</p>
+<p>使用 screen 可以创建一个持久性的终端会话，使您可以在后台运行长时间运行的命令，即使连接中断也可以重新连接到该会话并恢复该命令的运行。下面是如何使用 screen 的步骤：</p>
+<p>打开终端并连接到您的 VPS。<br>
+在终端中输入以下命令以启动一个新的 screen 会话：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">screen</span> 
+<span class="token comment"># or</span>
+<span class="token function">screen</span> <span class="token parameter variable">-S</span> <span class="token operator">&lt;</span>会话ID<span class="token operator">></span></code></pre>
+<p>现在您已经进入了一个新的 screen 会话。在这个会话中，您可以执行您想要在后台运行的命令。<br>
+在 screen 会话中，您可以使用以下命令将当前会话放入后台运行：</p>
+<pre class="language-css" data-language="css"><code class="language-css">Ctrl + A + D</code></pre>
+<p>这将使当前 screen 会话放入后台，并返回到您的原始终端会话。<br>
+要恢复到 screen 会话中，您可以使用以下命令：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">screen</span> <span class="token parameter variable">-r</span></code></pre>
+<p>如果您有多个 screen 会话，则可以使用以下命令恢复到特定的会话：php</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">screen</span> <span class="token parameter variable">-r</span> <span class="token operator">&lt;</span>会话ID<span class="token operator">></span></code></pre>
+<p>您可以使用 screen -ls 命令查看所有的 screen 会话及其会话ID。<br>
+如果您需要完全退出 screen 会话，可以在会话中执行以下命令：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">exit</span></code></pre>
+<p>或者，在您使用 Ctrl + A + D 将会话放入后台后，您可以在原始终端中执行以下命令来彻底关闭该会话：</p>
+<pre class="language-php" data-language="php"><code class="language-php">screen <span class="token operator">-</span><span class="token constant">X</span> <span class="token operator">-</span><span class="token constant">S</span> <span class="token operator">&lt;</span>会话<span class="token constant">ID</span><span class="token operator">></span> quit</code></pre>
+<p>这是使用 screen 的基本操作。screen 提供了很多其他功能，如分屏、会话共享等。您可以使用 man screen 命令查看 screen 的完整文档。</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://hdcola.medium.com/telegram-bot-api-server%E4%BD%9C%E5%BC%8A%E6%9D%A1-301d40bd65ba">Telegram Bot API Server作弊条</a><br>
+<a target="_blank" rel="noopener" href="https://tdlib.github.io/telegram-bot-api/build.html?os=Linux">Choose an operating system on which you want to use the Telegram Bot API server</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Telegram/" rel="tag"># Telegram</a>
+              <a href="/tags/Bot/" rel="tag"># Bot</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%E7%9A%84onTap%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94/" rel="prev" title="Flutter的onTap没有反应">
+                  <i class="fa fa-angle-left"></i> Flutter的onTap没有反应
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/The%207%20habits%20of%20highly%20effective%20people/" rel="next" title="The 7 habits of highly effective people">
+                  The 7 habits of highly effective people <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

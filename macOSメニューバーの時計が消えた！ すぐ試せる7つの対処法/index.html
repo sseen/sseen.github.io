@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这个恼人的问题，已经遇到很久了感觉，重新o3来整理下，上一次好像还是搜索解决的。 一句话总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法">
+<meta property="og:url" content="https://sseen.github.io/macOS%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E6%99%82%E8%A8%88%E3%81%8C%E6%B6%88%E3%81%88%E3%81%9F%EF%BC%81%20%E3%81%99%E3%81%90%E8%A9%A6%E3%81%9B%E3%82%8B7%E3%81%A4%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="这个恼人的问题，已经遇到很久了感觉，重新o3来整理下，上一次好像还是搜索解决的。 一句话总结">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-06-16T23:40:02.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.837Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="menu bar">
+<meta property="article:tag" content="time">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/macOS%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E6%99%82%E8%A8%88%E3%81%8C%E6%B6%88%E3%81%88%E3%81%9F%EF%BC%81%20%E3%81%99%E3%81%90%E8%A9%A6%E3%81%9B%E3%82%8B7%E3%81%A4%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/macOS%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E6%99%82%E8%A8%88%E3%81%8C%E6%B6%88%E3%81%88%E3%81%9F%EF%BC%81%20%E3%81%99%E3%81%90%E8%A9%A6%E3%81%9B%E3%82%8B7%E3%81%A4%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/","path":"macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法/","title":"macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">一句话总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#o3"><span class="nav-number">2.</span> <span class="nav-text">o3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%BF%99%E7%A7%8D%E7%8E%B0%E8%B1%A1%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">为什么会出现这种现象？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E8%B4%B4%E5%A3%AB"><span class="nav-number">2.2.</span> <span class="nav-text">小贴士</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text">其他</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/macOS%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E6%99%82%E8%A8%88%E3%81%8C%E6%B6%88%E3%81%88%E3%81%9F%EF%BC%81%20%E3%81%99%E3%81%90%E8%A9%A6%E3%81%9B%E3%82%8B7%E3%81%A4%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-06-16 23:40:02" itemprop="dateCreated datePublished" datetime="2025-06-16T23:40:02+00:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这个恼人的问题，已经遇到很久了感觉，重新o3来整理下，上一次好像还是搜索解决的。</p>
+<h2 id="一句话总结">一句话总结</h2>
+<p><code>killall ControlCenter</code>  直接重启 ControlCenter 进程，时钟就回来了，也就是状态栏就回来了。</p>
+<h2 id="o3">o3</h2>
+<p>下面这几个原因最常见，也对应了逐步递进的解决办法。<strong>建议先按照顺序排查</strong>，大多数用户在前两步就能把时钟找回来；如果你的版本是 macOS Sonoma 14.x 或更新到 15/26（Tahoe）后出现，尤其要注意第 4 步。</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>可能原因</th>
+<th>解决方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1️⃣ <strong>设置被改动</strong></td>
+<td>时钟被设成「有空位时才显示」或误选了「模拟」</td>
+<td>打开 <strong>系统设置 › 控制中心 › 菜单栏</strong>，点「时钟」→「时钟选项」，把「显示日期」或「显示时间」改成 <strong>“始终”</strong>，并确认「数字」已勾选(<a target="_blank" rel="noopener" href="https://itechhacks.com/date-and-time-missing-from-macos-menu-bar/" title="Date and Time Missing from macOS Menu Bar? Here's How to Fix It">itechhacks.com</a>)</td>
+</tr>
+<tr>
+<td>2️⃣ <strong>菜单栏空间不足</strong></td>
+<td>插件/图标太多，或刘海屏左右空间不够</td>
+<td>按 ⌘ 并拖出不必要的图标，或在上一步把时钟设为「始终显示」后再重启 Finder；若外接显示器，把“主菜单栏”切回内建屏也能测试空间问题(<a target="_blank" rel="noopener" href="https://itechhacks.com/date-and-time-missing-from-macos-menu-bar/" title="Date and Time Missing from macOS Menu Bar? Here's How to Fix It">itechhacks.com</a>)</td>
+</tr>
+<tr>
+<td>3️⃣ <strong>Control Center 进程崩溃</strong></td>
+<td>时钟、Wi-Fi、Spotlight 等系统图标一起消失</td>
+<td>打开「终端」输入：<br><code>killall ControlCenter</code>  (Sonoma 及之后)<br>或 <code>killall SystemUIServer</code> (旧系统)。进程会自动重启，图标通常立即回来(<a target="_blank" rel="noopener" href="https://github.com/tech-otaku/menu-bar-clock?utm_source=chatgpt.com" title="tech-otaku/menu-bar-clock - GitHub">github.com</a>, <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3153685/programmatically-tampering-with-mac-osx-menubar-settings?utm_source=chatgpt.com" title="Programmatically tampering with Mac OSX MenuBar settings">stackoverflow.com</a>)</td>
+</tr>
+<tr>
+<td>4️⃣ <strong>系统 Bug（Sonoma 14.4/14.5 常见）</strong></td>
+<td>睡眠-唤醒后或随机消失</td>
+<td>先<strong>升级到最新版补丁</strong>（≥14.6 / 15.1 / 26.0），Apple 已在随后的补丁里修正部分菜单栏缺失问题；不少用户更新后已恢复正常(<a target="_blank" rel="noopener" href="https://discussions.apple.com/thread/255340823" title="Date and Time vanished from menu bar sinc… - Apple Community">discussions.apple.com</a>)</td>
+</tr>
+<tr>
+<td>5️⃣ <strong>第三方工具冲突</strong></td>
+<td>Bartender、iStat Menus、CleanMyMac 等修改菜单栏</td>
+<td>进入<strong>安全模式</strong>（开机按住 ⇧），若时钟出现，说明有外部程序冲突；卸载刚才提到的优化/清理/VPN 类软件，然后正常启动再观察(<a target="_blank" rel="noopener" href="https://itechhacks.com/date-and-time-missing-from-macos-menu-bar/" title="Date and Time Missing from macOS Menu Bar? Here's How to Fix It">itechhacks.com</a>, <a target="_blank" rel="noopener" href="https://discussions.apple.com/thread/254484469?utm_source=chatgpt.com" title="Clock disappears from Menu Bar - Apple Community - Apple Support Community">discussions.apple.com</a>)</td>
+</tr>
+<tr>
+<td>6️⃣ <strong>用户配置损坏</strong></td>
+<td>只影响当前帐号</td>
+<td>新建一个临时用户（系统设置 › 用户与群组），若在新帐号里一切正常，则回到原帐号删除 <code>~/Library/Preferences/com.apple.menuextra.clock.plist</code> 后注销再登录(<a target="_blank" rel="noopener" href="https://itechhacks.com/date-and-time-missing-from-macos-menu-bar/" title="Date and Time Missing from macOS Menu Bar? Here's How to Fix It">itechhacks.com</a>)</td>
+</tr>
+<tr>
+<td>7️⃣ <strong>磁盘/系统文件错误</strong></td>
+<td>时钟反复丢失</td>
+<td>打开「磁盘工具」› 急救，完成后重启；或在「恢复模式」里重新安装 macOS（不抹盘）来覆盖损坏的系统文件(<a target="_blank" rel="noopener" href="https://itechhacks.com/date-and-time-missing-from-macos-menu-bar/" title="Date and Time Missing from macOS Menu Bar? Here's How to Fix It">itechhacks.com</a>)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="为什么会出现这种现象？">为什么会出现这种现象？</h3>
+<ul>
+<li><strong>Sonoma 14.4–14.5 Bug</strong>：Apple 社区与 MacRumors 论坛在 2024-05 前后有多帖用户反馈时钟随机消失，需要重启才能恢复(<a target="_blank" rel="noopener" href="https://discussions.apple.com/thread/255340823" title="Date and Time vanished from menu bar sinc… - Apple Community">discussions.apple.com</a>, <a target="_blank" rel="noopener" href="https://forums.macrumors.com/threads/macos-sonoma-menu-items-missing.2405808/" title="macOS Sonoma menu items missing | MacRumors Forums">forums.macrumors.com</a>)。</li>
+<li><strong>ControlCenter 崩溃</strong>：从 Ventura 开始，菜单栏大部分系统图标都由 <code>ControlCenter</code> 进程托管，崩溃后只剩 App 自带或第三方图标(<a target="_blank" rel="noopener" href="https://github.com/tech-otaku/menu-bar-clock?utm_source=chatgpt.com" title="tech-otaku/menu-bar-clock - GitHub">github.com</a>)。</li>
+<li><strong>菜单栏空间</strong>：刘海屏或开启「显示输入法/屏幕录制/通知图标」时，如果空间不够，macOS 会优先隐藏时钟；把时钟改成「始终」可避免被挤掉(<a target="_blank" rel="noopener" href="https://itechhacks.com/date-and-time-missing-from-macos-menu-bar/" title="Date and Time Missing from macOS Menu Bar? Here's How to Fix It">itechhacks.com</a>)。</li>
+</ul>
+<hr>
+<h3 id="小贴士">小贴士</h3>
+<ul>
+<li><strong>快捷恢复</strong>：若只是偶发，可把 <code>killall ControlCenter</code> 命令存成 Automator › 快速操作，双击即可重启菜单栏。</li>
+<li><strong>保留自定义排版</strong>：使用第三方菜单栏管理器（如 Bartender 5）时，仍然让系统负责渲染时钟，避免双重注入导致闪退。</li>
+<li><strong>开发者调试</strong>：<code>log stream --predicate 'subsystem == &quot;com.apple.ControlCenter&quot;'</code> 可实时观察 ControlCenter 崩溃日志，方便追踪冲突插件。</li>
+</ul>
+<hr>
+<p>如果以上方法都试过仍无效，请告诉我你的 <strong>Mac 机型与具体 macOS 版本号</strong>（ › 关于本机），以便提供更针对性的排查步骤。</p>
+<h2 id="其他">其他</h2>
+<p>顺便用 o3 写了几个标题看看</p>
+<blockquote>
+<p>这个回答的内容想要写一个blog，给一个blog标题，分下面几种风格给出来<br>
+小红书<br>
+震惊体<br>
+抖音<br>
+快手<br>
+微信公众号<br>
+国际英文<br>
+通常日文</p>
+</blockquote>
+<p><strong>为同一篇“macOS 状态栏时钟消失”攻略，7 种风格化标题示例：</strong></p>
+<table>
+<thead>
+<tr>
+<th>风格</th>
+<th>建议标题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>小红书</strong></td>
+<td>⏰🍎 7 步找回 macOS 状态栏时钟！新手也能 3 分钟搞定✨</td>
+</tr>
+<tr>
+<td><strong>震惊体</strong></td>
+<td>震惊！你的 Mac 时钟竟然说不见就不见，第 4 个解决方案让人目瞪口呆！</td>
+</tr>
+<tr>
+<td><strong>抖音</strong></td>
+<td>#Mac小技巧# 时钟消失别慌！跟我 7 步“啪”一下就回来～</td>
+</tr>
+<tr>
+<td><strong>快手</strong></td>
+<td>Mac时钟没了咋整？兄弟姐妹看过来，7招教你立马恢复！</td>
+</tr>
+<tr>
+<td><strong>微信公众号</strong></td>
+<td>macOS 菜单栏时钟消失全解：7 个排查点 + 升级建议</td>
+</tr>
+<tr>
+<td><strong>国际英文</strong></td>
+<td>Bring Back the Missing macOS Menu-Bar Clock: 7 Proven Fixes You Should Know</td>
+</tr>
+<tr>
+<td><strong>通常日文</strong></td>
+<td>macOSメニューバーの時計が消えた！ すぐ試せる7つの対処法</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>你可以直接拷贝对应风格的标题用于博客或社媒发布，再根据平台习惯调整排版与配图即可。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/macOS/" rel="tag"># macOS</a>
+              <a href="/tags/menu-bar/" rel="tag"># menu bar</a>
+              <a href="/tags/time/" rel="tag"># time</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/PowerAutomate%E4%B8%80%E4%BA%9B/" rel="prev" title="PowerAutomate一些">
+                  <i class="fa fa-angle-left"></i> PowerAutomate一些
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/xcode%20package%20resolution%20failed/" rel="next" title="xcode package resolution failed">
+                  xcode package resolution failed <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

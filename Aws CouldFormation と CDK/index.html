@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在 AWS 云平台中，AWS CDK（Cloud Development Kit） 与 AWS CloudFormation 有着紧密的联系。它们的关系大致可以概括为：CDK 最终会将你的代码转换成 CloudFormation 模板，然后由 CloudFormation 去创建和管理相应的资源。以下从几个角度进行解释。 1. CDK 与 CloudFormation 的核心区别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS CloudFormation と CDK">
+<meta property="og:url" content="https://sseen.github.io/Aws%20CouldFormation%20%E3%81%A8%20CDK/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="在 AWS 云平台中，AWS CDK（Cloud Development Kit） 与 AWS CloudFormation 有着紧密的联系。它们的关系大致可以概括为：CDK 最终会将你的代码转换成 CloudFormation 模板，然后由 CloudFormation 去创建和管理相应的资源。以下从几个角度进行解释。 1. CDK 与 CloudFormation 的核心区别">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-02-28T10:48:45.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.826Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="CloudFormation">
+<meta property="article:tag" content="CDK">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Aws%20CouldFormation%20%E3%81%A8%20CDK/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Aws%20CouldFormation%20%E3%81%A8%20CDK/","path":"Aws CouldFormation と CDK/","title":"AWS CloudFormation と CDK"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AWS CloudFormation と CDK | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-CDK-%E4%B8%8E-CloudFormation-%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">1. CDK 与 CloudFormation 的核心区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-CDK-%E5%91%BD%E4%BB%A4%E4%B8%8E-CloudFormation-%E7%9A%84%E5%85%B3%E8%81%94"><span class="nav-number">2.</span> <span class="nav-text">2. CDK 命令与 CloudFormation 的关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%85%B7%E4%BD%93%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">3. 具体工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BD%95%E6%97%B6%E7%9B%B4%E6%8E%A5%E7%94%A8-CloudFormation%EF%BC%8C%E4%BD%95%E6%97%B6%E7%94%A8-CDK%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">4. 何时直接用 CloudFormation，何时用 CDK？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">5. 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Aws%20CouldFormation%20%E3%81%A8%20CDK/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AWS CloudFormation と CDK | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AWS CloudFormation と CDK
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-02-28 10:48:45" itemprop="dateCreated datePublished" datetime="2025-02-28T10:48:45+00:00">2025-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在 AWS 云平台中，<strong>AWS CDK（Cloud Development Kit）</strong> 与 <strong>AWS CloudFormation</strong> 有着紧密的联系。它们的关系大致可以概括为：<strong>CDK 最终会将你的代码转换成 CloudFormation 模板，然后由 CloudFormation 去创建和管理相应的资源</strong>。以下从几个角度进行解释。</p>
+<h2 id="1-CDK-与-CloudFormation-的核心区别">1. CDK 与 CloudFormation 的核心区别</h2>
+<ol>
+<li>
+<p><strong>CloudFormation</strong></p>
+<ul>
+<li>以 <strong>模板（Template）</strong> 形式（JSON 或 YAML）来定义并部署 AWS 资源。</li>
+<li>模板通过 <strong>CloudFormation</strong> 服务进行解析和执行，最终创建或更新资源栈（Stack）。</li>
+<li>使用方式较为“声明式”：在模板中描述需要哪些 AWS 资源、如何配置。</li>
+</ul>
+</li>
+<li>
+<p><strong>AWS CDK</strong></p>
+<ul>
+<li>使用 <strong>TypeScript、Python、Java、.NET、Go</strong> 等常见编程语言来编写基础设施代码。</li>
+<li>通过 <strong>CDK CLI</strong>（命令行）将这些“代码”编译（或称“合成”）成 <strong>CloudFormation 模板</strong>（JSON/YAML）。</li>
+<li>也可以直接通过 CDK CLI 将合成后的模板部署到 AWS CloudFormation，由其完成真正的资源创建或更新。</li>
+<li>使用方式更具“过程式”或“面向对象”风格：可以复用组件、逻辑判断和语言特性，简化大规模基础设施的定义。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-CDK-命令与-CloudFormation-的关联">2. CDK 命令与 CloudFormation 的关联</h2>
+<p>CDK CLI 提供了一系列常见的命令来帮助你完成从开发、测试到部署的完整流程。最核心的几个命令和它们对应的 CloudFormation 行为如下：</p>
+<ol>
+<li>
+<p><strong>cdk synth</strong></p>
+<ul>
+<li>将你用 TypeScript/Python/Java 等语言编写的 CDK 代码，合成为 <strong>CloudFormation 模板</strong>。</li>
+<li>结果会在本地生成一个或多个 <code>.template.json</code> 文件。</li>
+<li>单纯生成模板，不会直接与 CloudFormation 交互，不会对实际的 AWS 资源进行操作。</li>
+</ul>
+</li>
+<li>
+<p><strong>cdk diff</strong></p>
+<ul>
+<li>对比本地合成出的新模板，与当前已部署到 AWS 中的 CloudFormation Stack 之间的差异。</li>
+<li>方便在 <strong>cdk deploy</strong> 前了解将会做哪些变更，例如添加新资源、删除资源、修改已有资源配置等。</li>
+<li>本质上还是在比较 <strong>本地新模板</strong> 与 <strong>云端当前模板</strong> 的差异。</li>
+</ul>
+</li>
+<li>
+<p><strong>cdk deploy</strong></p>
+<ul>
+<li>将合成出的 CloudFormation 模板 <strong>上传到 CloudFormation</strong>，并由 CloudFormation 根据模板来创建或更新相应的资源。</li>
+<li>在部署前，CDK CLI 通常会提示你检查变更（与 <code>cdk diff</code> 结果类似）并让你确认。</li>
+<li>部署成功后，对应的 <strong>Stack</strong> 及相应的资源在 AWS 中便会被创建或更新。</li>
+<li>若遇到资源冲突、不兼容更新，CloudFormation 会进行回滚或给出错误提示。</li>
+</ul>
+</li>
+<li>
+<p><strong>cdk destroy</strong></p>
+<ul>
+<li>命令会调用 CloudFormation <strong>删除</strong> 对应的 Stack，进而清理所有相关的 AWS 资源。</li>
+<li>需要特别谨慎使用，因为这可能会删除生产环境中正在使用的资源。</li>
+</ul>
+</li>
+<li>
+<p><strong>cdk bootstrap</strong></p>
+<ul>
+<li>用于在指定账户和区域中创建一个所谓的 “Bootstrapping Stack”，其中会包含 <strong>CDK</strong> 在后续部署时所需的各种支持性资源（如 S3 存储文件、IAM 角色等）。</li>
+<li>只需在第一次使用某个 AWS 账号或区域时执行一次。后面再用同一账号或区域时，就不必重复执行。</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-具体工作原理">3. 具体工作原理</h2>
+<ol>
+<li>
+<p><strong>编写代码（CDK App）</strong></p>
+<ul>
+<li>在本地使用你熟悉的编程语言（如 TypeScript、Python、Java 等）来定义一个或多个 Stack。</li>
+<li>在代码中直接引用构造（Construct），例如 <code>new s3.Bucket(...)</code>，<code>new lambda.Function(...)</code>，<code>new ec2.Vpc(...)</code> 等。</li>
+<li>通过编程语言的逻辑，可以更好地组织和复用基础设施配置。</li>
+</ul>
+</li>
+<li>
+<p><strong>CDK CLI 合成（Synth）</strong></p>
+<ul>
+<li>当运行 <code>cdk synth</code>，CDK CLI 会将这些代码编译并转换成一个标准的 <strong>CloudFormation 模板</strong>（JSON/YAML）。</li>
+<li>可以在本地查看生成的模板内容。</li>
+</ul>
+</li>
+<li>
+<p><strong>CDK CLI 部署（Deploy）</strong></p>
+<ul>
+<li>当运行 <code>cdk deploy</code>，CDK CLI 首先会执行 <code>cdk synth</code> 的过程获得模板，然后将模板提交给 CloudFormation。</li>
+<li>CloudFormation 根据模板中的资源配置去创建或更新 AWS 资源栈（Stack）。</li>
+<li>如果出现问题，比如 IAM 权限不足、资源冲突、某些不兼容变更等，会出现报错或回滚。</li>
+</ul>
+</li>
+<li>
+<p><strong>CloudFormation 实际执行</strong></p>
+<ul>
+<li>本质上，最终是 <strong>CloudFormation</strong> 服务在<strong>后端</strong>将模板中描述的资源（EC2、S3、IAM、Lambda、API Gateway 等）进行创建、更新或删除。</li>
+<li>整个过程由 CloudFormation 提供的 <strong>Stack</strong> 概念统一跟踪和管理。</li>
+</ul>
+</li>
+</ol>
+<h2 id="4-何时直接用-CloudFormation，何时用-CDK？">4. 何时直接用 CloudFormation，何时用 CDK？</h2>
+<ul>
+<li>
+<p><strong>直接使用 CloudFormation 模板</strong></p>
+<ul>
+<li>适合对声明式模板比较熟悉，且所需部署的资源类型或数量并不复杂的场景。</li>
+<li>更贴近原生 AWS 配置，只要能写 JSON/YAML 文件并掌握语法即可。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用 CDK</strong></p>
+<ul>
+<li>当基础设施规模变大，或者需要灵活的编程逻辑（如条件、循环、函数式配置）时，CDK 能带来更好的开发体验和可维护性。</li>
+<li>可以利用 IDE 提示、代码复用、面向对象等特性来减少模板的冗余、降低出错风险。</li>
+<li>仍可随时查看合成后的 CloudFormation 模板，以便排查问题或与原有流程结合。</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-总结">5. 总结</h2>
+<ol>
+<li><strong>CDK 是一个更高层次的开发框架</strong>，让你通过写代码（面向对象或过程式），在本地就能管理和组织复杂的云资源定义。</li>
+<li><strong>CloudFormation 是底层“执行引擎”</strong>，当 CDK 代码被合成为模板并部署时，依赖的正是 CloudFormation 去完成基础设施的实际创建和更新。</li>
+<li><strong>CDK 命令行</strong>（<code>cdk synth</code>, <code>cdk diff</code>, <code>cdk deploy</code>, <code>cdk destroy</code> 等） 的操作对象最终都是 <strong>CloudFormation</strong>，它通过将生成的模板推送到 CloudFormation 并触发创建或更新 Stack 来完成部署。</li>
+</ol>
+<p>因此，可以把 <strong>CDK</strong> 理解成一层编程语言对声明式模板的“包装”，而 <strong>CloudFormation</strong> 则是负责在 AWS 上真正落地资源的 <strong>服务后台</strong>。在实际项目中，CDK 简化了使用 CloudFormation 部署资源的过程，并带来了更灵活、更可维护的基础设施编程方式。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AWS/" rel="tag"># AWS</a>
+              <a href="/tags/CloudFormation/" rel="tag"># CloudFormation</a>
+              <a href="/tags/CDK/" rel="tag"># CDK</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Aws%20Infrastructure%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9/" rel="prev" title="Aws Infrastructureインフラ">
+                  <i class="fa fa-angle-left"></i> Aws Infrastructureインフラ
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Flutter%20Provider's%20state%20error/" rel="next" title="Flutter Provider's state error">
+                  Flutter Provider's state error <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

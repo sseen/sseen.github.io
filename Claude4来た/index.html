@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Claude 4 来了，这周还在说目前的 Claude 的存在感已经不强了，对比的尤其是网页版的服务，已经很久不用了，可能主要是其他工具用其api比较多。 没想到今天就来了，后面观察对比试试看，看看是不是真的有提升。 先给两个发布文档的对比分析。 o3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Claude4きた">
+<meta property="og:url" content="https://sseen.github.io/Claude4%E6%9D%A5%E3%81%9F/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="Claude 4 来了，这周还在说目前的 Claude 的存在感已经不强了，对比的尤其是网页版的服务，已经很久不用了，可能主要是其他工具用其api比较多。 没想到今天就来了，后面观察对比试试看，看看是不是真的有提升。 先给两个发布文档的对比分析。 o3">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-05-23T10:32:10.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.835Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Claude">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Claude4%E6%9D%A5%E3%81%9F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Claude4%E6%9D%A5%E3%81%9F/","path":"Claude4来た/","title":"Claude4きた"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Claude4きた | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#o3"><span class="nav-number">1.</span> <span class="nav-text">o3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E6%AE%B5%E5%85%AC%E5%91%8A%E7%9A%84%E4%B8%BB%E8%A6%81%E5%B7%AE%E5%BC%82"><span class="nav-number">1.1.</span> <span class="nav-text">两段公告的主要差异</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%87%E6%80%BB%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.1.</span> <span class="nav-text">汇总说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gemini-2-5-pro"><span class="nav-number">2.</span> <span class="nav-text">Gemini 2.5 pro</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Claude4%E6%9D%A5%E3%81%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Claude4きた | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Claude4きた
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-05-23 10:32:10" itemprop="dateCreated datePublished" datetime="2025-05-23T10:32:10+00:00">2025-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Claude 4 来了，这周还在说目前的 Claude 的存在感已经不强了，对比的尤其是网页版的服务，已经很久不用了，可能主要是其他工具用其api比较多。<br>
+没想到今天就来了，后面观察对比试试看，看看是不是真的有提升。<br>
+先给两个发布文档的对比分析。</p>
+<h2 id="o3">o3</h2>
+<h3 id="两段公告的主要差异">两段公告的主要差异</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>Claude Opus 4</strong></th>
+<th><strong>Claude Sonnet 4</strong></th>
+<th><strong>差异要点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发布时间</strong></td>
+<td>2025 年 5 月 22 日</td>
+<td>2025 年 ? （未给具体日期，正文未写，不过原公告顶部是无日期，而后面引用 3 月以前）</td>
+<td>时序上 Opus 4 更晚发布。</td>
+</tr>
+<tr>
+<td><strong>定位</strong></td>
+<td>“最前沿”“我们最智能的模型”；强调突破性、适合<strong>复杂工程与业务难题</strong></td>
+<td>“改进版 Sonnet”；“前沿性能但更实用”，面向<strong>大多数常见场景</strong></td>
+<td>Opus 4 主打顶尖能力，Sonnet 4 主打性价比与广泛适用。</td>
+</tr>
+<tr>
+<td><strong>典型场景</strong></td>
+<td>- AI 代理（营销、企业流程）  <br>- <strong>高级编码</strong>（SWE-bench 领先，32 K 输出）<br>- <strong>代理式搜索／研究</strong> <br>- 创意写作</td>
+<td>- <strong>客户-面</strong> AI 代理 <br>- <strong>端到端软件开发</strong>（64 K 输出）<br>- <strong>电脑操作</strong>（屏幕-鼠标-键盘）<br>- 聊天机器人、知识 Q&amp;A、视觉提取、RPA</td>
+<td>Opus 强调“研究级”代理和搜索；Sonnet 提供更多“落地”功能（电脑操作、RPA 等）。</td>
+</tr>
+<tr>
+<td><strong>价格</strong> (每百万 tokens)</td>
+<td><strong>输入 $15 / 输出 $75</strong></td>
+<td><strong>输入 $3 / 输出 $15</strong></td>
+<td>Sonnet 4 约 1/5 价格，性价比高。</td>
+</tr>
+<tr>
+<td><strong>上下文/输出窗口</strong></td>
+<td>明确标注 <strong>32 K 输出 token</strong></td>
+<td><strong>64 K 输出 token</strong></td>
+<td>Sonnet 可生成更长代码/文档。</td>
+</tr>
+<tr>
+<td><strong>可用渠道</strong></td>
+<td>Pro / Max / Team / Enterprise；API + Bedrock + Vertex AI</td>
+<td>网页 / iOS / Android 全量开放；同样支持 API + Bedrock + Vertex AI</td>
+<td>Sonnet 的聊天端对所有用户开放；Opus 仅高级套餐。</td>
+</tr>
+<tr>
+<td><strong>基准成绩</strong></td>
+<td>强调 SWE-bench、MMLU、GPQA；突出<strong>写作质量</strong></td>
+<td>强调 SWE-bench、TAU-bench；突出<strong>工具使用</strong></td>
+<td>两者都强于前代，但侧重点不同（Opus 写作，Sonnet 工具）。</td>
+</tr>
+<tr>
+<td><strong>安全合规</strong></td>
+<td>与外部专家合作，模型卡披露新安全结果</td>
+<td>同上</td>
+<td>安全声明一致，无明显差异。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="汇总说明">汇总说明</h4>
+<ol>
+<li>
+<p><strong>定位与目标用户</strong></p>
+<ul>
+<li><strong>Opus 4</strong> 面向追求最高智能、愿意为前沿性能买单的企业 / 开发者。</li>
+<li><strong>Sonnet 4</strong> 面向需要“够用且划算”方案的更广泛用户与场景。</li>
+</ul>
+</li>
+<li>
+<p><strong>定价与成本</strong><br>
+Sonnet 4 的 token 价格仅为 Opus 4 的约 20 %，并支持相同的缓存与批处理折扣，极大降低大规模调用成本。</p>
+</li>
+<li>
+<p><strong>能力侧重</strong></p>
+<ul>
+<li><strong>Opus 4</strong> 强调长程推理、复杂代理、深度研究与创意写作。</li>
+<li><strong>Sonnet 4</strong> 更注重可执行性：端到端编码、电脑 UI 交互、RPA、视觉数据提取等生产级工作流。</li>
+</ul>
+</li>
+<li>
+<p><strong>输出长度</strong><br>
+Sonnet 4 提供 64 K 输出窗口，是 Opus 4 的两倍，更适合大型代码库和长文档生成。</p>
+</li>
+<li>
+<p><strong>获取方式</strong><br>
+Sonnet 4 在网页与移动端对所有用户开放，门槛更低；Opus 4 需付费升级至 Pro/Max/Team/Enterprise。</p>
+</li>
+<li>
+<p><strong>Benchmarks 侧重点</strong><br>
+Opus 在写作与通用考试中拔尖；Sonnet 在 TAU-bench（工具使用）与长程编码/执行任务表现更优。</p>
+</li>
+</ol>
+<p><strong>一句话总结</strong></p>
+<blockquote>
+<p><em>Opus 4 追求顶尖智能与研究级深度，价格高但能力极致；Sonnet 4 聚焦实用性、长文本与低成本，以更亲民的价格覆盖更广泛的商业与开发场景。</em></p>
+</blockquote>
+<h2 id="Gemini-2-5-pro">Gemini 2.5 pro</h2>
+<p>好的，这两段文本分别介绍了 Claude Opus 4 和 Claude Sonnet 4 两款模型。它们之间存在明显的定位、功能侧重、目标用户和定价差异。</p>
+<p>以下是两段文本主要不同点的差分和汇总说明：</p>
+<p><strong>1. 模型定位与核心能力：</strong></p>
+<ul>
+<li><strong>Claude Opus 4:</strong>
+<ul>
+<li><strong>定位：</strong> “我们迄今为止最智能的模型”（our most intelligent model to date），“推动编码、智能体搜索和创造性写作的前沿”（pushing the frontier in coding, agentic search, and creative writing）。强调其在智能水平上的<strong>绝对领先</strong>和<strong>前沿探索性</strong>。</li>
+<li><strong>核心能力强调：</strong> 顶级编码能力（处理“长达数日的工程任务”）、强大的智能体搜索与研究（进行“数小时的独立研究”，提供“战略洞察”）、卓越的创造性写作（“丰富、深刻的角色”和“人类品质的内容”）。特别提到可以后台运行 Claude Code 处理长时编码任务。</li>
+</ul>
+</li>
+<li><strong>Claude Sonnet 4:</strong>
+<ul>
+<li><strong>定位：</strong> “在多个领域（尤其是在编码方面）均优于 Claude Sonnet 3.7”（improves on Claude Sonnet 3.7 across a variety of areas, especially coding），“提供适用于大多数 AI 应用场景的实用前沿性能”（offers frontier performance that’s practical for most AI use cases）。强调其<strong>实用性</strong>、<strong>高性价比</strong>和作为 Sonnet 3.7 的<strong>升级版</strong>。</li>
+<li><strong>核心能力强调：</strong> 强大的编码能力（覆盖“整个软件开发生命周期”）、面向客户的 AI 智能体、<strong>计算机操作</strong>（通过看屏幕、移动光标、点击、打字等方式使用电脑）、高级聊天机器人、知识问答、视觉数据提取、机器人流程自动化（RPA）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. 目标用户与可用性：</strong></p>
+<ul>
+<li><strong>Claude Opus 4:</strong>
+<ul>
+<li><strong>消费者/企业用户：</strong> 面向希望在复杂任务上协作的 Claude <strong>Pro、Max、团队版和企业版用户</strong>。</li>
+<li><strong>开发者：</strong> Anthropic API, Amazon Bedrock, Google Cloud’s Vertex AI。</li>
+</ul>
+</li>
+<li><strong>Claude Sonnet 4:</strong>
+<ul>
+<li><strong>消费者/企业用户：</strong> 面向希望使用强大聊天体验的 Claude <strong>所有用户</strong>（web、iOS、Android），覆盖面更广。</li>
+<li><strong>开发者：</strong> Anthropic API, Amazon Bedrock, Google Cloud’s Vertex AI (与 Opus 4 相同)。</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. 定价：</strong></p>
+<ul>
+<li><strong>Claude Opus 4:</strong>
+<ul>
+<li>输入：$15 / 百万 tokens</li>
+<li>输出：$75 / 百万 tokens</li>
+<li><strong>显著更贵</strong>，反映其顶级定位。</li>
+</ul>
+</li>
+<li><strong>Claude Sonnet 4:</strong>
+<ul>
+<li>输入：$3 / 百万 tokens</li>
+<li>输出：$15 / 百万 tokens</li>
+<li><strong>价格更亲民</strong>，适合大规模和高频次使用。</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. 特色功能与用例侧重：</strong></p>
+<ul>
+<li><strong>Claude Opus 4 更侧重：</strong>
+<ul>
+<li><strong>极限性能任务：</strong> 长时间运行的复杂编码、深度战略研究、高水准创意写作。</li>
+<li><strong>企业级复杂工作流：</strong> 如自主管理多渠道营销、协调跨职能企业流程。</li>
+<li><strong>学术与前沿基准：</strong> 强调在 MMLU, GPQA 等高难度基准上的表现。</li>
+</ul>
+</li>
+<li><strong>Claude Sonnet 4 更侧重：</strong>
+<ul>
+<li><strong>实用与高频场景：</strong> 面向客户的 AI 助手、高吞吐量任务、日常编码辅助。</li>
+<li><strong>独特交互能力：</strong> 明确提出“计算机操作”（Computer use）能力，这是 Sonnet 4 的一个显著特点。</li>
+<li><strong>具体应用场景细化：</strong> 如高级聊天机器人、知识问答、视觉数据提取、RPA 等，更贴近具体的业务流程自动化和信息处理需求。</li>
+<li><strong>输出 Token 数量：</strong> Sonnet 4 提到支持高达 64K 输出 token，这对代码生成和规划很有价值；Opus 4 提到 32K 输出 token 支持。</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. 发布时间与迭代关系：</strong></p>
+<ul>
+<li><strong>Claude Opus 4：</strong> 2025年5月22日发布，是更新的模型。</li>
+<li><strong>Claude Sonnet 4：</strong> 文中未直接给出发布日期，但提到其改进自2025年2月24日发布的 Claude Sonnet 3.7，意味着 Sonnet 4 在 Opus 4 之前或同期（但基于更早的 Sonnet 3.7 迭代）。从上下文看，Opus 4 是最新的旗舰。</li>
+</ul>
+<p><strong>汇总说明：</strong></p>
+<ul>
+<li><strong>Claude Opus 4 是 Anthropic 的旗舰模型</strong>，代表了其最顶尖的智能水平，专为处理最复杂、最具挑战性的任务而设计，例如前沿的编码项目、深度战略研究和高质量的创意内容生成。其目标用户是需要极致性能的企业和专业人士，定价也反映了其高端定位。</li>
+<li><strong>Claude Sonnet 4 则是一款高性能且更具性价比的模型</strong>，旨在为广泛的 AI 应用提供实用且强大的能力，特别是在编码、面向客户的交互、计算机操作和自动化任务方面表现突出。它面向更广泛的用户群体，包括普通用户和对成本效益有要求的开发者，定价更为亲民。Sonnet 4 的一个独特亮点是其“计算机操作”能力，使其能像人一样与计算机界面交互。</li>
+</ul>
+<p>简单来说，<strong>Opus 4 是追求“极致智能与前沿探索”的选择，而 Sonnet 4 是追求“实用性能与广泛适用”的选择。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Claude/" rel="tag"># Claude</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/WWDC25%E5%89%8D%E7%9E%BB/" rel="prev" title="WWDC25前瞻">
+                  <i class="fa fa-angle-left"></i> WWDC25前瞻
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Obsidian%20Web%20Clipper/" rel="next" title="Obsidian Web Clipper">
+                  Obsidian Web Clipper <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

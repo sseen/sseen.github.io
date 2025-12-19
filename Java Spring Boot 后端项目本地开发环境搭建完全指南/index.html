@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="上面算是从eclipse安装开始进行了一个java后端项目的启动调试和整体介绍，作为一个多年经验的后端开发和架构大师，来一篇科普的blog总结汇总上面所有提到的内容，注意脱敏。 作为一名多年经验的后端开发者，我将从零开始介绍如何在本地搭建一个企业级 Java Spring Boot 项目的开发调试环境。本文涵盖 IDE 选择、项目导入、配置管理、常见问题排查等方面。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Spring Boot 后端项目本地开发环境搭建完全指南">
+<meta property="og:url" content="https://sseen.github.io/Java%20Spring%20Boot%20%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="上面算是从eclipse安装开始进行了一个java后端项目的启动调试和整体介绍，作为一个多年经验的后端开发和架构大师，来一篇科普的blog总结汇总上面所有提到的内容，注意脱敏。 作为一名多年经验的后端开发者，我将从零开始介绍如何在本地搭建一个企业级 Java Spring Boot 项目的开发调试环境。本文涵盖 IDE 选择、项目导入、配置管理、常见问题排查等方面。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-15T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.839Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Spring Boot">
+<meta property="article:tag" content="Eclipse">
+<meta property="article:tag" content="Cursor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Java%20Spring%20Boot%20%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Java%20Spring%20Boot%20%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/","path":"Java Spring Boot 后端项目本地开发环境搭建完全指南/","title":"Java Spring Boot 后端项目本地开发环境搭建完全指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java Spring Boot 后端项目本地开发环境搭建完全指南 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81IDE-%E9%80%89%E6%8B%A9%EF%BC%9AEclipse-STS-vs-IntelliJ-IDEA"><span class="nav-number">1.</span> <span class="nav-text">一、IDE 选择：Eclipse&#x2F;STS vs IntelliJ IDEA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A1%B9%E7%9B%AE%E7%B1%BB%E5%9E%8B%E5%86%B3%E5%AE%9A-IDE-%E9%80%89%E6%8B%A9"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 项目类型决定 IDE 选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%89%E7%A7%8D-IDE-%E5%AF%B9%E6%AF%94"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 三种 IDE 对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 选择建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Eclipse-STS-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">二、Eclipse STS 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 下载安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%AF%BC%E5%85%A5-Maven-%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 导入 Maven 项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Lombok-%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%81%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Lombok 插件安装（重要！）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Spring-Boot-%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">三、Spring Boot 多环境配置详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%B1%82%E7%BA%A7"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 配置文件层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%85%B8%E5%9E%8B%E7%9A%84%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 典型的多环境配置结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 主配置文件示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 环境配置文件示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%88%87%E6%8D%A2%E7%8E%AF%E5%A2%83%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 切换环境的三种方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%B0%83%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">四、项目启动与调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%B8%A4%E7%A7%8D%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 两种启动方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-A%EF%BC%9A%E5%86%85%E5%B5%8C-Tomcat%EF%BC%88%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B%EF%BC%89"><span class="nav-number">4.1.1.</span> <span class="nav-text">方式 A：内嵌 Tomcat（推荐新手）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-B%EF%BC%9A%E5%A4%96%E9%83%A8-Tomcat%EF%BC%88WAR-%E9%83%A8%E7%BD%B2%EF%BC%89"><span class="nav-number">4.1.2.</span> <span class="nav-text">方式 B：外部 Tomcat（WAR 部署）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 调试技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Log4j2-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">五、Log4j2 日志配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 日志配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 日志格式说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 查看日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="nav-number">6.</span> <span class="nav-text">六、常见问题排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%96%87%E4%BB%B6%E6%89%BE%E4%B8%8D%E5%88%B0%E9%94%99%E8%AF%AF"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 文件找不到错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-Bean-%E5%88%9B%E5%BB%BA%E5%A4%B1%E8%B4%A5"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 Bean 创建失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 端口被占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 数据库连接失败</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.</span> <span class="nav-text">七、项目结构最佳实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">八、总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Java%20Spring%20Boot%20%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java Spring Boot 后端项目本地开发环境搭建完全指南 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Spring Boot 后端项目本地开发环境搭建完全指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-12-15 12:00:00" itemprop="dateCreated datePublished" datetime="2025-12-15T12:00:00+00:00">2025-12-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>上面算是从eclipse安装开始进行了一个java后端项目的启动调试和整体介绍，作为一个多年经验的后端开发和架构大师，来一篇科普的blog总结汇总上面所有提到的内容，注意脱敏。<br>
+作为一名多年经验的后端开发者，我将从零开始介绍如何在本地搭建一个企业级 Java Spring Boot 项目的开发调试环境。本文涵盖 IDE 选择、项目导入、配置管理、常见问题排查等方面。</p>
+</blockquote>
+<hr>
+<h2 id="一、IDE-选择：Eclipse-STS-vs-IntelliJ-IDEA">一、IDE 选择：Eclipse/STS vs IntelliJ IDEA</h2>
+<h3 id="1-1-项目类型决定-IDE-选择">1.1 项目类型决定 IDE 选择</h3>
+<p>在选择 IDE 之前，首先要分析项目的技术栈：</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- pom.xml 关键信息 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>parent</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-parent<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.4.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>parent</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>packaging</span><span class="token punctuation">></span></span>war<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>packaging</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>java.version</span><span class="token punctuation">></span></span>11<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>java.version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span></code></pre>
+<p><strong>项目特征分析：</strong></p>
+<ul>
+<li>Spring Boot 2.x 项目</li>
+<li>WAR 打包（部署到外部 Tomcat）</li>
+<li>Java 11</li>
+<li>使用 MyBatis + PostgreSQL</li>
+<li>使用 Lombok 简化代码</li>
+</ul>
+<h3 id="1-2-三种-IDE-对比">1.2 三种 IDE 对比</h3>
+<table>
+<thead>
+<tr>
+<th>IDE</th>
+<th>适用场景</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Eclipse + STS</strong></td>
+<td>WAR 部署、传统企业项目</td>
+<td>免费、Tomcat 集成完善</td>
+<td>启动较慢、界面略显老旧</td>
+</tr>
+<tr>
+<td><strong>IntelliJ IDEA Ultimate</strong></td>
+<td>所有 Java 项目</td>
+<td>功能强大、体验优秀</td>
+<td>付费（约 ¥1500/年）</td>
+</tr>
+<tr>
+<td><strong>IntelliJ IDEA Community</strong></td>
+<td>简单 Java/Maven 项目</td>
+<td>免费</td>
+<td>不支持 Spring、Tomcat、Web 开发</td>
+</tr>
+<tr>
+<td><strong>VSCode + Spring Tools</strong></td>
+<td>轻量级开发、代码审查</td>
+<td>启动快、占用少</td>
+<td>Tomcat/WAR 支持弱</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-3-选择建议">1.3 选择建议</h3>
+<pre class="language-none"><code class="language-none">┌─────────────────────────────────────────────────────────┐
+│                    你的项目是？                          │
+├─────────────────────────────────────────────────────────┤
+│  WAR 打包 + Tomcat 部署？                                │
+│     ├── 是 → Eclipse + STS（免费首选）                   │
+│     │        或 IntelliJ Ultimate（付费）                │
+│     └── 否 → 内嵌 Tomcat 的 Spring Boot JAR？            │
+│              ├── 预算充足 → IntelliJ Ultimate            │
+│              └── 预算有限 → Eclipse + STS 或 VSCode      │
+└─────────────────────────────────────────────────────────┘</code></pre>
+<hr>
+<h2 id="二、Eclipse-STS-环境搭建">二、Eclipse STS 环境搭建</h2>
+<h3 id="2-1-下载安装">2.1 下载安装</h3>
+<ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://spring.io/tools">Spring Tools 官网</a></li>
+<li>下载对应系统版本的 Spring Tools Suite</li>
+<li>解压到任意目录即可使用</li>
+</ol>
+<h3 id="2-2-导入-Maven-项目">2.2 导入 Maven 项目</h3>
+<pre class="language-none"><code class="language-none">File → Import → Maven → Existing Maven Projects
+                ↓
+        选择项目根目录（包含 pom.xml）
+                ↓
+        勾选 pom.xml → Finish
+                ↓
+        等待 Maven 下载依赖（观察右下角进度条）</code></pre>
+<h3 id="2-3-Lombok-插件安装（重要！）">2.3 Lombok 插件安装（重要！）</h3>
+<p>如果项目使用了 Lombok，必须安装插件，否则会报编译错误：</p>
+<pre class="language-none"><code class="language-none">The method getXxx() is undefined for the type XxxEntity</code></pre>
+<p><strong>安装步骤：</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 找到 Maven 下载的 lombok.jar</span>
+<span class="token function">find</span> ~/.m2/repository <span class="token parameter variable">-name</span> <span class="token string">"lombok*.jar"</span> <span class="token operator">|</span> <span class="token function">head</span> <span class="token parameter variable">-1</span>
+
+<span class="token comment"># 2. 运行安装程序</span>
+<span class="token function">java</span> <span class="token parameter variable">-jar</span> ~/.m2/repository/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar
+
+<span class="token comment"># 3. 在弹出的界面中选择 STS 安装目录 → Install/Update</span>
+
+<span class="token comment"># 4. 必须重启 STS！</span></code></pre>
+<p><strong>验证安装成功：</strong></p>
+<ul>
+<li>打开任意使用 <code>@Data</code> 注解的 Entity 类</li>
+<li>在 Outline 视图中能看到自动生成的 getter/setter 方法</li>
+</ul>
+<hr>
+<h2 id="三、Spring-Boot-多环境配置详解">三、Spring Boot 多环境配置详解</h2>
+<h3 id="3-1-配置文件层级">3.1 配置文件层级</h3>
+<p>Spring Boot 支持多环境配置，文件加载顺序如下：</p>
+<pre class="language-none"><code class="language-none">application.properties          ← 主配置（指定激活哪个 profile）
+        ↓
+application-&#123;profile&#125;.properties  ← 对应环境的具体配置</code></pre>
+<h3 id="3-2-典型的多环境配置结构">3.2 典型的多环境配置结构</h3>
+<pre class="language-none"><code class="language-none">src&#x2F;main&#x2F;resources&#x2F;
+├── application.properties           # 主配置文件
+├── application-dev.properties       # 开发环境
+├── application-test.properties      # 测试环境
+├── application-prod.properties      # 生产环境
+└── application-local.properties     # 本地环境（可选）</code></pre>
+<h3 id="3-3-主配置文件示例">3.3 主配置文件示例</h3>
+<pre class="language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># application.properties</span>
+<span class="token comment"># 通过注释切换环境</span>
+
+<span class="token comment"># 开发环境</span>
+<span class="token key attr-name">spring.profiles.active</span><span class="token punctuation">=</span><span class="token value attr-value">dev</span>
+
+<span class="token comment"># 测试环境</span>
+<span class="token comment">#spring.profiles.active=test</span>
+
+<span class="token comment"># 生产环境</span>
+<span class="token comment">#spring.profiles.active=prod</span></code></pre>
+<h3 id="3-4-环境配置文件示例">3.4 环境配置文件示例</h3>
+<pre class="language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># application-dev.properties</span>
+
+<span class="token comment"># 数据库配置</span>
+<span class="token key attr-name">spring.datasource.url</span><span class="token punctuation">=</span><span class="token value attr-value">jdbc:postgresql://localhost:5432/mydb</span>
+<span class="token key attr-name">spring.datasource.username</span><span class="token punctuation">=</span><span class="token value attr-value">postgres</span>
+<span class="token key attr-name">spring.datasource.password</span><span class="token punctuation">=</span><span class="token value attr-value">******</span>
+<span class="token key attr-name">spring.datasource.driver-class-name</span><span class="token punctuation">=</span><span class="token value attr-value">org.postgresql.Driver</span>
+
+<span class="token comment"># MyBatis 配置</span>
+<span class="token key attr-name">mybatis.mapper-locations</span><span class="token punctuation">=</span><span class="token value attr-value">classpath:mapper/*.xml</span>
+
+<span class="token comment"># 服务器配置</span>
+<span class="token key attr-name">server.port</span><span class="token punctuation">=</span><span class="token value attr-value">8080</span>
+<span class="token key attr-name">server.servlet.context-path</span><span class="token punctuation">=</span><span class="token value attr-value">/api</span>
+
+<span class="token comment"># JWT 配置</span>
+<span class="token key attr-name">jwt.timeout</span><span class="token punctuation">=</span><span class="token value attr-value">1800</span>
+<span class="token key attr-name">jwt.secret</span><span class="token punctuation">=</span><span class="token value attr-value">your-secret-key</span>
+
+<span class="token comment"># 日志级别</span>
+<span class="token key attr-name">logging.level.org.springframework</span><span class="token punctuation">=</span><span class="token value attr-value">INFO</span>
+<span class="token key attr-name">logging.level.com.yourcompany.mapper</span><span class="token punctuation">=</span><span class="token value attr-value">DEBUG</span>
+
+<span class="token comment"># 文件上传</span>
+<span class="token key attr-name">spring.servlet.multipart.max-file-size</span><span class="token punctuation">=</span><span class="token value attr-value">200MB</span>
+<span class="token key attr-name">spring.servlet.multipart.max-request-size</span><span class="token punctuation">=</span><span class="token value attr-value">200MB</span></code></pre>
+<h3 id="3-5-切换环境的三种方式">3.5 切换环境的三种方式</h3>
+<p><strong>方式一：修改配置文件</strong></p>
+<pre class="language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.profiles.active</span><span class="token punctuation">=</span><span class="token value attr-value">prod</span></code></pre>
+<p><strong>方式二：启动参数（推荐）</strong></p>
+<pre class="language-none"><code class="language-none">Run Configurations → Arguments → Program arguments:
+--spring.profiles.active&#x3D;dev</code></pre>
+<p><strong>方式三：VM 参数</strong></p>
+<pre class="language-none"><code class="language-none">Run Configurations → Arguments → VM arguments:
+-Dspring.profiles.active&#x3D;dev</code></pre>
+<hr>
+<h2 id="四、项目启动与调试">四、项目启动与调试</h2>
+<h3 id="4-1-两种启动方式">4.1 两种启动方式</h3>
+<h4 id="方式-A：内嵌-Tomcat（推荐新手）">方式 A：内嵌 Tomcat（推荐新手）</h4>
+<pre class="language-none"><code class="language-none">1. 找到主类（带 @SpringBootApplication 注解）
+2. 右键 → Run As → Spring Boot App
+3. 或者 Debug As → Spring Boot App（调试模式）</code></pre>
+<h4 id="方式-B：外部-Tomcat（WAR-部署）">方式 B：外部 Tomcat（WAR 部署）</h4>
+<pre class="language-none"><code class="language-none">1. Window → Show View → Servers
+2. 右键 → New → Server → Apache Tomcat v9.0
+3. 配置 Tomcat 安装目录
+4. 右键服务器 → Add and Remove → 添加项目
+5. 右键服务器 → Debug（调试模式启动）</code></pre>
+<h3 id="4-2-调试技巧">4.2 调试技巧</h3>
+<p><strong>设置断点：</strong></p>
+<ul>
+<li>在代码行号左侧双击，出现蓝色圆点</li>
+</ul>
+<p><strong>调试快捷键：</strong></p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F5</td>
+<td>Step Into（进入方法）</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>Step Over（执行下一行）</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Step Return（跳出方法）</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Resume（继续执行到下一个断点）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>查看变量：</strong></p>
+<ul>
+<li>Variables 视图：查看当前作用域变量</li>
+<li>Expressions 视图：输入表达式实时计算</li>
+</ul>
+<hr>
+<h2 id="五、Log4j2-日志配置">五、Log4j2 日志配置</h2>
+<h3 id="5-1-日志配置文件">5.1 日志配置文件</h3>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- log4j2.xml --></span>
+<span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Configuration</span> <span class="token attr-name">status</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>off<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Properties</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>formatlog<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>%d&#123;yyyy/MM/dd HH:mm:ss.SSS&#125; [%t] %-6p %c&#123;10&#125; %m%n<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>logfile<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>./logs/application.log<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>logfile-archive<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>./logs/application_%d&#123;yyyy-MM-dd&#125;-%i.log<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Property</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Properties</span><span class="token punctuation">></span></span>
+    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Appenders</span><span class="token punctuation">></span></span>
+        <span class="token comment">&lt;!-- 控制台输出 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Console</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Console<span class="token punctuation">"</span></span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>SYSTEM_OUT<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PatternLayout</span> <span class="token attr-name">pattern</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$&#123;formatlog&#125;<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Console</span><span class="token punctuation">></span></span>
+
+        <span class="token comment">&lt;!-- 文件输出（滚动日志） --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>RollingFile</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>RollingFile<span class="token punctuation">"</span></span> 
+                     <span class="token attr-name">fileName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$&#123;logfile&#125;<span class="token punctuation">"</span></span>
+                     <span class="token attr-name">filePattern</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$&#123;logfile-archive&#125;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PatternLayout</span> <span class="token attr-name">pattern</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$&#123;formatlog&#125;<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Policies</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>SizeBasedTriggeringPolicy</span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10MB<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Policies</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DefaultRolloverStrategy</span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>RollingFile</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Appenders</span><span class="token punctuation">></span></span>
+    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Loggers</span><span class="token punctuation">></span></span>
+        <span class="token comment">&lt;!-- 开发环境用 INFO，生产环境用 ERROR --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Root</span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>INFO<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>AppenderRef</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Console<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>AppenderRef</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>RollingFile<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Root</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Loggers</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Configuration</span><span class="token punctuation">></span></span></code></pre>
+<h3 id="5-2-日志格式说明">5.2 日志格式说明</h3>
+<pre class="language-none"><code class="language-none">%d&#123;yyyy&#x2F;MM&#x2F;dd HH:mm:ss.SSS&#125;  → 日期时间
+[%t]                          → 线程名
+%-6p                          → 日志级别（左对齐6字符）
+%c&#123;10&#125;                        → 类名（最多10个包层级）
+%m                            → 日志消息
+%n                            → 换行</code></pre>
+<h3 id="5-3-查看日志">5.3 查看日志</h3>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 实时跟踪日志</span>
+<span class="token function">tail</span> <span class="token parameter variable">-f</span> ./logs/application.log
+
+<span class="token comment"># 查看最后 100 行</span>
+<span class="token function">tail</span> <span class="token parameter variable">-100</span> ./logs/application.log
+
+<span class="token comment"># 搜索错误日志</span>
+<span class="token function">grep</span> <span class="token string">"ERROR"</span> ./logs/application.log</code></pre>
+<hr>
+<h2 id="六、常见问题排查">六、常见问题排查</h2>
+<h3 id="6-1-文件找不到错误">6.1 文件找不到错误</h3>
+<pre class="language-none"><code class="language-none">java.io.FileNotFoundException: class path resource [xxx&#x2F;xxx.p8] cannot be resolved</code></pre>
+<p><strong>原因：</strong> 配置文件引用的资源文件不存在</p>
+<p><strong>解决：</strong></p>
+<ol>
+<li>检查 <code>src/main/resources</code> 下是否有该文件</li>
+<li>修改配置指向正确的文件路径</li>
+<li>如果是证书/密钥文件，从正确的环境获取</li>
+</ol>
+<h3 id="6-2-Bean-创建失败">6.2 Bean 创建失败</h3>
+<pre class="language-none"><code class="language-none">Error creating bean with name &#39;xxx&#39;: Unsatisfied dependency</code></pre>
+<p><strong>可能原因：</strong></p>
+<ol>
+<li>Lombok 未安装 → 安装 Lombok 插件</li>
+<li>依赖注入失败 → 检查 @Autowired 的类是否有 @Component/@Service 等注解</li>
+<li>配置错误 → 检查 application.properties</li>
+</ol>
+<h3 id="6-3-端口被占用">6.3 端口被占用</h3>
+<pre class="language-none"><code class="language-none">Web server failed to start. Port 8080 was already in use.</code></pre>
+<p><strong>解决：</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查找占用端口的进程</span>
+<span class="token function">lsof</span> <span class="token parameter variable">-i</span> :8080
+
+<span class="token comment"># 杀掉进程</span>
+<span class="token function">kill</span> <span class="token parameter variable">-9</span> <span class="token operator">&lt;</span>PID<span class="token operator">></span>
+
+<span class="token comment"># 或者修改项目端口</span>
+<span class="token comment"># application.properties</span>
+<span class="token assign-left variable">server.port</span><span class="token operator">=</span><span class="token number">8081</span></code></pre>
+<h3 id="6-4-数据库连接失败">6.4 数据库连接失败</h3>
+<pre class="language-none"><code class="language-none">Cannot create PoolableConnectionFactory</code></pre>
+<p><strong>检查清单：</strong></p>
+<ol>
+<li>数据库服务是否启动</li>
+<li>IP 地址和端口是否正确</li>
+<li>用户名密码是否正确</li>
+<li>数据库是否已创建</li>
+<li>防火墙是否放行</li>
+</ol>
+<hr>
+<h2 id="七、项目结构最佳实践">七、项目结构最佳实践</h2>
+<pre class="language-none"><code class="language-none">src&#x2F;main&#x2F;java&#x2F;
+├── com.example.project&#x2F;
+│   ├── config&#x2F;           # 配置类（Security、CORS 等）
+│   ├── controller&#x2F;       # 控制器层（处理 HTTP 请求）
+│   ├── service&#x2F;          # 服务层（业务逻辑）
+│   ├── mapper&#x2F;           # 数据访问层（MyBatis 接口）
+│   ├── entity&#x2F;           # 实体类
+│   ├── filter&#x2F;           # 过滤器（JWT、登录等）
+│   ├── util&#x2F;             # 工具类
+│   ├── common&#x2F;           # 公共组件
+│   └── Application.java  # 启动类
+
+src&#x2F;main&#x2F;resources&#x2F;
+├── mapper&#x2F;               # MyBatis XML 映射文件
+├── i18n&#x2F;                 # 国际化资源
+├── templates&#x2F;            # 模板文件（邮件、PDF 等）
+├── application.properties
+├── application-dev.properties
+├── application-prod.properties
+└── log4j2.xml</code></pre>
+<hr>
+<h2 id="八、总结">八、总结</h2>
+<p>搭建 Java Spring Boot 项目本地开发环境的核心步骤：</p>
+<pre class="language-none"><code class="language-none">1. 选择合适的 IDE
+   └── WAR 部署项目推荐 Eclipse + STS
+
+2. 导入 Maven 项目
+   └── 等待依赖下载完成
+
+3. 安装必要插件
+   └── Lombok 是最常见的必装插件
+
+4. 配置运行环境
+   └── 修改 application-dev.properties 连接本地数据库
+
+5. 解决启动错误
+   └── 资源文件缺失、Bean 创建失败等
+
+6. 启动调试
+   └── 设置断点、查看日志</code></pre>
+<p>希望这篇指南能帮助你快速上手 Java 后端项目的本地开发！</p>
+<hr>
+<p><em>本文基于实际项目经验总结，适用于 Spring Boot 2.x + MyBatis + PostgreSQL 技术栈。</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+              <a href="/tags/Eclipse/" rel="tag"># Eclipse</a>
+              <a href="/tags/Cursor/" rel="tag"># Cursor</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E7%A9%BF%E8%B6%8A%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%BF%B7%E9%9B%BE%EF%BC%9A%E4%BB%8E%20GCD%20%E5%88%B0%20@MainActor%20%E7%9A%84%E7%A9%B6%E6%9E%81%E8%BF%9B%E5%8C%96/" rel="prev" title="穿越线程的迷雾：从 GCD 到 @MainActor 的究极进化">
+                  <i class="fa fa-angle-left"></i> 穿越线程的迷雾：从 GCD 到 @MainActor 的究极进化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog%20migrate%20to%20cloudflare/" rel="next" title="blog migrate to cloudflare">
+                  blog migrate to cloudflare <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

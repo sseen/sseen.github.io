@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="有时候需要设置 xcode 几个 shell 脚本，会用到各种内置的 build 参数。 比如 crashlytics 上传 dsym 时候，简单的判断需要用到；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode Build Variables">
+<meta property="og:url" content="https://sseen.github.io/Xcode%20Build%20Variables/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="有时候需要设置 xcode 几个 shell 脚本，会用到各种内置的 build 参数。 比如 crashlytics 上传 dsym 时候，简单的判断需要用到；">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-09T14:34:43.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.821Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Xcode">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Xcode%20Build%20Variables/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Xcode%20Build%20Variables/","path":"Xcode Build Variables/","title":"Xcode Build Variables"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Xcode Build Variables | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Xcode%20Build%20Variables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Xcode Build Variables | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Xcode Build Variables
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-09 14:34:43" itemprop="dateCreated datePublished" datetime="2021-11-09T14:34:43+00:00">2021-11-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>有时候需要设置 xcode 几个 shell 脚本，会用到各种内置的 build 参数。</p>
+<p>比如 crashlytics 上传 dsym 时候，简单的判断需要用到；</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 本地调试不上传</span>
+<span class="token comment"># demo App 用 demo 配置</span>
+<span class="token comment"># App 用 正式配置</span>
+<span class="token assign-left variable">bundleID</span><span class="token operator">=</span><span class="token variable">$&#123;PRODUCT_BUNDLE_IDENTIFIER&#125;</span>
+<span class="token assign-left variable">configuration</span><span class="token operator">=</span><span class="token variable">$&#123;CONFIGURATION&#125;</span>
+<span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">"com.xxx.demo"</span>
+<span class="token assign-left variable">fireBaseFileName</span><span class="token operator">=</span><span class="token string">"GoogleService-Info.plist"</span>
+<span class="token comment"># 空代表是本地调试</span>
+<span class="token comment"># 不然本地调试很慢必须有科学网络才能调试</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"ssn shell"</span>
+<span class="token builtin class-name">echo</span> <span class="token variable">$configuration</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$configuration</span>"</span> <span class="token operator">=</span> <span class="token string">"xxx-Demo"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"demo"</span>
+    <span class="token assign-left variable">fireBaseFileName</span><span class="token operator">=</span><span class="token string">"GoogleService-Info-demo.plist"</span>
+<span class="token keyword">fi</span>
+<span class="token comment"># if [ -z "$bundleID"]; then</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$configuration</span>"</span> <span class="token operator">=</span> <span class="token string">"Debug"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"kong"</span>
+    <span class="token assign-left variable">fireBaseFileName</span><span class="token operator">=</span><span class="token string">"GoogleService-Info-demo.plist"</span>
+<span class="token keyword">else</span> 
+    <span class="token builtin class-name">echo</span> <span class="token string">"upload"</span>
+    <span class="token string">"<span class="token variable">$&#123;PODS_ROOT&#125;</span>/FirebaseCrashlytics/upload-symbols"</span> <span class="token parameter variable">-gsp</span> <span class="token string">"<span class="token variable">$&#123;PROJECT_DIR&#125;</span>/EndZone/<span class="token variable">$&#123;fireBaseFileName&#125;</span>"</span> <span class="token parameter variable">-p</span> ios <span class="token string">"<span class="token variable">$&#123;DWARF_DSYM_FOLDER_PATH&#125;</span>/<span class="token variable">$&#123;DWARF_DSYM_FILE_NAME&#125;</span>"</span>
+<span class="token keyword">fi</span>
+</code></pre>
+<pre class="language-console" data-language="console"><code class="language-console">ACTION &#x3D; build
+    AD_HOC_CODE_SIGNING_ALLOWED &#x3D; NO
+    ALTERNATE_GROUP &#x3D; staff
+    ALTERNATE_MODE &#x3D; u+w,go-w,a+rX
+    ALTERNATE_OWNER &#x3D; grantdavis
+    ALWAYS_SEARCH_USER_PATHS &#x3D; NO
+    ALWAYS_USE_SEPARATE_HEADERMAPS &#x3D; YES
+    APPLE_INTERNAL_DEVELOPER_DIR &#x3D; &#x2F;AppleInternal&#x2F;Developer
+    APPLE_INTERNAL_DIR &#x3D; &#x2F;AppleInternal
+    APPLE_INTERNAL_DOCUMENTATION_DIR &#x3D; &#x2F;AppleInternal&#x2F;Documentation
+    APPLE_INTERNAL_LIBRARY_DIR &#x3D; &#x2F;AppleInternal&#x2F;Library
+    APPLE_INTERNAL_TOOLS &#x3D; &#x2F;AppleInternal&#x2F;Developer&#x2F;Tools
+    APPLY_RULES_IN_COPY_FILES &#x3D; NO
+    ARCHS &#x3D; armv7 armv7s
+    ARCHS_STANDARD &#x3D; armv7 armv7s arm64
+    ARCHS_STANDARD_32_64_BIT &#x3D; armv7 armv7s arm64
+    ARCHS_STANDARD_32_BIT &#x3D; armv7 armv7s
+    ARCHS_STANDARD_64_BIT &#x3D; arm64
+    ARCHS_STANDARD_INCLUDING_64_BIT &#x3D; armv7 armv7s arm64
+    ARCHS_UNIVERSAL_IPHONE_OS &#x3D; armv7 armv7s arm64
+    ASSETCATALOG_COMPILER_APPICON_NAME &#x3D; AppIcon
+    ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME &#x3D; LaunchImage
+    AVAILABLE_PLATFORMS &#x3D; iphonesimulator macosx iphoneos
+    BUILD_COMPONENTS &#x3D; headers build
+    BUILD_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products
+    BUILD_ROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products
+    BUILD_STYLE &#x3D; 
+    BUILD_VARIANTS &#x3D; normal
+    BUILT_PRODUCTS_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products&#x2F;Release-iphoneos
+    CACHE_ROOT &#x3D; &#x2F;var&#x2F;folders&#x2F;3v&#x2F;93gzxtps2zl90z2cqldp8gxc0000gn&#x2F;C&#x2F;com.apple.DeveloperTools&#x2F;5.1-5B130a&#x2F;Xcode
+    CCHROOT &#x3D; &#x2F;var&#x2F;folders&#x2F;3v&#x2F;93gzxtps2zl90z2cqldp8gxc0000gn&#x2F;C&#x2F;com.apple.DeveloperTools&#x2F;5.1-5B130a&#x2F;Xcode
+    CHMOD &#x3D; &#x2F;bin&#x2F;chmod
+    CHOWN &#x3D; &#x2F;usr&#x2F;sbin&#x2F;chown
+    CLANG_ENABLE_OBJC_ARC &#x3D; YES
+    CLANG_WARN_CONSTANT_CONVERSION &#x3D; YES
+    CLANG_WARN_ENUM_CONVERSION &#x3D; YES
+    CLANG_WARN_INT_CONVERSION &#x3D; YES
+    CLANG_WARN__DUPLICATE_METHOD_MATCH &#x3D; YES
+    CLASS_FILE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;JavaClasses
+    CLEAN_PRECOMPS &#x3D; YES
+    CLONE_HEADERS &#x3D; NO
+    CODESIGNING_FOLDER_PATH &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products&#x2F;Release-iphoneos&#x2F;Meijer.app
+    CODE_SIGNING_ALLOWED &#x3D; YES
+    CODE_SIGNING_REQUIRED &#x3D; YES
+    CODE_SIGN_CONTEXT_CLASS &#x3D; XCiPhoneOSCodeSignContext
+    CODE_SIGN_IDENTITY &#x3D; iPhone Developer
+    COLOR_DIAGNOSTICS &#x3D; YES
+    COMBINE_HIDPI_IMAGES &#x3D; NO
+    COMPOSITE_SDK_DIRS &#x3D; &#x2F;var&#x2F;folders&#x2F;3v&#x2F;93gzxtps2zl90z2cqldp8gxc0000gn&#x2F;C&#x2F;com.apple.DeveloperTools&#x2F;5.1-5B130a&#x2F;Xcode&#x2F;CompositeSDKs
+    COMPRESS_PNG_FILES &#x3D; YES
+    CONFIGURATION &#x3D; Release
+    CONFIGURATION_BUILD_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products&#x2F;Release-iphoneos
+    CONFIGURATION_TEMP_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos
+    CONTENTS_FOLDER_PATH &#x3D; Meijer.app
+    COPYING_PRESERVES_HFS_DATA &#x3D; NO
+    COPY_PHASE_STRIP &#x3D; NO
+    COPY_RESOURCES_FROM_STATIC_FRAMEWORKS &#x3D; YES
+    CP &#x3D; &#x2F;bin&#x2F;cp
+    CREATE_INFOPLIST_SECTION_IN_BINARY &#x3D; NO
+    CURRENT_ARCH &#x3D; armv7s
+    CURRENT_VARIANT &#x3D; normal
+    DEAD_CODE_STRIPPING &#x3D; YES
+    DEBUGGING_SYMBOLS &#x3D; YES
+    DEBUG_INFORMATION_FORMAT &#x3D; dwarf-with-dsym
+    DEFAULT_COMPILER &#x3D; com.apple.compilers.llvm.clang.1_0
+    DEFAULT_KEXT_INSTALL_PATH &#x3D; &#x2F;System&#x2F;Library&#x2F;Extensions
+    DEPLOYMENT_LOCATION &#x3D; NO
+    DEPLOYMENT_POSTPROCESSING &#x3D; NO
+    DERIVED_FILES_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;DerivedSources
+    DERIVED_FILE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;DerivedSources
+    DERIVED_SOURCES_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;DerivedSources
+    DEVELOPER_APPLICATIONS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications
+    DEVELOPER_BIN_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;usr&#x2F;bin
+    DEVELOPER_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer
+    DEVELOPER_FRAMEWORKS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Library&#x2F;Frameworks
+    DEVELOPER_FRAMEWORKS_DIR_QUOTED &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Library&#x2F;Frameworks
+    DEVELOPER_LIBRARY_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Library
+    DEVELOPER_SDK_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;MacOSX.platform&#x2F;Developer&#x2F;SDKs
+    DEVELOPER_TOOLS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Tools
+    DEVELOPER_USR_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;usr
+    DEVELOPMENT_LANGUAGE &#x3D; English
+    DOCUMENTATION_FOLDER_PATH &#x3D; Meijer.app&#x2F;English.lproj&#x2F;Documentation
+    DO_HEADER_SCANNING_IN_JAM &#x3D; NO
+    DSTROOT &#x3D; &#x2F;tmp&#x2F;Meijer.dst
+    DT_TOOLCHAIN_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Toolchains&#x2F;XcodeDefault.xctoolchain
+    DWARF_DSYM_FILE_NAME &#x3D; Meijer.app.dSYM
+    DWARF_DSYM_FILE_SHOULD_ACCOMPANY_PRODUCT &#x3D; NO
+    DWARF_DSYM_FOLDER_PATH &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products&#x2F;Release-iphoneos
+    EFFECTIVE_PLATFORM_NAME &#x3D; -iphoneos
+    EMBEDDED_PROFILE_NAME &#x3D; embedded.mobileprovision
+    ENABLE_HEADER_DEPENDENCIES &#x3D; YES
+    ENTITLEMENTS_ALLOWED &#x3D; YES
+    ENTITLEMENTS_REQUIRED &#x3D; YES
+    EXCLUDED_INSTALLSRC_SUBDIRECTORY_PATTERNS &#x3D; .DS_Store .svn .git .hg CVS
+    EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES &#x3D; *.nib *.lproj *.framework *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj
+    EXECUTABLES_FOLDER_PATH &#x3D; Meijer.app&#x2F;Executables
+    EXECUTABLE_FOLDER_PATH &#x3D; Meijer.app
+    EXECUTABLE_NAME &#x3D; Meijer
+    EXECUTABLE_PATH &#x3D; Meijer.app&#x2F;Meijer
+    FILE_LIST &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;Objects&#x2F;LinkFileList
+    FIXED_FILES_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;FixedFiles
+    FRAMEWORKS_FOLDER_PATH &#x3D; Meijer.app&#x2F;Frameworks
+    FRAMEWORK_FLAG_PREFIX &#x3D; -framework
+    FRAMEWORK_SEARCH_PATHS &#x3D;  &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;Meijer &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;PIMapsLib &#x2F;Users&#x2F;jimyeomans&#x2F;Source&#x2F;meijerios&#x2F;Meijer
+    FRAMEWORK_VERSION &#x3D; A
+    FULL_PRODUCT_NAME &#x3D; Meijer.app
+    GCC3_VERSION &#x3D; 3.3
+    GCC_C_LANGUAGE_STANDARD &#x3D; gnu99
+    GCC_INLINES_ARE_PRIVATE_EXTERN &#x3D; YES
+    GCC_PFE_FILE_C_DIALECTS &#x3D; c objective-c c++ objective-c++
+    GCC_PRECOMPILE_PREFIX_HEADER &#x3D; YES
+    GCC_PREFIX_HEADER &#x3D; Meijer&#x2F;Meijer-Prefix.pch
+    GCC_PREPROCESSOR_DEFINITIONS &#x3D; CERT_SERVER&#x3D;1 TESTFLIGHT&#x3D;1 MR_ENABLE_ACTIVE_RECORD_LOGGING&#x3D;1
+    GCC_SYMBOLS_PRIVATE_EXTERN &#x3D; YES
+    GCC_THUMB_SUPPORT &#x3D; YES
+    GCC_TREAT_WARNINGS_AS_ERRORS &#x3D; NO
+    GCC_VERSION &#x3D; com.apple.compilers.llvm.clang.1_0
+    GCC_VERSION_IDENTIFIER &#x3D; com_apple_compilers_llvm_clang_1_0
+    GCC_WARN_ABOUT_RETURN_TYPE &#x3D; YES
+    GCC_WARN_UNINITIALIZED_AUTOS &#x3D; YES
+    GCC_WARN_UNUSED_VARIABLE &#x3D; YES
+    GENERATE_MASTER_OBJECT_FILE &#x3D; NO
+    GENERATE_PKGINFO_FILE &#x3D; YES
+    GENERATE_PROFILING_CODE &#x3D; NO
+    GID &#x3D; 20
+    GROUP &#x3D; staff
+    HEADERMAP_INCLUDES_FLAT_ENTRIES_FOR_TARGET_BEING_BUILT &#x3D; YES
+    HEADERMAP_INCLUDES_FRAMEWORK_ENTRIES_FOR_ALL_PRODUCT_TYPES &#x3D; YES
+    HEADERMAP_INCLUDES_NONPUBLIC_NONPRIVATE_HEADERS &#x3D; YES
+    HEADERMAP_INCLUDES_PROJECT_HEADERS &#x3D; YES
+    HEADER_SEARCH_PATHS &#x3D; &#x2F;usr&#x2F;include&#x2F;libxml2 &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;CatalinaMobileMJ&#x2F;**
+    ICONV &#x3D; &#x2F;usr&#x2F;bin&#x2F;iconv
+    INFOPLIST_EXPAND_BUILD_SETTINGS &#x3D; YES
+    INFOPLIST_FILE &#x3D; Meijer&#x2F;Meijer-Info.plist
+    INFOPLIST_OUTPUT_FORMAT &#x3D; binary
+    INFOPLIST_PATH &#x3D; Meijer.app&#x2F;Info.plist
+    INFOPLIST_PREPROCESS &#x3D; NO
+    INFOSTRINGS_PATH &#x3D; Meijer.app&#x2F;English.lproj&#x2F;InfoPlist.strings
+    INSTALL_DIR &#x3D; &#x2F;tmp&#x2F;Meijer.dst&#x2F;Applications
+    INSTALL_GROUP &#x3D; staff
+    INSTALL_MODE_FLAG &#x3D; u+w,go-w,a+rX
+    INSTALL_OWNER &#x3D; grantdavis
+    INSTALL_PATH &#x3D; &#x2F;Applications
+    INSTALL_ROOT &#x3D; &#x2F;tmp&#x2F;Meijer.dst
+    IPHONEOS_DEPLOYMENT_TARGET &#x3D; 6.0
+    JAVAC_DEFAULT_FLAGS &#x3D; -J-Xms64m -J-XX:NewSize&#x3D;4M -J-Dfile.encoding&#x3D;UTF8
+    JAVA_APP_STUB &#x3D; &#x2F;System&#x2F;Library&#x2F;Frameworks&#x2F;JavaVM.framework&#x2F;Resources&#x2F;MacOS&#x2F;JavaApplicationStub
+    JAVA_ARCHIVE_CLASSES &#x3D; YES
+    JAVA_ARCHIVE_TYPE &#x3D; JAR
+    JAVA_COMPILER &#x3D; &#x2F;usr&#x2F;bin&#x2F;javac
+    JAVA_FOLDER_PATH &#x3D; Meijer.app&#x2F;Java
+    JAVA_FRAMEWORK_RESOURCES_DIRS &#x3D; Resources
+    JAVA_JAR_FLAGS &#x3D; cv
+    JAVA_SOURCE_SUBDIR &#x3D; .
+    JAVA_USE_DEPENDENCIES &#x3D; YES
+    JAVA_ZIP_FLAGS &#x3D; -urg
+    JIKES_DEFAULT_FLAGS &#x3D; +E +OLDCSO
+    KEEP_PRIVATE_EXTERNS &#x3D; NO
+    LD_DEPENDENCY_INFO_FILE &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;Objects-normal&#x2F;armv7s&#x2F;Meijer_dependency_info.dat
+    LD_GENERATE_MAP_FILE &#x3D; YES
+    LD_MAP_FILE_PATH &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;Meijer-LinkMap-normal-armv7s.txt
+    LD_NO_PIE &#x3D; NO
+    LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER &#x3D; YES
+    LEGACY_DEVELOPER_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;PlugIns&#x2F;Xcode3Core.ideplugin&#x2F;Contents&#x2F;SharedSupport&#x2F;Developer
+    LEX &#x3D; lex
+    LIBRARY_FLAG_NOSPACE &#x3D; YES
+    LIBRARY_FLAG_PREFIX &#x3D; -l
+    LIBRARY_KEXT_INSTALL_PATH &#x3D; &#x2F;Library&#x2F;Extensions
+    LIBRARY_SEARCH_PATHS &#x3D;  &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;** &#x2F;System&#x2F;Library&#x2F;Frameworks&#x2F;ExceptionHandling.framework&#x2F;Versions&#x2F;A &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;CatalinaMobileMJ &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;Motorola &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;Meijer &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;TestFlightSDK2.0.0 &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;PIMapsLib
+    LINKER_DISPLAYS_MANGLED_NAMES &#x3D; NO
+    LINK_FILE_LIST_normal_armv7 &#x3D; 
+    LINK_FILE_LIST_normal_armv7s &#x3D; 
+    LINK_WITH_STANDARD_LIBRARIES &#x3D; YES
+    LOCALIZED_RESOURCES_FOLDER_PATH &#x3D; Meijer.app&#x2F;English.lproj
+    LOCAL_ADMIN_APPS_DIR &#x3D; &#x2F;Applications&#x2F;Utilities
+    LOCAL_APPS_DIR &#x3D; &#x2F;Applications
+    LOCAL_DEVELOPER_DIR &#x3D; &#x2F;Library&#x2F;Developer
+    LOCAL_LIBRARY_DIR &#x3D; &#x2F;Library
+    MACH_O_TYPE &#x3D; mh_execute
+    MAC_OS_X_PRODUCT_BUILD_VERSION &#x3D; 13C64
+    MAC_OS_X_VERSION_ACTUAL &#x3D; 1092
+    MAC_OS_X_VERSION_MAJOR &#x3D; 1090
+    MAC_OS_X_VERSION_MINOR &#x3D; 0902
+    MODULE_CACHE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;ModuleCache
+    NATIVE_ARCH &#x3D; armv7
+    NATIVE_ARCH_32_BIT &#x3D; i386
+    NATIVE_ARCH_64_BIT &#x3D; x86_64
+    NATIVE_ARCH_ACTUAL &#x3D; x86_64
+    NO_COMMON &#x3D; YES
+    OBJECT_FILE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;Objects
+    OBJECT_FILE_DIR_normal &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;Objects-normal
+    OBJROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates
+    ONLY_ACTIVE_ARCH &#x3D; NO
+    OPTIMIZATION_LEVEL &#x3D; 0
+    OS &#x3D; MACOS
+    OSAC &#x3D; &#x2F;usr&#x2F;bin&#x2F;osacompile
+    OTHER_CFLAGS &#x3D; -DNS_BLOCK_ASSERTIONS&#x3D;1
+    OTHER_CPLUSPLUSFLAGS &#x3D; -DNS_BLOCK_ASSERTIONS&#x3D;1
+    OTHER_LDFLAGS &#x3D; -ObjC -all_load -prefinalized-library &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;Motorola&#x2F;libMotoSDA.a &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;CatalinaMobileMJ&#x2F;libCatalinaMobileMJ.a -finalizer-disable-strip -finalize -lMotoSDA -lstdc++ -lxml2
+    PACKAGE_TYPE &#x3D; com.apple.package-type.wrapper.application
+    PASCAL_STRINGS &#x3D; YES
+    PATH &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;usr&#x2F;bin:&#x2F;opt&#x2F;local&#x2F;bin:&#x2F;opt&#x2F;local&#x2F;sbin:&#x2F;Users&#x2F;grantdavis&#x2F;.rvm&#x2F;gems&#x2F;ruby-1.9.3-p362&#x2F;bin:&#x2F;Users&#x2F;grantdavis&#x2F;.rvm&#x2F;gems&#x2F;ruby-1.9.3-p362@global&#x2F;bin:&#x2F;Users&#x2F;grantdavis&#x2F;.rvm&#x2F;rubies&#x2F;ruby-1.9.3-p362&#x2F;bin:&#x2F;Users&#x2F;grantdavis&#x2F;.rvm&#x2F;bin:&#x2F;opt&#x2F;subversion&#x2F;bin:&#x2F;opt&#x2F;local&#x2F;bin:&#x2F;opt&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;mysql&#x2F;bin:&#x2F;usr&#x2F;local&#x2F;heroku&#x2F;bin:&#x2F;usr&#x2F;bin:&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;opt&#x2F;X11&#x2F;bin:&#x2F;Applications&#x2F;Server.app&#x2F;Contents&#x2F;ServerRoot&#x2F;usr&#x2F;bin:&#x2F;Applications&#x2F;Server.app&#x2F;Contents&#x2F;ServerRoot&#x2F;usr&#x2F;sbin
+    PATH_PREFIXES_EXCLUDED_FROM_HEADER_DEPENDENCIES &#x3D; &#x2F;usr&#x2F;include &#x2F;usr&#x2F;local&#x2F;include &#x2F;System&#x2F;Library&#x2F;Frameworks &#x2F;System&#x2F;Library&#x2F;PrivateFrameworks &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Headers &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;SDKs &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms
+    PBDEVELOPMENTPLIST_PATH &#x3D; Meijer.app&#x2F;pbdevelopment.plist
+    PFE_FILE_C_DIALECTS &#x3D; objective-c
+    PKGINFO_FILE_PATH &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;PkgInfo
+    PKGINFO_PATH &#x3D; Meijer.app&#x2F;PkgInfo
+    PLATFORM_DEVELOPER_APPLICATIONS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;Applications
+    PLATFORM_DEVELOPER_BIN_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;usr&#x2F;bin
+    PLATFORM_DEVELOPER_LIBRARY_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;PlugIns&#x2F;Xcode3Core.ideplugin&#x2F;Contents&#x2F;SharedSupport&#x2F;Developer&#x2F;Library
+    PLATFORM_DEVELOPER_SDK_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;SDKs
+    PLATFORM_DEVELOPER_TOOLS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;Tools
+    PLATFORM_DEVELOPER_USR_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;usr
+    PLATFORM_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform
+    PLATFORM_NAME &#x3D; iphoneos
+    PLATFORM_PREFERRED_ARCH &#x3D; arm64
+    PLATFORM_PRODUCT_BUILD_VERSION &#x3D; 11D167
+    PLIST_FILE_OUTPUT_FORMAT &#x3D; binary
+    PLUGINS_FOLDER_PATH &#x3D; Meijer.app&#x2F;PlugIns
+    PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR &#x3D; YES
+    PRECOMP_DESTINATION_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;PrefixHeaders
+    PRESERVE_DEAD_CODE_INITS_AND_TERMS &#x3D; NO
+    PRIVATE_HEADERS_FOLDER_PATH &#x3D; Meijer.app&#x2F;PrivateHeaders
+    PRODUCT_NAME &#x3D; Meijer
+    PRODUCT_SETTINGS_PATH &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;Meijer&#x2F;Meijer-Info.plist
+    PRODUCT_TYPE &#x3D; com.apple.product-type.application
+    PROFILING_CODE &#x3D; NO
+    PROJECT &#x3D; Meijer
+    PROJECT_DERIVED_FILE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;DerivedSources
+    PROJECT_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer
+    PROJECT_FILE_PATH &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer&#x2F;Meijer.xcodeproj
+    PROJECT_NAME &#x3D; Meijer
+    PROJECT_TEMP_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build
+    PROJECT_TEMP_ROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates
+    PROVISIONING_PROFILE_REQUIRED &#x3D; YES
+    PUBLIC_HEADERS_FOLDER_PATH &#x3D; Meijer.app&#x2F;Headers
+    RECURSIVE_SEARCH_PATHS_FOLLOW_SYMLINKS &#x3D; YES
+    REMOVE_CVS_FROM_RESOURCES &#x3D; YES
+    REMOVE_GIT_FROM_RESOURCES &#x3D; YES
+    REMOVE_HG_FROM_RESOURCES &#x3D; YES
+    REMOVE_SVN_FROM_RESOURCES &#x3D; YES
+    RESOURCE_RULES_REQUIRED &#x3D; YES
+    REZ_COLLECTOR_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;ResourceManagerResources
+    REZ_OBJECTS_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build&#x2F;ResourceManagerResources&#x2F;Objects
+    SCAN_ALL_SOURCE_FILES_FOR_INCLUDES &#x3D; NO
+    SCRIPTS_FOLDER_PATH &#x3D; Meijer.app&#x2F;Scripts
+    SDKROOT &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;SDKs&#x2F;iPhoneOS7.1.sdk
+    SDK_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Platforms&#x2F;iPhoneOS.platform&#x2F;Developer&#x2F;SDKs&#x2F;iPhoneOS7.1.sdk
+    SDK_NAME &#x3D; iphoneos7.1
+    SDK_PRODUCT_BUILD_VERSION &#x3D; 11D167
+    SED &#x3D; &#x2F;usr&#x2F;bin&#x2F;sed
+    SEPARATE_STRIP &#x3D; NO
+    SEPARATE_SYMBOL_EDIT &#x3D; NO
+    SET_DIR_MODE_OWNER_GROUP &#x3D; YES
+    SET_FILE_MODE_OWNER_GROUP &#x3D; NO
+    SHALLOW_BUNDLE &#x3D; YES
+    SHARED_DERIVED_FILE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products&#x2F;Release-iphoneos&#x2F;DerivedSources
+    SHARED_FRAMEWORKS_FOLDER_PATH &#x3D; Meijer.app&#x2F;SharedFrameworks
+    SHARED_PRECOMPS_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;PrecompiledHeaders
+    SHARED_SUPPORT_FOLDER_PATH &#x3D; Meijer.app&#x2F;SharedSupport
+    SKIP_INSTALL &#x3D; NO
+    SOURCE_ROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer
+    SRCROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Workspace&#x2F;Meijer-iOS&#x2F;Meijer
+    STRINGS_FILE_OUTPUT_ENCODING &#x3D; binary
+    STRIP_INSTALLED_PRODUCT &#x3D; YES
+    STRIP_STYLE &#x3D; all
+    SUPPORTED_DEVICE_FAMILIES &#x3D; 1,2
+    SUPPORTED_PLATFORMS &#x3D; iphonesimulator iphoneos
+    SYMROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products
+    SYSTEM_ADMIN_APPS_DIR &#x3D; &#x2F;Applications&#x2F;Utilities
+    SYSTEM_APPS_DIR &#x3D; &#x2F;Applications
+    SYSTEM_CORE_SERVICES_DIR &#x3D; &#x2F;System&#x2F;Library&#x2F;CoreServices
+    SYSTEM_DEMOS_DIR &#x3D; &#x2F;Applications&#x2F;Extras
+    SYSTEM_DEVELOPER_APPS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications
+    SYSTEM_DEVELOPER_BIN_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;usr&#x2F;bin
+    SYSTEM_DEVELOPER_DEMOS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications&#x2F;Utilities&#x2F;Built Examples
+    SYSTEM_DEVELOPER_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer
+    SYSTEM_DEVELOPER_DOC_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;ADC Reference Library
+    SYSTEM_DEVELOPER_GRAPHICS_TOOLS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications&#x2F;Graphics Tools
+    SYSTEM_DEVELOPER_JAVA_TOOLS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications&#x2F;Java Tools
+    SYSTEM_DEVELOPER_PERFORMANCE_TOOLS_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications&#x2F;Performance Tools
+    SYSTEM_DEVELOPER_RELEASENOTES_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;ADC Reference Library&#x2F;releasenotes
+    SYSTEM_DEVELOPER_TOOLS &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Tools
+    SYSTEM_DEVELOPER_TOOLS_DOC_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;ADC Reference Library&#x2F;documentation&#x2F;DeveloperTools
+    SYSTEM_DEVELOPER_TOOLS_RELEASENOTES_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;ADC Reference Library&#x2F;releasenotes&#x2F;DeveloperTools
+    SYSTEM_DEVELOPER_USR_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;usr
+    SYSTEM_DEVELOPER_UTILITIES_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Applications&#x2F;Utilities
+    SYSTEM_DOCUMENTATION_DIR &#x3D; &#x2F;Library&#x2F;Documentation
+    SYSTEM_KEXT_INSTALL_PATH &#x3D; &#x2F;System&#x2F;Library&#x2F;Extensions
+    SYSTEM_LIBRARY_DIR &#x3D; &#x2F;System&#x2F;Library
+    TARGETED_DEVICE_FAMILY &#x3D; 1
+    TARGETNAME &#x3D; Meijer
+    TARGET_BUILD_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Products&#x2F;Release-iphoneos
+    TARGET_NAME &#x3D; Meijer
+    TARGET_TEMP_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build
+    TEMP_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build
+    TEMP_FILES_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build
+    TEMP_FILE_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates&#x2F;Meijer.build&#x2F;Release-iphoneos&#x2F;Meijer.build
+    TEMP_ROOT &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;Meijer-bendrqyqislprqgnunzxygajcfho&#x2F;Build&#x2F;Intermediates
+    TOOLCHAINS &#x3D; com.apple.dt.toolchain.iOS7_1
+    UID &#x3D; 501
+    UNLOCALIZED_RESOURCES_FOLDER_PATH &#x3D; Meijer.app
+    UNSTRIPPED_PRODUCT &#x3D; NO
+    USER &#x3D; grantdavis
+    USER_APPS_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Applications
+    USER_LIBRARY_DIR &#x3D; &#x2F;Users&#x2F;grantdavis&#x2F;Library
+    USE_DYNAMIC_NO_PIC &#x3D; YES
+    USE_HEADERMAP &#x3D; YES
+    USE_HEADER_SYMLINKS &#x3D; NO
+    VALIDATE_PRODUCT &#x3D; NO
+    VALID_ARCHS &#x3D; armv7 armv7s
+    VERBOSE_PBXCP &#x3D; NO
+    VERSIONPLIST_PATH &#x3D; Meijer.app&#x2F;version.plist
+    VERSION_INFO_BUILDER &#x3D; grantdavis
+    VERSION_INFO_FILE &#x3D; Meijer_vers.c
+    VERSION_INFO_STRING &#x3D; &quot;@(#)PROGRAM:Meijer  PROJECT:Meijer-&quot;
+    WRAPPER_EXTENSION &#x3D; app
+    WRAPPER_NAME &#x3D; Meijer.app
+    WRAPPER_SUFFIX &#x3D; .app
+    XCODE_APP_SUPPORT_DIR &#x3D; &#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Library&#x2F;Xcode
+    XCODE_PRODUCT_BUILD_VERSION &#x3D; 5B130a
+    XCODE_VERSION_ACTUAL &#x3D; 0510
+    XCODE_VERSION_MAJOR &#x3D; 0500
+    XCODE_VERSION_MINOR &#x3D; 0510
+    XPCSERVICES_FOLDER_PATH &#x3D; Meijer.app&#x2F;XPCServices
+    YACC &#x3D; yacc
+    arch &#x3D; armv7s
+    diagnostic_message_length &#x3D; 97
+    variant &#x3D; normal</code></pre>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/gdavis/6670468">Xcode Build Variables List. Adopted from: http://stackoverflow.com/questions/6910901/canonical-list-of-xcode-environment-variables</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Xcode/" rel="tag"># Xcode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/UITest/" rel="prev" title="UITest">
+                  <i class="fa fa-angle-left"></i> UITest
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/XBlock%20and%20Closures/" rel="next" title="Block and Closures">
+                  Block and Closures <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="第一次用还有点费劲 经过两个多月的使用发现还是挺方便的，也学到了不少invocation的东西，但是总感觉测试有点事后诸葛亮的味道，尤其是当前对着已有的代码写测试用例，还没有get到它的威力，还是TDD开发，啥时候试试看。 里程碑文件 Faking network calls for iOS unit tests">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OCMock使用">
+<meta property="og:url" content="https://sseen.github.io/OCMock%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="第一次用还有点费劲 经过两个多月的使用发现还是挺方便的，也学到了不少invocation的东西，但是总感觉测试有点事后诸葛亮的味道，尤其是当前对着已有的代码写测试用例，还没有get到它的威力，还是TDD开发，啥时候试试看。 里程碑文件 Faking network calls for iOS unit tests">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-04T10:10:16.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.820Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="OCMock">
+<meta property="article:tag" content="Test">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/OCMock%E4%BD%BF%E7%94%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/OCMock%E4%BD%BF%E7%94%A8/","path":"OCMock使用/","title":"OCMock使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OCMock使用 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.1.</span> <span class="nav-text">网络模拟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Notification%E9%80%9A%E7%9F%A5%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.2.</span> <span class="nav-text">Notification通知模拟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stub-expect-%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">stub expect 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#verify-private-method"><span class="nav-number">2.2.</span> <span class="nav-text">verify private method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E7%9A%84data%E5%9C%A8%E5%93%AA%E9%87%8C%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.</span> <span class="nav-text">模拟的data在哪里替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%AB%8B%E5%88%BB%E8%AE%A9%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9E%E5%88%B0%E7%AC%AC%E4%B8%80%E6%AD%A5%E6%A8%A1%E6%8B%9F%E7%9A%84-onfinished"><span class="nav-number">2.4.</span> <span class="nav-text">如何立刻让网络请求返回到第一步模拟的 onfinished</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%B7%B3%E8%BF%87%E6%88%96%E8%80%85%E5%A4%84%E7%90%86%E6%AF%8F%E6%AC%A1%E9%83%BD%E6%89%A7%E8%A1%8C%E7%9A%84-didFinishLaunchingWithOptions"><span class="nav-number">2.5.</span> <span class="nav-text">怎么跳过或者处理每次都执行的 didFinishLaunchingWithOptions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ocmock-%E6%96%B9%E9%9D%A2"><span class="nav-number">3.1.</span> <span class="nav-text">ocmock 方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ocmock-%E4%B9%8B%E5%A4%96-uitest"><span class="nav-number">3.2.</span> <span class="nav-text">ocmock 之外 uitest</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/OCMock%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OCMock使用 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OCMock使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-04 10:10:16" itemprop="dateCreated datePublished" datetime="2021-08-04T10:10:16+00:00">2021-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>第一次用还有点费劲<br>
+经过两个多月的使用发现还是挺方便的，也学到了不少invocation的东西，但是总感觉测试有点事后诸葛亮的味道，尤其是当前对着已有的代码写测试用例，还没有get到它的威力，还是TDD开发，啥时候试试看。</p>
+<p><strong>里程碑文件</strong><br>
+<a target="_blank" rel="noopener" href="https://blog.grio.com/2013/04/faking-network-calls-for-ios-unit-tests.html">Faking network calls for iOS unit tests</a></p>
+<h2 id="使用">使用</h2>
+<h3 id="网络模拟">网络模拟</h3>
+<p>这里说下自己开始遇到的一个问题，网络请求可能分装了很多层，如果想要覆盖更多的代码，就要让接口请求尽量在更外层，真正mock替换的方法尽量在最内层。</p>
+<p>由以下几步组成</p>
+<ol>
+<li>找到网络请求发起的动作 request</li>
+<li>找到网络请求返回的动作 response</li>
+<li>OCMExpect(response).andDo()，替换 mock data</li>
+<li>OCMStub(request).andCall(response)，直接转到 mock 返回</li>
+<li>然后用mock请求接口就好了</li>
+</ol>
+<pre class="language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">// 模拟 af manager</span>
+ id mockAf <span class="token operator">=</span> <span class="token function">OCMPartialMock</span><span class="token punctuation">(</span><span class="token punctuation">[</span>mockUtil getAFHTTPSessionManager<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token function">OCMStub</span><span class="token punctuation">(</span><span class="token punctuation">[</span>mockUtil getAFHTTPSessionManager<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">andReturn</span><span class="token punctuation">(</span>mockAf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+ <span class="token comment">// 模拟验证码接口数据</span>
+ <span class="token function">OCMExpect</span><span class="token punctuation">(</span><span class="token punctuation">[</span>mockUtil requestFinished<span class="token punctuation">:</span>OCMOCK_ANY task<span class="token punctuation">:</span>OCMOCK_ANY<span class="token punctuation">]</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">andDo</span><span class="token punctuation">(</span><span class="token operator">^</span><span class="token punctuation">(</span>NSInvocation <span class="token operator">*</span>invocation<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+     <span class="token comment">// 模拟数据</span>
+ <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token comment">// 请求随即返回指定响应方法</span>
+ <span class="token function">OCMStub</span><span class="token punctuation">(</span><span class="token punctuation">[</span>mockAf POST<span class="token punctuation">:</span>OCMOCK_ANY parameters<span class="token punctuation">:</span>OCMOCK_ANY progress<span class="token punctuation">:</span>OCMOCK_ANY success<span class="token punctuation">:</span>OCMOCK_ANY failure<span class="token punctuation">:</span>OCMOCK_ANY<span class="token punctuation">]</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">andCall</span><span class="token punctuation">(</span>mockUtil<span class="token punctuation">,</span> <span class="token keyword">@selector</span><span class="token punctuation">(</span>requestFinished<span class="token punctuation">:</span>task<span class="token punctuation">:</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+ <span class="token punctuation">[</span>mockUtil 请求接口方法<span class="token punctuation">]</span><span class="token punctuation">;</span>
+ <span class="token comment">// 验证mock的方法是否真的调用成功</span>
+ <span class="token punctuation">[</span>mockDelegate verify<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+ <span class="token comment">// 验证调用了这个方法</span>
+ <span class="token function">OCMVerify</span><span class="token punctuation">(</span><span class="token punctuation">[</span>mockDelegate tableView<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="Notification通知模拟">Notification通知模拟</h3>
+<p>新的 ocmock 已经完全用 XCTNSNotificationExpectation 来代替就方法了。</p>
+<pre class="language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">// 1.能验证收到通知，但是会真的继续执行 post notification 后面的方法</span>
+NSNotificationCenter <span class="token operator">*</span>ntfCenter <span class="token operator">=</span> <span class="token punctuation">[</span>NSNotificationCenter defaultCenter<span class="token punctuation">]</span><span class="token punctuation">;</span>
+XCTNSNotificationExpectation <span class="token operator">*</span>ntfExcept <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>XCTNSNotificationExpectation alloc<span class="token punctuation">]</span> initWithName<span class="token punctuation">:</span>notificationName object<span class="token punctuation">:</span>nil notificationCenter<span class="token punctuation">:</span>ntfCenter<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span>
+<span class="token punctuation">.</span>
+<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token keyword">self</span> waitForExpectations<span class="token punctuation">:</span><span class="token operator">@</span><span class="token punctuation">[</span>ntfExcept<span class="token punctuation">]</span> timeout<span class="token punctuation">:</span><span class="token number">0.1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 2.能收到通知，并能捕获post方法直接返回，而不继续执行。</span>
+XCTNSNotificationExpectation <span class="token operator">*</span>ntfExcept <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>XCTNSNotificationExpectation alloc<span class="token punctuation">]</span> initWithName<span class="token punctuation">:</span>kNotificationAddPickUpSuc<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token keyword">self</span> expectationForNotification<span class="token punctuation">:</span>kNotificationAddPickUpSuc object<span class="token punctuation">:</span>nil handler<span class="token punctuation">:</span><span class="token operator">^</span><span class="token function">BOOL</span><span class="token punctuation">(</span>NSNotification <span class="token operator">*</span> _Nonnull notification<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token punctuation">[</span>ntfExcept fulfill<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> true<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span>
+<span class="token punctuation">.</span>
+<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token keyword">self</span> waitForExpectationsWithTimeout<span class="token punctuation">:</span><span class="token number">0.1</span> handler<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">(</span>NSError <span class="token operator">*</span> _Nullable error<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 3.就是因为1的原因，发现就算用了2的方法，不知道为什么有时候不能捕获post，所以直接忽略掉方法不执行任何内容</span>
+NSNotificationCenter <span class="token operator">*</span>center <span class="token operator">=</span> <span class="token punctuation">[</span>NSNotificationCenter defaultCenter<span class="token punctuation">]</span><span class="token punctuation">;</span>
+id mocknf <span class="token operator">=</span> <span class="token function">OCMPartialMock</span><span class="token punctuation">(</span>center<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 忽视掉这个方法，免的crash</span>
+<span class="token function">OCMStub</span><span class="token punctuation">(</span><span class="token punctuation">[</span>mocknf postNotificationName<span class="token punctuation">:</span>OCMOCK_ANY object<span class="token punctuation">:</span>OCMOCK_ANY<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">andDo</span><span class="token punctuation">(</span>nil<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="问题">问题</h2>
+<p>开始卡住的地方有两个；然后陆续发现一些别的。</p>
+<h3 id="stub-expect-区别">stub expect 区别</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.robustastudio.com/mobile-development/using-ocmock-create-ios-unit-tests/">Using OCMock to create iOS Unit Tests</a><br>
+Both –stub and –expect allow you to force a method to return a certain value whenever called during your test so you don’t have to worry about its result. In the example above, I am forcing the getPlaceName to return @”JFK International Airport”.</p>
+<p>So, what is the difference between –stub and –expect?</p>
+<p>The main difference is: you –expect methods that must happen, and –stub methods that might happen.</p>
+<p>There are 2 ways mock objects fail: either an unexpected/unstubbed method is called, or an expected method is not called:</p>
+<ol>
+<li>Unexpected invocations. When a mock object receives a message that hasn’t been either stubbed or expected, it throws an exception immediately and your test fails.</li>
+<li>Expected invocations. When you call verify on your mock (generally at the end of your test), it checks to make sure all of the methods you expected were actually called. If any were not, your test will fail.</li>
+</ol>
+<h3 id="verify-private-method">verify private method</h3>
+<p>虽然还在找 verify 私有（没有声明在h文件里的）方法，但是这句话值得记下来。<br>
+找到了<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/18354788/unit-testing-private-method-objective-c">Unit testing private method - objective C</a></p>
+<blockquote>
+<p>If a method is private, you never should test it.<br>
+Think about this. You should test behaviour and contract of your methods instead internal implementation</p>
+</blockquote>
+<h3 id="模拟的data在哪里替换">模拟的data在哪里替换</h3>
+<p>尤其是看了很多例子都是 block 方式来替换的，但是 delegate 的方法到底如何才能调用/替换？尤其是data要在哪个步骤模拟？</p>
+<ul>
+<li>可以在 delegate 的 onfinished 替换，我选择了这里。</li>
+<li>可以在 requester 的 onfinished 替换？</li>
+</ul>
+<pre class="language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">//**********************************************************</span>
+<span class="token comment">//1.set up the mock players</span>
+<span class="token comment">//**********************************************************</span>
+__block ApiUtility <span class="token operator">*</span>util <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>ApiUtility alloc<span class="token punctuation">]</span> init<span class="token punctuation">]</span><span class="token punctuation">;</span> 
+ViewController <span class="token operator">*</span>vc <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>ViewController alloc <span class="token punctuation">]</span> init<span class="token punctuation">]</span><span class="token punctuation">;</span>    
+<span class="token comment">//set the delegate and do the action</span>
+<span class="token punctuation">[</span>util setDelegate<span class="token punctuation">:</span>vc<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">//**********************************************************</span>
+<span class="token comment">//2.mock a sceneraio and stub some fake data</span>
+<span class="token comment">//**********************************************************   </span>
+id mockDelegate <span class="token operator">=</span> <span class="token punctuation">[</span>OCMockObject partialMockForObject<span class="token punctuation">:</span>vc<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span>mockDelegate expect<span class="token punctuation">]</span> andDo<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">(</span>NSInvocation <span class="token operator">*</span>invocation<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">//3.</span>
+    <span class="token comment">//mocks we will pass back</span>
+    id mockImage <span class="token operator">=</span> <span class="token punctuation">[</span>OCMockObject mockForClass<span class="token punctuation">:</span><span class="token punctuation">[</span>UIImage class<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    id mockPhoto <span class="token operator">=</span> <span class="token punctuation">[</span>OCMockObject mockForClass<span class="token punctuation">:</span><span class="token punctuation">[</span>Photo class<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">// we need to set these properties (to anything),</span>
+    <span class="token comment">// because ViewController will try to use them on success of image download</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span>mockPhoto stub<span class="token punctuation">]</span>andReturn<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span><span class="token punctuation">]</span> photoId<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span>mockPhoto stub<span class="token punctuation">]</span>andReturn<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span><span class="token punctuation">]</span> photoTitle<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span>mockPhoto stub<span class="token punctuation">]</span>andReturn<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span><span class="token punctuation">]</span> ownerName<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">[</span>invocation setTarget<span class="token punctuation">:</span>vc<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">[</span>invocation setSelector<span class="token punctuation">:</span><span class="token keyword">@selector</span><span class="token punctuation">(</span>apiUtility<span class="token punctuation">:</span>didCompleteDownloadingImage<span class="token punctuation">:</span>forPhoto<span class="token punctuation">:</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//again 0 and 1 are reserved for the invocation object , so...</span>
+    <span class="token punctuation">[</span>invocation setArgument<span class="token punctuation">:</span><span class="token operator">&amp;</span>util atIndex<span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//apitutil</span>
+    <span class="token punctuation">[</span>invocation setArgument<span class="token punctuation">:</span><span class="token operator">&amp;</span>mockImage atIndex<span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//fake returned image</span>
+    <span class="token punctuation">[</span>invocation setArgument<span class="token punctuation">:</span><span class="token operator">&amp;</span>mockPhoto atIndex<span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//the mock photo</span>
+    <span class="token punctuation">[</span>invocation invoke<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//actually involke apiUtility:didCompleteDownloadingImage:forPhoto:</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+apiUtility<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span> didCompleteDownloadingImage<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span> forPhoto<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+<h3 id="如何立刻让网络请求返回到第一步模拟的-onfinished">如何立刻让网络请求返回到第一步模拟的 onfinished</h3>
+<p>写完一个满足条件后，直接就发现，如果不让网络请求发生而直接返回结果？<br>
+其实想想肯定有个地方需要指定这个关系，一请求就立马执行返回函数，也就是这里</p>
+<pre class="language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">//4. the mock object that will mock a download/ApiUtility</span>
+id mockUtil <span class="token operator">=</span> <span class="token punctuation">[</span>OCMockObject partialMockForObject<span class="token punctuation">:</span>util<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span>mockUtil stub<span class="token punctuation">]</span>
+  andCall<span class="token punctuation">:</span><span class="token keyword">@selector</span><span class="token punctuation">(</span>apiUtility<span class="token punctuation">:</span>didCompleteDownloadingImage<span class="token punctuation">:</span>forPhoto<span class="token punctuation">:</span><span class="token punctuation">)</span> onObject<span class="token punctuation">:</span>mockDelegate<span class="token punctuation">]</span> <span class="token comment">//we must call the protocol, as the real method would fail without network </span>
+ downloadLargeImage<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">//5. do the download</span>
+<span class="token punctuation">[</span>mockUtil downloadLargeImage<span class="token punctuation">:</span><span class="token punctuation">[</span>OCMArg any<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">//6. make sure the delegate got the call</span>
+<span class="token punctuation">[</span>mockDelegate verify<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//make sure out delegate method is actually called</span></code></pre>
+<h3 id="怎么跳过或者处理每次都执行的-didFinishLaunchingWithOptions">怎么跳过或者处理每次都执行的 didFinishLaunchingWithOptions</h3>
+<p>测试其他方法的时候，每次都要执行 launch 流程，导致 launch 相关的接口都会执行一遍，而这些接口要怎么模拟？</p>
+<h2 id="参考">参考</h2>
+<h3 id="ocmock-方面">ocmock 方面</h3>
+<p><a target="_blank" rel="noopener" href="https://phamchicong.blogspot.com/2015/12/improve-unit-test-with-ocmock.html#protocol">Improve Unit Test with OCMock</a><br>
+<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/18354788/unit-testing-private-method-objective-c">Unit testing private method - objective C</a><br>
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fb73f1eae4da">OCMock使用实例</a><br>
+<a target="_blank" rel="noopener" href="https://onevcat.com/2014/05/kiwi-mock-stub-test/">Kiwi 使用进阶 Mock, Stub, 参数捕获和异步测试</a><br>
+<a target="_blank" rel="noopener" href="http://blog.oneinbest.com/2017/07/27/iOS%E6%B5%8B%E8%AF%95%E7%B3%BB%E5%88%97-%E5%9B%9B-Specta,Expecta%E5%92%8CKiwi%E7%9A%84%E4%BD%BF%E7%94%A8/">iOS测试系列（四）：Specta,Expecta和Kiwi的使用</a><br>
+<a target="_blank" rel="noopener" href="https://gist.github.com/kharmabum/51b52c37b6166d897826">ocmock-cheatsheet.m</a><br>
+<a target="_blank" rel="noopener" href="https://blog.robustastudio.com/mobile-development/using-ocmock-create-ios-unit-tests/">Using OCMock to create iOS Unit Tests</a><br>
+<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/31843720/how-to-mock-response-from-afnetworking-with-ocmock-in-swift">How to mock response from AFNetworking with OCMock in Swift?</a><br>
+<a target="_blank" rel="noopener" href="https://blog.grio.com/2013/04/faking-network-calls-for-ios-unit-tests.html">Faking network calls for iOS unit tests</a><br>
+<a target="_blank" rel="noopener" href="https://jayeshkawli.ghost.io/ios-unit-testing-switching-method-implementation-with-ocmock-part-3/">iOS Unit Testing - Switching method implementations with OCMock (Part 3)</a><br>
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/36c5682da0f7">iOS开发 | 如何为网络接口编写单元测试</a><br>
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5358f9c93b71">为网络接口编写单元测试(OCMock注入)</a><br>
+<a target="_blank" rel="noopener" href="https://ocmock.org/reference/#stubing-methods">Reference</a></p>
+<h3 id="ocmock-之外-uitest">ocmock 之外 uitest</h3>
+<p><a target="_blank" rel="noopener" href="https://masilotti.com/ui-testing-tdd/#3-native-asyncronous-assertions">Three ways UI Testing just made test-driven development even better</a><br>
+<a target="_blank" rel="noopener" href="https://medium.com/connected2me-techblog/recording-your-xctests-on-circleci-4a490b68c640">Recording Your XCTests on CircleCI</a><br>
+<a target="_blank" rel="noopener" href="https://super-tester.medium.com/ios-separation-of-unit-ui-test-jobs-in-circleci-for-single-multi-app-variants-18edc7ae552b">iOS — Separation of XCUnit &amp; XCUITest jobs in CircleCI for single &amp; multi app regions/variants</a><br>
+如果几十万的评论模拟，mock json 也太难搞了看下这个<br>
+<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1442906">PICK一下，iOS自动化测试新方案出道</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OCMock/" rel="tag"># OCMock</a>
+              <a href="/tags/Test/" rel="tag"># Test</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/iOS%20%E5%8A%A8%E6%80%81%E6%B3%A8%E5%85%A5/" rel="prev" title="iOS 动态注入">
+                  <i class="fa fa-angle-left"></i> iOS 动态注入
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/OC%20Enum%20rawvalue%20like%20Swift/" rel="next" title="OC Enum rawvalue like Swift">
+                  OC Enum rawvalue like Swift <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

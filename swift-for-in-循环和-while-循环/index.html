@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="开始  系列  cgfloat rounded  (.towardZero) (.down) (.up) (.toNearestOrAwayFromZero) (.toNearestOrEven) (.awayFromZero)   这是什么形式 for in with index optional string to int map、flatmap、compactmap enum 自定义prin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift for in 循环和 while 循环">
+<meta property="og:url" content="https://sseen.github.io/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="开始  系列  cgfloat rounded  (.towardZero) (.down) (.up) (.toNearestOrAwayFromZero) (.toNearestOrEven) (.awayFromZero)   这是什么形式 for in with index optional string to int map、flatmap、compactmap enum 自定义prin">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-06-14T17:55:15.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.817Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/","path":"swift-for-in-循环和-while-循环/","title":"swift for in 循环和 while 循环"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>swift for in 循环和 while 循环 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">系列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cgfloat-rounded"><span class="nav-number">1.1.</span> <span class="nav-text">cgfloat rounded</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#towardZero"><span class="nav-number">1.1.1.</span> <span class="nav-text">(.towardZero)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#down"><span class="nav-number">1.1.2.</span> <span class="nav-text">(.down)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#up"><span class="nav-number">1.1.3.</span> <span class="nav-text">(.up)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toNearestOrAwayFromZero"><span class="nav-number">1.1.4.</span> <span class="nav-text">(.toNearestOrAwayFromZero)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toNearestOrEven"><span class="nav-number">1.1.5.</span> <span class="nav-text">(.toNearestOrEven)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awayFromZero"><span class="nav-number">1.1.6.</span> <span class="nav-text">(.awayFromZero)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">这是什么形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in-with-index"><span class="nav-number">1.3.</span> <span class="nav-text">for in with index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optional-string-to-int"><span class="nav-number">1.4.</span> <span class="nav-text">optional string to int</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map%E3%80%81flatmap%E3%80%81compactmap"><span class="nav-number">1.5.</span> <span class="nav-text">map、flatmap、compactmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enum"><span class="nav-number">1.6.</span> <span class="nav-text">enum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89print"><span class="nav-number">1.7.</span> <span class="nav-text">自定义print</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/swift-for-in-%E5%BE%AA%E7%8E%AF%E5%92%8C-while-%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="swift for in 循环和 while 循环 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          swift for in 循环和 while 循环
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-14 17:55:15" itemprop="dateCreated datePublished" datetime="2016-06-14T17:55:15+00:00">2016-06-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>开始</p>
+<ol>
+<li><a href="#%E7%B3%BB%E5%88%97">系列</a>
+<ol>
+<li><a href="#cgfloat-rounded">cgfloat rounded</a>
+<ol>
+<li><a href="#towardzero">(.towardZero)</a></li>
+<li><a href="#down">(.down)</a></li>
+<li><a href="#up">(.up)</a></li>
+<li><a href="#tonearestorawayfromzero">(.toNearestOrAwayFromZero)</a></li>
+<li><a href="#tonearestoreven">(.toNearestOrEven)</a></li>
+<li><a href="#awayfromzero">(.awayFromZero)</a></li>
+</ol>
+</li>
+<li><a href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%E5%BD%A2%E5%BC%8F">这是什么形式</a></li>
+<li><a href="#for-in-with-index">for in with index</a></li>
+<li><a href="#optional-string-to-int">optional string to int</a></li>
+<li><a href="#mapflatmapcompactmap">map、flatmap、compactmap</a></li>
+<li><a href="#enum">enum</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89print">自定义print</a></li>
+</ol>
+</li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ol>
+<h2 id="系列">系列</h2>
+<h3 id="cgfloat-rounded">cgfloat rounded</h3>
+<h4 id="towardZero">(.towardZero)</h4>
+<p>x.rounded(.towardZero)，直接去掉小数部分，保留整数部分。类似same thing with Int(x).</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+
+<span class="token operator">-</span><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+</code></pre>
+<h4 id="down">(.down)</h4>
+<p>x.rounded(.down)，变小。类似 floor(x)</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+
+<span class="token operator">-</span><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+</code></pre>
+<h4 id="up">(.up)</h4>
+<p>x.rounded(.up)，变大。类似 ceil(x)</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+
+<span class="token operator">-</span><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+</code></pre>
+<h4 id="toNearestOrAwayFromZero">(.toNearestOrAwayFromZero)</h4>
+<p>x.rounded(.toNearestOrAwayFromZero)，四舍五入。也就是默认 x.rounded()</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>  <span class="token operator">***</span>
+<span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+
+<span class="token operator">-</span><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>  <span class="token operator">***</span>
+<span class="token operator">-</span><span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+</code></pre>
+<h4 id="toNearestOrEven">(.toNearestOrEven)</h4>
+<p>x.rounded(.toNearestOrEven)<br>
+This is similar to toNearestOrAwayFromZero, except now the .5 values get rounded to the even whole number.</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>   <span class="token operator">***</span>
+<span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">4.500</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>   <span class="token operator">***</span>
+
+<span class="token operator">-</span><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>   <span class="token operator">***</span>
+<span class="token operator">-</span><span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">4.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>   <span class="token operator">***</span></code></pre>
+<h4 id="awayFromZero">(.awayFromZero)</h4>
+<p>x.rounded(.awayFromZero)，远离0</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token number">3.0</span>
+<span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+<span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token number">4.0</span>
+
+<span class="token operator">-</span><span class="token number">3.000</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">3.0</span>
+<span class="token operator">-</span><span class="token number">3.001</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">3.499</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">3.500</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+<span class="token operator">-</span><span class="token number">3.999</span>  <span class="token operator">-></span>  <span class="token operator">-</span><span class="token number">4.0</span>
+</code></pre>
+<h3 id="这是什么形式">这是什么形式</h3>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// 错误</span>
+<span class="token keyword">static</span> <span class="token keyword">var</span> oneBookEntity<span class="token punctuation">:</span> <span class="token class-name">Book</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Book</span> <span class="token keyword">in</span>
+    <span class="token keyword">let</span> one <span class="token operator">=</span> <span class="token class-name">Book</span><span class="token punctuation">(</span>context<span class="token punctuation">:</span> <span class="token class-name">PersistenceController</span><span class="token punctuation">.</span>previewBook<span class="token punctuation">.</span>container<span class="token punctuation">.</span>viewContext<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> one
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 可以</span>
+<span class="token keyword">static</span> <span class="token keyword">var</span> oneBookEntity<span class="token punctuation">:</span> <span class="token class-name">Book</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> one <span class="token operator">=</span> <span class="token class-name">Book</span><span class="token punctuation">(</span>context<span class="token punctuation">:</span> <span class="token class-name">PersistenceController</span><span class="token punctuation">.</span>previewBook<span class="token punctuation">.</span>container<span class="token punctuation">.</span>viewContext<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> one
+<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="for-in-with-index">for in with index</h3>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">for</span> index <span class="token keyword">in</span> <span class="token number">1</span><span class="token operator">...</span><span class="token number">5</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">index</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string"> times 5 is </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">index <span class="token operator">*</span> <span class="token number">5</span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span>index<span class="token punctuation">,</span> element<span class="token punctuation">)</span> <span class="token keyword">in</span> list<span class="token punctuation">.</span><span class="token function">enumerated</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Item </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">index</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">: </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">element</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+</code></pre>
+<h3 id="optional-string-to-int">optional string to int</h3>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token punctuation">(</span>optionalString <span class="token operator">==</span> <span class="token nil constant">nil</span> <span class="token operator">||</span> <span class="token class-name">Int</span><span class="token punctuation">(</span>optionalString<span class="token operator">!</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token nil constant">nil</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token punctuation">:</span> <span class="token class-name">Int</span><span class="token punctuation">(</span>optionalString<span class="token operator">!</span><span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token keyword">func</span> <span class="token function-definition function">toInt</span><span class="token punctuation">(</span>s<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Int</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">var</span> result <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token keyword">if</span> <span class="token keyword">let</span> str<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> s<span class="token punctuation">,</span>
+  i <span class="token operator">=</span> <span class="token class-name">Int</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      result <span class="token operator">=</span> i
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="map、flatmap、compactmap">map、flatmap、compactmap</h3>
+<p>map 生成新的 array<br>
+flatmap 嵌套的 array 展开</p>
+<h3 id="enum">enum</h3>
+<p>In Swift 4.2, the CaseIterable protocol can be used for an enum with rawValues, but the string should match against the enum case labels:</p>
+<p>enum MyCode : String, CaseIterable {<br>
+case one   = “uno”<br>
+case two   = “dos”<br>
+case three = “tres”<br>
+static func withLabel(_ label: String) -&gt; MyCode? {<br>
+return self.allCases.first{ “($0)” == label }<br>
+}<br>
+}</p>
+<p>usage:</p>
+<p>print(MyCode.withLabel(“one”)) // Optional(MyCode.one)<br>
+print(MyCode(rawValue: “uno”))  // Optional(MyCode.one)</p>
+<h3 id="自定义print">自定义print</h3>
+<p>目前 swift 里已经没有宏定义了，可以在项目设置里添加下<br>
+Target→Build Settings→Other swift Flags 下面的 Debug 添加 <code>-D DEBUGLOG</code></p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">printX</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> message<span class="token punctuation">:</span> <span class="token keyword">Any</span><span class="token operator">...</span><span class="token punctuation">,</span>
+              file<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> <span class="token literal constant">#file</span><span class="token punctuation">,</span>
+              method<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> <span class="token literal constant">#function</span><span class="token punctuation">,</span>
+              line<span class="token punctuation">:</span> <span class="token class-name">Int</span> <span class="token operator">=</span> <span class="token literal constant">#line</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token directive property"><span class="token directive-name">#if</span> DEBUGLOG</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation"><span class="token punctuation">(</span>file <span class="token keyword">as</span> <span class="token class-name">NSString</span><span class="token punctuation">)</span><span class="token punctuation">.</span>lastPathComponent</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">[</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">line</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">], </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">method</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">: </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">message</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token directive property"><span class="token directive-name">#endif</span></span>
+<span class="token punctuation">&#125;</span>
+</code></pre>
+<h2 id="问题">问题</h2>
+<p>import Foundation 是否必要</p>
+<blockquote>
+<p>If you want to work with Strings, Dates, etc you need to import Foundation.</p>
+<p>The Foundation framework provides a base layer of functionality for apps and frameworks, including data storage and persistence, text processing, date and time calculations, sorting and filtering, and networking.</p>
+</blockquote>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://www.hangge.com/blog/cache/detail_1869.html">Swift - 第三方加密库CryptoSwift使用详解3（AES加密与解密）</a><br>
+<a target="_blank" rel="noopener" href="https://medium.com/@PhiJay/why-swift-enums-with-associated-values-cannot-have-a-raw-value-21e41d5ec11">Why Swift Enums with Associated Values Cannot Have a Raw Value</a><br>
+<a target="_blank" rel="noopener" href="https://appventure.me/guides/advanced_practical_enum_examples/diving_in/methods_and_properties.html">Advanced and Practical Enum usage in Swift超详细教程</a><br>
+<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2667130/how-to-round-cgfloat">How to round CGFloat</a><br>
+<a target="_blank" rel="noopener" href="https://gist.github.com/artemkrachulov/233d447594f7dc5ec0291a7124fc17e6">Double-Float+Rounding.swift</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E8%BF%99%E9%87%8C%E8%BF%8EWWDC-16/" rel="prev" title="这里迎WWDC 16">
+                  <i class="fa fa-angle-left"></i> 这里迎WWDC 16
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/WebKit-Safari-and-SafariViewController/" rel="next" title="WebKit, Safari and SafariViewController">
+                  WebKit, Safari and SafariViewController <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

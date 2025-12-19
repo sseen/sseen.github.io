@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="自己15 iMac 5k突然有一天发现，重启以后系统回到了前两天的状态，这两天的内容全部丢失的情况。当时装了big sur beta6，然后想着抹掉重装catalina(10.15.6)，然后就出现开机启动出现闪烁的问号文件夹。 🌤第1次尝试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iMac 5k 15 系统重装出现问号文件夹问题">
+<meta property="og:url" content="https://sseen.github.io/iMac_5k_15%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%87%BA%E7%8E%B0%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="自己15 iMac 5k突然有一天发现，重启以后系统回到了前两天的状态，这两天的内容全部丢失的情况。当时装了big sur beta6，然后想着抹掉重装catalina(10.15.6)，然后就出现开机启动出现闪烁的问号文件夹。 🌤第1次尝试">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-30T12:00:26.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.818Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="MacOS">
+<meta property="article:tag" content="iMac">
+<meta property="article:tag" content="问号文件夹">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/iMac_5k_15%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%87%BA%E7%8E%B0%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E9%97%AE%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/iMac_5k_15%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%87%BA%E7%8E%B0%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E9%97%AE%E9%A2%98/","path":"iMac_5k_15系统重装出现问号文件夹问题/","title":"iMac 5k 15 系统重装出现问号文件夹问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iMac 5k 15 系统重装出现问号文件夹问题 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%A4%E7%AC%AC1%E6%AC%A1%E5%B0%9D%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">🌤第1次尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%A7%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%B0%9D%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">🌧第二次尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%88%E6%9C%80%E7%BB%88"><span class="nav-number">3.</span> <span class="nav-text">🌈最终</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/iMac_5k_15%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%87%BA%E7%8E%B0%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iMac 5k 15 系统重装出现问号文件夹问题 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iMac 5k 15 系统重装出现问号文件夹问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-09-30 12:00:26" itemprop="dateCreated datePublished" datetime="2020-09-30T12:00:26+00:00">2020-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><code>自己15 iMac 5k</code>突然有一天发现，重启以后系统回到了前两天的状态，这两天的内容全部丢失的情况。当时装了<code>big sur beta6</code>，然后想着抹掉重装<code>catalina(10.15.6)</code>，然后就出现开机启动出现闪烁的问号文件夹。</p>
+<h2 id="🌤第1次尝试">🌤第1次尝试</h2>
+<p><code>command + option + R</code> 抹盘重装安装<code>catalina(10.15.6)</code>就不行了。<br>
+command + R 还能装15年的 <code>el capitan(10.11.6)</code>。</p>
+<p>那既然能装 <code>el capitan(10.11.6)</code>，装上后直接升级总可以的吧，然后安装更新 <code>capitan(10.11.6)</code>，启动一样的闪烁 “folder?”，wtf?</p>
+<p>那好，一级级的升级总不会有问题了吧，<code>sierra(10.12)</code> 先来？一片曙光啊，竟然可以，心里稳了。继续 <code>high sierra(10.13)</code> 吧？咦，熟悉的启动闪烁又出现了，崩了。</p>
+<p>然后试了更种组合的更新方法，都宣告失败。无奈之下，只能网上预约苹果官方店查查看，当然是先给客服聊了半天，也远程支持了，包括检测硬件命令都试过了，一切正常，还是不知道原因。</p>
+<p>11号送修了，过了三四天，守着电话终于响了，说试了各种方法，包括不限于互换正常硬盘安装，硬盘没问题，排除硬盘问题，那就是硬件主板可能坏了，修一下4000，直接换新的，我一想太贵了吧。那说帮我在别的机器上装个新的系统，然后放回，就先用着，也还能用几年，我一想也只能这样了。</p>
+<p>兴奋的开车取回家，赶紧试试新系统吧，谁知道一开机帮我装的 <code>mojave(10.14)</code> 我的 <code>catalina(10.15.6)</code> 呢，算了，免费帮我折腾了几天就算了。然后新建个文件，一顿日常操作，重启看看吧。一启动傻眼了，回到了最开始的状态，所有的资料都不见了，又到了 <code>mojave(10.14)</code> 开机页面。虽然自己还能一直用 <code>sierra(10.12)</code>，但是太老了，很多软件可能都不支持了，包括自己写的软件哈哈，太讽刺了。但是实在没办法，网上搜了一通，也说<code>iMac 5k 15</code>有问题，什么boot rom还是smc版本不能升级了之类的，我宣告放弃了。</p>
+<h2 id="🌧第二次尝试">🌧第二次尝试</h2>
+<p>持续用了半个多月的 <code>sierra(10.12)</code>，没有兴奋的感觉，都是能用就好的将就。终于在前天也就是28号，又想起来搜下看到底是什么问题。找到了这篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/sanji2020/article/details/103747575">【疑难杂症】解决苹果MacOS升级提示“验证固件时发生错误”，无论如何都无法升级更新，主板Boot Rom、SMC版本号更新！</a>，好像发现了新大陆一样，跟我的情况简直如出一辙，激动之余赶紧动手拿出媳妇的移动硬盘，想在外接的硬盘上安装升级 <code>high sierra(10.13)</code>，这样机器上的boot rom就可以升级了，然后就可以用原硬盘正常升级了。</p>
+<p>第二次开始行动。惊喜发现真的可以升级到 <code>high sierra(10.13)</code>，这是之前原装硬盘办不到的事情，又燃起了极大的信心。然后到了凌晨1点多，看着半泽2最终章，发现外接硬盘升级了 <code>high sierra(10.13)</code> 后 boot rom版本号并没有变化，回到原装系统 <code>sierra(10.12)</code> 依然无法正常升级，残念です。</p>
+<p>然后第二天6点多就起来了，继续搞机器。漫天的找 “High Sierra Update <code>Firmware</code> Error - FIX”, “MacOS High Sierra: An error occurred while verifying firmware”, “Catalina bricked my 2015 MacBook Pro. What to do now?”, “<code>Boot ROM</code> Version eines iMac 17,1 von Version 170.0.0.0.0 auf 176.0.0.0.0 aktualisieren?”, <a target="_blank" rel="noopener" href="https://eclecticlight.co/2020/03/30/some-macs-dont-update-their-firmware-when-they-should/">Some Macs don’t update their firmware when they should</a> 等等，想要寻找答案…</p>
+<h2 id="🌈最终">🌈最终</h2>
+<p>功夫不负有心人。看到这个文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55708777">送修Mac前 万能的两个自救方法：重置 NVRAM（PRAM）与 重置 SMC</a>，其实也内心先否定了一下，因为iMac重置SMC我第一天就操作了，没有用。但是精疲力尽之余，死马当活马医，最后再试一次鬼使神差的重置了 NVRAM（PRAM），然后直接原装机器升级 <code>high sierra(10.13)</code> 竟然成功了。我一鼓作气 <code>mojave(10.14)</code>, <code>catalina(10.15.6)</code>, <code>big sur beta8</code>, 都顺利的装好了。苍天啊，这么简单的一个操作，经历了快一个月…</p>
+<p>感恩，感谢，互联网…</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MacOS/" rel="tag"># MacOS</a>
+              <a href="/tags/iMac/" rel="tag"># iMac</a>
+              <a href="/tags/%E9%97%AE%E5%8F%B7%E6%96%87%E4%BB%B6%E5%A4%B9/" rel="tag"># 问号文件夹</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/MacOS%E8%87%AA%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" rel="prev" title="MacOS自用命令及操作总结">
+                  <i class="fa fa-angle-left"></i> MacOS自用命令及操作总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/vscode_%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" rel="next" title="vscode 使用总结">
+                  vscode 使用总结 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

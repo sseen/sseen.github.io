@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="很久不写 Flutter 了，最近在写一个项目，用到了 Repository Pattern，然后也用到了 riverpod，还记得当时学 flutter 时候用的 provider，然后其他项目又用到了 bloc，现在又用到了 riverpod，感觉 flutter 的生态真的是太丰富了。 全局使用 riverpod，太方便了，想到就用，直接 ref 一把嗦，爽歪歪。然后本地状态用 flutte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter Repository Pattern">
+<meta property="og:url" content="https://sseen.github.io/Flutter%20Repository%20Pattern/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="很久不写 Flutter 了，最近在写一个项目，用到了 Repository Pattern，然后也用到了 riverpod，还记得当时学 flutter 时候用的 provider，然后其他项目又用到了 bloc，现在又用到了 riverpod，感觉 flutter 的生态真的是太丰富了。 全局使用 riverpod，太方便了，想到就用，直接 ref 一把嗦，爽歪歪。然后本地状态用 flutte">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-11T11:38:20.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.827Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="Repository Pattern">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Flutter%20Repository%20Pattern/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Flutter%20Repository%20Pattern/","path":"Flutter Repository Pattern/","title":"Flutter Repository Pattern"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter Repository Pattern | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">3.7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">o1 基础介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.</span> <span class="nav-text">1. 添加依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%EF%BC%88freezed%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">2. 定义数据模型（freezed）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9A%E4%B9%89-Retrofit-%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.3.</span> <span class="nav-text">3. 定义 Retrofit 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AE%9A%E4%B9%89-Repository-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.4.</span> <span class="nav-text">4. 定义 Repository 接口和实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Repository-%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.4.1.</span> <span class="nav-text">4.1. Repository 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.4.2.</span> <span class="nav-text">4.2. 具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%9C%A8-Riverpod-%E4%B8%AD%E5%A3%B0%E6%98%8E-Provider"><span class="nav-number">2.5.</span> <span class="nav-text">5. 在 Riverpod 中声明 Provider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%9C%A8%E7%95%8C%E9%9D%A2%E5%B1%82%EF%BC%88Widget%EF%BC%89%E4%B8%AD%E4%BD%BF%E7%94%A8-Hooks-Riverpod"><span class="nav-number">2.6.</span> <span class="nav-text">6. 在界面层（Widget）中使用 Hooks + Riverpod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%80%BB%E7%BB%93"><span class="nav-number">2.7.</span> <span class="nav-text">7. 总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Flutter%20Repository%20Pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter Repository Pattern | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter Repository Pattern
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-11 11:38:20" itemprop="dateCreated datePublished" datetime="2025-03-11T11:38:20+00:00">2025-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>很久不写 Flutter 了，最近在写一个项目，用到了 Repository Pattern，然后也用到了 riverpod，还记得当时学 flutter 时候用的 provider，然后其他项目又用到了 bloc，现在又用到了 riverpod，感觉 flutter 的生态真的是太丰富了。</p>
+<p>全局使用 riverpod，太方便了，想到就用，直接 ref 一把嗦，爽歪歪。然后本地状态用 flutter_hooks，配合起来用效果更好。</p>
+<h1>3.7</h1>
+<p>用 claude 3.7 解析，然后生成流程图。<br>
+是的，你说得对！<code>WaterDio</code> 是实际处理 HTTP 请求的核心组件，让我更新完整的流程图：</p>
+<pre class="language-none"><code class="language-none">&#123;% mermaid %&#125;
+graph TD
+    subgraph UI Layer
+        A[login_user.dart&lt;br&gt;登录页面] --&gt;|1.ref.read| B[adminApiRepoProvider]
+    end
+
+    subgraph Repository Pattern
+        B[data_providers.dart&lt;br&gt;adminApiRepo] --&gt;|2.实例化| C
+        C[admin_api_implements.dart&lt;br&gt;AdminApiImplement] --&gt;|3._apiCall| D
+    end
+
+    subgraph API Layer
+        D[xxx_project_api_source.dart&lt;br&gt;xxxProjectApiSource] --&gt;|4.请求| E[UserDio]
+        E --&gt;|5.HTTP请求| F[Backend Server]
+    end
+
+    subgraph Dio Layer
+        E --&gt;|继承| G[_BaseDio]
+        G --&gt;|配置| H[Dio实例&lt;br&gt;拦截器&#x2F;超时&#x2F;headers等]
+    end
+
+    subgraph Response Flow
+        F --&gt;|6.HTTP响应| E
+        E --&gt;|7.响应处理| D
+        D --&gt;|8.数据转换| C
+        C --&gt;|9.返回数据| A
+    end
+&#123;% endmermaid %&#125;</code></pre>
+<p>完整的文件结构：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">lib/
+├── app/
+│   └── pages/
+│       └── auth/
+│           └── login_user.dart                <span class="token comment"># UI 层</span>
+├── data/
+│   ├── data_providers.dart                    <span class="token comment"># Provider 定义</span>
+│   ├── repositories/
+│   │   ├── admin_api_repository.dart         <span class="token comment"># 接口定义</span>
+│   │   └── implements/
+│   │       └── admin_api_implements.dart     <span class="token comment"># 接口实现</span>
+│   ├── sources/
+│   │   └── xxx_project_api_source.dart     <span class="token comment"># API 调用封装</span>
+│   ├── dio/
+│   │   ├── xxx_dio.dart                    <span class="token comment"># Dio 实现</span>
+│   │   └── base_dio.dart                     <span class="token comment"># 基础 Dio 配置</span>
+│   └── models/
+│       └── auth/
+│           ├── login_request.dart            <span class="token comment"># 请求模型</span>
+│           └── login_response.dart           <span class="token comment"># 响应模型</span></code></pre>
+<p><code>_BaseDio</code> 通常包含的功能：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">class</span> _BaseDio <span class="token punctuation">&#123;</span>
+  late <span class="token keyword">final</span> <span class="token class-name">Dio</span> _dio<span class="token punctuation">;</span>
+
+  <span class="token function">_BaseDio</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    _dio <span class="token operator">=</span> <span class="token class-name">Dio</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token punctuation">.</span>options <span class="token operator">=</span> <span class="token class-name">BaseOptions</span><span class="token punctuation">(</span>
+        baseUrl<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'API_BASE_URL'</span></span><span class="token punctuation">,</span>
+        connectTimeout<span class="token punctuation">:</span> <span class="token class-name">Duration</span><span class="token punctuation">(</span>seconds<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        receiveTimeout<span class="token punctuation">:</span> <span class="token class-name">Duration</span><span class="token punctuation">(</span>seconds<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        <span class="token comment">// 日志拦截器</span>
+        <span class="token class-name">LogInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token comment">// 错误处理拦截器</span>
+        <span class="token class-name">ErrorInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token comment">// Token 拦截器</span>
+        <span class="token class-name">TokenInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token comment">// 重试拦截器</span>
+        <span class="token class-name">RetryInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><code>UserDio</code> 的特定实现：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">class</span> <span class="token class-name">UserDio</span> <span class="token keyword">extends</span> _BaseDio <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 用户相关的特定配置</span>
+  <span class="token class-name">UserDio</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    _dio<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>
+      <span class="token class-name">InterceptorsWrapper</span><span class="token punctuation">(</span>
+        onRequest<span class="token punctuation">:</span> <span class="token punctuation">(</span>options<span class="token punctuation">,</span> handler<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          <span class="token comment">// 添加用户相关的 headers</span>
+          options<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">'Authorization'</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">'Bearer </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">userToken</span></span><span class="token string">'</span></span><span class="token punctuation">;</span>
+          <span class="token keyword">return</span> handler<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 封装具体的请求方法</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token keyword">get</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _dio<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span><span class="token punctuation">></span></span> post<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _dio<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>完整的调用链：</p>
+<ol>
+<li>UI 触发请求</li>
+<li>Repository 处理业务逻辑</li>
+<li>ApiSource 封装 API 调用</li>
+<li>UserDio 处理 HTTP 请求
+<ul>
+<li>请求拦截（headers、token 等）</li>
+<li>错误处理</li>
+<li>重试机制</li>
+<li>日志记录</li>
+</ul>
+</li>
+<li>服务器响应</li>
+<li>响应处理（数据转换、错误处理）</li>
+<li>返回业务数据</li>
+</ol>
+<p>这种架构的优势：</p>
+<ol>
+<li>统一的网络层配置</li>
+<li>灵活的拦截器机制</li>
+<li>统一的错误处理</li>
+<li>可配置的重试策略</li>
+<li>完整的日志系统</li>
+</ol>
+<h1>o1 基础介绍</h1>
+<blockquote>
+<p>简单扼要的介绍下 flutter 的 resposity pattern 网络请求模式，用 retrofit。业务层用 freezed，riverpod annotation，riverpod hooks，flutter hook</p>
+</blockquote>
+<p>下面给出一个简要示例，演示如何在 <strong>Flutter</strong> 中结合 <strong><code>retrofit</code></strong>（网络请求）、<strong><code>freezed</code></strong>（数据类）、<strong><code>riverpod_annotation</code></strong>（Riverpod 代码生成）、<strong><code>riverpod_hooks</code></strong> / <strong><code>flutter_hooks</code></strong>（Hooks）构建一套「Repository + Provider」的数据请求层级。代码示例仅作思路参考，实际业务可根据需要扩充。</p>
+<h2 id="1-添加依赖">1. 添加依赖</h2>
+<p>在 <code>pubspec.yaml</code> 中（示例）：</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dependencies</span><span class="token punctuation">:</span>
+  <span class="token key atrule">flutter</span><span class="token punctuation">:</span>
+    <span class="token key atrule">sdk</span><span class="token punctuation">:</span> flutter
+  <span class="token key atrule">dio</span><span class="token punctuation">:</span> ^5.1.0
+  <span class="token key atrule">retrofit</span><span class="token punctuation">:</span> ^4.0.1
+  <span class="token key atrule">json_annotation</span><span class="token punctuation">:</span> ^4.8.0
+  <span class="token key atrule">freezed_annotation</span><span class="token punctuation">:</span> ^2.2.0
+  <span class="token key atrule">hooks_riverpod</span><span class="token punctuation">:</span> ^2.3.6
+  <span class="token key atrule">flutter_hooks</span><span class="token punctuation">:</span> ^0.18.6
+
+<span class="token key atrule">dev_dependencies</span><span class="token punctuation">:</span>
+  <span class="token key atrule">build_runner</span><span class="token punctuation">:</span> ^2.3.3
+  <span class="token key atrule">retrofit_generator</span><span class="token punctuation">:</span> ^7.0.1
+  <span class="token key atrule">json_serializable</span><span class="token punctuation">:</span> ^6.6.0
+  <span class="token key atrule">freezed</span><span class="token punctuation">:</span> ^2.2.0
+  <span class="token key atrule">riverpod_annotation</span><span class="token punctuation">:</span> ^2.0.2</code></pre>
+<h2 id="2-定义数据模型（freezed）">2. 定义数据模型（<code>freezed</code>）</h2>
+<p>以「用户信息」为例，结合 <code>freezed</code> + <code>json_serializable</code> 来简化序列化。</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// user.dart</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:freezed_annotation/freezed_annotation.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">part</span> <span class="token string-literal"><span class="token string">'user.freezed.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">part</span> <span class="token string-literal"><span class="token string">'user.g.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token metadata function">@freezed</span>
+<span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">with</span> _$<span class="token class-name">User</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">factory</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    required <span class="token class-name">String</span> id<span class="token punctuation">,</span>
+    required <span class="token class-name">String</span> name<span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=</span> _User<span class="token punctuation">;</span>
+
+  <span class="token keyword">factory</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _$<span class="token class-name">UserFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>执行 <code>flutter pub run build_runner build</code> 后，会生成 <code>user.freezed.dart</code> 和 <code>user.g.dart</code>。</p>
+<h2 id="3-定义-Retrofit-接口">3. 定义 Retrofit 接口</h2>
+<p>使用 <code>retrofit</code> + <code>dio</code>：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// api_service.dart</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:dio/dio.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:retrofit/retrofit.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">part</span> <span class="token string-literal"><span class="token string">'api_service.g.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token metadata function">@RestApi</span><span class="token punctuation">(</span>baseUrl<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"https://example.com/api"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ApiService</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">factory</span> <span class="token class-name">ApiService</span><span class="token punctuation">(</span><span class="token class-name">Dio</span> dio<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token class-name">String</span> baseUrl<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=</span> _ApiService<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@GET</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"/users/&#123;id&#125;"</span></span><span class="token punctuation">)</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token metadata function">@Path</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"id"</span></span><span class="token punctuation">)</span> <span class="token class-name">String</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@GET</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"/users"</span></span><span class="token punctuation">)</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">getUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>同样执行 <code>flutter pub run build_runner build</code> 来生成 <code>api_service.g.dart</code>。</p>
+<h2 id="4-定义-Repository-接口和实现">4. 定义 Repository 接口和实现</h2>
+<h3 id="4-1-Repository-接口">4.1. Repository 接口</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// user_repository.dart</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">UserRepository</span> <span class="token punctuation">&#123;</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">fetchUserById</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">fetchAllUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="4-2-具体实现">4.2. 具体实现</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// user_repository_impl.dart</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:dio/dio.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'api_service.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user_repository.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">UserRepositoryImpl</span> <span class="token keyword">implements</span> <span class="token class-name">UserRepository</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">final</span> <span class="token class-name">ApiService</span> _apiService<span class="token punctuation">;</span>
+
+  <span class="token class-name">UserRepositoryImpl</span><span class="token punctuation">(</span><span class="token class-name">Dio</span> dio<span class="token punctuation">)</span> <span class="token punctuation">:</span> _apiService <span class="token operator">=</span> <span class="token class-name">ApiService</span><span class="token punctuation">(</span>dio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">fetchUserById</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _apiService<span class="token punctuation">.</span><span class="token function">getUser</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">fetchAllUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _apiService<span class="token punctuation">.</span><span class="token function">getUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="5-在-Riverpod-中声明-Provider">5. 在 Riverpod 中声明 Provider</h2>
+<p>利用 <code>riverpod_annotation</code>（自动生成 Provider），示例中声明了一个 <strong><code>UserRepository</code></strong> 的 Provider，以及一个获取用户列表的异步 Provider。</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// user_providers.dart</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:dio/dio.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:riverpod_annotation/riverpod_annotation.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user_repository.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user_repository_impl.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">part</span> <span class="token string-literal"><span class="token string">'user_providers.g.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token comment">// 1) 声明一个 Repository Provider</span>
+<span class="token metadata function">@riverpod</span>
+<span class="token class-name">UserRepository</span> <span class="token function">userRepository</span><span class="token punctuation">(</span><span class="token class-name">UserRepositoryRef</span> ref<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">final</span> dio <span class="token operator">=</span> <span class="token class-name">Dio</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 如果有全局 dio 也可从别的 provider 里获取</span>
+  <span class="token keyword">return</span> <span class="token class-name">UserRepositoryImpl</span><span class="token punctuation">(</span>dio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 2) 声明一个异步 Provider，用于获取用户列表</span>
+<span class="token metadata function">@riverpod</span>
+<span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">userList</span><span class="token punctuation">(</span><span class="token class-name">UserListRef</span> ref<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> ref<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span>userRepositoryProvider<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fetchAllUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 你也可以声明获取单个用户的 Provider，或更多业务逻辑</span></code></pre>
+<p>执行 <code>flutter pub run build_runner build</code> 后，会生成 <code>user_providers.g.dart</code>。</p>
+<p>这样就有了：</p>
+<ul>
+<li><code>userRepositoryProvider</code>：返回 <code>UserRepositoryImpl</code> 实例</li>
+<li><code>userListProvider</code>：返回一个异步 <code>Future&lt;List&lt;User&gt;&gt;</code>，依赖 <code>userRepositoryProvider</code></li>
+</ul>
+<h2 id="6-在界面层（Widget）中使用-Hooks-Riverpod">6. 在界面层（Widget）中使用 Hooks + Riverpod</h2>
+<p>在 Flutter 中，可以使用 <code>HookConsumerWidget</code> 来消费 Riverpod Provider，并结合 Hooks 管理状态、生命周期等。示例：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">// user_list_page.dart</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:hooks_riverpod/hooks_riverpod.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'user_providers.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">UserListPage</span> <span class="token keyword">extends</span> <span class="token class-name">HookConsumerWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token class-name">UserListPage</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token class-name">Key</span><span class="token operator">?</span> key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">,</span> <span class="token class-name">WidgetRef</span> ref<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">final</span> asyncUserList <span class="token operator">=</span> ref<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span>userListProvider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token keyword">const</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"User List"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> asyncUserList<span class="token punctuation">.</span><span class="token function">when</span><span class="token punctuation">(</span>
+        data<span class="token punctuation">:</span> <span class="token punctuation">(</span>users<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">ListView</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span>
+          itemCount<span class="token punctuation">:</span> users<span class="token punctuation">.</span>length<span class="token punctuation">,</span>
+          itemBuilder<span class="token punctuation">:</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">final</span> user <span class="token operator">=</span> users<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">ListTile</span><span class="token punctuation">(</span>
+              title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span>
+              subtitle<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'ID: </span><span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token expression">user<span class="token punctuation">.</span>id</span><span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        loading<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">const</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>child<span class="token punctuation">:</span> <span class="token class-name">CircularProgressIndicator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        error<span class="token punctuation">:</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> st<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">Center</span><span class="token punctuation">(</span>child<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Error: </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">err</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li><code>ref.watch(userListProvider)</code> 会触发异步加载并返回 <code>AsyncValue&lt;List&lt;User&gt;&gt;</code>；</li>
+<li><code>asyncUserList.when(...)</code> 用于根据 <code>loading / data / error</code> 不同状态显示不同 UI。</li>
+</ul>
+<blockquote>
+<p>如果需要主动刷新，可以调用 <code>ref.refresh(userListProvider)</code> 或 <code>ref.invalidate(userListProvider)</code> 等方法。</p>
+</blockquote>
+<h2 id="7-总结">7. 总结</h2>
+<ol>
+<li><strong>数据层（Repository + Retrofit）</strong>：使用 <code>retrofit</code> + <code>dio</code> 封装所有网络请求；</li>
+<li><strong>模型层（<code>freezed</code> + <code>json_serializable</code>）</strong>：自动生成不可变数据类，简化序列化/反序列化；</li>
+<li><strong>业务注入（<code>riverpod_annotation</code>）</strong>：通过 <code>@riverpod</code> 自动生成各种 Provider（如 Repository Provider、数据 Provider），上层只需 <code>ref.watch(...)</code> 即可拿到数据；</li>
+<li><strong>UI 层（HookConsumerWidget）</strong>：使用 Hooks + Riverpod 的方式来管理状态、消费 Provider，轻松地监听数据更新并刷新界面。</li>
+</ol>
+<p>通过以上流程，可以把「数据获取逻辑」与「UI/业务」进行良好解耦，并利用 Riverpod 的 Provider 机制，实现可测试、可维护的整体结构。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Flutter/" rel="tag"># Flutter</a>
+              <a href="/tags/Repository-Pattern/" rel="tag"># Repository Pattern</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/MacBook%20Air%20M4/" rel="prev" title="MacBook Air M4">
+                  <i class="fa fa-angle-left"></i> MacBook Air M4
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Riverpod%E3%81%8C%E5%A5%BD%E3%81%8D/" rel="next" title="Riverpodが好き">
+                  Riverpodが好き <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ai可以随意生成很多高质量内容，但是同一个问题每次看生成的新的结果未免太累，熟悉的内容多次重复倒是不错的方式，这也是为什么当下我记录的理由，当然写点东西一直是学一个语言最直接高级的方式，因为难度最大效果才最好，坚持喽 本文由 Cursor 生成，本文介绍如何在 SwiftUI 中使用 WKWebView 实现 H5 与原生相机的交互，支持远程 URL 和本地 HTML 两种加载方式。  ps近期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SwiftUI WKWebView 相机集成完整指南">
+<meta property="og:url" content="https://sseen.github.io/SwiftUI%20WKWebView%20%E7%9B%B8%E6%9C%BA%E9%9B%86%E6%88%90%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="ai可以随意生成很多高质量内容，但是同一个问题每次看生成的新的结果未免太累，熟悉的内容多次重复倒是不错的方式，这也是为什么当下我记录的理由，当然写点东西一直是学一个语言最直接高级的方式，因为难度最大效果才最好，坚持喽 本文由 Cursor 生成，本文介绍如何在 SwiftUI 中使用 WKWebView 实现 H5 与原生相机的交互，支持远程 URL 和本地 HTML 两种加载方式。  ps近期">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-14T11:17:00.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.839Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="SwiftUI">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Cursor">
+<meta property="article:tag" content="WKWebView">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/SwiftUI%20WKWebView%20%E7%9B%B8%E6%9C%BA%E9%9B%86%E6%88%90%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/SwiftUI%20WKWebView%20%E7%9B%B8%E6%9C%BA%E9%9B%86%E6%88%90%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/","path":"SwiftUI WKWebView 相机集成完整指南/","title":"SwiftUI WKWebView 相机集成完整指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SwiftUI WKWebView 相机集成完整指南 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">📋 目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">🎯 核心功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A7-%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">🔧 完整实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%B8%8F%E2%83%A3-SwiftUI-%E5%85%A5%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">1️⃣ SwiftUI 入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%B8%8F%E2%83%A3-UIViewControllerRepresentable-%E5%8C%85%E8%A3%85%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">2️⃣ UIViewControllerRepresentable 包装器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%B8%8F%E2%83%A3-WebViewController-%E6%A0%B8%E5%BF%83%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.3.</span> <span class="nav-text">3️⃣ WebViewController 核心实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%80-%E4%B8%A4%E7%A7%8D%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">🔀 两种加载方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-1%EF%BC%9A%E5%8A%A0%E8%BD%BD%E8%BF%9C%E7%A8%8B-URL%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">方式 1：加载远程 URL（推荐）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-2%EF%BC%9A%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0-HTML-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.2.</span> <span class="nav-text">方式 2：加载本地 HTML 字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%90-H5-%E7%AB%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">🌐 H5 端实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TypeScript-%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">TypeScript 类型声明（可选）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%90-%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">🔐 权限配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%84-%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">🔄 交互流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">📝 常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-%E7%9B%B8%E6%9C%BA%E5%9C%A8%E6%A8%A1%E6%8B%9F%E5%99%A8%E4%B8%8A%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">8.1.</span> <span class="nav-text">Q1: 相机在模拟器上无法使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-JS-%E8%B0%83%E7%94%A8%E6%B2%A1%E6%9C%89%E5%8F%8D%E5%BA%94%EF%BC%9F"><span class="nav-number">8.2.</span> <span class="nav-text">Q2: JS 调用没有反应？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95-H5-%E9%A1%B5%E9%9D%A2%EF%BC%9F"><span class="nav-number">8.3.</span> <span class="nav-text">Q3: 如何调试 H5 页面？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-%E9%9C%80%E8%A6%81%E6%94%AF%E6%8C%81%E5%A4%9A%E4%B8%AA-JS-Handler%EF%BC%9F"><span class="nav-number">8.4.</span> <span class="nav-text">Q4: 需要支持多个 JS Handler？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">🎯 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9A-%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="nav-number">10.</span> <span class="nav-text">📚 扩展阅读</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/SwiftUI%20WKWebView%20%E7%9B%B8%E6%9C%BA%E9%9B%86%E6%88%90%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SwiftUI WKWebView 相机集成完整指南 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SwiftUI WKWebView 相机集成完整指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-11-14 11:17:00" itemprop="dateCreated datePublished" datetime="2025-11-14T11:17:00+00:00">2025-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>ai可以随意生成很多高质量内容，但是同一个问题每次看生成的新的结果未免太累，熟悉的内容多次重复倒是不错的方式，这也是为什么当下我记录的理由，当然写点东西一直是学一个语言最直接高级的方式，因为难度最大效果才最好，坚持喽<br>
+本文由 Cursor 生成，本文介绍如何在 SwiftUI 中使用 WKWebView 实现 H5 与原生相机的交互，支持远程 URL 和本地 HTML 两种加载方式。</p>
+</blockquote>
+<p>ps近期项目的一个问题刚好，native和angular结合的hyperapp，但是呢拍照的js-native交互</p>
+<ol>
+<li>之前没有用js-native交互，用的input标签拍照，最后测试发现iOS17基本各个版本都不能用，一调起相机整个web就重新刷新；</li>
+<li>改成交互好多了，但是独独iOS17.7.1有之前的问题</li>
+<li>后面客户那边拿了真机过来，自己写了iOS版的测试，竟然没问题，看来是他们壳的问题</li>
+</ol>
+<p>这个项目总结下来两个奇怪的问题</p>
+<ol>
+<li>上面的iOS17.7.1问题</li>
+<li>iOS上的input标签响应聚焦问题，根本不能控制</li>
+</ol>
+<h2 id="📋-目录">📋 目录</h2>
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD">核心功能</a></li>
+<li><a href="#%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0">完整实现</a></li>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F">两种加载方式</a></li>
+<li><a href="#h5-%E7%AB%AF%E5%AE%9E%E7%8E%B0">H5 端实现</a></li>
+<li><a href="#%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE">权限配置</a></li>
+<li><a href="#%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B">交互流程</a></li>
+</ul>
+<hr>
+<h2 id="🎯-核心功能">🎯 核心功能</h2>
+<p>实现 H5 页面与 iOS 原生相机的无缝交互：</p>
+<ol>
+<li><strong>H5 → Native</strong>：网页调用原生相机</li>
+<li><strong>Native → H5</strong>：拍照后将 base64 图片数据回传给网页</li>
+<li><strong>双向通信</strong>：使用 <code>WKScriptMessageHandler</code> 和 <code>evaluateJavaScript</code></li>
+</ol>
+<hr>
+<h2 id="🔧-完整实现">🔧 完整实现</h2>
+<h3 id="1️⃣-SwiftUI-入口">1️⃣ SwiftUI 入口</h3>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+
+<span class="token attribute atrule">@main</span>
+<span class="token keyword">struct</span> <span class="token class-name">WebCameraApp</span><span class="token punctuation">:</span> <span class="token class-name">App</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Scene</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WindowGroup</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ContentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WebContainerView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">ignoresSafeArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="2️⃣-UIViewControllerRepresentable-包装器">2️⃣ UIViewControllerRepresentable 包装器</h3>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+<span class="token keyword">import</span> <span class="token class-name">WebKit</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">WebContainerView</span><span class="token punctuation">:</span> <span class="token class-name">UIViewControllerRepresentable</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">makeUIViewController</span><span class="token punctuation">(</span>context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">WebViewController</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WebViewController</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">updateUIViewController</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> uiViewController<span class="token punctuation">:</span> <span class="token class-name">WebViewController</span><span class="token punctuation">,</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="3️⃣-WebViewController-核心实现">3️⃣ WebViewController 核心实现</h3>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">UIKit</span>
+<span class="token keyword">import</span> <span class="token class-name">WebKit</span>
+
+<span class="token keyword">class</span> <span class="token class-name">WebViewController</span><span class="token punctuation">:</span> <span class="token class-name">UIViewController</span><span class="token punctuation">,</span>
+                         <span class="token class-name">WKScriptMessageHandler</span><span class="token punctuation">,</span>
+                         <span class="token class-name">UIImagePickerControllerDelegate</span><span class="token punctuation">,</span>
+                         <span class="token class-name">UINavigationControllerDelegate</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">var</span> webView<span class="token punctuation">:</span> <span class="token class-name">WKWebView</span><span class="token operator">!</span>
+    <span class="token keyword">var</span> imagePicker<span class="token punctuation">:</span> <span class="token class-name">UIImagePickerController</span><span class="token operator">?</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function-definition function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// 1. 配置 WKWebView</span>
+        <span class="token keyword">let</span> contentController <span class="token operator">=</span> <span class="token class-name">WKUserContentController</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        contentController<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"takePhoto"</span></span><span class="token punctuation">)</span>   <span class="token comment">// JS 调用入口</span>
+
+        <span class="token keyword">let</span> config <span class="token operator">=</span> <span class="token class-name">WKWebViewConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        config<span class="token punctuation">.</span>userContentController <span class="token operator">=</span> contentController
+
+        webView <span class="token operator">=</span> <span class="token class-name">WKWebView</span><span class="token punctuation">(</span>frame<span class="token punctuation">:</span> <span class="token punctuation">.</span>zero<span class="token punctuation">,</span> configuration<span class="token punctuation">:</span> config<span class="token punctuation">)</span>
+        webView<span class="token punctuation">.</span>translatesAutoresizingMaskIntoConstraints <span class="token operator">=</span> <span class="token boolean">false</span>
+        view<span class="token punctuation">.</span><span class="token function">addSubview</span><span class="token punctuation">(</span>webView<span class="token punctuation">)</span>
+
+        <span class="token class-name">NSLayoutConstraint</span><span class="token punctuation">.</span><span class="token function">activate</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            webView<span class="token punctuation">.</span>topAnchor<span class="token punctuation">.</span><span class="token function">constraint</span><span class="token punctuation">(</span>equalTo<span class="token punctuation">:</span> view<span class="token punctuation">.</span>topAnchor<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            webView<span class="token punctuation">.</span>bottomAnchor<span class="token punctuation">.</span><span class="token function">constraint</span><span class="token punctuation">(</span>equalTo<span class="token punctuation">:</span> view<span class="token punctuation">.</span>bottomAnchor<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            webView<span class="token punctuation">.</span>leadingAnchor<span class="token punctuation">.</span><span class="token function">constraint</span><span class="token punctuation">(</span>equalTo<span class="token punctuation">:</span> view<span class="token punctuation">.</span>leadingAnchor<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            webView<span class="token punctuation">.</span>trailingAnchor<span class="token punctuation">.</span><span class="token function">constraint</span><span class="token punctuation">(</span>equalTo<span class="token punctuation">:</span> view<span class="token punctuation">.</span>trailingAnchor<span class="token punctuation">)</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// 2. 加载网页（见下方两种方式）</span>
+        <span class="token function">loadWebContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">deinit</span> <span class="token punctuation">&#123;</span>
+        webView<span class="token punctuation">.</span>configuration<span class="token punctuation">.</span>userContentController<span class="token punctuation">.</span><span class="token function">removeScriptMessageHandler</span><span class="token punctuation">(</span>forName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"takePhoto"</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 3. JS → Native：接收拍照请求</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">userContentController</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> userContentController<span class="token punctuation">:</span> <span class="token class-name">WKUserContentController</span><span class="token punctuation">,</span>
+                               didReceive message<span class="token punctuation">:</span> <span class="token class-name">WKScriptMessage</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> message<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string-literal"><span class="token string">"takePhoto"</span></span> <span class="token punctuation">&#123;</span>
+            <span class="token function">openCamera</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 4. 打开相机</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">openCamera</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">guard</span> <span class="token class-name">UIImagePickerController</span><span class="token punctuation">.</span><span class="token function">isSourceTypeAvailable</span><span class="token punctuation">(</span><span class="token punctuation">.</span>camera<span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"相机不可用，请使用真机测试"</span></span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">let</span> picker <span class="token operator">=</span> <span class="token class-name">UIImagePickerController</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        picker<span class="token punctuation">.</span>sourceType <span class="token operator">=</span> <span class="token punctuation">.</span>camera
+        picker<span class="token punctuation">.</span>delegate <span class="token operator">=</span> <span class="token keyword">self</span>
+        picker<span class="token punctuation">.</span>allowsEditing <span class="token operator">=</span> <span class="token boolean">false</span>
+        imagePicker <span class="token operator">=</span> picker
+
+        <span class="token function">present</span><span class="token punctuation">(</span>picker<span class="token punctuation">,</span> animated<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 5. 拍照完成：转 base64 并回传给 JS</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">imagePickerController</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> picker<span class="token punctuation">:</span> <span class="token class-name">UIImagePickerController</span><span class="token punctuation">,</span>
+                               didFinishPickingMediaWithInfo info<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">UIImagePickerController</span><span class="token punctuation">.</span><span class="token class-name">InfoKey</span> <span class="token punctuation">:</span> <span class="token keyword">Any</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        picker<span class="token punctuation">.</span><span class="token function">dismiss</span><span class="token punctuation">(</span>animated<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">guard</span> <span class="token keyword">let</span> image <span class="token operator">=</span> info<span class="token punctuation">[</span><span class="token punctuation">.</span>originalImage<span class="token punctuation">]</span> <span class="token keyword">as</span><span class="token operator">?</span> <span class="token class-name">UIImage</span><span class="token punctuation">,</span>
+              <span class="token keyword">let</span> data <span class="token operator">=</span> image<span class="token punctuation">.</span><span class="token function">jpegData</span><span class="token punctuation">(</span>compressionQuality<span class="token punctuation">:</span> <span class="token number">0.8</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">let</span> base64 <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">base64EncodedString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// 转义特殊字符</span>
+        <span class="token keyword">let</span> escapedBase64 <span class="token operator">=</span> base64
+            <span class="token punctuation">.</span><span class="token function">replacingOccurrences</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"\\"</span></span><span class="token punctuation">,</span> with<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"\\\\"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">replacingOccurrences</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"'"</span></span><span class="token punctuation">,</span>  with<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"\\'"</span></span><span class="token punctuation">)</span>
+
+        <span class="token comment">// Native → JS</span>
+        <span class="token keyword">let</span> js <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"window.onNativePhoto &amp;&amp; window.onNativePhoto('</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">escapedBase64</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">');"</span></span>
+
+        webView<span class="token punctuation">.</span><span class="token function">evaluateJavaScript</span><span class="token punctuation">(</span>js<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token omit keyword">_</span><span class="token punctuation">,</span> error <span class="token keyword">in</span>
+            <span class="token keyword">if</span> <span class="token keyword">let</span> error <span class="token operator">=</span> error <span class="token punctuation">&#123;</span>
+                <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"JS 调用失败："</span></span><span class="token punctuation">,</span> error<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">imagePickerControllerDidCancel</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> picker<span class="token punctuation">:</span> <span class="token class-name">UIImagePickerController</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        picker<span class="token punctuation">.</span><span class="token function">dismiss</span><span class="token punctuation">(</span>animated<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// ⭐️ 加载网页内容（根据需求选择方式）</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">loadWebContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 方式选择：见下一节</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<hr>
+<h2 id="🔀-两种加载方式">🔀 两种加载方式</h2>
+<h3 id="方式-1：加载远程-URL（推荐）">方式 1：加载远程 URL（推荐）</h3>
+<p><strong>适用场景</strong>：H5 页面独立部署，前后端分离</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">loadWebContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ⭐️ 加载远程 URL</span>
+    <span class="token keyword">if</span> <span class="token keyword">let</span> url <span class="token operator">=</span> <span class="token function">URL</span><span class="token punctuation">(</span>string<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"https://你的网站.com/camera-demo.html"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        webView<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token class-name">URLRequest</span><span class="token punctuation">(</span>url<span class="token punctuation">:</span> url<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>✅ H5 代码独立维护，更新无需重新打包 App</li>
+<li>✅ 支持热更新</li>
+<li>✅ 前端可独立调试</li>
+</ul>
+<h3 id="方式-2：加载本地-HTML-字符串">方式 2：加载本地 HTML 字符串</h3>
+<p><strong>适用场景</strong>：简单页面、离线功能、快速原型</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">loadWebContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ⭐️ 加载本地 HTML 字符串</span>
+    webView<span class="token punctuation">.</span><span class="token function">loadHTMLString</span><span class="token punctuation">(</span>htmlString<span class="token punctuation">,</span> baseURL<span class="token punctuation">:</span> <span class="token nil constant">nil</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> htmlString<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-literal"><span class="token string">"""
+    &lt;!DOCTYPE html>
+    &lt;html>
+    &lt;body>
+        &lt;h3>SwiftUI + WKWebView 拍照 demo&lt;/h3>
+        &lt;button onclick="takePhoto()">拍照&lt;/button>
+        &lt;p>预览：&lt;/p>
+        &lt;img id="preview" style="max-width: 100%; border: 1px solid #ccc;" />
+
+        &lt;script>
+            // JS 发起拍照
+            function takePhoto() &#123;
+                if (window.webkit?.messageHandlers?.takePhoto) &#123;
+                    window.webkit.messageHandlers.takePhoto.postMessage(null);
+                &#125; else &#123;
+                    alert('native 通道不可用');
+                &#125;
+            &#125;
+
+            // 接收 base64 图片
+            window.onNativePhoto = function(base64) &#123;
+                document.getElementById('preview').src = 'data:image/jpeg;base64,' + base64;
+                console.log('收到 base64 长度:', base64.length);
+            &#125;
+        &lt;/script>
+    &lt;/body>
+    &lt;/html>
+    """</span></span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>✅ 无需网络请求</li>
+<li>✅ 适合简单页面</li>
+<li>✅ 调试方便</li>
+</ul>
+<hr>
+<h2 id="🌐-H5-端实现">🌐 H5 端实现</h2>
+<p>如果使用<strong>方式 1（远程 URL）</strong>，你的网页需要包含以下 JS 代码：</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token special-attr"><span class="token attr-name">onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value javascript language-javascript"><span class="token function">takePhoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span>拍照<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>preview<span class="token punctuation">"</span></span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">max-width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span> <span class="token punctuation">/></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+        <span class="token comment">// 1. 调用原生相机</span>
+        <span class="token keyword">function</span> <span class="token function">takePhoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            window<span class="token punctuation">.</span>webkit<span class="token operator">?.</span>messageHandlers<span class="token operator">?.</span>takePhoto<span class="token operator">?.</span><span class="token function">postMessage</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">// 2. 接收原生回传的 base64</span>
+        window<span class="token punctuation">.</span><span class="token function-variable function">onNativePhoto</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">base64</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'preview'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token string">'data:image/jpeg;base64,'</span> <span class="token operator">+</span> base64<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></code></pre>
+<h3 id="TypeScript-类型声明（可选）">TypeScript 类型声明（可选）</h3>
+<pre class="language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">declare</span> global <span class="token punctuation">&#123;</span>
+  <span class="token keyword">interface</span> <span class="token class-name">Window</span> <span class="token punctuation">&#123;</span>
+    webkit<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      messageHandlers<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        takePhoto<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token function-variable function">postMessage</span><span class="token operator">:</span> <span class="token punctuation">(</span>data<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    onNativePhoto<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">(</span>base64<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<hr>
+<h2 id="🔐-权限配置">🔐 权限配置</h2>
+<p>在 <code>Info.plist</code> 中添加相机权限：</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>NSCameraUsageDescription<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>需要使用相机拍照并回传给网页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span></code></pre>
+<hr>
+<h2 id="🔄-交互流程">🔄 交互流程</h2>
+<pre class="language-none"><code class="language-none">┌─────────────────────────────────────────────────────┐
+│                    完整交互流程                        │
+└─────────────────────────────────────────────────────┘
+
+  H5 端                          Native 端
+    │                               │
+    │  1. 用户点击&quot;拍照&quot;按钮         │
+    ├──────────────────────────────&gt;│
+    │  window.webkit.messageHandlers│
+    │  .takePhoto.postMessage(null) │
+    │                               │
+    │                          2. 收到请求
+    │                          openCamera()
+    │                               │
+    │                          3. 打开相机
+    │                          UIImagePicker
+    │                               │
+    │                          4. 用户拍照
+    │                               │
+    │                          5. 转 base64
+    │&lt;──────────────────────────────┤
+    │  window.onNativePhoto(base64) │
+    │                               │
+    │  6. 显示预览                  │
+    │  img.src &#x3D; &#39;data:image&#x2F;...&#39;   │
+    │                               │</code></pre>
+<hr>
+<h2 id="📝-常见问题">📝 常见问题</h2>
+<h3 id="Q1-相机在模拟器上无法使用？">Q1: 相机在模拟器上无法使用？</h3>
+<p><strong>A</strong>: 相机功能必须在真机上测试，模拟器不支持。</p>
+<h3 id="Q2-JS-调用没有反应？">Q2: JS 调用没有反应？</h3>
+<p><strong>A</strong>: 检查以下几点：</p>
+<ol>
+<li><code>WKUserContentController</code> 是否正确注册了 <code>takePhoto</code></li>
+<li>H5 中的调用是否正确：<code>window.webkit.messageHandlers.takePhoto.postMessage(null)</code></li>
+<li>查看 Safari 开发者工具的控制台错误</li>
+</ol>
+<h3 id="Q3-如何调试-H5-页面？">Q3: 如何调试 H5 页面？</h3>
+<p><strong>A</strong>:</p>
+<ol>
+<li>真机连接 Mac</li>
+<li>Safari → 开发 → [你的设备] → [你的 WebView]</li>
+<li>可以实时查看控制台和网络请求</li>
+</ol>
+<h3 id="Q4-需要支持多个-JS-Handler？">Q4: 需要支持多个 JS Handler？</h3>
+<p><strong>A</strong>: 在配置时添加多个：</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift">contentController<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"takePhoto"</span></span><span class="token punctuation">)</span>
+contentController<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"selectImage"</span></span><span class="token punctuation">)</span>
+contentController<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"saveData"</span></span><span class="token punctuation">)</span></code></pre>
+<hr>
+<h2 id="🎯-总结">🎯 总结</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>远程 URL</th>
+<th>本地 HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>更新方式</td>
+<td>热更新</td>
+<td>需重新打包</td>
+</tr>
+<tr>
+<td>网络依赖</td>
+<td>需要</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>生产环境</td>
+<td>原型/Demo</td>
+</tr>
+<tr>
+<td>推荐度</td>
+<td>⭐️⭐️⭐️⭐️⭐️</td>
+<td>⭐️⭐️⭐️</td>
+</tr>
+</tbody>
+</table>
+<p><strong>推荐方案</strong>：</p>
+<ul>
+<li>🚀 <strong>生产环境</strong>：使用远程 URL（方式 1）</li>
+<li>🧪 <strong>快速原型</strong>：使用本地 HTML（方式 2）</li>
+</ul>
+<hr>
+<h2 id="📚-扩展阅读">📚 扩展阅读</h2>
+<p>如果你需要实现以下功能：</p>
+<ul>
+<li>✨ 加载本地 HTML 文件（Bundle）</li>
+<li>🔒 HTTPS 证书忽略</li>
+<li>📮 POST 表单提交</li>
+<li>🎨 SwiftUI 直接封装 WKWebView（无 UIViewController）</li>
+<li>📸 支持相册选择（不只是相机）</li>
+</ul>
+<p>可以在此基础上进行扩展，核心思路保持不变。</p>
+<hr>
+<p><strong>完整代码已测试可运行</strong> ✅</p>
+<p>Happy Coding! 🎉</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/SwiftUI/" rel="tag"># SwiftUI</a>
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Cursor/" rel="tag"># Cursor</a>
+              <a href="/tags/WKWebView/" rel="tag"># WKWebView</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/VSCode%20Angular%E5%AE%8C%E6%95%B4%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" rel="prev" title="Cursor/VSCode Angular完整开发环境配置指南">
+                  <i class="fa fa-angle-left"></i> Cursor/VSCode Angular完整开发环境配置指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ffmpeg-kit-react-native%20Android%20%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE/" rel="next" title="ffmpeg-kit-react-native Android 构建配置">
+                  ffmpeg-kit-react-native Android 构建配置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

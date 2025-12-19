@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="blogをcloudflareに移行しました。  来篇博客，linus大师口吻，用了多年的github pages是时候切换到cloudflare自定义域名了，ai让我不在拖延也算是最大的好处吧。限期一个月时间，一个月后关闭github pages。 有点啰嗦了，简化些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="blog migrate to cloudflare">
+<meta property="og:url" content="https://sseen.github.io/blog%20migrate%20to%20cloudflare/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="blogをcloudflareに移行しました。  来篇博客，linus大师口吻，用了多年的github pages是时候切换到cloudflare自定义域名了，ai让我不在拖延也算是最大的好处吧。限期一个月时间，一个月后关闭github pages。 有点啰嗦了，简化些">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-19T16:12:47.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.839Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="cloudflare">
+<meta property="article:tag" content="github pages">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/blog%20migrate%20to%20cloudflare/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/blog%20migrate%20to%20cloudflare/","path":"blog migrate to cloudflare/","title":"blog migrate to cloudflare"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>blog migrate to cloudflare | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI-%E8%AE%A9%E6%88%91%E4%B8%8D%E5%86%8D%E6%8B%96%E5%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">AI 让我不再拖延</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E6%9C%9F%E4%B8%80%E4%B8%AA%E6%9C%88"><span class="nav-number">3.</span> <span class="nav-text">限期一个月</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/blog%20migrate%20to%20cloudflare/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="blog migrate to cloudflare | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          blog migrate to cloudflare
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-12-19 16:12:47 / Modified: 07:19:01" itemprop="dateCreated datePublished" datetime="2025-12-19T16:12:47+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>blogをcloudflareに移行しました。</p>
+<blockquote>
+<p>来篇博客，linus大师口吻，用了多年的github pages是时候切换到cloudflare自定义域名了，ai让我不在拖延也算是最大的好处吧。限期一个月时间，一个月后关闭github pages。<br>
+有点啰嗦了，简化些</p>
+</blockquote>
+<p><strong>new site: <a target="_blank" rel="noopener" href="https://lengdeng.com">lengdeng.com</a></strong></p>
+<p>GitHub Pages? 该滚蛋了</p>
+<p>我的网站在 GitHub Pages 上待了太久了。是时候换到 Cloudflare Pages 了，还有访问统计。</p>
+<h2 id="为什么？">为什么？</h2>
+<p>自定义域名。性能更好。CDN 全球分布。而且我已经在 Cloudflare 上管理其他域名了。</p>
+<p>就这么简单。</p>
+<h2 id="AI-让我不再拖延">AI 让我不再拖延</h2>
+<p>这个决定我拖了很久。迁移听起来就像是要花一个周末折腾 DNS 和部署脚本。</p>
+<p>但这次我让 AI 帮我写脚本、检查配置。结果？几小时就搞定了，而不是一个周末。</p>
+<p><strong>这就是 AI 最大的好处：它让你不再拖延。</strong></p>
+<p>不是替代你思考，而是快速处理那些你一直拖着不做的琐事。</p>
+<h2 id="限期一个月">限期一个月</h2>
+<p>一个月后，GitHub Pages 就关闭了。如果你还在用旧链接，那是你的问题。</p>
+<p>我已经警告过你了。</p>
+<hr>
+<p><strong>迁移截止日期：一个月后, 如果没有忘记的话</strong></p>
+<pre class="language-markdown" data-language="markdown"><code class="language-markdown">(長い文書バッジョン)
+
+<span class="token title important"><span class="token punctuation">#</span> GitHub Pages? 该滚蛋了</span>
+
+好吧，我承认。我的个人网站（或者说博客，随便你怎么叫）在 GitHub Pages 上已经待了... 多久了？我不记得了，反正很久了。
+
+这本身不是什么问题。GitHub Pages 能工作，它确实能工作。但问题是，它只是"能工作"而已。就像你用一把钝刀也能切菜，但为什么不换把锋利的？
+
+<span class="token title important"><span class="token punctuation">##</span> 为什么是 Cloudflare？</span>
+
+让我直接说：<span class="token bold"><span class="token punctuation">**</span><span class="token content">自定义域名</span><span class="token punctuation">**</span></span>。就这么简单。
+
+GitHub Pages 当然支持自定义域名，但 Cloudflare 做得更好。而且，Cloudflare Pages 是免费的，性能更好，CDN 全球分布，部署速度更快。最重要的是，我已经在 Cloudflare 上管理其他域名了，为什么不把所有东西放在一个地方？
+
+这不是什么技术革命，这只是<span class="token bold"><span class="token punctuation">**</span><span class="token content">常识</span><span class="token punctuation">**</span></span>。当你有了更好的工具，你就应该用更好的工具。这不是背叛，这是进化。
+
+<span class="token title important"><span class="token punctuation">##</span> AI 让我不再拖延</span>
+
+说实话，这个决定我拖了很久。迁移网站？听起来就像是要花一个周末的时间去折腾那些该死的 DNS 配置和部署脚本。
+
+但这次不一样。我让 AI 帮我写迁移脚本，检查配置，甚至帮我写这篇博客（虽然我肯定会改得面目全非）。结果？整个过程只花了我几个小时，而不是一个周末。
+
+<span class="token bold"><span class="token punctuation">**</span><span class="token content">这就是 AI 最大的好处：它让你不再拖延。</span><span class="token punctuation">**</span></span>
+
+不是因为它能替代你思考，而是因为它能快速处理那些你明知道该做但一直拖着不做的琐事。DNS 配置？让 AI 生成，你检查一下就行。部署脚本？让 AI 写，你测试一下就行。
+
+这不是偷懒，这是<span class="token bold"><span class="token punctuation">**</span><span class="token content">效率</span><span class="token punctuation">**</span></span>。
+
+<span class="token title important"><span class="token punctuation">##</span> 限期一个月</span>
+
+我给自己设了个期限：<span class="token bold"><span class="token punctuation">**</span><span class="token content">一个月</span><span class="token punctuation">**</span></span>。
+
+一个月后，GitHub Pages 上的网站就关闭了。如果你还在用旧的链接，那是你的问题，不是我的。我已经给了你足够的时间去更新书签。
+
+这个期限不是随便定的。一个月足够：
+<span class="token list punctuation">-</span> 更新所有外部链接
+<span class="token list punctuation">-</span> 通知那些还在用旧链接的人（如果他们真的在乎的话）
+<span class="token list punctuation">-</span> 确保新站点稳定运行
+<span class="token list punctuation">-</span> 处理任何迁移问题
+
+如果一个月后你还在抱怨链接失效，那说明你根本不在乎这个网站，所以我也没必要在乎你的抱怨。
+
+<span class="token title important"><span class="token punctuation">##</span> 技术细节（给那些想知道的人）</span>
+
+迁移过程其实很简单：
+
+<span class="token list punctuation">1.</span> <span class="token bold"><span class="token punctuation">**</span><span class="token content">在 Cloudflare 上创建 Pages 项目</span><span class="token punctuation">**</span></span>
+   <span class="token list punctuation">-</span> 连接 GitHub 仓库
+   <span class="token list punctuation">-</span> 设置构建命令（如果有的话）
+   <span class="token list punctuation">-</span> 配置自定义域名
+
+<span class="token list punctuation">2.</span> <span class="token bold"><span class="token punctuation">**</span><span class="token content">更新 DNS 记录</span><span class="token punctuation">**</span></span>
+   <span class="token list punctuation">-</span> 添加 CNAME 或 A 记录指向 Cloudflare Pages
+   <span class="token list punctuation">-</span> 等待 DNS 传播（通常几分钟到几小时）
+
+<span class="token list punctuation">3.</span> <span class="token bold"><span class="token punctuation">**</span><span class="token content">测试，测试，再测试</span><span class="token punctuation">**</span></span>
+   <span class="token list punctuation">-</span> 确保所有页面正常加载
+   <span class="token list punctuation">-</span> 检查 HTTPS 证书（Cloudflare 自动处理）
+   <span class="token list punctuation">-</span> 验证自定义域名工作正常
+
+<span class="token list punctuation">4.</span> <span class="token bold"><span class="token punctuation">**</span><span class="token content">关闭 GitHub Pages</span><span class="token punctuation">**</span></span>
+   <span class="token list punctuation">-</span> 一个月后执行
+   <span class="token list punctuation">-</span> 删除 GitHub Pages 设置
+   <span class="token list punctuation">-</span> 清理旧的部署
+
+就这么简单。如果你觉得复杂，那是因为你把它想复杂了。
+
+<span class="token title important"><span class="token punctuation">##</span> 最后的话</span>
+
+这不是什么重大公告，这只是我个人的技术决策。如果你觉得有用，可以参考。如果你觉得我在浪费时间，那就别看。
+
+但如果你也在用 GitHub Pages，而且已经用了很久，也许你也该考虑迁移了。不是因为 GitHub Pages 不好，而是因为<span class="token bold"><span class="token punctuation">**</span><span class="token content">有更好的选择</span><span class="token punctuation">**</span></span>。
+
+而且，现在有 AI 帮你，你还有什么借口拖延？
+
+<span class="token hr punctuation">---</span>
+
+<span class="token bold"><span class="token punctuation">**</span><span class="token content">迁移截止日期：一个月后</span><span class="token punctuation">**</span></span>
+
+到时候，旧的 GitHub Pages 链接就失效了。如果你还在用，那是你的问题。
+
+我已经警告过你了。
+
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/blog/" rel="tag"># blog</a>
+              <a href="/tags/cloudflare/" rel="tag"># cloudflare</a>
+              <a href="/tags/github-pages/" rel="tag"># github pages</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Java%20Spring%20Boot%20%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" rel="prev" title="Java Spring Boot 后端项目本地开发环境搭建完全指南">
+                  <i class="fa fa-angle-left"></i> Java Spring Boot 后端项目本地开发环境搭建完全指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="从零开始建 CoreData 数据的话，应该是常规操作了，但是如何导入已经存在的 sqlite 文件供 CoreData 使用呢？ 昨天弄了半天，遇到第一个 not found entity 问题，用 momd文件解编译回xcode可识别文件 导入原始的 entity 结构解决。 完成后今天发现一个 mbp 可以正常读取数据了，但是回家 imac 上不能读取数据，依然出现 query entity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreData导入已经存在的sqlite文件">
+<meta property="og:url" content="https://sseen.github.io/CoreData%E5%AF%BC%E5%85%A5%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84sqlite%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="从零开始建 CoreData 数据的话，应该是常规操作了，但是如何导入已经存在的 sqlite 文件供 CoreData 使用呢？ 昨天弄了半天，遇到第一个 not found entity 问题，用 momd文件解编译回xcode可识别文件 导入原始的 entity 结构解决。 完成后今天发现一个 mbp 可以正常读取数据了，但是回家 imac 上不能读取数据，依然出现 query entity">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-19T00:59:24.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.820Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="CoreData">
+<meta property="article:tag" content="sqlite">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/CoreData%E5%AF%BC%E5%85%A5%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84sqlite%E6%96%87%E4%BB%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/CoreData%E5%AF%BC%E5%85%A5%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84sqlite%E6%96%87%E4%BB%B6/","path":"CoreData导入已经存在的sqlite文件/","title":"CoreData导入已经存在的sqlite文件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CoreData导入已经存在的sqlite文件 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1"><span class="nav-number">1.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2"><span class="nav-number">1.2.</span> <span class="nav-text">Step 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-3"><span class="nav-number">1.3.</span> <span class="nav-text">Step 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-4"><span class="nav-number">1.4.</span> <span class="nav-text">Step 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-5"><span class="nav-number">1.5.</span> <span class="nav-text">Step 5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Application-Support-xxx-sqlite-No-such-file-or-directory"><span class="nav-number">3.1.</span> <span class="nav-text">Application Support&#x2F;xxx.sqlite: No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E4%B8%8D%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84-entity"><span class="nav-number">3.2.</span> <span class="nav-text">找不到对应的 entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#container-loadPersistentStores-%E6%88%90%E5%8A%9F%E5%90%8E%E6%9F%A5%E6%89%BE%E6%95%B0%E6%8D%AE%E4%B8%BA0%EF%BC%8C%E4%BD%86%E6%98%AF%E6%9C%89%E6%95%B0%E6%8D%AE"><span class="nav-number">3.3.</span> <span class="nav-text">container.loadPersistentStores 成功后查找数据为0，但是有数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/CoreData%E5%AF%BC%E5%85%A5%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84sqlite%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CoreData导入已经存在的sqlite文件 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CoreData导入已经存在的sqlite文件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-19 00:59:24" itemprop="dateCreated datePublished" datetime="2021-03-19T00:59:24+00:00">2021-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>从零开始建 CoreData 数据的话，应该是常规操作了，但是如何导入已经存在的 sqlite 文件供 CoreData 使用呢？<br>
+昨天弄了半天，遇到第一个 <code>not found entity</code> 问题，用 <a target="_blank" rel="noopener" href="https://github.com/atomicbird/momdec">momd文件解编译回xcode可识别文件</a> 导入原始的 entity 结构解决。<br>
+完成后今天发现一个 mbp 可以正常读取数据了，但是回家 imac 上不能读取数据，依然出现 query entity 时候没有记录的情况。</p>
+<p>基本上就是这两个主要的问题，谷歌了这样解决的，请接着往下看。<br>
+<code>2021-03-25</code><br>
+已更新，请先看更新部分</p>
+<ol>
+<li><a href="#%E6%AD%A5%E9%AA%A4">步骤</a>
+<ol>
+<li><a href="#step-1">Step 1</a></li>
+<li><a href="#step-2">Step 2</a></li>
+<li><a href="#step-3">Step 3</a></li>
+<li><a href="#step-4">Step 4</a></li>
+<li><a href="#step-5">Step 5</a></li>
+</ol>
+</li>
+<li><a href="#%E6%9B%B4%E6%96%B0">更新</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a>
+<ol>
+<li><a href="#application-supportxxxsqlite-no-such-file-or-directory">Application Support/xxx.sqlite: No such file or directory</a></li>
+<li><a href="#%E6%89%BE%E4%B8%8D%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84-entity">找不到对应的 entity</a></li>
+<li><a href="#containerloadpersistentstores-%E6%88%90%E5%8A%9F%E5%90%8E%E6%9F%A5%E6%89%BE%E6%95%B0%E6%8D%AE%E4%B8%BA0%E4%BD%86%E6%98%AF%E6%9C%89%E6%95%B0%E6%8D%AE">container.loadPersistentStores 成功后查找数据为0，但是有数据</a></li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ol>
+<h2 id="步骤">步骤</h2>
+<p>看看这个小哥的详细步骤。</p>
+<h3 id="Step-1">Step 1</h3>
+<p>找到你要导入的 sqlite 文件，可能有三个文件 sqlite,sqlite-shm,sqlite-wal，导入一个 sqlite 也行的。</p>
+<blockquote>
+<p>Populate your Core Data in another app and get files’ path using this code:</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> paths <span class="token operator">=</span> <span class="token class-name">FileManager</span><span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">.</span><span class="token function">urls</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token punctuation">.</span>applicationSupportDirectory<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token punctuation">.</span>userDomainMask<span class="token punctuation">)</span>
+<span class="token keyword">let</span> documentsDirectory <span class="token operator">=</span> paths<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token function">print</span><span class="token punctuation">(</span>documentsDirectory<span class="token punctuation">)</span></code></pre>
+</blockquote>
+<h3 id="Step-2">Step 2</h3>
+<p>导入文件</p>
+<blockquote>
+<p>Drag your 3 files with .sqlite extension into your xCode project. (Be sure to select Add to targets option).</p>
+</blockquote>
+<h3 id="Step-3">Step 3</h3>
+<p>添加这个方法，确保只设置一次。</p>
+<blockquote>
+<p>Create function to check app’s first run in AppDelegate.swift</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">isFirstLaunch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Bool</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> hasBeenLaunchedBeforeFlag <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"hasBeenLaunchedBeforeFlag"</span></span>
+    <span class="token keyword">let</span> isFirstLaunch <span class="token operator">=</span> <span class="token operator">!</span><span class="token class-name">UserDefaults</span><span class="token punctuation">.</span>standard<span class="token punctuation">.</span><span class="token function">bool</span><span class="token punctuation">(</span>forKey<span class="token punctuation">:</span> hasBeenLaunchedBeforeFlag<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isFirstLaunch<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">UserDefaults</span><span class="token punctuation">.</span>standard<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">,</span> forKey<span class="token punctuation">:</span> hasBeenLaunchedBeforeFlag<span class="token punctuation">)</span>
+        <span class="token class-name">UserDefaults</span><span class="token punctuation">.</span>standard<span class="token punctuation">.</span><span class="token function">synchronize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> isFirstLaunch
+<span class="token punctuation">&#125;</span></code></pre>
+</blockquote>
+<h3 id="Step-4">Step 4</h3>
+<p>添加这个方法，这个地址是 sqlite 文件即将保存的位置，注意 .applicationSupportDirectory ？？</p>
+<blockquote>
+<p>Copy this function in AppDelegate.swift to get url where sqlite database should be moved:</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">getDocumentsDirectory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span> <span class="token constant">URL</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> paths <span class="token operator">=</span> <span class="token class-name">FileManager</span><span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">.</span><span class="token function">urls</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token punctuation">.</span>applicationSupportDirectory<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token punctuation">.</span>userDomainMask<span class="token punctuation">)</span>
+    <span class="token keyword">let</span> documentsDirectory <span class="token operator">=</span> paths<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> documentsDirectory
+<span class="token punctuation">&#125;</span></code></pre>
+</blockquote>
+<h3 id="Step-5">Step 5</h3>
+<p>执行替换</p>
+<blockquote>
+<p>Replace declaration of persistentContainer with this one:</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: - Core Data stack</span>
+
+<span class="token keyword">lazy</span> <span class="token keyword">var</span> persistentContainer<span class="token punctuation">:</span> <span class="token class-name">NSPersistentContainer</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> container <span class="token operator">=</span> <span class="token class-name">NSPersistentContainer</span><span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"ProjectName"</span></span><span class="token punctuation">)</span>
+
+    <span class="token keyword">let</span> storeUrl <span class="token operator">=</span> <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">getDocumentsDirectory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">appendingPathComponent</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"FileName.sqlite"</span></span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token function">isFirstLaunch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> seededDataUrl <span class="token operator">=</span> <span class="token class-name">Bundle</span><span class="token punctuation">.</span>main<span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span>forResource<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"FileName"</span></span><span class="token punctuation">,</span> withExtension<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"sqlite"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token operator">!</span> container<span class="token punctuation">.</span>persistentStoreCoordinator<span class="token punctuation">.</span><span class="token function">replacePersistentStore</span><span class="token punctuation">(</span>at<span class="token punctuation">:</span> storeUrl<span class="token punctuation">,</span> destinationOptions<span class="token punctuation">:</span> <span class="token nil constant">nil</span><span class="token punctuation">,</span> withPersistentStoreFrom<span class="token punctuation">:</span> seededDataUrl<span class="token operator">!</span><span class="token punctuation">,</span> sourceOptions<span class="token punctuation">:</span> <span class="token nil constant">nil</span><span class="token punctuation">,</span> ofType<span class="token punctuation">:</span> <span class="token class-name">NSSQLiteStoreType</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    container<span class="token punctuation">.</span><span class="token function">loadPersistentStores</span><span class="token punctuation">(</span>completionHandler<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">(</span>storeDescription<span class="token punctuation">,</span> error<span class="token punctuation">)</span> <span class="token keyword">in</span>
+        <span class="token keyword">if</span> <span class="token keyword">let</span> error <span class="token operator">=</span> error <span class="token keyword">as</span> <span class="token class-name">NSError</span><span class="token operator">?</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Unresolved error </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">, </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">error<span class="token punctuation">.</span>userInfo</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> container
+<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+</blockquote>
+<p>注意 isFirstLaunch 这个判断句中的细节，之前我用的如下这个时好时坏？？包括 <code>FileManager 的 .applicationSupportDirectory 还是 .documentDirectory</code></p>
+<pre class="language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">if</span> <span class="token operator">!</span><span class="token class-name">FileManager</span><span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">.</span><span class="token function">fileExists</span><span class="token punctuation">(</span>atPath<span class="token punctuation">:</span> <span class="token punctuation">(</span>storeUrl<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> seededDataUrl <span class="token operator">=</span> <span class="token class-name">Bundle</span><span class="token punctuation">.</span>main<span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span>forResource<span class="token punctuation">:</span> appName<span class="token punctuation">,</span> withExtension<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"sqlite"</span></span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token operator">!</span> <span class="token class-name">FileManager</span><span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">.</span><span class="token function">copyItem</span><span class="token punctuation">(</span>at<span class="token punctuation">:</span> seededDataUrl<span class="token operator">!</span><span class="token punctuation">,</span> to<span class="token punctuation">:</span> storeUrl<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="更新">更新</h2>
+<p>最新教程按照这个来<a target="_blank" rel="noopener" href="https://gist.github.com/xavierchia/ef43abb270003ae63e5bbb7eb5404645">Preload Sqlite data to Core Data</a>，其中把已有的 <code>.sqlite</code> copy 到相应路径时一定要注意获得路径的方法<br>
+就是不要自己拼接 Application Support 的路径 <code>self.getDocumentsDirectory().appendingPathComponent(&quot;\(appName).sqlite&quot;)</code><br>
+而是用 NSPersistentContainer 的方法来获得 <code>URL(fileURLWithPath: NSPersistentContainer.defaultDirectoryURL().relativePath + &quot;/\(appName).sqlite&quot;)</code><br>
+自己拼接的路径会报错。<br>
+后一种方法可能会让 core data 去自动生成相关目录。</p>
+<h2 id="问题">问题</h2>
+<p>主要问题</p>
+<h3 id="Application-Support-xxx-sqlite-No-such-file-or-directory">Application Support/xxx.sqlite: No such file or directory</h3>
+<p>把已有的 <code>.sqlite</code> copy 到相应路径时一定要注意获得路径的方法<br>
+就是不要自己拼接 Application Support 的路径 <code>self.getDocumentsDirectory().appendingPathComponent(&quot;\(appName).sqlite&quot;)</code><br>
+而是用 NSPersistentContainer 的方法来获得 <code>URL(fileURLWithPath: NSPersistentContainer.defaultDirectoryURL().relativePath + &quot;/\(appName).sqlite&quot;)</code><br>
+自己拼接的路径会报错。</p>
+<h3 id="找不到对应的-entity">找不到对应的 entity</h3>
+<p>一般就是 xcdatamodeld 里的 entity 字段定义的有出入，大小写敏感的应该？？</p>
+<h3 id="container-loadPersistentStores-成功后查找数据为0，但是有数据">container.loadPersistentStores 成功后查找数据为0，但是有数据</h3>
+<p>搜索 <code>pre-filled sqlite</code> 找到 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2230354/any-way-to-pre-populate-core-data/2233979">Any way to pre populate core data?</a>，应该是没有正确设置 CoreData 中的 sqlite 文件导致的。</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2230354/any-way-to-pre-populate-core-data/2233979">Any way to pre populate core data?</a><br>
+<a target="_blank" rel="noopener" href="https://gist.github.com/gblancogarcia/896eef9658492e73bfc4">Core Data: preloading an existing SQLite database</a><br>
+<a target="_blank" rel="noopener" href="https://gist.github.com/xavierchia/ef43abb270003ae63e5bbb7eb5404645">Preload Sqlite data to Core Data</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CoreData/" rel="tag"># CoreData</a>
+              <a href="/tags/sqlite/" rel="tag"># sqlite</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/SwiftUI%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%88/" rel="prev" title="SwiftUIスタート">
+                  <i class="fa fa-angle-left"></i> SwiftUIスタート
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/SwiftUI%E5%92%8CUIKit%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/" rel="next" title="SwiftUI和UIKit混合使用">
+                  SwiftUI和UIKit混合使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

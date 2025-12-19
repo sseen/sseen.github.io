@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="現時点で見ると、Gemini 2.5 Pro Experimental 03-25の能力は恐ろしいほど強力で、この具体的な例を一度で生成し、完全に使用可能です。 o1は何度試しても駄目でした； grok 3も何度試しても駄目でした； o1 pro modeも何度試しても駄目でした； o3 mini highも何度試しても駄目でした； 問題：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个弹窗的想法">
+<meta property="og:url" content="https://sseen.github.io/%E4%B8%80%E4%B8%AA%E5%BC%B9%E7%AA%97%E7%9A%84%E6%83%B3%E6%B3%95/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="現時点で見ると、Gemini 2.5 Pro Experimental 03-25の能力は恐ろしいほど強力で、この具体的な例を一度で生成し、完全に使用可能です。 o1は何度試しても駄目でした； grok 3も何度試しても駄目でした； o1 pro modeも何度試しても駄目でした； o3 mini highも何度試しても駄目でした； 問題：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-27T10:57:22.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.835Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Ai">
+<meta property="article:tag" content="想法">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/%E4%B8%80%E4%B8%AA%E5%BC%B9%E7%AA%97%E7%9A%84%E6%83%B3%E6%B3%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/%E4%B8%80%E4%B8%AA%E5%BC%B9%E7%AA%97%E7%9A%84%E6%83%B3%E6%B3%95/","path":"一个弹窗的想法/","title":"一个弹窗的想法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一个弹窗的想法 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/%E4%B8%80%E4%B8%AA%E5%BC%B9%E7%AA%97%E7%9A%84%E6%83%B3%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一个弹窗的想法 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个弹窗的想法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-27 10:57:22" itemprop="dateCreated datePublished" datetime="2025-03-27T10:57:22+00:00">2025-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>現時点で見ると、<code>Gemini 2.5 Pro Experimental 03-25</code>の能力は恐ろしいほど強力で、この具体的な例を一度で生成し、完全に使用可能です。<br>
+o1は何度試しても駄目でした；<br>
+grok 3も何度試しても駄目でした；<br>
+o1 pro modeも何度試しても駄目でした；<br>
+o3 mini highも何度試しても駄目でした；</p>
+<p>問題：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">class</span> <span class="token class-name">DialogManager</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">static</span> <span class="token class-name">BuildContext</span><span class="token operator">?</span> _currentContext<span class="token punctuation">;</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token keyword">show</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">,</span> <span class="token class-name">String</span> title<span class="token punctuation">,</span> <span class="token class-name">String</span> content<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Widget</span><span class="token punctuation">></span></span> actions<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token class-name">Function</span><span class="token punctuation">(</span>bool result<span class="token punctuation">)</span> onClose<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 关闭旧弹窗</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_currentContext <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token class-name">Navigator</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>_currentContext<span class="token operator">!</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">canPop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token class-name">Navigator</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>_currentContext<span class="token operator">!</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    _currentContext <span class="token operator">=</span> context<span class="token punctuation">;</span>
+
+    <span class="token function">showDialog</span><span class="token punctuation">(</span>
+      context<span class="token punctuation">:</span> context<span class="token punctuation">,</span>
+      builder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">AlertDialog</span><span class="token punctuation">(</span>
+        title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>title<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        content<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        actions<span class="token punctuation">:</span> actions<span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      _currentContext <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token function">onClose</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+这个弹窗不能保证，先关闭旧的，再显示新的吧</code></pre>
+<p>答え：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart">您是对的，目前的实现不能完全保证旧弹窗一定会在新弹窗开始显示之前完全关闭。
+
+原因分析：
+
+    异步操作：<span class="token class-name">Navigator</span><span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 和 <span class="token function">showDialog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 都是异步操作。它们向 <span class="token class-name">Flutter</span> 框架发出请求，但实际的 UI 更新（移除旧对话框、添加新对话框）发生在稍后的渲染帧中。
+
+    执行顺序：
+
+        代码调用 <span class="token class-name">Navigator</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>_currentContext<span class="token operator">!</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 发起关闭请求。
+
+        几乎同时，代码更新 _currentContext <span class="token operator">=</span> context<span class="token punctuation">;</span>。
+
+        紧接着，代码调用 <span class="token function">showDialog</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> 发起显示新对话框的请求。
+
+    潜在问题：由于这些操作是异步的，showDialog 的请求可能会在 <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 的请求完全处理完（即旧对话框从视觉树中移除）之前就开始处理。这可能导致：
+
+        短暂的视觉重叠。
+
+        在极少数情况下，如果框架处理不当，可能会出现状态混乱。
+
+如何改进以确保顺序？
+
+可以使用 <span class="token keyword">async</span><span class="token operator">/</span><span class="token keyword">await</span> 来更好地控制流程，并确保在前一个对话框的关闭逻辑（至少是 pop 调用返回的 <span class="token class-name">Future</span>）完成后再显示新的对话框。
+
+改进后的代码示例：
+
+      
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'dart:async'</span></span><span class="token punctuation">;</span> <span class="token comment">// 引入 async</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DialogManager</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 使用一个内部变量跟踪当前是否有对话框正在显示或即将显示，</span>
+  <span class="token comment">// 以及用于关闭它的上下文。</span>
+  <span class="token keyword">static</span> <span class="token class-name">BuildContext</span><span class="token operator">?</span> _currentDialogContext<span class="token punctuation">;</span>
+  <span class="token comment">// 用于确保上一个关闭流程完成后再进行下一个显示</span>
+  <span class="token keyword">static</span> <span class="token class-name">Completer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">void</span><span class="token punctuation">></span></span><span class="token operator">?</span> _dismissCompleter<span class="token punctuation">;</span>
+
+  <span class="token keyword">static</span> <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">void</span><span class="token punctuation">></span></span> <span class="token keyword">show</span><span class="token punctuation">(</span> <span class="token comment">// 改为 async 方法</span>
+    <span class="token class-name">BuildContext</span> context<span class="token punctuation">,</span> <span class="token comment">// 这个 context 用于显示 *新* 对话框</span>
+    <span class="token class-name">String</span> title<span class="token punctuation">,</span>
+    <span class="token class-name">String</span> content<span class="token punctuation">,</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Widget</span><span class="token punctuation">></span></span> actions<span class="token punctuation">,</span>
+    <span class="token keyword">void</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token keyword">dynamic</span> result<span class="token punctuation">)</span> onClose<span class="token punctuation">,</span> <span class="token comment">// 允许返回任意类型</span>
+  <span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 添加 async 关键字</span>
+
+    <span class="token keyword">final</span> contextToPop <span class="token operator">=</span> _currentDialogContext<span class="token punctuation">;</span>
+    <span class="token keyword">final</span> previousDismissCompleter <span class="token operator">=</span> _dismissCompleter<span class="token punctuation">;</span>
+
+    <span class="token comment">// 为当前的 show 调用创建一个新的 Completer</span>
+    <span class="token keyword">final</span> currentCompleter <span class="token operator">=</span> <span class="token class-name">Completer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">void</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _dismissCompleter <span class="token operator">=</span> currentCompleter<span class="token punctuation">;</span>
+    <span class="token comment">// 立即将 _currentDialogContext 设置为 null，</span>
+    <span class="token comment">// 以防止快速连续调用 show 时出现竞争条件。</span>
+    <span class="token comment">// 后续如果需要 pop，我们会使用局部变量 contextToPop。</span>
+    _currentDialogContext <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+
+    <span class="token comment">// 1. 如果有旧弹窗上下文，尝试关闭并等待其完成</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>contextToPop <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// 检查 Navigator 是否还能 pop (弹窗可能已被用户或其他方式关闭)</span>
+      <span class="token comment">// 并且检查 context 是否仍然 mounted (虽然 canPop 通常已包含此意图)</span>
+      <span class="token comment">// ignore: use_build_context_synchronously</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>contextToPop<span class="token punctuation">.</span>mounted <span class="token operator">&amp;&amp;</span> <span class="token class-name">Navigator</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>contextToPop<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">canPop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Popping previous dialog."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 发起关闭请求</span>
+        <span class="token class-name">Navigator</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>contextToPop<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 等待上一个 showDialog 的 .then() 块执行完毕</span>
+        <span class="token comment">// (通过上一个 Completer 发出的信号)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>previousDismissCompleter <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+           <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Waiting for previous dismissal to complete."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token keyword">await</span> previousDismissCompleter<span class="token punctuation">.</span>future<span class="token punctuation">;</span>
+           <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Previous dismissal completed."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+           <span class="token comment">// 如果没有上一个 Completer（比如是第一个弹窗），</span>
+           <span class="token comment">// 短暂等待，给 pop 一点时间处理，但这并非绝对保证。</span>
+           <span class="token comment">// await Future.delayed(const Duration(milliseconds: 50)); // 可选的短暂延迟</span>
+           <span class="token keyword">await</span> <span class="token class-name">Future</span><span class="token punctuation">.</span><span class="token function">delayed</span><span class="token punctuation">(</span><span class="token class-name">Duration</span><span class="token punctuation">.</span>zero<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 至少让出事件循环</span>
+           <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Yielded after pop (no previous completer)."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+          <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Previous context cannot pop or is unmounted."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// 如果无法 pop，但存在上一个 Completer，则应立即完成它，</span>
+          <span class="token comment">// 以免阻塞后续的 show 调用（如果它们在等待）。</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>previousDismissCompleter <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>previousDismissCompleter<span class="token punctuation">.</span>isCompleted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+              previousDismissCompleter<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 2. 显示新弹窗</span>
+    <span class="token comment">// ignore: use_build_context_synchronously</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>context<span class="token punctuation">.</span>mounted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Context is unmounted before showing new dialog. Aborting."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment">// 如果 context 没了，就不能显示了，完成当前 completer 并调用 onClose</span>
+      currentCompleter<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">onClose</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 或者其他表示失败的值</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 在调用 showDialog 之前，记录下用于未来关闭这个 *新* 对话框的 context</span>
+    _currentDialogContext <span class="token operator">=</span> context<span class="token punctuation">;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Showing new dialog."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">final</span> result <span class="token operator">=</span> <span class="token keyword">await</span> showDialog<span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">dynamic</span><span class="token punctuation">></span></span><span class="token punctuation">(</span> <span class="token comment">// 使用 await 等待结果</span>
+      context<span class="token punctuation">:</span> context<span class="token punctuation">,</span>
+      barrierDismissible<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment">// 通常建议不允许点击外部关闭，由 actions 控制</span>
+      builder<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token class-name">BuildContext</span> dialogContext<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// dialogContext 是 AlertDialog 内部的 context，理论上用它 pop 更精确，</span>
+        <span class="token comment">// 但实践中用外面的 context 通常也可以。为保持简单，我们仍用外面传入的 context。</span>
+        <span class="token comment">// 如果遇到问题，可以考虑保存 dialogContext。</span>
+        <span class="token keyword">return</span> <span class="token class-name">AlertDialog</span><span class="token punctuation">(</span>
+          title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>title<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          content<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          actions<span class="token punctuation">:</span> actions<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Dialog dismissed with result: </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">result</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 3. 清理和回调</span>
+    <span class="token comment">// 检查 _currentDialogContext 是否仍然是本次调用设置的 context</span>
+    <span class="token comment">// 如果在弹窗显示期间，有新的 show() 调用，_currentDialogContext 可能已被覆盖</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_currentDialogContext <span class="token operator">==</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      _currentDialogContext <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+      <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Cleared _currentDialogContext for this instance."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+       <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: _currentDialogContext was changed by a subsequent call. Not clearing."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token comment">// 完成当前 Completer，发出信号表示这个 show 调用及其关闭流程已结束</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>currentCompleter<span class="token punctuation">.</span>isCompleted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       currentCompleter<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"DialogManager: Current dismissal completer completed."</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token comment">// 调用外部传入的回调</span>
+    <span class="token comment">// 处理 null 情况，与原代码逻辑保持一致</span>
+    <span class="token function">onClose</span><span class="token punctuation">(</span>result <span class="token operator">?</span><span class="token operator">?</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+    
+
+IGNORE_WHEN_COPYING_START
+<span class="token class-name">Use</span> code <span class="token keyword">with</span> <span class="token class-name"><span class="token namespace">caution<span class="token punctuation">.</span></span>Dart</span>
+IGNORE_WHEN_COPYING_END
+
+主要改动解释：
+
+    <span class="token keyword">async</span><span class="token operator">/</span><span class="token keyword">await</span>：<span class="token keyword">show</span> 方法改为 <span class="token keyword">async</span>，允许在内部使用 <span class="token keyword">await</span>。
+
+    <span class="token class-name">Completer</span>：引入 _dismissCompleter。每个 <span class="token keyword">show</span> 调用都会创建一个新的 <span class="token class-name">Completer</span>。当该调用的对话框关闭并且其后续处理（<span class="token punctuation">.</span>then 块，现在是 <span class="token keyword">await</span> 之后的部分）完成时，会调用 completer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>。
+
+    等待旧对话框关闭完成：在显示新对话框之前，如果存在 previousDismissCompleter，代码会 <span class="token keyword">await</span> previousDismissCompleter<span class="token punctuation">.</span>future。这会暂停执行，直到上一个 <span class="token keyword">show</span> 调用的清理逻辑（包括 completer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>）执行完毕。这确保了上一个关闭流程结束后才开始显示新的。
+
+    状态更新时机：_currentDialogContext 的更新和清除时机更精确，结合 <span class="token class-name">Completer</span> 来处理并发调用 <span class="token keyword">show</span> 的情况。
+
+    context<span class="token punctuation">.</span>mounted 检查：增加了对 context<span class="token punctuation">.</span>mounted 的检查，尤其是在异步操作之后使用 context 之前，这是一个好的实践。
+
+    等待 showDialog：使用 <span class="token keyword">await</span> <span class="token function">showDialog</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> 来等待用户关闭对话框或程序化关闭对话框，并获取其返回结果。
+
+这种改进后的方法能更可靠地保证在显示新对话框之前，旧对话框的关闭流程（包括相关的状态清理）已经完成。</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ai/" rel="tag"># Ai</a>
+              <a href="/tags/%E6%83%B3%E6%B3%95/" rel="tag"># 想法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/My%20Coding%20Life/" rel="prev" title="My Coding Life">
+                  <i class="fa fa-angle-left"></i> My Coding Life
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Tax%20and%20price%20updates%20for%20apps,%20In-App%20Purchases,%20and%20subscriptions/" rel="next" title="Tax and price updates for apps, In-App Purchases, and subscriptions">
+                  Tax and price updates for apps, In-App Purchases, and subscriptions <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

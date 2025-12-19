@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="実際のところ  excel 格式尽量优化，能合并的尽量合并 因为前半部分合并单元格，后半部分没有合并，导致后半部分的 row 都另起一行重新渲染了，解决这个问题解决了大部分问题 之前都是存在横向的合并单元格，纵向的没遇到，这次完整了 不过性能还是要涉及到，多问问 ai 练习练习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter UI jank">
+<meta property="og:url" content="https://sseen.github.io/Flutter%20UI%20jank/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="実際のところ  excel 格式尽量优化，能合并的尽量合并 因为前半部分合并单元格，后半部分没有合并，导致后半部分的 row 都另起一行重新渲染了，解决这个问题解决了大部分问题 之前都是存在横向的合并单元格，纵向的没遇到，这次完整了 不过性能还是要涉及到，多问问 ai 练习练习">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-29T14:03:14.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.840Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="UI jank">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Flutter%20UI%20jank/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Flutter%20UI%20jank/","path":"Flutter UI jank/","title":"Flutter UI jank"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter UI jank | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9F%E9%9A%9B%E3%81%AE%E3%81%A8%E3%81%93%E3%82%8D"><span class="nav-number">1.</span> <span class="nav-text">実際のところ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#o1"><span class="nav-number">2.</span> <span class="nav-text">o1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0-UI-jank"><span class="nav-number">3.</span> <span class="nav-text">1. 为什么会出现 UI jank</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%9A%E4%BD%8D-jank"><span class="nav-number">4.</span> <span class="nav-text">2. 如何调试和定位 jank</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Flutter-%E7%9A%84-Performance-Overlay-%E6%80%A7%E8%83%BD%E5%8F%A0%E5%B1%82"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 Flutter 的 Performance Overlay (性能叠层)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%BD%BF%E7%94%A8-Flutter-DevTools%EF%BC%88Timeline-Performance%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">2.2 使用 Flutter DevTools（Timeline &#x2F; Performance）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%97%A5%E5%BF%97-%E5%9F%8B%E7%82%B9"><span class="nav-number">4.3.</span> <span class="nav-text">2.3 日志&#x2F;埋点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">3. 常见的优化思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%B8%80%E4%BA%9B%E5%BF%AB%E9%80%9F%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="nav-number">6.</span> <span class="nav-text">4. 一些快速检查清单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">6.1.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Flutter%20UI%20jank/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter UI jank | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter UI jank
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-01-29 14:03:14" itemprop="dateCreated datePublished" datetime="2025-01-29T14:03:14+00:00">2025-01-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="実際のところ">実際のところ</h2>
+<ol>
+<li>excel 格式尽量优化，能合并的尽量合并</li>
+<li>因为前半部分合并单元格，后半部分没有合并，导致后半部分的 row 都另起一行重新渲染了，解决这个问题解决了大部分问题</li>
+<li>之前都是存在横向的合并单元格，纵向的没遇到，这次完整了</li>
+<li>不过性能还是要涉及到，多问问 ai 练习练习</li>
+</ol>
+<h2 id="o1">o1</h2>
+<p>在 Flutter 开发过程中，如果在 Debug 控制台看到 <strong>“I/Choreographer: Skipped XX frames! The application may be doing too much work on its main thread.”</strong> 或类似的 “<strong>UI jank detected</strong>” 警告，说明在某些帧里，界面绘制没有在预期的 16ms（或更短）时间内完成，就出现了明显的掉帧或卡顿（Jank）。</p>
+<p>下面介绍一些<strong>如何处理 UI jank</strong>以及<strong>如何调试</strong>的思路和技巧。</p>
+<hr>
+<h2 id="1-为什么会出现-UI-jank">1. 为什么会出现 UI jank</h2>
+<ol>
+<li><strong>主线程负担过重</strong><br>
+Flutter 中绝大部分工作（如构建、布局、绘制指令生成）都在 Dart 的单线程（UI Thread）上执行，如果你在此线程里做了大量的同步计算（如复杂的 JSON 解析、大量循环计算、或阻塞 I/O），就会堵塞绘制，造成掉帧。</li>
+<li><strong>过度 rebuild</strong><br>
+如果在每帧（或每次动画）都 setState 导致整棵 Widget Tree rebuild，或在 <code>build()</code> 里做大量繁重操作，就会增加帧耗时。</li>
+<li><strong>图片解码/加载开销</strong><br>
+一些大的图片，解码/缩放/缓存也会占用主线程资源。如果不做懒加载，就在同一时间内加载和解码大量图片，可能导致 jank。</li>
+<li><strong>不合理的渲染层级</strong><br>
+Flutter 复杂的叠层过多（大量重叠或过度使用 <code>Opacity</code>），也会造成绘制压力增大。</li>
+<li><strong>动画刷新频率高</strong><br>
+在某些动画或滚动场景里，每帧都计算大量内容，可能导致帧率跌落。</li>
+</ol>
+<hr>
+<h2 id="2-如何调试和定位-jank">2. 如何调试和定位 jank</h2>
+<h3 id="2-1-Flutter-的-Performance-Overlay-性能叠层">2.1 Flutter 的 Performance Overlay (性能叠层)</h3>
+<p>你可以在 <code>MaterialApp</code> 或者 <code>WidgetsApp</code> 中启用性能叠层：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token class-name">MaterialApp</span><span class="token punctuation">(</span>
+  showPerformanceOverlay<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在 App 界面右上角会出现两个图表：</p>
+<ul>
+<li><strong>上半部分</strong>：GPU 图表（图形线程）。</li>
+<li><strong>下半部分</strong>：UI 图表（Dart 主线程）。</li>
+</ul>
+<p>当柱状图越高，说明该帧耗时越长。如果有一部分柱子“越过”虚线，就表示帧耗时超过 16ms（即掉帧）。你可以观察在出现 jank 时是哪边柱状图飙升，是在 GPU 还是在 UI 线程。</p>
+<h3 id="2-2-使用-Flutter-DevTools（Timeline-Performance）">2.2 使用 Flutter DevTools（Timeline / Performance）</h3>
+<ol>
+<li>在 IDE（如 Android Studio、VS Code）或命令行启动 <code>flutter run --profile</code> 或 <code>flutter run --release</code>（Profile 更适合调试性能）。</li>
+<li>在浏览器或 IDE 中打开 <a target="_blank" rel="noopener" href="https://docs.flutter.dev/development/tools/devtools/overview">DevTools</a>，进入 <strong>Performance</strong> 页签。</li>
+<li>进行交互或操作，点击 <strong>Record</strong> 录制一段时间，停止后查看 <strong>Flame Chart</strong>。</li>
+<li>在 Flame Chart 里可以看到每帧中都调用了哪些函数，哪个阶段耗时过长，以此定位到卡顿的原因（比如：某个大的循环、某个图片解码等）。</li>
+</ol>
+<h3 id="2-3-日志-埋点">2.3 日志/埋点</h3>
+<ul>
+<li>如果有怀疑点，可以在 <code>build()</code> 或 <code>setState()</code> 前后打印日志做简单的耗时统计；也可以在业务逻辑里加上一些事件埋点。</li>
+</ul>
+<hr>
+<h2 id="3-常见的优化思路">3. 常见的优化思路</h2>
+<ol>
+<li><strong>将耗时操作放到后台 Isolate</strong>
+<ul>
+<li>如果在主 Isolate（UI Thread）中做了复杂计算或阻塞 I/O，可以使用 <code>compute(...)</code> 或自己创建 <strong>Isolate</strong> 在后台线程处理，避免阻塞 UI。</li>
+</ul>
+</li>
+<li><strong>分离 / 减少 Widget rebuild</strong>
+<ul>
+<li>避免在父级 setState 时重建所有子 Widget。可以将变动频繁的子 Widget 拆分出去，或使用 <code>ValueListenableBuilder</code>/<code>StreamBuilder</code> 让局部刷新。</li>
+<li>对一些静态/不变的 Widget，尽量用 <code>const</code> 构造。</li>
+</ul>
+</li>
+<li><strong>懒加载 / 虚拟滚动</strong>
+<ul>
+<li>如果在一个大列表（ListView / Table / Grid）中，有成百上千的项目，务必使用 <code>ListView.builder</code> / <code>SliverList</code> 等按需加载，<strong>不要</strong>一次性构建所有子组件。</li>
+<li>大图片也需懒加载，并使用缓存以免每次都解码。</li>
+</ul>
+</li>
+<li><strong>缩小图片 / 压缩</strong>
+<ul>
+<li>如果图片很大，可以使用后端接口返回缩略图，或在 Flutter 端指定 <code>cacheWidth</code>/<code>cacheHeight</code> 来在解码时缩小尺寸。</li>
+</ul>
+</li>
+<li><strong>避免动画过于复杂 / 帧动画</strong>
+<ul>
+<li>如果需要高帧率动画，要确保每帧更新的计算量足够小。必要时使用 <code>TweenAnimationBuilder</code>、<code>AnimatedBuilder</code> 等轻量控件。</li>
+</ul>
+</li>
+<li><strong>避免过度使用 <code>Opacity</code></strong>
+<ul>
+<li>在动画中频繁改变 <code>Opacity</code> 会导致图层合成开销，可以尝试用 <code>AnimatedSwitcher</code> 或 <code>FadeTransition</code>，或重新布局替换，以减少重复绘制。</li>
+</ul>
+</li>
+<li><strong>Release / Profile 模式测试</strong>
+<ul>
+<li>Debug 模式下有额外的调试开销，Release 可能更流畅。但性能问题也要在 Profile / Release 下做真实验证。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="4-一些快速检查清单">4. 一些快速检查清单</h2>
+<ol>
+<li><strong>日志是否频繁打印</strong>：大量的 log.debug 打印也会导致卡顿。</li>
+<li><strong>是否有大循环 / 密集计算</strong>：如嵌套循环、图表绘制、加密解密等都要放到 Isolate。</li>
+<li><strong>渲染层级</strong>：查看是否大量叠层，或者有一些不必要的 <code>Stack</code>、<code>Opacity</code>、<code>ClipRect</code>。</li>
+<li><strong>动画帧</strong>：对关键动画场景做 <code>DevTools</code> 录制，看 flame chart 哪里耗时最大。</li>
+<li><strong>内存</strong>：当内存不足时，系统也可能出现掉帧，要监控内存使用情况。</li>
+</ol>
+<hr>
+<h3 id="结论">结论</h3>
+<ul>
+<li><strong>需要处理</strong>：当出现“UI jank detected”时，说明用户体验会有卡顿感，最好通过上述工具来调试、定位，并针对问题所在做性能优化。</li>
+<li><strong>如何调试</strong>：主要使用 <strong>Performance Overlay</strong> 或 <strong>DevTools</strong>（Performance 页签 + Timeline / Flame Chart）来找出具体瓶颈。</li>
+<li><strong>如何优化</strong>：常见方式包括把耗时计算放到后台 Isolate，减少 Widget rebuild，使用懒加载处理长列表和大图片，尽量降低主线程负担等。</li>
+</ul>
+<p>只要掌握了上述调试方法和常见优化手段，一般都能逐步排查并解决 Flutter 项目中的 UI jank 问题。祝你调试顺利！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Flutter/" rel="tag"># Flutter</a>
+              <a href="/tags/UI-jank/" rel="tag"># UI jank</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE%E3%81%AE%E8%A7%A3/" rel="prev" title="朝花夕拾の解">
+                  <i class="fa fa-angle-left"></i> 朝花夕拾の解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E7%9B%AE%E6%A8%99%E5%AE%9F%E7%8F%BE%E3%81%AB%E5%90%91%E3%81%91%E3%81%A6/" rel="next" title="目標実現に向けて">
+                  目標実現に向けて <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

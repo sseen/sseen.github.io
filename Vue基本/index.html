@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="o1 pro解释 解释下这个代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue基本">
+<meta property="og:url" content="https://sseen.github.io/Vue%E5%9F%BA%E6%9C%AC/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="o1 pro解释 解释下这个代码。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-11T14:01:23.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.825Z">
+<meta property="article:author" content="sseen">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Vue%E5%9F%BA%E6%9C%AC/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Vue%E5%9F%BA%E6%9C%AC/","path":"Vue基本/","title":"Vue基本"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue基本 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E4%B8%8B%E8%BF%99%E4%B8%AA%E4%BB%A3%E7%A0%81%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">解释下这个代码。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%EF%BC%8C%E9%82%A3%E5%8D%95%E5%90%91%E7%BB%91%E5%AE%9A%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E4%B8%80%E8%B5%B7%E5%AF%B9%E6%AF%94%E4%B8%8B"><span class="nav-number">2.</span> <span class="nav-text">对比双向绑定，那单向绑定的方式来一起对比下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref-%E5%92%8C-reactive"><span class="nav-number">3.</span> <span class="nav-text">ref 和 reactive</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Vue%E5%9F%BA%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vue基本 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue基本
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-11 14:01:23" itemprop="dateCreated datePublished" datetime="2024-12-11T14:01:23+00:00">2024-12-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>o1 pro解释</p>
+<h2 id="解释下这个代码。">解释下这个代码。</h2>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;EditPage
+      ref&#x3D;&quot;editPageRef&quot;
+      v-model:visible&#x3D;&quot;editVisible&quot;
+      :editkbn&#x3D;&quot;editkbn&quot;
+      @getTableList&#x3D;&quot;searchAll&quot;
+    &#x2F;&gt;</code></pre>
+<p>这段代码是一个Vue组件 <code>&lt;EditPage&gt;</code> 的使用示例，可以分解如下：</p>
+<ol>
+<li>
+<p><strong>组件引用（子组件）</strong>：<br>
+<code>&lt;EditPage ... /&gt;</code> 表示在当前组件中使用名为 <code>EditPage</code> 的子组件。</p>
+</li>
+<li>
+<p><strong>ref=“editPageRef”</strong>：<br>
+给这个子组件设置了一个<code>ref</code>，名为 <code>editPageRef</code>。这样在父组件中就可以通过 <code>this.$refs.editPageRef</code>（在setup语法中可使用 <code>ref</code> 变量）直接访问子组件的实例，从而调用子组件上定义的方法或获取其内部状态。</p>
+</li>
+<li>
+<p><strong>v-model:visible=“editVisible”</strong>：<br>
+这一行表示将父组件的 <code>editVisible</code> 响应式数据与 <code>EditPage</code> 组件的 <code>visible</code> 属性进行双向绑定。</p>
+<ul>
+<li>当父组件改变 <code>editVisible</code> 的值时，<code>EditPage</code> 内部的 <code>visible</code> 属性也会相应更新。</li>
+<li>当 <code>EditPage</code> 组件内部通过触发 <code>update:visible</code> 事件修改自身的 <code>visible</code> 状态时，也会同步更新到父组件的 <code>editVisible</code>。</li>
+</ul>
+<p>简言之，<code>v-model:visible=&quot;editVisible&quot;</code> 是将 <code>EditPage</code> 的 <code>visible</code> prop 和 <code>父组件的editVisible</code> 数据双向同步。</p>
+</li>
+<li>
+<p><strong>:editkbn=“editkbn”</strong>：<br>
+通过 <code>:</code> 绑定的方式，将父组件中定义的 <code>editkbn</code> 数据（可以是一个数值或字符串）作为一个属性传递给 <code>EditPage</code>，使 <code>EditPage</code> 可以根据这个值决定组件内部的逻辑（比如编辑模式、状态等）。</p>
+</li>
+<li>
+<p><strong>@getTableList=“searchAll”</strong>：<br>
+这个是事件监听器，当 <code>EditPage</code> 组件内部通过 <code>$emit('getTableList')</code> 触发这个事件时，父组件就会调用 <code>searchAll</code> 方法。<br>
+也就是说，一旦子组件有数据改变或者操作完成后需要父组件刷新列表，就可以在子组件中 <code>$emit('getTableList')</code>，父组件就会响应式地执行 <code>searchAll()</code> 来更新表格数据。</p>
+</li>
+</ol>
+<p>总体而言，这段代码的作用是：</p>
+<ul>
+<li>在父组件中嵌入一个 <code>EditPage</code> 弹窗（或编辑页面）组件，</li>
+<li>使用 <code>v-model</code> 将该弹窗的显示状态与父组件的 <code>editVisible</code> 状态联系起来，</li>
+<li>将 <code>editkbn</code> 属性传给子组件，用于决定编辑状态或模式，</li>
+<li>监听子组件的 <code>getTableList</code> 事件，一旦子组件要求刷新列表，就调用父组件的 <code>searchAll</code> 函数刷新数据。</li>
+</ul>
+<h2 id="对比双向绑定，那单向绑定的方式来一起对比下">对比双向绑定，那单向绑定的方式来一起对比下</h2>
+<p>与双向绑定相比，单向绑定的区别在于数据流向和事件响应机制。</p>
+<p><strong>双向绑定（v-model）</strong>：<br>
+例如：</p>
+  <pre class="language-vue" data-language="vue"><code class="language-vue">&lt;EditPage
+  v-model:visible&#x3D;&quot;editVisible&quot;
+&#x2F;&gt;</code></pre>
+<p>等价于：</p>
+  <pre class="language-vue" data-language="vue"><code class="language-vue">&lt;EditPage
+  :visible&#x3D;&quot;editVisible&quot;
+  @update:visible&#x3D;&quot;val &#x3D;&gt; editVisible &#x3D; val&quot;
+&#x2F;&gt;</code></pre>
+<p>说明：</p>
+<ol>
+<li>父组件通过<code>:visible=&quot;editVisible&quot;</code>将数据传递给子组件的 <code>visible</code> 属性（数据从父到子），保证了子组件能根据 <code>editVisible</code> 的值来更新其自身的显示状态。</li>
+<li>子组件可以通过 <code>$emit('update:visible', 新值)</code> 来向父组件通知更新，从而父组件的 <code>editVisible</code> 值也会随之变化（数据从子到父）。</li>
+</ol>
+<p>整体来说，<code>v-model</code> 实现了父子组件之间 <code>visible</code> 属性的双向同步，父变 → 子变，子变 → 父也变。</p>
+<p><strong>单向绑定</strong>：<br>
+若只有单向绑定，例如：</p>
+  <pre class="language-vue" data-language="vue"><code class="language-vue">&lt;EditPage :visible&#x3D;&quot;editVisible&quot; &#x2F;&gt;</code></pre>
+<p>说明：</p>
+<ol>
+<li>父组件通过<code>:visible=&quot;editVisible&quot;</code>将数据单向传入子组件，子组件能够根据 <code>editVisible</code> 的值显示或隐藏，但它如果想改变自己的 <code>visible</code> 状态并影响父组件，是做不到的，因为父组件没有监听事件的回调设置。</li>
+<li>如果子组件内部调用 <code>$emit('update:visible', false)</code>，由于父组件没有对应的监听器（<code>@update:visible</code>），父组件的 <code>editVisible</code> 不会改变，数据无法从子组件传回父组件。</li>
+</ol>
+<p>因此，这种方式是数据从父传到子是单向的。子组件的状态变化无法直接反馈给父组件的属性值。</p>
+<p><strong>对比总结</strong>：</p>
+<ul>
+<li><strong>双向绑定（<code>v-model</code>）</strong>：父组件数据通过属性传给子组件，子组件变化通过 <code>update:propName</code> 事件传回父组件，从而实现父子间数据的同步更新。</li>
+<li><strong>单向绑定</strong>：父组件仅通过属性将数据下行传递给子组件，子组件如果想要更新父组件的数据，需要父组件显式监听事件并进行相应处理，否则父数据不会改变，数据流是单向的。</li>
+</ul>
+<h2 id="ref-和-reactive">ref 和 reactive</h2>
+<pre class="language-none"><code class="language-none">const uiState &#x3D; reactive(&#123;
+  canEditMachineType: false,
+  canUseFooterButtons: false,
+&#125;)
+这种方式解释下，何用ref方式有什么不同</code></pre>
+<p><code>reactive</code> 和 <code>ref</code> 在 Vue 3 中都是用来创建响应式数据的工具，但它们的工作方式和适用场景略有不同。</p>
+<p><strong>使用 <code>reactive</code>：</strong></p>
+<pre class="language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">const</span> uiState <span class="token operator">=</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  canEditMachineType<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  canUseFooterButtons<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>reactive</code> 接受一个对象（包括数组、Map、Set等复杂数据结构）并返回该对象的深层响应式代理。也就是说，<code>uiState</code> 是一个响应式对象，其中的每个属性都是响应式的。</li>
+<li>使用 <code>reactive</code> 时，对象中的属性在模版中使用时不需要 <code>.value</code>，可以直接通过 <code>uiState.canEditMachineType</code> 访问。</li>
+<li><code>reactive</code> 更适合存放多个相关状态，因为可以把它们集中在一个对象中，对象内的属性都将被响应式追踪。如果日后需要添加更多相关状态，可以直接在 <code>uiState</code> 对象中扩展。</li>
+</ul>
+<p><strong>使用 <code>ref</code>：</strong><br>
+如果想用 <code>ref</code> 替代上述写法，可能是如下形式：</p>
+<pre class="language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">const</span> canEditMachineType <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> canUseFooterButtons <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>ref</code> 更适合处理单一的基本类型值（如布尔值、字符串、数字）或某个单独的响应式数据。它会返回一个带有 <code>.value</code> 属性的对象，一般在模版中使用时需要访问 <code>canEditMachineType.value</code>。</li>
+<li>如果有很多独立的状态，用 <code>ref</code> 分散定义会比较清晰：每个状态都有自己的 <code>ref</code>。但这样多个状态就分散到多个变量里了。</li>
+<li>若要把这些分散的 <code>ref</code> 合并管理，就得自己手动组织。</li>
+</ul>
+<p><strong>总结区别：</strong></p>
+<ul>
+<li>
+<p><code>reactive</code>：</p>
+<ul>
+<li>针对对象和复杂数据结构，实现「深层响应式」。</li>
+<li>不需要对属性使用 <code>.value</code>，可以直接访问属性。</li>
+<li>多个相关状态可以集中在一个对象里统一管理。</li>
+</ul>
+</li>
+<li>
+<p><code>ref</code>：</p>
+<ul>
+<li>针对基本类型数据，返回一个带 <code>.value</code> 的包装对象。</li>
+<li>比较适合单独的值响应式管理。</li>
+<li>若有多个状态，用多个 <code>ref</code> 来管理，每个独立存在。</li>
+</ul>
+</li>
+</ul>
+<p>在你的场景中，如果你喜欢将所有页面状态统一放在一个数据对象中，便于集中管理和结构化，<code>reactive</code> 是更直观的选择。如果倾向于单点独立状态控制（尤其是简单值），<code>ref</code> 可能更清晰。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E8%87%AA%E5%8A%A8mock%E6%96%B9%E6%B3%95/" rel="prev" title="自动mock方法">
+                  <i class="fa fa-angle-left"></i> 自动mock方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Vue%E8%A1%A8%E5%8D%95/" rel="next" title="Vue表单">
+                  Vue表单 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

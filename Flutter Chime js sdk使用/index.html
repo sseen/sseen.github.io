@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="之前项目用过但是是针对 ios 和 android 的，现在需要针对 web 的，所以需要重新记录下。 deploy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter Chime js sdk 使用">
+<meta property="og:url" content="https://sseen.github.io/Flutter%20Chime%20js%20sdk%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="之前项目用过但是是针对 ios 和 android 的，现在需要针对 web 的，所以需要重新记录下。 deploy">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-21T16:18:33.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.839Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="flutter">
+<meta property="article:tag" content="chime">
+<meta property="article:tag" content="sdk">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Flutter%20Chime%20js%20sdk%E4%BD%BF%E7%94%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Flutter%20Chime%20js%20sdk%E4%BD%BF%E7%94%A8/","path":"Flutter Chime js sdk使用/","title":"Flutter Chime js sdk 使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter Chime js sdk 使用 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#deploy"><span class="nav-number">1.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-white-screen"><span class="nav-number">2.1.</span> <span class="nav-text">iOS white screen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webview-flutter-%E8%BF%98%E6%98%AF-inappwebview"><span class="nav-number">2.2.</span> <span class="nav-text">webview_flutter 还是 inappwebview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows-webview-%E5%95%8F%E9%A1%8C"><span class="nav-number">2.3.</span> <span class="nav-text">windows webview 問題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%82%A2%E3%83%97%E3%83%AA%E5%92%8C-windows-%E5%8C%85%E5%8C%BA%E5%88%86%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.</span> <span class="nav-text">アプリ和 windows 包区分的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">2.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Flutter%20Chime%20js%20sdk%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter Chime js sdk 使用 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter Chime js sdk 使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-01-21 16:18:33" itemprop="dateCreated datePublished" datetime="2025-01-21T16:18:33+00:00">2025-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>之前项目用过但是是针对 ios 和 android 的，现在需要针对 web 的，所以需要重新记录下。</p>
+<h2 id="deploy">deploy</h2>
+<ol>
+<li>安装 aws cli</li>
+<li>修改region</li>
+<li><code>serverless</code> 目录下 <pre class="language-none"><code class="language-none">cd demos&#x2F;serverless
+npm install
+npm run deploy -- -r us-east-1 -b &lt;my-bucket&gt; -s &lt;my-stack-name&gt; -a meeting</code></pre>
+</li>
+</ol>
+<h2 id="问题">问题</h2>
+<p>先搞清楚，硬件的权限和 web 的权限，因为用到摄像头和麦克风。<br>
+基本原理就是 web 上用到摄像头和麦克风，需要在启动 web 前先把平台的相关权限申请好。</p>
+<h3 id="iOS-white-screen">iOS white screen</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token number">1.</span> 初始化 webview 的时候，需要设置 `shouldOverrideUrlLoading` 为 `<span class="token class-name">NavigationActionPolicy</span><span class="token punctuation">.</span>ALLOW`，否则会白屏。
+<span class="token class-name">InAppWebView</span><span class="token punctuation">(</span>
+            <span class="token comment">// 初始URL</span>
+            initialUrlRequest<span class="token punctuation">:</span> <span class="token class-name">URLRequest</span><span class="token punctuation">(</span>url<span class="token punctuation">:</span> <span class="token class-name">WebUri</span><span class="token punctuation">(</span>widget<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            shouldOverrideUrlLoading<span class="token punctuation">:</span> <span class="token punctuation">(</span>controller<span class="token punctuation">,</span> action<span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">&#123;</span>
+              <span class="token keyword">return</span> <span class="token class-name">NavigationActionPolicy</span><span class="token punctuation">.</span>ALLOW<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token number">2.</span> 这个是额外设置，不一定
+onReceivedServerTrustAuthRequest<span class="token punctuation">:</span> <span class="token punctuation">(</span>controller<span class="token punctuation">,</span> challenge<span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">&#123;</span>
+              <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Server Trust Challenge: </span><span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token expression">challenge<span class="token punctuation">.</span>protectionSpace<span class="token punctuation">.</span>host</span><span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token comment">// 直接信任证书</span>
+              <span class="token keyword">return</span> <span class="token class-name">ServerTrustAuthResponse</span><span class="token punctuation">(</span>
+                action<span class="token punctuation">:</span> <span class="token class-name">ServerTrustAuthResponseAction</span><span class="token punctuation">.</span>PROCEED<span class="token punctuation">,</span>
+              <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span></code></pre>
+<h3 id="webview-flutter-还是-inappwebview">webview_flutter 还是 inappwebview</h3>
+<p>开始用的 webview_flutter，但是发现权限问题，好一通网上查找都没解决，因为之前项目里 chime 本身原来接入的就是 inappwebview，所以索性切换到 inappwebview。</p>
+<p><strong>安卓配置</strong></p>
+<ol>
+<li>
+<p>在 <code>AndroidManifest.xml</code> 中添加权限：</p>
+ <pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>manifest</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>android</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://schemas.android.com/apk/res/android<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.INTERNET<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.SYSTEM_ALERT_WINDOW<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.CAMERA<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.WRITE_EXTERNAL_STORAGE<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.RECORD_AUDIO<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.READ_EXTERNAL_STORAGE<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>android.permission.MODIFY_AUDIO_SETTINGS<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token comment">&lt;!--    &lt;uses-permission android:name="android.permission.BLUETOOTH" />--></span>
+<span class="token comment">&lt;!--    &lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>application</span>
+    <span class="token attr-name"><span class="token namespace">android:</span>label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>test_pdf_editor<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$&#123;applicationName&#125;<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>icon</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>@mipmap/ic_launcher<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activity</span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>application</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>manifest</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>
+<p>app/build.gradle 中添加版本：</p>
+ <pre class="language-gradle" data-language="gradle"><code class="language-gradle">android <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">...</span>
+    defaultConfig <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">...</span>
+        minSdk <span class="token operator">=</span> <span class="token number">28</span> <span class="token comment">// 最低版本 23 以上</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li>
+<p>dart 中使用</p>
+ <pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token comment">/// 一次性请求摄像头 &amp; 麦克风权限</span>
+<span class="token keyword">static</span> <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">void</span><span class="token punctuation">></span></span> <span class="token function">_requestCameraAndMicrophonePermission</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">final</span> statuses <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token punctuation">[</span>
+    <span class="token class-name">Permission</span><span class="token punctuation">.</span>camera<span class="token punctuation">,</span>
+    <span class="token class-name">Permission</span><span class="token punctuation">.</span>microphone<span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 分别检查状态</span>
+    <span class="token keyword">final</span> cameraStatus <span class="token operator">=</span> statuses<span class="token punctuation">[</span><span class="token class-name">Permission</span><span class="token punctuation">.</span>camera<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> micStatus <span class="token operator">=</span> statuses<span class="token punctuation">[</span><span class="token class-name">Permission</span><span class="token punctuation">.</span>microphone<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 摄像头权限</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cameraStatus <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> cameraStatus<span class="token punctuation">.</span>isGranted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Camera permission granted'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>cameraStatus <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> cameraStatus<span class="token punctuation">.</span>isPermanentlyDenied<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Camera permission permanently denied'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 引导用户去系统设置开启权限</span>
+    <span class="token keyword">await</span> <span class="token function">openAppSettings</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Camera permission denied'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 麦克风权限</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>micStatus <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> micStatus<span class="token punctuation">.</span>isGranted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Microphone permission granted'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>micStatus <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> micStatus<span class="token punctuation">.</span>isPermanentlyDenied<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Microphone permission permanently denied'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> <span class="token function">openAppSettings</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">debugPrint</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'Microphone permission denied'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li>
+<p>在需要使用摄像头和麦克风的地方调用，最后这个初始化 webview 的代码比较重要，因为可能 voice input 有声音，但是 voice output 没有声音，所以需要设置 <code>mediaPlaybackRequiresUserGesture</code> 为 <code>false</code>，允许自动播放，也就是麦克风和 speaker，网页上显示 speaker 下拉框是 device selection unavailable 基本没有关系，做这个配置就可以了。</p>
+ <pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">await</span> <span class="token function">_requestCameraAndMicrophonePermission</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">InAppWebView</span><span class="token punctuation">(</span>
+        <span class="token comment">// 初始 URL</span>
+        initialUrlRequest<span class="token punctuation">:</span> <span class="token class-name">URLRequest</span><span class="token punctuation">(</span>url<span class="token punctuation">:</span> <span class="token class-name">WebUri</span><span class="token punctuation">(</span>widget<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+        <span class="token comment">// 初始配置，比如是否允许 JS</span>
+        initialSettings<span class="token punctuation">:</span> <span class="token class-name">InAppWebViewSettings</span><span class="token punctuation">(</span>
+          javaScriptEnabled<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          mediaPlaybackRequiresUserGesture<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>  <span class="token comment">// 自動再生を許可</span>
+          useOnLoadResource<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          useShouldOverrideUrlLoading<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          allowsInlineMediaPlayback<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          mixedContentMode<span class="token punctuation">:</span> <span class="token class-name">MixedContentMode</span><span class="token punctuation">.</span>MIXED_CONTENT_ALWAYS_ALLOW<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span></code></pre>
+</li>
+</ol>
+<h3 id="windows-webview-問題">windows webview 問題</h3>
+<p>先开始一直用的 webview_windows，但是发现权限问题，也就是点击打开 web 页面的时候，没有弹出权限弹窗，然后页面显示异常。然后切换到 desktop_webview_window 后，发现正常出现了弹窗。</p>
+<h3 id="アプリ和-windows-包区分的问题">アプリ和 windows 包区分的问题</h3>
+<h3 id="结论">结论</h3>
+<ul>
+<li><strong>Flutter 并不支持在 pubspec.yaml 内直接区分平台添加依赖</strong>，因此没法在 pubspec 中做“只在 Windows 下引入 desktop_webview_window”之类的写法。</li>
+<li>通常我们会<strong>把所有可能用到的平台包都放进 <code>dependencies</code></strong>，然后在代码层面用<strong>条件导入</strong>或“分文件”去避免在非目标平台上实际导入并编译那些插件。</li>
+<li>这在实际项目中是非常常见且推荐的做法，一般不会对不相关平台编译造成任何阻塞或报错，也不会有太大性能或打包体积的负面影响。</li>
+</ul>
+<p><strong>简单总结</strong>：</p>
+<blockquote>
+<p><strong>不需要也无法在 pubspec 中“区分”来引入，直接一起引入就好，关键是要用条件导入或分文件来控制代码层面对插件的引用</strong>，避免不兼容问题。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+              <a href="/tags/flutter/" rel="tag"># flutter</a>
+              <a href="/tags/chime/" rel="tag"># chime</a>
+              <a href="/tags/sdk/" rel="tag"># sdk</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%E7%8A%B6%E6%80%81%E8%B7%AF%E5%BE%84%E4%B8%80%E6%AC%A1%E6%80%A7%E6%8F%8F%E8%BF%B0/" rel="prev" title="Flutter 状态路径一次性描述">
+                  <i class="fa fa-angle-left"></i> Flutter 状态路径一次性描述
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Stargate%20Project/" rel="next" title="Stargate Project">
+                  Stargate Project <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

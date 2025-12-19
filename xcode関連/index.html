@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="xcode相关  设置及技巧  模拟器相册图片怎么找到 xcode 选择行列模式 Using same version number for multiple Xcode targets Info.plist  方法一 方法二   xcode build number 自动增加 xcode快捷键，复制当前行并插入   参考">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xcode関連（かんれん）">
+<meta property="og:url" content="https://sseen.github.io/xcode%E9%96%A2%E9%80%A3/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="xcode相关  设置及技巧  模拟器相册图片怎么找到 xcode 选择行列模式 Using same version number for multiple Xcode targets Info.plist  方法一 方法二   xcode build number 自动增加 xcode快捷键，复制当前行并插入   参考">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-05T14:40:30.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.822Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="xcode">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/xcode%E9%96%A2%E9%80%A3/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/xcode%E9%96%A2%E9%80%A3/","path":"xcode関連/","title":"xcode関連（かんれん）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>xcode関連（かんれん） | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%8F%8A%E6%8A%80%E5%B7%A7"><span class="nav-number">1.</span> <span class="nav-text">设置及技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E7%9B%B8%E5%86%8C%E5%9B%BE%E7%89%87%E6%80%8E%E4%B9%88%E6%89%BE%E5%88%B0"><span class="nav-number">1.1.</span> <span class="nav-text">模拟器相册图片怎么找到</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xcode-%E9%80%89%E6%8B%A9%E8%A1%8C%E5%88%97%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">xcode 选择行列模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-same-version-number-for-multiple-Xcode-targets-Info-plist"><span class="nav-number">1.3.</span> <span class="nav-text">Using same version number for multiple Xcode targets Info.plist</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">1.3.1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">1.3.2.</span> <span class="nav-text">方法二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xcode-build-number-%E8%87%AA%E5%8A%A8%E5%A2%9E%E5%8A%A0"><span class="nav-number">1.4.</span> <span class="nav-text">xcode build number 自动增加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xcode%E5%BF%AB%E6%8D%B7%E9%94%AE%EF%BC%8C%E5%A4%8D%E5%88%B6%E5%BD%93%E5%89%8D%E8%A1%8C%E5%B9%B6%E6%8F%92%E5%85%A5"><span class="nav-number">1.5.</span> <span class="nav-text">xcode快捷键，复制当前行并插入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/xcode%E9%96%A2%E9%80%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="xcode関連（かんれん） | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          xcode関連（かんれん）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-05 14:40:30" itemprop="dateCreated datePublished" datetime="2021-03-05T14:40:30+00:00">2021-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>xcode相关</p>
+<ol>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E5%8F%8A%E6%8A%80%E5%B7%A7">设置及技巧</a>
+<ol>
+<li><a href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E7%9B%B8%E5%86%8C%E5%9B%BE%E7%89%87%E6%80%8E%E4%B9%88%E6%89%BE%E5%88%B0">模拟器相册图片怎么找到</a></li>
+<li><a href="#xcode-%E9%80%89%E6%8B%A9%E8%A1%8C%E5%88%97%E6%A8%A1%E5%BC%8F">xcode 选择行列模式</a></li>
+<li><a href="#using-same-version-number-for-multiple-xcode-targets-infoplist">Using same version number for multiple Xcode targets Info.plist</a>
+<ol>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80">方法一</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C">方法二</a></li>
+</ol>
+</li>
+<li><a href="#xcode-build-number-%E8%87%AA%E5%8A%A8%E5%A2%9E%E5%8A%A0">xcode build number 自动增加</a></li>
+<li><a href="#xcode%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%A4%8D%E5%88%B6%E5%BD%93%E5%89%8D%E8%A1%8C%E5%B9%B6%E6%8F%92%E5%85%A5">xcode快捷键，复制当前行并插入</a></li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ol>
+<h2 id="设置及技巧">设置及技巧</h2>
+<h3 id="模拟器相册图片怎么找到">模拟器相册图片怎么找到</h3>
+<p>一般都在这个位置<code>~/Library/Developer/CoreSimulator/Devices/&lt;device UDID&gt;/data/Media/DCIM/100APPLE</code><br>
+You can also get the <code>&lt;device UDID&gt;</code> from Devices window (Shift+CMD+2)，这个在xcode里的快捷键可以直接找到<br>
+Where the value of <code>&lt;device UDID&gt;</code> can be determined using the command: <code>xcrun simctl list devices</code>.<br>
+<code>xcrun simctl list devices | grep Booted | grep -E  '\w+-\w+-\w+-\w+-\w+' -o</code> 如果有打开的模拟器，这个命令可以直接显示</p>
+<h3 id="xcode-选择行列模式">xcode 选择行列模式</h3>
+<p><code>Shift + Control + Up/Down Arrow</code><br>
+<code>Shift + Control + Click</code><br>
+<code>Option + Drag</code></p>
+<h3 id="Using-same-version-number-for-multiple-Xcode-targets-Info-plist">Using same version number for multiple Xcode targets Info.plist</h3>
+<p>多个 target 后如何保持 version 和 buildnumber 一致？</p>
+<h4 id="方法一">方法一</h4>
+<blockquote>
+<p>Add a new custom property to your project (Editor -&gt; Add Build Setting -&gt; Add User Defined Setting). Let’s name it MY_VERSION and let’s give it value 1.0.1.</p>
+<p>Now go to the Info section of every target and set the version to ${MY_VERSION}.</p>
+</blockquote>
+<h4 id="方法二">方法二</h4>
+<p>参考自动增加 build number 类似，把所有 targets 的 plist 位置设置好，一个个同步，比如：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Type a script or drag a script file from your workspace to insert its path.</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$&#123;SRCROOT&#125;</span>"</span>
+
+<span class="token assign-left variable">INFOPLIST</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;SRCROOT&#125;</span>/xxxx/Info.plist"</span>
+<span class="token assign-left variable">INFOPLIST_Today</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;SRCROOT&#125;</span>/Today/Info.plist"</span>
+<span class="token assign-left variable">INFOPLIST_Widget</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;SRCROOT&#125;</span>/soWidget/Info.plist"</span>
+
+<span class="token assign-left variable">buildNumber</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Print CFBundleVersion"</span> <span class="token string">"<span class="token variable">$PRODUCT_SETTINGS_PATH</span>"</span><span class="token variable">)</span></span>
+<span class="token assign-left variable">versionNumber</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Print CFBundleShortVersionString"</span> <span class="token string">"<span class="token variable">$PRODUCT_SETTINGS_PATH</span>"</span><span class="token variable">)</span></span>
+<span class="token assign-left variable">buildNumber</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$buildNumber</span> + <span class="token number">1</span><span class="token punctuation">]</span>
+/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Set :CFBundleVersion <span class="token variable">$buildNumber</span>"</span> <span class="token string">"<span class="token variable">$PRODUCT_SETTINGS_PATH</span>"</span>
+
+/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Set :CFBundleVersion <span class="token variable">$buildNumber</span>"</span> <span class="token string">"<span class="token variable">$INFOPLIST_Today</span>"</span>
+/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Set :CFBundleShortVersionString <span class="token variable">$versionNumber</span>"</span> <span class="token string">"<span class="token variable">$INFOPLIST_Today</span>"</span>
+
+/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Set :CFBundleVersion <span class="token variable">$buildNumber</span>"</span> <span class="token string">"<span class="token variable">$INFOPLIST_Widget</span>"</span>
+/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Set :CFBundleShortVersionString <span class="token variable">$versionNumber</span>"</span> <span class="token string">"<span class="token variable">$INFOPLIST_Widget</span>"</span>
+
+</code></pre>
+<h3 id="xcode-build-number-自动增加">xcode build number 自动增加</h3>
+<p>在 <code>Build Phases</code> 添加 <code>Run Scripts</code> 如下，实现 build number 自动增加：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Type a script or drag a script file from your workspace to insert its path.</span>
+<span class="token assign-left variable">buildNumber</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Print CFBundleVersion"</span> <span class="token string">"<span class="token variable">$PRODUCT_SETTINGS_PATH</span>"</span><span class="token variable">)</span></span>
+<span class="token assign-left variable">versionNumber</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Print CFBundleShortVersionString"</span> <span class="token string">"<span class="token variable">$PRODUCT_SETTINGS_PATH</span>"</span><span class="token variable">)</span></span>
+<span class="token comment"># echo $PRODUCT_SETTINGS_PATH</span>
+<span class="token comment"># echo "$buildNumber"</span>
+<span class="token comment"># echo "$versionNumber"</span>
+<span class="token assign-left variable">buildNumber</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$buildNumber</span> + <span class="token number">1</span><span class="token punctuation">]</span>
+/usr/libexec/PlistBuddy <span class="token parameter variable">-c</span> <span class="token string">"Set :CFBundleVersion <span class="token variable">$buildNumber</span>"</span> <span class="token string">"<span class="token variable">$PRODUCT_SETTINGS_PATH</span>"</span>
+</code></pre>
+<h3 id="xcode快捷键，复制当前行并插入">xcode快捷键，复制当前行并插入</h3>
+<p>以下文字放入到 <code>x.sh文件</code> 中保存;</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token assign-left variable">PLB</span><span class="token operator">=</span><span class="token string">"sudo /usr/libexec/PlistBuddy"</span>
+<span class="token assign-left variable">PLIST</span><span class="token operator">=</span><span class="token string">"/Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/Versions/Current/Resources/IDETextKeyBindingSet.plist"</span>
+
+<span class="token variable">$PLB</span> <span class="token parameter variable">-c</span> <span class="token string">"Add :'Custom Commands':'Duplicate Current Lines Down' string 'selectParagraph:, delete:, yank:, moveToBeginningOfParagraph:, yank:, moveUp:, moveToEndOfParagraph:'"</span> <span class="token string">"<span class="token variable">$PLIST</span>"</span> 
+<span class="token variable">$PLB</span> <span class="token parameter variable">-c</span> <span class="token string">"Add :'Custom Commands':'Delete Line' string 'selectLine:, deleteBackward:'"</span> <span class="token string">"<span class="token variable">$PLIST</span>"</span>
+<span class="token variable">$PLB</span> <span class="token parameter variable">-c</span> <span class="token string">"Add :'Custom Commands':'Duplicate Lines' string 'selectLine:, copy:, moveToEndOfLine:, insertNewline:, paste:, deleteBackward:'"</span> <span class="token string">"<span class="token variable">$PLIST</span>"</span></code></pre>
+<p>然后执行 <code>sh x.sh</code><br>
+重启 xcode 就可以搜索按键绑定的地方就可以了。</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/20999798/using-same-version-number-for-multiple-xcode-targets-info-plist">Using same version number for multiple Xcode targets Info.plist</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/xcode/" rel="tag"># xcode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E6%B1%BD%E8%BD%A6%E6%94%B6%E9%9B%86/" rel="prev" title="汽车收集">
+                  <i class="fa fa-angle-left"></i> 汽车收集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/iOS%E7%B1%BBSS%E5%AE%A2%E6%88%B7%E7%AB%AF%20macOS%20Big%20Sur%20%E4%B8%8B%E7%BC%96%E8%AF%91/" rel="next" title="iOS类SS客户端 macOS Big Sur 下编译">
+                  iOS类SS客户端 macOS Big Sur 下编译 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

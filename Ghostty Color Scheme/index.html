@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="当然还是 iterm2 的 flat 配色比较经典，想要移植过来；但是整体移过来后，同样的色值，显示却不一样； 最后用吸色软件获取颜色对比后，发现是 iterm2 对颜色的渲染有问题，导致颜色显示不一致；  下面先说明如何应用与「#002240 → #002F52」相同的转换过程，随后给出所有颜色的转换结果列表，并在结尾附上本次答复的日语词汇表。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ghostty Color Scheme">
+<meta property="og:url" content="https://sseen.github.io/Ghostty%20Color%20Scheme/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="当然还是 iterm2 的 flat 配色比较经典，想要移植过来；但是整体移过来后，同样的色值，显示却不一样； 最后用吸色软件获取颜色对比后，发现是 iterm2 对颜色的渲染有问题，导致颜色显示不一致；  下面先说明如何应用与「#002240 → #002F52」相同的转换过程，随后给出所有颜色的转换结果列表，并在结尾附上本次答复的日语词汇表。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-02-02T14:58:11.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.840Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Ghostty">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Ghostty%20Color%20Scheme/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Ghostty%20Color%20Scheme/","path":"Ghostty Color Scheme/","title":"Ghostty Color Scheme"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Ghostty Color Scheme | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">1. 转换过程回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E9%A2%9C%E8%89%B2%E8%BD%AC%E6%8D%A2%E7%BB%93%E6%9E%9C"><span class="nav-number">2.</span> <span class="nav-text">2. 具体颜色转换结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Palette-%E9%83%A8%E5%88%86"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Palette 部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%85%B6%E4%BD%99%E9%A2%9C%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 其余颜色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%9C%80%E7%BB%88%E6%96%B0%E7%9A%84%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">3. 最终新的配色方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E8%AF%AD%E5%8D%95%E8%AF%8D%E5%92%8C%E7%9F%AD%E8%AF%AD%E6%8F%90%E5%8F%96%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">日语单词和短语提取表</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Ghostty%20Color%20Scheme/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Ghostty Color Scheme | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ghostty Color Scheme
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-02-02 14:58:11" itemprop="dateCreated datePublished" datetime="2025-02-02T14:58:11+00:00">2025-02-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>当然还是 iterm2 的 flat 配色比较经典，想要移植过来；但是整体移过来后，同样的色值，显示却不一样；<br>
+最后用吸色软件获取颜色对比后，发现是 iterm2 对颜色的渲染有问题，导致颜色显示不一致；</p>
+<blockquote>
+<p>下面先说明如何应用与「#002240 → #002F52」相同的转换过程，随后给出所有颜色的转换结果列表，并在结尾附上本次答复的日语词汇表。</p>
+</blockquote>
+<hr>
+<h2 id="1-转换过程回顾">1. 转换过程回顾</h2>
+<p>在之前的说明中，<strong>#002240</strong>（R=0, G=34, B=64）转变为 <strong>#002F52</strong>（R=0, G=47, B=82）。</p>
+<ul>
+<li>红色通道：0 → 0（无变化）</li>
+<li>绿色通道：34 → 47（+13）</li>
+<li>蓝色通道：64 → 82（+18）</li>
+</ul>
+<p>因此，可将此视为对每个颜色的 <strong>(R, G, B)</strong> 分量执行下列操作：</p>
+<ul>
+<li>R 通道：保持不变</li>
+<li>G 通道：<strong>+13</strong>（若超过 255 则取 255）</li>
+<li>B 通道：<strong>+18</strong>（若超过 255 则取 255）</li>
+</ul>
+<blockquote>
+<p>注意：如果加法结果超过 255，需要进行上限裁剪（Clamp to 255），因为通道的数值范围是 0～255。</p>
+</blockquote>
+<hr>
+<h2 id="2-具体颜色转换结果">2. 具体颜色转换结果</h2>
+<p>以下依照您所提供的各项颜色（palette 0~15、background、foreground 等），将同样的加法转换应用到所有 Hex 颜色码，计算并给出新的结果。若出现通道溢出，则裁剪为 0xFF（十六进制为 FF）。</p>
+<h3 id="2-1-Palette-部分">2.1 Palette 部分</h3>
+<ul>
+<li>
+<p><strong>palette 0 = #222d3f</strong></p>
+<ul>
+<li>(R,G,B) = (0x22, 0x2d, 0x3f) = (34, 45, 63)</li>
+<li>新 (R,G,B) = (34, 45+13=58, 63+18=81) = (0x22, 0x3A, 0x51)</li>
+<li><strong>→ #223A51</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 1 = #a82320</strong></p>
+<ul>
+<li>(R,G,B) = (0xa8, 0x23, 0x20) = (168, 35, 32)</li>
+<li>新 (R,G,B) = (168, 35+13=48, 32+18=50) = (0xa8, 0x30, 0x32)</li>
+<li><strong>→ #a83032</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 2 = #32a548</strong></p>
+<ul>
+<li>(R,G,B) = (0x32, 0xa5, 0x48) = (50, 165, 72)</li>
+<li>新 (R,G,B) = (50, 165+13=178, 72+18=90) = (0x32, 0xb2, 0x5a)</li>
+<li><strong>→ #32b25a</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 3 = #e58d11</strong></p>
+<ul>
+<li>(R,G,B) = (0xe5, 0x8d, 0x11) = (229, 141, 17)</li>
+<li>新 (R,G,B) = (229, 141+13=154, 17+18=35) = (0xe5, 0x9a, 0x23)</li>
+<li><strong>→ #e59a23</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 4 = #3167ac</strong></p>
+<ul>
+<li>(R,G,B) = (0x31, 0x67, 0xac) = (49, 103, 172)</li>
+<li>新 (R,G,B) = (49, 103+13=116, 172+18=190) = (0x31, 0x74, 0xbe)</li>
+<li><strong>→ #3174be</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 5 = #781aa0</strong></p>
+<ul>
+<li>(R,G,B) = (0x78, 0x1a, 0xa0) = (120, 26, 160)</li>
+<li>新 (R,G,B) = (120, 26+13=39, 160+18=178) = (0x78, 0x27, 0xb2)</li>
+<li><strong>→ #7827b2</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 6 = #2c9370</strong></p>
+<ul>
+<li>(R,G,B) = (0x2c, 0x93, 0x70) = (44, 147, 112)</li>
+<li>新 (R,G,B) = (44, 147+13=160, 112+18=130) = (0x2c, 0xa0, 0x82)</li>
+<li><strong>→ #2ca082</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 7 = #b0b6ba</strong></p>
+<ul>
+<li>(R,G,B) = (0xb0, 0xb6, 0xba) = (176, 182, 186)</li>
+<li>新 (R,G,B) = (176, 182+13=195, 186+18=204) = (0xb0, 0xc3, 0xcc)</li>
+<li><strong>→ #b0c3cc</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 8 = #212c3c</strong></p>
+<ul>
+<li>(R,G,B) = (0x21, 0x2c, 0x3c) = (33, 44, 60)</li>
+<li>新 (R,G,B) = (33, 44+13=57, 60+18=78) = (0x21, 0x39, 0x4e)</li>
+<li><strong>→ #21394e</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 9 = #d4312e</strong></p>
+<ul>
+<li>(R,G,B) = (0xd4, 0x31, 0x2e) = (212, 49, 46)</li>
+<li>新 (R,G,B) = (212, 49+13=62, 46+18=64) = (0xd4, 0x3e, 0x40)</li>
+<li><strong>→ #d43e40</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 10 = #2d9440</strong></p>
+<ul>
+<li>(R,G,B) = (0x2d, 0x94, 0x40) = (45, 148, 64)</li>
+<li>新 (R,G,B) = (45, 148+13=161, 64+18=82) = (0x2d, 0xa1, 0x52)</li>
+<li><strong>→ #2da152</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 11 = #e5be0c</strong></p>
+<ul>
+<li>(R,G,B) = (0xe5, 0xbe, 0x0c) = (229, 190, 12)</li>
+<li>新 (R,G,B) = (229, 190+13=203, 12+18=30) = (0xe5, 0xcb, 0x1e)</li>
+<li><strong>→ #e5cb1e</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 12 = #3c7dd2</strong></p>
+<ul>
+<li>(R,G,B) = (0x3c, 0x7d, 0xd2) = (60, 125, 210)</li>
+<li>新 (R,G,B) = (60, 125+13=138, 210+18=228) = (0x3c, 0x8a, 0xe4)</li>
+<li><strong>→ #3c8ae4</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 13 = #8230a7</strong></p>
+<ul>
+<li>(R,G,B) = (0x82, 0x30, 0xa7) = (130, 48, 167)</li>
+<li>新 (R,G,B) = (130, 48+13=61, 167+18=185) = (0x82, 0x3d, 0xb9)</li>
+<li><strong>→ #823db9</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 14 = #35b387</strong></p>
+<ul>
+<li>(R,G,B) = (0x35, 0xb3, 0x87) = (53, 179, 135)</li>
+<li>新 (R,G,B) = (53, 179+13=192, 135+18=153) = (0x35, 0xc0, 0x99)</li>
+<li><strong>→ #35c099</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>palette 15 = #e7eced</strong></p>
+<ul>
+<li>(R,G,B) = (0xe7, 0xec, 0xed) = (231, 236, 237)</li>
+<li>新 (R,G,B) = (231, 236+13=249, 237+18=255) = (0xe7, 0xf9, 0xff)</li>
+<li><strong>→ #e7f9ff</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-其余颜色">2.2 其余颜色</h3>
+<ul>
+<li>
+<p><strong>background = #002240</strong></p>
+<ul>
+<li>此即原例：转为 <strong>#002F52</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>foreground = #2cc55d</strong></p>
+<ul>
+<li>(R,G,B) = (0x2c, 0xc5, 0x5d) = (44, 197, 93)</li>
+<li>新 (R,G,B) = (44, 197+13=210, 93+18=111) = (0x2c, 0xd2, 0x6f)</li>
+<li><strong>→ #2cd26f</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>cursor-color = #e5be0c</strong></p>
+<ul>
+<li>同 palette 11，一致转为 <strong>#e5cb1e</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>selection-background = #792b9c</strong></p>
+<ul>
+<li>(R,G,B) = (0x79, 0x2b, 0x9c) = (121, 43, 156)</li>
+<li>新 (R,G,B) = (121, 43+13=56, 156+18=174) = (0x79, 0x38, 0xae)</li>
+<li><strong>→ #7938ae</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>selection-foreground = #ffffff</strong></p>
+<ul>
+<li>(R,G,B) = (255, 255, 255)</li>
+<li>新 (R,G,B) = (255, 255+13=268→255, 255+18=273→255) → 超出 255 时裁剪至 255</li>
+<li><strong>→ #ffffff（保持不变）</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-最终新的配色方案">3. 最终新的配色方案</h2>
+<p>可按与原始配置相同的格式，列出如下（仅供参考，也可直接使用上述逐一结果）：</p>
+<pre class="language-none"><code class="language-none">palette &#x3D; 0&#x3D;#223A51
+palette &#x3D; 1&#x3D;#a83032
+palette &#x3D; 2&#x3D;#32b25a
+palette &#x3D; 3&#x3D;#e59a23
+palette &#x3D; 4&#x3D;#3174be
+palette &#x3D; 5&#x3D;#7827b2
+palette &#x3D; 6&#x3D;#2ca082
+palette &#x3D; 7&#x3D;#b0c3cc
+palette &#x3D; 8&#x3D;#21394e
+palette &#x3D; 9&#x3D;#d43e40
+palette &#x3D; 10&#x3D;#2da152
+palette &#x3D; 11&#x3D;#e5cb1e
+palette &#x3D; 12&#x3D;#3c8ae4
+palette &#x3D; 13&#x3D;#823db9
+palette &#x3D; 14&#x3D;#35c099
+palette &#x3D; 15&#x3D;#e7f9ff
+
+background &#x3D; #002F52
+foreground &#x3D; #2cd26f
+cursor-color &#x3D; #e5cb1e
+selection-background &#x3D; #7938ae
+selection-foreground &#x3D; #ffffff</code></pre>
+<p>如上，即在 RGB 值的绿色通道上加 13、蓝色通道上加 18（溢出则裁剪），得到的统一增亮或提升饱和度的效果。</p>
+<p>当前的配置</p>
+<pre class="language-lua" data-language="lua"><code class="language-lua">macos<span class="token operator">-</span>titlebar<span class="token operator">-</span>style <span class="token operator">=</span> tabs
+
+quick<span class="token operator">-</span>terminal<span class="token operator">-</span>position <span class="token operator">=</span> <span class="token string">"top"</span>
+quick<span class="token operator">-</span>terminal<span class="token operator">-</span>screen <span class="token operator">=</span> <span class="token string">"main"</span>
+quick<span class="token operator">-</span>terminal<span class="token operator">-</span>animation<span class="token operator">-</span>duration <span class="token operator">=</span> <span class="token number">0.23</span>
+keybind <span class="token operator">=</span> <span class="token string">"global:cmd+shift+t=toggle_quick_terminal"</span>
+
+background<span class="token operator">-</span>opacity <span class="token operator">=</span> <span class="token number">0.9</span>
+
+palette <span class="token operator">=</span> <span class="token number">0</span><span class="token operator">=</span><span class="token operator">#</span>223A51
+palette <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">=</span><span class="token operator">#</span>a83032
+palette <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">=</span><span class="token operator">#</span>32b25a
+palette <span class="token operator">=</span> <span class="token number">3</span><span class="token operator">=</span><span class="token operator">#</span>e59a23
+palette <span class="token operator">=</span> <span class="token number">4</span><span class="token operator">=</span><span class="token operator">#</span>3174be
+palette <span class="token operator">=</span> <span class="token number">5</span><span class="token operator">=</span><span class="token operator">#</span>7827b2
+palette <span class="token operator">=</span> <span class="token number">6</span><span class="token operator">=</span><span class="token operator">#</span>2ca082
+palette <span class="token operator">=</span> <span class="token number">7</span><span class="token operator">=</span><span class="token operator">#</span>b0c3cc
+palette <span class="token operator">=</span> <span class="token number">8</span><span class="token operator">=</span><span class="token operator">#</span>21394e
+palette <span class="token operator">=</span> <span class="token number">9</span><span class="token operator">=</span><span class="token operator">#</span>d43e40
+palette <span class="token operator">=</span> <span class="token number">10</span><span class="token operator">=</span><span class="token operator">#</span>2da152
+palette <span class="token operator">=</span> <span class="token number">11</span><span class="token operator">=</span><span class="token operator">#</span>e5cb1e
+palette <span class="token operator">=</span> <span class="token number">12</span><span class="token operator">=</span><span class="token operator">#</span>3c8ae4
+palette <span class="token operator">=</span> <span class="token number">13</span><span class="token operator">=</span><span class="token operator">#</span>823db9
+palette <span class="token operator">=</span> <span class="token number">14</span><span class="token operator">=</span><span class="token operator">#</span>35c099
+palette <span class="token operator">=</span> <span class="token number">15</span><span class="token operator">=</span><span class="token operator">#</span>e7f9ff
+
+background <span class="token operator">=</span> <span class="token operator">#</span>002F52
+foreground <span class="token operator">=</span> <span class="token operator">#</span>2cd26f
+cursor<span class="token operator">-</span>color <span class="token operator">=</span> <span class="token operator">#</span>e5cb1e
+selection<span class="token operator">-</span>background <span class="token operator">=</span> <span class="token operator">#</span>7938ae
+selection<span class="token operator">-</span>foreground <span class="token operator">=</span> <span class="token operator">#</span>ffffff</code></pre>
+<hr>
+<h3 id="日语单词和短语提取表">日语单词和短语提取表</h3>
+<table>
+<thead>
+<tr>
+<th>Japanese characters</th>
+<th>Hiragana reading</th>
+<th>English translation</th>
+<th>Chinese meaning</th>
+<th>Related phrases (with hiragana reading) or idiomatic expressions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>パレット</td>
+<td>ぱれっと</td>
+<td>Palette</td>
+<td>调色板、颜色列表</td>
+<td>カラーパレット (からーぱれっと) - 色彩调色板</td>
+</tr>
+<tr>
+<td>変換</td>
+<td>へんかん</td>
+<td>Transformation / Conversion</td>
+<td>转换、变换</td>
+<td>数値変換 (すうち へんかん) - 数值转换</td>
+</tr>
+<tr>
+<td>加算</td>
+<td>かさん</td>
+<td>Addition</td>
+<td>加法</td>
+<td>加算処理 (かさん しょり) - 加法处理</td>
+</tr>
+<tr>
+<td>裁剪</td>
+<td>さいせん（※“クリップ”更常用外来语）</td>
+<td>Clipping</td>
+<td>裁剪、截断（在计算机图形中指超过范围截取）</td>
+<td>クリップ (くりっぷ) - 裁剪、限定；範囲を超える (はんい を こえる) - 超出范围</td>
+</tr>
+<tr>
+<td>明度</td>
+<td>めいど</td>
+<td>Brightness / Lightness</td>
+<td>亮度、明度</td>
+<td>明度を上げる (めいど を あげる) - 提高亮度</td>
+</tr>
+<tr>
+<td>飽和度</td>
+<td>ほうわど</td>
+<td>Saturation</td>
+<td>饱和度</td>
+<td>彩度 (さいど) 也同义；彩度を上げる (さいど を あげる) - 提高饱和度</td>
+</tr>
+<tr>
+<td>色コード</td>
+<td>いろ こーど</td>
+<td>Color code</td>
+<td>颜色代码</td>
+<td>16 進数カラーコード (じゅうろくしんすう からーこーど) - 十六进制颜色代码</td>
+</tr>
+<tr>
+<td>上限値</td>
+<td>じょうげんち</td>
+<td>Upper limit</td>
+<td>最大值</td>
+<td>255 が最大値 (255 が さいだいち) - 255 是最大值</td>
+</tr>
+<tr>
+<td>溢出</td>
+<td>いっしゅつ（※一般常用“オーバーフロー”）</td>
+<td>Overflow</td>
+<td>超出范围</td>
+<td>オーバーフロー (おーばーふろー) - 溢出</td>
+</tr>
+</tbody>
+</table>
+<p>如有其他关于色彩处理、前端设计或相关问题，欢迎继续提出。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ghostty/" rel="tag"># Ghostty</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%20Gesture%E5%86%B2%E7%AA%81/" rel="prev" title="Flutter Gesture 冲突">
+                  <i class="fa fa-angle-left"></i> Flutter Gesture 冲突
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/My%20use%20of%20AI%20in%202025/" rel="next" title="My use of AI in 2025">
+                  My use of AI in 2025 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

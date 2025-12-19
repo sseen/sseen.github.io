@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="还是回到了这里，记录保存。  fastalne  安装 code sign 之 手动 code sign 之 match pilot 2fa 还有 App Store Connect API Key   问题  badge 修改 app icon  dyld: Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;libomp&#x2F;lib&#x2F;libomp.dylib Library no">
+<meta property="og:type" content="article">
+<meta property="og:title" content="测试及持续集成自动化Fastlane">
+<meta property="og:url" content="https://sseen.github.io/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%87%AA%E5%8A%A8%E5%8C%96Fastlane/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="还是回到了这里，记录保存。  fastalne  安装 code sign 之 手动 code sign 之 match pilot 2fa 还有 App Store Connect API Key   问题  badge 修改 app icon  dyld: Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;libomp&#x2F;lib&#x2F;libomp.dylib Library no">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-17T22:29:25.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.822Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Fastlane">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%87%AA%E5%8A%A8%E5%8C%96Fastlane/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%87%AA%E5%8A%A8%E5%8C%96Fastlane/","path":"测试及持续集成自动化Fastlane/","title":"测试及持续集成自动化Fastlane"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>测试及持续集成自动化Fastlane | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fastalne"><span class="nav-number">1.</span> <span class="nav-text">fastalne</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-sign-%E4%B9%8B-%E6%89%8B%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text">code sign 之 手动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-sign-%E4%B9%8B-match"><span class="nav-number">1.3.</span> <span class="nav-text">code sign 之 match</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pilot-2fa-%E8%BF%98%E6%9C%89-App-Store-Connect-API-Key"><span class="nav-number">1.4.</span> <span class="nav-text">pilot 2fa 还有 App Store Connect API Key</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#badge-%E4%BF%AE%E6%94%B9-app-icon"><span class="nav-number">2.1.</span> <span class="nav-text">badge 修改 app icon</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dyld-Library-not-loaded-usr-local-opt-libomp-lib-libomp-dylib"><span class="nav-number">2.1.1.</span> <span class="nav-text">dyld: Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;libomp&#x2F;lib&#x2F;libomp.dylib</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Library-not-loaded-usr-local-opt-libffi-lib-libffi-7-dylib"><span class="nav-number">2.1.2.</span> <span class="nav-text">Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;libffi&#x2F;lib&#x2F;libffi.7.dylib</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E6%97%B6%E5%80%99%E4%BF%AE%E6%94%B9app-icon%E5%9B%BE%E7%89%87"><span class="nav-number">3.1.</span> <span class="nav-text">发布时候修改app icon图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.2.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%87%AA%E5%8A%A8%E5%8C%96Fastlane/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="测试及持续集成自动化Fastlane | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          测试及持续集成自动化Fastlane
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-17 22:29:25" itemprop="dateCreated datePublished" datetime="2021-06-17T22:29:25+00:00">2021-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>还是回到了这里，记录保存。</p>
+<ol>
+<li><a href="#fastalne">fastalne</a>
+<ol>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#code-sign-%E4%B9%8B-%E6%89%8B%E5%8A%A8">code sign 之 手动</a></li>
+<li><a href="#code-sign-%E4%B9%8B-match">code sign 之 match</a></li>
+<li><a href="#pilot-2fa-%E8%BF%98%E6%9C%89-app-store-connect-api-key">pilot 2fa 还有 App Store Connect API Key</a></li>
+</ol>
+</li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a>
+<ol>
+<li><a href="#badge-%E4%BF%AE%E6%94%B9-app-icon">badge 修改 app icon</a>
+<ol>
+<li><a href="#dyld-library-not-loaded-usrlocaloptlibompliblibompdylib">dyld: Library not loaded: /usr/local/opt/libomp/lib/libomp.dylib</a></li>
+<li><a href="#library-not-loaded-usrlocaloptlibffiliblibffi7dylib">Library not loaded: /usr/local/opt/libffi/lib/libffi.7.dylib</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a>
+<ol>
+<li><a href="#%E5%8F%91%E5%B8%83%E6%97%B6%E5%80%99%E4%BF%AE%E6%94%B9app-icon%E5%9B%BE%E7%89%87">发布时候修改app icon图片</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="fastalne">fastalne</h2>
+<h3 id="安装">安装</h3>
+<ul>
+<li><code>xcode-select --install</code></li>
+<li><code>sudo gem install fastlane --verbose</code></li>
+<li>到项目目录下执行 <code>sudo fastlane init</code></li>
+</ul>
+<h3 id="code-sign-之-手动">code sign 之 手动</h3>
+<p>发现除了配置 match 来实现签名外，手动配置也可以，貌似也不麻烦，为什么还要 match 呢？</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> base64 <span class="token punctuation">-</span>D <span class="token punctuation">-</span>o xxxx.p12 \&lt;&lt;&lt; $Distribution_pac_demo_key
+<span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> base64 <span class="token punctuation">-</span>D <span class="token punctuation">-</span>o xxxx.mobileprovision \&lt;&lt;&lt; $Distribution_pac_demo_profile_key
+<span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> fastlane beta keypath<span class="token punctuation">:</span>`pwd` <span class="token comment"># Run tests using Fastlae</span></code></pre>
+<p>相关ci参数设置</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">APPCONNECT_ISSUER_ID
+
+APPCONNECT_KEY_CONTENT
+
+APPCONNECT_KEY_ID
+
+APP_DISTRIBUTION_KEY
+
+APP_DISTRIBUTION_PROFILE
+
+APP_PROFILE_NAME</code></pre>
+<h3 id="code-sign-之-match">code sign 之 match</h3>
+<p>这是最困难的点了应该，劝退的关键点。<br>
+应该很少有直接 revoke 所有证书的操作的，所以一般都是怎么在现有证书的基础上进行 code sign。</p>
+<p>步骤：(注意看下面的说明)</p>
+<ol>
+<li>建立私有repo，目录结构固定</li>
+<li>加密相应的证书及p12，然后放到相应的目录</li>
+<li>加密相应的provision，然后放到相应的目录</li>
+<li>git add &amp; push</li>
+<li>测试是否成功使用命令 <code>fastlane match adHoc或者appstore或者developtment --verbose</code></li>
+<li>成功后，去主项目的目录，执行 <code>fastlane match init</code></li>
+<li>配置matchfile</li>
+</ol>
+<p><code>2021-06-24</code><br>
+这样的方式可能会带来一个问题，也就是ci环境运行的时候出现 <code>error: Missing private key for signing certificate.</code><br>
+就是因为手动加密造成的与 fastlane match 不一致，可以正常解密 repo 获得 cer和p12，但是 install to keychain 的时候，出现错误。<br>
+解决方法就是上述步骤的(2,3,4)替换成 fastlane 官方提供的加密 match repo 的方法就可以了<a target="_blank" rel="noopener" href="https://docs.fastlane.tools/advanced/other/#manually-manage-the-fastlane-match-repo">Manually manage the fastlane match Repo</a>，还是官方的文档靠谱。<br>
+(ps.早一天就看到这个官方的说明了，那时候看有点复杂没有耐性子看完英文，导致只去搜索了，发现出问题的人不是那么多，当时还想，这么常规的错误竟然没有很多人遇到，原来这个问题常规，但是官方给了方法了，所以就没那么多人发表文章了哈哈)</p>
+<h3 id="pilot-2fa-还有-App-Store-Connect-API-Key">pilot 2fa 还有 App Store Connect API Key</h3>
+<p>使用 App Store Connect API 替代输入账号密码的方式更加利于自动换，而且很好的解决了2fa问题。<br>
+其中的p8文件，可以用base64的方式来指定，也略去了指定p8文件路径的问题。</p>
+<h2 id="问题">问题</h2>
+<h3 id="badge-修改-app-icon">badge 修改 app icon</h3>
+<p>这两天调试 badge，ci cache 遇到了几个问题，后面基本都断定是 brew cache 后，环境变量没有正确设置的原因。</p>
+<h4 id="dyld-Library-not-loaded-usr-local-opt-libomp-lib-libomp-dylib">dyld: Library not loaded: /usr/local/opt/libomp/lib/libomp.dylib</h4>
+<p>这个算是基本的问题，就是找不到这个库，需要 <code>brew link</code>，可以先用 <code>brew doctor</code> 看看到底那些库没有link好。</p>
+<h4 id="Library-not-loaded-usr-local-opt-libffi-lib-libffi-7-dylib">Library not loaded: /usr/local/opt/libffi/lib/libffi.7.dylib</h4>
+<p>这个确不能像上面那样简单的link解决。</p>
+<h2 id="参考">参考</h2>
+<h3 id="发布时候修改app-icon图片">发布时候修改app icon图片</h3>
+<p><a target="_blank" rel="noopener" href="https://discuss.circleci.com/t/caching-go-on-mac-os-build-environment/35255">Caching go on Mac OS build environment?</a><br>
+<a target="_blank" rel="noopener" href="https://qiita.com/shigwata/items/7665d5dc89387c52c446">CircleCIでHomebrewをキャッシュする方法</a><br>
+<a target="_blank" rel="noopener" href="https://diamantidis.github.io/2020/05/10/add-shield-on-the-app-icon-of-beta-builds">How to add a shield on the App Icon of beta builds</a></p>
+<h3 id="其他">其他</h3>
+<p><a target="_blank" rel="noopener" href="https://docs.fastlane.tools/actions/pilot/">pilot</a><br>
+<a target="_blank" rel="noopener" href="https://blog.devgenius.io/how-to-fix-your-ci-to-avoid-apple-2fa-e1b101555dc1">How to Fix Your CI to Avoid Apple’s 2FA</a><br>
+<a target="_blank" rel="noopener" href="https://sarunw.com/posts/using-app-store-connect-api-with-fastlane-match/">Using App Store Connect API with Fastlane Match</a><br>
+<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903701795225608">iOS 用fastlane进行团队证书管理</a><br>
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3a24e9958288">fastlane match 运用在现有的证书环境下</a><br>
+<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903726524661767">使用fastlane match自动和手动管理证书</a><br>
+<a target="_blank" rel="noopener" href="https://kyson.cn/index.php/archives/103/">iOS使用fastlane一键打包审核</a><br>
+<a target="_blank" rel="noopener" href="https://medium.com/@ahmadfarrag/setup-fastlane-match-manually-ios-1e8e070218f3">Setup Fastlane MATCH manually — iOS !</a><br>
+<a target="_blank" rel="noopener" href="https://www.appcoda.com.tw/continuous-delivery/">Fastlane/Jenkins：一人團隊也用得上的 Continuous Delivery 系統</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Fastlane/" rel="tag"># Fastlane</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" rel="prev" title="测试及持续集成">
+                  <i class="fa fa-angle-left"></i> 测试及持续集成
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/OC%20Swizzle/" rel="next" title="OC Swizzle">
+                  OC Swizzle <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

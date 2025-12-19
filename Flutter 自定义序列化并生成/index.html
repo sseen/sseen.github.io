@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="json model定义的时候，定义了一个必须型，但是服务端返回的时候，这个字段是null，这个时候，如果直接序列化，就会报错。在freezed中，如何利用自动生成功能，又能手动解决这个问题呢？    o1 grok3 claude 3.7     ❌ ✅ ❌">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 自定义序列化并生成">
+<meta property="og:url" content="https://sseen.github.io/Flutter%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96%E5%B9%B6%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="json model定义的时候，定义了一个必须型，但是服务端返回的时候，这个字段是null，这个时候，如果直接序列化，就会报错。在freezed中，如何利用自动生成功能，又能手动解决这个问题呢？    o1 grok3 claude 3.7     ❌ ✅ ❌">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-06T12:25:45.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.827Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="Freezed">
+<meta property="article:tag" content="JsonSerializable">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Flutter%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96%E5%B9%B6%E7%94%9F%E6%88%90/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Flutter%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96%E5%B9%B6%E7%94%9F%E6%88%90/","path":"Flutter 自定义序列化并生成/","title":"Flutter 自定义序列化并生成"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter 自定义序列化并生成 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JP"><span class="nav-number">1.</span> <span class="nav-text">JP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby-%E8%83%8C%E6%99%AF-rt-%E3%81%AF%E3%81%84%E3%81%91%E3%81%84-rt-ruby"><span class="nav-number">2.</span> <span class="nav-text">背景はいけい</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby-%E3%81%AA%E3%81%9C-rt-%E3%81%AA%E3%81%9C-rt-ruby-%E3%81%93%E3%81%AE-ruby-%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3-rt-annotation-rt-ruby-%E3%81%A7-ruby-%E4%B8%8A%E6%89%8B-rt-%E3%81%86%E3%81%BE-rt-ruby-%E3%81%8F%E3%81%84%E3%81%8F%E3%81%AE%E3%81%8B%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">なぜなぜこのアノテーションannotationで上手うまくいくのか？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby-%E6%AD%A3-rt-%E3%81%9F%E3%81%A0-rt-ruby-%E3%81%97%E3%81%84-ruby-%E4%BE%8B-rt-%E3%82%8C%E3%81%84-rt-ruby"><span class="nav-number">4.</span> <span class="nav-text">正ただしい例れい</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby-%E9%87%8D%E8%A6%81-rt-%E3%81%98%E3%82%85%E3%81%86%E3%82%88%E3%81%86-rt-ruby-%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88-rt-point-rt-ruby-%E3%81%BE%E3%81%A8%E3%82%81"><span class="nav-number">5.</span> <span class="nav-text">重要じゅうようポイントpointまとめ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby-%E7%B5%90%E8%AB%96-rt-%E3%81%91%E3%81%A4%E3%82%8D%E3%82%93-rt-ruby"><span class="nav-number">6.</span> <span class="nav-text">結論けつろん</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CN"><span class="nav-number">7.</span> <span class="nav-text">CN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">7.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%A4%B1%E8%B4%A5%EF%BC%9F"><span class="nav-number">7.2.</span> <span class="nav-text">为什么会失败？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E7%A4%BA%E4%BE%8B"><span class="nav-number">7.3.</span> <span class="nav-text">正确示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">7.4.</span> <span class="nav-text">关键点总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">7.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Flutter%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96%E5%B9%B6%E7%94%9F%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter 自定义序列化并生成 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter 自定义序列化并生成
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-06 12:25:45" itemprop="dateCreated datePublished" datetime="2025-03-06T12:25:45+00:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>json model定义的时候，定义了一个必须型，但是服务端返回的时候，这个字段是null，这个时候，如果直接序列化，就会报错。在freezed中，如何利用自动生成功能，又能手动解决这个问题呢？</p>
+<table>
+<thead>
+<tr>
+<th>o1</th>
+<th>grok3</th>
+<th>claude 3.7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<p>竟然是 grok3 直接找出了这个答案，o1 试了很多次都没有，即便是你给它提示它都还不太理解，claude 3.7 第一时间也没给这个答案，但是你给它提示它就理解了。神奇（不过文章都是o1来总结的😂）</p>
+<p><strong>一句话总结</strong>：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token metadata function">@JsonSerializable</span><span class="token punctuation">(</span>explicitToJson<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> genericArgumentFactories<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span></code></pre>
+<h2 id="JP">JP</h2>
+<p>以下は、<ruby>Freezed<rt>Freezed</rt></ruby> + <ruby>泛型<rt>はんけい</rt></ruby>（<ruby>ジェネリック<rt>generic</rt></ruby>）の<ruby>場面<rt>ばめん</rt></ruby>で、 <code>fromJson</code> に<ruby>独自<rt>どくじ</rt></ruby>ロジックを<ruby>挿入<rt>そうにゅう</rt></ruby>しながら <code>.g.dart</code> <ruby>ファイル<rt>ファイル</rt></ruby>を<ruby>正常<rt>せいじょう</rt></ruby>に<ruby>生成<rt>せいせい</rt></ruby>する<ruby>方法<rt>ほうほう</rt></ruby>についての <strong><ruby>完全<rt>かんぜん</rt></ruby>な<ruby>まとめ<rt>まとめ</rt></ruby></strong> です：</p>
+<hr>
+<h2 id="ruby-背景-rt-はいけい-rt-ruby"><ruby>背景<rt>はいけい</rt></ruby></h2>
+<p><ruby>Freezed<rt>Freezed</rt></ruby> で<ruby>ジェネリック<rt>generic</rt></ruby>を<ruby>含<rt>ふく</rt></ruby>む<ruby>実体<rt>じったい</rt></ruby><ruby>クラス<rt>class</rt></ruby>を<ruby>定義<rt>ていぎ</rt></ruby>するときは、<ruby>通常<rt>つうじょう</rt></ruby>こんな<ruby>書<rt>か</rt></ruby>き<ruby>方<rt>かた</rt></ruby>を<ruby>します<rt>します</rt></ruby>：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token metadata function">@freezed</span>
+<span class="token keyword">class</span> <span class="token class-name">MyResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">with</span> _$<span class="token class-name">MyResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">factory</span> <span class="token class-name">MyResponse</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=</span> _MyResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+
+  <span class="token keyword">factory</span> <span class="token class-name">MyResponse</span><span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>
+    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+    <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _$<span class="token class-name">MyResponseFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>そのあと <ruby>build_runner<rt>ビルドランナー</rt></ruby> を<ruby>使<rt>つか</rt></ruby>うと、 <code>my_response.g.dart</code> <ruby>ファイル<rt>ファイル</rt></ruby>（ <code>_$MyResponseFromJson</code> などを<ruby>含<rt>ふく</rt></ruby>む）を<ruby>自動的<rt>じどうてき</rt></ruby>に<ruby>生成<rt>せいせい</rt></ruby>してくれます。</p>
+<p>しかし、ときどき<ruby>ビジネス<rt>business</rt></ruby>ロジック（<ruby>検証<rt>けんしょう</rt></ruby>、<ruby>補完<rt>ほかん</rt></ruby>、<ruby>ログ<rt>ログ</rt></ruby>の<ruby>出力<rt>しゅつりょく</rt></ruby>、<ruby>エラー<rt>エラー</rt></ruby><ruby>処理<rt>しょり</rt></ruby>など）を<ruby>反序列化<rt>はんじょれつか</rt></ruby>の<ruby>際<rt>さい</rt></ruby>に<ruby>追加<rt>ついか</rt></ruby>したい<ruby>場合<rt>ばあい</rt></ruby>が<ruby>あります<rt>あります</rt></ruby>。もし <code>fromJson</code> を<ruby>直接<rt>ちょくせつ</rt></ruby>こんな<ruby>風<rt>ふう</rt></ruby>に<ruby>書<rt>か</rt></ruby>き<ruby>換<rt>か</rt></ruby>えると：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">factory</span> <span class="token class-name">MyResponse</span><span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>
+  <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+  <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// ここで JSON を先に処理して、</span>
+  <span class="token comment">// 自動生成された反序列化関数に渡したい</span>
+  <span class="token keyword">return</span> _$<span class="token class-name">MyResponseFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><ruby>この<rt>この</rt></ruby>とき、 <ruby>Freezed<rt>Freezed</rt></ruby> や<ruby>内部<rt>ないぶ</rt></ruby>の <code>json_serializable</code> が<ruby>コード<rt>コード</rt></ruby>の<ruby>生成<rt>せいせい</rt></ruby>に<ruby>失敗<rt>しっぱい</rt></ruby>する<ruby>可能性<rt>かのうせい</rt></ruby>が<ruby>出<rt>で</rt></ruby>てきます。<br>
+<strong><ruby>解決<rt>かいけつ</rt></ruby>策<rt>さく</rt></ruby></strong> ： <ruby>対象<rt>たいしょう</rt></ruby>の<ruby>クラス<rt>class</rt></ruby>に <code>@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)</code> を<ruby>加<rt>くわ</rt></ruby>えて、<ruby>正しい<rt>ただ</rt></ruby><ruby>関数<rt>かんすう</rt></ruby><ruby>シグネチャ<rt>signature</rt></ruby>と<ruby>引数<rt>ひきすう</rt></ruby>の<ruby>順序<rt>じゅんじょ</rt></ruby>を<ruby>保<rt>たも</rt></ruby>ちましょう。</p>
+<hr>
+<h2 id="ruby-なぜ-rt-なぜ-rt-ruby-この-ruby-アノテーション-rt-annotation-rt-ruby-で-ruby-上手-rt-うま-rt-ruby-くいくのか？"><ruby>なぜ<rt>なぜ</rt></ruby>この<ruby>アノテーション<rt>annotation</rt></ruby>で<ruby>上手<rt>うま</rt></ruby>くいくのか？</h2>
+<ul>
+<li>
+<p><strong><code>@JsonSerializable(genericArgumentFactories: true)</code></strong><br>
+これは<ruby>内部<rt>ないぶ</rt></ruby>の <code>json_serializable</code> および <ruby>Freezed<rt>Freezed</rt></ruby> に：</p>
+<ol>
+<li>「<ruby>汎用<rt>はんよう</rt></ruby>（<ruby>ジェネリック<rt>generic</rt></ruby>）を<ruby>反序列化<rt>はんじょれつか</rt></ruby>する<ruby>ため<rt>ため</rt></ruby>の<ruby>工場<rt>こうじょう</rt></ruby><ruby>関数<rt>かんすう</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>だ」<br>
+→ <code>T Function(Object?) fromJsonT</code> の<ruby>よう<rt>よう</rt></ruby>な<ruby>形<rt>かたち</rt></ruby>の<ruby>シグネチャ<rt>signature</rt></ruby>を<ruby>対応<rt>たいおう</rt></ruby>できるように<ruby>する<rt>する</rt></ruby>。</li>
+<li>「この<ruby>クラス<rt>class</rt></ruby>は<ruby>追加<rt>ついか</rt></ruby>の<ruby>処理<rt>しょり</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>型<rt>かた</rt></ruby>を<ruby>含<rt>ふく</rt></ruby>む」</li>
+</ol>
+</li>
+<li>
+<p><strong><code>explicitToJson: true</code></strong><br>
+<ruby>主<rt>おも</rt></ruby>に <code>toJson</code> の<ruby>際<rt>さい</rt></ruby>、ネストされた<ruby>オブジェクト<rt>object</rt></ruby>にも<ruby>明示的<rt>めいしてき</rt></ruby>に <code>toJson()</code> を<ruby>呼<rt>よ</rt></ruby>ぶよう<ruby>指示<rt>しじ</rt></ruby>してくれます。そうしないと、<ruby>単純<rt>たんじゅん</rt></ruby>に<ruby>インスタンス<rt>instance</rt></ruby>を<ruby>放<rt>ほう</rt></ruby>り<ruby>込<rt>こ</rt></ruby>むだけで<ruby>不完全<rt>ふかんぜん</rt></ruby>な<ruby>シリアライズ<rt>serialization</rt></ruby>になる<ruby>事<rt>こと</rt></ruby>があります。</p>
+</li>
+</ul>
+<p>この2つの<ruby>パラメータ<rt>parameters</rt></ruby>を<ruby>両方<rt>りょうほう</rt></ruby>オンにしておくことで、 <code>fromJson</code> の<ruby>大括弧<rt>だいかっこ</rt></ruby>+<ruby>独自<rt>どくじ</rt></ruby>ロジックという<ruby>書<rt>か</rt></ruby>き<ruby>方<rt>かた</rt></ruby>にも<ruby>対応<rt>たいおう</rt></ruby>できるようになり、<ruby>大括弧<rt>だいかっこ</rt></ruby>と<ruby>追加<rt>ついか</rt></ruby>ロジックを<ruby>理由<rt>りゆう</rt></ruby>に<ruby>コード<rt>コード</rt></ruby>が<ruby>生成<rt>せいせい</rt></ruby>できなくなる<ruby>問題<rt>もんだい</rt></ruby>が<ruby>解消<rt>かいしょう</rt></ruby>されます。</p>
+<hr>
+<h2 id="ruby-正-rt-ただ-rt-ruby-しい-ruby-例-rt-れい-rt-ruby"><ruby>正<rt>ただ</rt></ruby>しい<ruby>例<rt>れい</rt></ruby></h2>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token metadata function">@JsonSerializable</span><span class="token punctuation">(</span>explicitToJson<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> genericArgumentFactories<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token metadata function">@freezed</span>
+<span class="token keyword">class</span> xxxProjectResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">with</span> _$xxxProjectResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">factory</span> <span class="token function">xxxProjectResponse</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 定义字段...</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=</span> _xxxProjectResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+
+  <span class="token keyword">factory</span> xxxProjectResponse<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>
+    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+    <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ここで独自ロジックを挿入</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>json<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'datas'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      json<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">'datas'</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string-literal"><span class="token string">"item"</span></span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> _$<span class="token function">xxxProjectResponseFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>そのあと、</p>
+<pre class="language-none"><code class="language-none">flutter pub run build_runner build</code></pre>
+<p>を<ruby>実行<rt>じっこう</rt></ruby>すれば <code>xxx_project_response.g.dart</code> が<ruby>正常<rt>せいじょう</rt></ruby>に<ruby>生成<rt>せいせい</rt></ruby>され、 <code>_$xxxProjectResponseFromJson</code> / <code>_$xxxProjectResponseToJson</code> <ruby>関数<rt>かんすう</rt></ruby>などが<ruby>含<rt>ふく</rt></ruby>まれています。</p>
+<hr>
+<h2 id="ruby-重要-rt-じゅうよう-rt-ruby-ポイント-rt-point-rt-ruby-まとめ"><ruby>重要<rt>じゅうよう</rt></ruby>ポイント<rt>point</rt></ruby>まとめ</h2>
+<ol>
+<li><strong><code>fromJson</code> の<ruby>シグネチャ<rt>signature</rt></ruby>は<ruby>自動生成<rt>じどうせいせい</rt></ruby>の<ruby>要件<rt>ようけん</rt></ruby>に<ruby>合致<rt>がっち</rt></ruby>させる</strong></li>
+<li><strong><code>@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)</code> を<ruby>付与<rt>ふよ</rt></ruby>する</strong></li>
+<li><strong>「<ruby>追加<rt>ついか</rt></ruby>ロジック」を <code>_$xxxProjectResponseFromJson</code> の<ruby>中<rt>なか</rt></ruby>には<ruby>直接<rt>ちょくせつ</rt></ruby>書<rt>か</rt>かない</strong></li>
+<li><strong>もし <code>fromJson</code> を<ruby>波括弧<rt>なみかっこ</rt></ruby>にしたくない<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>矢印<rt>やじるし</rt></ruby>（<ruby>アロー<rt>arrow</rt></ruby><ruby>シンタックス<rt>syntax</rt></ruby>）のままにしておき、<ruby>別<rt>べつ</rt></ruby>の<ruby>静的<rt>せいてき</rt></ruby><ruby>メソッド<rt>method</rt></ruby>で<ruby>包<rt>つつ</rt></ruby>む</strong></li>
+<li><strong>もし<ruby>完全<rt>かんぜん</rt></ruby>に <code>fromJson</code> / <code>toJson</code> を<ruby>手書<rt>てが</rt></ruby>きしたいなら、 <code>@Freezed(fromJson: false, toJson: false)</code> <ruby>に<rt>に</rt></ruby>して<ruby>自力<rt>じりき</rt></ruby>で<ruby>書<rt>か</rt></ruby>く</strong></li>
+</ol>
+<hr>
+<h2 id="ruby-結論-rt-けつろん-rt-ruby"><ruby>結論<rt>けつろん</rt></ruby></h2>
+<ul>
+<li>
+<p><ruby>Freezed<rt>Freezed</rt></ruby> + <ruby>ジェネリック<rt>generic</rt></ruby> + <ruby>手動<rt>しゅどう</rt></ruby><ruby>修正<rt>しゅうせい</rt></ruby>した <code>fromJson</code> という<ruby>場面<rt>ばめん</rt></ruby>で：</p>
+<ul>
+<li><code>@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)</code> を<ruby>付<rt>つ</rt></ruby>け、</li>
+<li><ruby>シグネチャ<rt>signature</rt></ruby> / <ruby>引数<rt>ひきすう</rt></ruby>を<ruby>既定<rt>きてい</rt></ruby>どおりに<ruby>揃<rt>そろ</rt></ruby>える</li>
+<li><ruby>大括弧<rt>だいかっこ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>独自<rt>どくじ</rt></ruby>の<ruby>処理<rt>しょり</rt></ruby>を<ruby>追加<rt>ついか</rt></ruby>し、<ruby>最後<rt>さいご</rt></ruby>に <code>_$XXXFromJson(...)</code> を<ruby>呼<rt>よ</rt></ruby>ぶ</li>
+</ul>
+</li>
+<li>
+<p>そうすれば、<ruby>自分<rt>じぶん</rt></ruby>の<ruby>ロジック<rt>logic</rt></ruby>を<ruby>挿入<rt>そうにゅう</rt></ruby>しつつも、<ruby>コード<rt>コード</rt></ruby> <ruby>生成<rt>せいせい</rt></ruby>を<ruby>正常<rt>せいじょう</rt></ruby>に<ruby>継続<rt>けいぞく</rt></ruby>できるようになります。</p>
+</li>
+</ul>
+<h2 id="CN">CN</h2>
+<p>以下是一份关于在 <strong>Freezed</strong> + <strong>泛型</strong> 场景下，如何在 <code>fromJson</code> 中插入自定义逻辑、并确保 <code>.g.dart</code> 文件正常生成的<strong>完整总结</strong>：</p>
+<h3 id="背景">背景</h3>
+<p>在使用 Freezed 来定义一个带泛型的实体类时，通常我们会这样写：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token metadata function">@freezed</span>
+<span class="token keyword">class</span> <span class="token class-name">MyResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">with</span> _$<span class="token class-name">MyResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">factory</span> <span class="token class-name">MyResponse</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=</span> _MyResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+
+  <span class="token keyword">factory</span> <span class="token class-name">MyResponse</span><span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>
+    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+    <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> _$<span class="token class-name">MyResponseFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>然后通过 <code>build_runner</code> 会自动生成 <code>my_response.g.dart</code> 文件（其中包括 <code>_$MyResponseFromJson</code> 等方法）。</p>
+<p>但有时我们需要在反序列化时插入一些业务逻辑（例如：检查、补全、打印日志、异常处理等）。如果我们直接把 <code>fromJson</code> 写成：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">factory</span> <span class="token class-name">MyResponse</span><span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>
+  <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+  <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 我想在这里先处理一波 JSON</span>
+  <span class="token comment">// 再把它交给自动生成的反序列化函数</span>
+  <span class="token keyword">return</span> _$<span class="token class-name">MyResponseFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>就有可能导致 <strong>Freezed</strong> 或底层的 <code>json_serializable</code> 生成代码失败。<br>
+<strong>解决方法</strong>：给该类添加 <code>@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)</code>，并且保持正确的函数签名和参数顺序。</p>
+<h3 id="为什么会失败？">为什么会失败？</h3>
+<ul>
+<li>当我们开启了 <strong><code>genericArgumentFactories: true</code></strong>，生成器就必须帮“泛型”生成对应的反序列化方法签名（带 <code>T Function(Object?) fromJsonT</code>）。</li>
+<li><strong>Freezed</strong>（基于 <code>json_serializable</code>）对 <code>fromJson</code> 的解析十分严格：
+<ol>
+<li>函数签名必须符合预期（包括参数名称、类型、顺序）。</li>
+<li>如果不是箭头函数而是大括号，生成器默认会“先读”我们手写的逻辑，再结合自动逻辑，看是否能完美拼装。稍有不一致，就会导致解析失败。</li>
+</ol>
+</li>
+</ul>
+<p>加上 <code>@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)</code> 可以让 <code>json_serializable</code> 知道这个类在序列化时需要对泛型和嵌套对象进行处理，也允许我们在 <code>fromJson</code> 里写大括号并添加手动处理，不会破坏生成器对签名的识别。</p>
+<h3 id="正确示例">正确示例</h3>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:freezed_annotation/freezed_annotation.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">part</span> <span class="token string-literal"><span class="token string">'xxx_project_response.freezed.dart'</span></span><span class="token punctuation">;</span>
+<span class="token keyword">part</span> <span class="token string-literal"><span class="token string">'xxx_project_response.g.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token comment">// 核心：在类上加这个注解</span>
+<span class="token metadata function">@JsonSerializable</span><span class="token punctuation">(</span>explicitToJson<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> genericArgumentFactories<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token metadata function">@freezed</span>
+<span class="token keyword">class</span> xxxProjectResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">with</span> _$xxxProjectResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">factory</span> <span class="token function">xxxProjectResponse</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 定义字段...</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=</span> _xxxProjectResponse<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+
+  <span class="token comment">// fromJson 大括号版本</span>
+  <span class="token keyword">factory</span> xxxProjectResponse<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>
+    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+    <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 在这里插入自定义逻辑</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>json<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'datas'</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      json<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">'datas'</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string-literal"><span class="token string">"item"</span></span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> _$<span class="token function">xxxProjectResponseFromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>然后执行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">flutter pub run build_runner build</code></pre>
+<p>就能正常生成 <code>xxx_project_response.g.dart</code>，并包含 <code>_$xxxProjectResponseFromJson</code>、<code>_$xxxProjectResponseToJson</code> 等方法。</p>
+<hr>
+<h3 id="关键点总结">关键点总结</h3>
+<ol>
+<li>
+<p><strong><code>@JsonSerializable(genericArgumentFactories: true)</code> 必须有</strong></p>
+<ul>
+<li>告诉生成器要为泛型 <code>T</code> 生成（反）序列化所需的工厂函数。</li>
+<li>没有这个，带泛型的 <code>fromJson</code> 往往会引起冲突或直接失败。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>@JsonSerializable(explicitToJson: true)</code> 一般也推荐</strong></p>
+<ul>
+<li>保证嵌套对象也会自动调用它们的 <code>toJson()</code>，而不是直接把对象插入到 JSON 中。</li>
+<li>特别是当你的泛型类型或其他字段包含更多可序列化对象时，很有必要。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>fromJson</code> 的函数签名和 <code>_...FromJson</code> 必须一致</strong></p>
+<ul>
+<li>保证：<code>factory MyResponse.fromJson(Map&lt;String, dynamic&gt; json, T Function(Object?) fromJsonT)</code></li>
+<li>保持这两个参数，且名字、类型不能乱改。</li>
+<li>最后 <code>return _$MyResponseFromJson(json, fromJsonT);</code> 调用自动生成的函数。</li>
+</ul>
+</li>
+<li>
+<p><strong>如果你不想在 <code>fromJson</code> 里加大括号</strong>，也可以先保留箭头函数，让生成器把 <code>_$FromJson</code> 生成好，然后你再创建一个新的静态方法来做处理：</p>
+<pre class="language-dart" data-language="dart"><code class="language-dart"><span class="token keyword">static</span> <span class="token class-name">MyResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> fromJsonWithLog<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>
+  <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">dynamic</span><span class="token punctuation">></span></span> json<span class="token punctuation">,</span>
+  <span class="token class-name">T</span> <span class="token class-name">Function</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token operator">?</span><span class="token punctuation">)</span> fromJsonT<span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'json: </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">json</span></span><span class="token string">'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token class-name">MyResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> fromJsonT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>这样就更简单，不会破坏生成器的默认识别。</p>
+</li>
+<li>
+<p><strong>如果想彻底自己写 <code>fromJson</code> / <code>toJson</code></strong>（不依赖自动生成），可以把 <code>@Freezed(fromJson: false, toJson: false)</code> 关掉自动生成，然后完全手写。但这样就失去了 Freezed 对序列化的辅助，需要你自己处理所有字段、泛型转换等逻辑。</p>
+</li>
+</ol>
+<h3 id="结论">结论</h3>
+<ul>
+<li><strong>在使用 Freezed + 泛型 + 手动修改 <code>fromJson</code> 的场景下</strong>：
+<ul>
+<li>加上 <code>@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)</code>，</li>
+<li>签名/参数保持一致，</li>
+<li>大括号里写你的<strong>自定义逻辑</strong>再调用 <code>_$XXXFromJson(...)</code>。</li>
+</ul>
+</li>
+<li>这样就能既插入自定义逻辑，又保持代码生成正常。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Flutter/" rel="tag"># Flutter</a>
+              <a href="/tags/Freezed/" rel="tag"># Freezed</a>
+              <a href="/tags/JsonSerializable/" rel="tag"># JsonSerializable</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Flutter%20Provider's%20state%20error/" rel="prev" title="Flutter Provider's state error">
+                  <i class="fa fa-angle-left"></i> Flutter Provider's state error
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/MacBook%20Air%20M4/" rel="next" title="MacBook Air M4">
+                  MacBook Air M4 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

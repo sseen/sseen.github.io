@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="问题描述 在 Android WebView 中，点击列表底部的隐藏复选框时，页面会突然向上滚动。同样的代码在 iOS 上正常运行，且另一个相似的页面也没有这个问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android WebView Checkbox 点击导致页面滚动问题分析">
+<meta property="og:url" content="https://sseen.github.io/Android%20WebView%20Checkbox%20%E7%82%B9%E5%87%BB%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%BB%9A%E5%8A%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="问题描述 在 Android WebView 中，点击列表底部的隐藏复选框时，页面会突然向上滚动。同样的代码在 iOS 上正常运行，且另一个相似的页面也没有这个问题。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-31T17:27:39.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.838Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Android%20WebView%20Checkbox%20%E7%82%B9%E5%87%BB%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%BB%9A%E5%8A%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Android%20WebView%20Checkbox%20%E7%82%B9%E5%87%BB%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%BB%9A%E5%8A%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/","path":"Android WebView Checkbox 点击导致页面滚动问题分析/","title":"Android WebView Checkbox 点击导致页面滚动问题分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android WebView Checkbox 点击导致页面滚动问题分析 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">根本原因分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E7%AB%9E%E4%BA%89%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">时序竞争问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E6%96%B9%E5%BC%8F%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.2.</span> <span class="nav-text">事件绑定方式的影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-click-%E6%AF%94-appxxxClick-%E6%9B%B4%E6%9C%89%E6%95%88"><span class="nav-number">3.</span> <span class="nav-text">为什么 (click) 比 appxxxClick 更有效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%881%EF%BC%9A%E5%8E%9F%E7%94%9F-click-%E4%BA%8B%E4%BB%B6-preventDefault%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">方案1：原生 click 事件 + preventDefault（推荐）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%882%EF%BC%9A%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%E5%88%B0%E5%AE%B9%E5%99%A8"><span class="nav-number">4.2.</span> <span class="nav-text">方案2：事件委托到容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%B4%9E%E5%AF%9F"><span class="nav-number">5.</span> <span class="nav-text">关键洞察</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">最佳实践</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Android%20WebView%20Checkbox%20%E7%82%B9%E5%87%BB%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%BB%9A%E5%8A%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android WebView Checkbox 点击导致页面滚动问题分析 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android WebView Checkbox 点击导致页面滚动问题分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-31 17:27:39" itemprop="dateCreated datePublished" datetime="2025-10-31T17:27:39+00:00">2025-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="问题描述">问题描述</h2>
+<p>在 Android WebView 中，点击列表底部的隐藏复选框时，页面会突然向上滚动。同样的代码在 iOS 上正常运行，且另一个相似的页面也没有这个问题。</p>
+<h2 id="根本原因分析">根本原因分析</h2>
+<h3 id="时序竞争问题">时序竞争问题</h3>
+<pre class="language-none"><code class="language-none">0ms:     用户触摸
+5ms:     &lt;input&gt; 获得焦点
+10ms:    Android WebView 触发自动滚动（确保元素可见）
+300ms:   自定义指令 (debounceTime) 才执行用户代码
+         此时滚动已完成，恢复操作已太晚</code></pre>
+<p>关键点：Android WebView 会在 <code>&lt;input&gt;</code> 聚焦时自动调用 <code>scrollIntoView()</code>，而 iOS 不会。</p>
+<h3 id="事件绑定方式的影响">事件绑定方式的影响</h3>
+<p><strong>问题代码</strong>：事件直接绑定在组件上</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-checkbox-round</span> <span class="token attr-name">(appxxxClick)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>onSelectedChange(item)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token comment">&lt;!-- 内部包含 &lt;input type="checkbox" class="sr-only"> --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-checkbox-round</span><span class="token punctuation">></span></span></code></pre>
+<p>→ 直接点击 <code>&lt;input&gt;</code>，触发聚焦 → 浏览器滚动</p>
+<p><strong>正常代码</strong>：事件委托给外层容器</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">(appxxxClick)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>onSelectedChange(item)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-checkbox-round</span><span class="token punctuation">></span></span><span class="token comment">&lt;!-- ... --></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-checkbox-round</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>→ 点击容器而非 <code>&lt;input&gt;</code>，浏览器不会强制聚焦 → 无滚动</p>
+<h2 id="为什么-click-比-appxxxClick-更有效">为什么 <code>(click)</code> 比 <code>appxxxClick</code> 更有效</h2>
+<p><code>appxxxClick</code> 使用 <code>debounceTime(300)</code> 防抖，代码执行时机晚到来不及阻止滚动。原生 <code>(click)</code> 事件立即响应，能在浏览器默认行为前插手。</p>
+<h2 id="解决方案">解决方案</h2>
+<h3 id="方案1：原生-click-事件-preventDefault（推荐）">方案1：原生 click 事件 + preventDefault（推荐）</h3>
+<pre class="language-typescript" data-language="typescript"><code class="language-typescript"><span class="token function">onSelectedChange</span><span class="token punctuation">(</span>event<span class="token operator">:</span> Event<span class="token punctuation">,</span> item<span class="token operator">:</span> Item<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 阻止 input 聚焦</span>
+  event<span class="token punctuation">.</span><span class="token function">stopPropagation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  
+  <span class="token comment">// 业务逻辑</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleItemToggle</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-checkbox-round</span> <span class="token attr-name">(click)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>onSelectedChange($event, item)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-checkbox-round</span><span class="token punctuation">></span></span></code></pre>
+<h3 id="方案2：事件委托到容器">方案2：事件委托到容器</h3>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">(appxxxClick)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>onSelectedChange(item)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-checkbox-round</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-checkbox-round</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>不是很准确这个方案</p>
+<pre class="language-none"><code class="language-none">两边代码“看起来一样”但行为仍然不同，说明真正的差异不在 Checkbox 那一层，而在页面容器的结构和滚动上下文。关键点有两个：
+
+- &#96;a-list&#96; 的滚动容器是 &#96;grid&#96; 布局里用 &#96;calc(100vh - …)&#96; 算出来的高度，有底部固定按钮、再加上外层 &#96;overflow:hidden&#96; 的结构。这种布局会让 Android WebView 在计算“元素是否在可视区”时更敏感，一旦它想聚焦到隐藏的 &#96;&lt;input&gt;&#96;，滚动保护就被触发。
+
+- &#96;b-result&#96; 则是整个页面 &#96;position:fixed&#96; + &#96;flex-column&#96;，可滚动区是简单的 &#96;flex:1&#96;。浏览器更容易判断“已在视口中”，所以没有触发同样的滚动。再加上它本地直接修改 &#96;isChecked&#96;，重渲染发生得更早，进一步压盖了浏览器的默认行为。
+
+所以，即便 Checkbox 周围的 DOM 结构你已经对齐了，滚动容器的布局方式仍然不同，Android WebView 的焦点逻辑仍然能被触发。要彻底避免这个问题，只能在事件上主动 &#96;preventDefault()&#96;&#x2F;&#96;stopPropagation()&#96;，或者改成原生 &#96;(click)&#96; 并阻止默认行为，提前终止浏览器那条“聚焦→滚动”的链路，这是唯一不依赖外部布局细节的确定性方案。</code></pre>
+<h2 id="关键洞察">关键洞察</h2>
+<ol>
+<li>
+<p><strong>事件目标很重要</strong>：直接与 <code>&lt;input&gt;</code> 交互 vs 与容器交互，WebView 的处理逻辑完全不同。</p>
+</li>
+<li>
+<p><strong>指令延迟带来的风险</strong>：自定义指令的 300ms 防抖让我们无法及时拦截浏览器的默认行为，原生事件更可控。</p>
+</li>
+<li>
+<p><strong>隐藏元素仍可聚焦</strong>：<code>&lt;input class=&quot;sr-only&quot;&gt;</code> 虽然不可见，但浏览器仍会在聚焦时滚动。</p>
+</li>
+<li>
+<p><strong>平台差异需测试</strong>：同样的代码在不同平台表现迥异，需在真实设备上验证关键交互。</p>
+</li>
+</ol>
+<h2 id="最佳实践">最佳实践</h2>
+<ul>
+<li>对包含隐藏表单元素的组件，优先使用原生事件而非自定义防抖指令。</li>
+<li>在事件处理函数开始立即调用 <code>preventDefault()</code>，确定性地阻止浏览器默认行为。</li>
+<li>将交互事件绑定到&quot;稳定&quot;的容器（不会被聚焦的 div），而不是表单元素。</li>
+<li>在 Android 低端设备上充分测试，这些问题往往更明显。</li>
+</ul>
+<hr>
+<p><strong>结论</strong>：理解浏览器与 WebView 的焦点和滚动机制，选择合适的事件绑定方式和时序控制，是解决跨平台兼容问题的关键。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/Web/" rel="tag"># Web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E7%A7%BB%E5%8A%A8%E7%AB%AF%20WebView%20%E7%82%B9%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/" rel="prev" title="移动端 WebView 点击穿透问题解决方案">
+                  <i class="fa fa-angle-left"></i> 移动端 WebView 点击穿透问题解决方案
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/VSCode%20Angular%E5%AE%8C%E6%95%B4%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" rel="next" title="Cursor/VSCode Angular完整开发环境配置指南">
+                  Cursor/VSCode Angular完整开发环境配置指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

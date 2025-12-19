@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言就不多说了，又踏入了一个新的领域，半个多月玩下来，不得不说微软这个做的真不错，完全捆绑增强平台的优势。 不过这种拖拽配置式的方式，让我想起刚毕业的时候做的一个应用，也是拖拽的，给信用社做的贷款还是什么的，很像。 没有代码的优势明显在于不方便调试和版本控制。 棘手的问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PowerPlatform">
+<meta property="og:url" content="https://sseen.github.io/PowerPlatform/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="前言就不多说了，又踏入了一个新的领域，半个多月玩下来，不得不说微软这个做的真不错，完全捆绑增强平台的优势。 不过这种拖拽配置式的方式，让我想起刚毕业的时候做的一个应用，也是拖拽的，给信用社做的贷款还是什么的，很像。 没有代码的优势明显在于不方便调试和版本控制。 棘手的问题">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-26T00:14:22.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.825Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="PowerPlatform">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/PowerPlatform/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/PowerPlatform/","path":"PowerPlatform/","title":"PowerPlatform"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PowerPlatform | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%98%E6%89%8B%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">棘手的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E6%8E%A7%E5%88%B6-approval-%E7%9A%84%E5%AE%A1%E6%89%B9%E7%8A%B6%E6%80%81%EF%BC%8C%E7%9B%B4%E6%8E%A5%E6%9B%B4%E6%94%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%BF%85%E9%A1%BB%E7%94%B1%E7%94%A8%E6%88%B7%E7%82%B9%E5%87%BB"><span class="nav-number">1.1.</span> <span class="nav-text">如何直接控制 approval 的审批状态，直接更改，而不是必须由用户点击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-component-%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">使用 component 功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%8F%91%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">新发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8-automate-%E6%9D%A5%E7%AE%A1%E7%90%86-list-%E7%9A%84%E6%9D%83%E9%99%90%EF%BC%8C%E8%AE%A9%E6%8C%87%E5%AE%9A%E7%9A%84%E7%BB%84%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%85%A8%E9%83%A8%EF%BC%8C%E5%85%B6%E4%BB%96%E5%8F%AA%E8%83%BD%E8%87%AA%E5%B7%B1%E7%9C%8B"><span class="nav-number">2.1.</span> <span class="nav-text">用 automate 来管理 list 的权限，让指定的组可以看全部，其他只能自己看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#power-pages"><span class="nav-number">2.2.</span> <span class="nav-text">power pages</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/PowerPlatform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PowerPlatform | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PowerPlatform
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-26 00:14:22" itemprop="dateCreated datePublished" datetime="2024-09-26T00:14:22+00:00">2024-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前言就不多说了，又踏入了一个新的领域，半个多月玩下来，不得不说微软这个做的真不错，完全捆绑增强平台的优势。<br>
+不过这种拖拽配置式的方式，让我想起刚毕业的时候做的一个应用，也是拖拽的，给信用社做的贷款还是什么的，很像。<br>
+没有代码的优势明显在于不方便调试和版本控制。</p>
+<h2 id="棘手的问题">棘手的问题</h2>
+<h3 id="如何直接控制-approval-的审批状态，直接更改，而不是必须由用户点击">如何直接控制 approval 的审批状态，直接更改，而不是必须由用户点击</h3>
+<p>看来没有这方面的 api 可用，两个代替案</p>
+<ul>
+<li>使用 create approval 后的 response link，这个用 launch 可以直接跳转网页审核</li>
+<li>使用 approval table，这样会用到 premium 功能</li>
+</ul>
+<h3 id="使用-component-功能">使用 component 功能</h3>
+<p>还是方便的，既可以定义 output 属性和方法，这样外部调用很方便<br>
+还有就是，component 的 set 全局变量和外部的不通</p>
+<h2 id="新发现">新发现</h2>
+<h3 id="用-automate-来管理-list-的权限，让指定的组可以看全部，其他只能自己看">用 automate 来管理 list 的权限，让指定的组可以看全部，其他只能自己看</h3>
+<p>可以使用 <code>Grant access to an item or a folder</code> 和 <code>Stop sharing an item or a file</code> 用 automate 来管理 list 的权限，让指定的组可以看全部，其他只能自己看。可以试试看。</p>
+<h3 id="power-pages">power pages</h3>
+<p>power pages 真是个好东西，结合了JavaScript的能力，然后接入到微软的生态里，又摆脱了low code的束缚，可以直接用 js 来操作。怪不得费用这么高，看来有用的好用的东西价格是最明显的区分。就像年末打折的东西，原价高的那必须是好过原价低的哈哈。</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://www.matthewdevaney.com/power-automate-approval-history-for-sharepoint-files-items/">https://www.matthewdevaney.com/power-automate-approval-history-for-sharepoint-files-items/</a><br>
+直接更改的方式<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7UKEGqt77z0">Cancel Approvals in PowerApps - approvals in power automate</a><br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiankang66/article/details/116594769">Power Apps 配置安全角色和对象权限_power apps 添加访问权限-CSDN 博客</a><br>
+<a target="_blank" rel="noopener" href="https://www.laitimes.com/zh/article/4kysr_51jv4.html">如何实现 sharepoint List 提交 Item 后自动分配权限？如何实现 sharepoint List 提交 Item 后自动分配权限？具体步骤：Step 1: 在 Team Site 中创建专门的一个 Weekly Report ListStep 2: 启动 Power Automate 创建自动化流 Step 3:选择站点地址及列表名称 Step 4: 添加操作：SharePoint，停止共享项目或文件 Step5: 重新授予 Item 权限 Step6: 保存并测试流 - 天天看点</a><br>
+跳转 automate 历史操作页面，专有操作页面<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=0U5jax-zMIc">Leave Request Power Apps Template - SharePoint</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PowerPlatform/" rel="tag"># PowerPlatform</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ReactNative/" rel="prev" title="ReactNative">
+                  <i class="fa fa-angle-left"></i> ReactNative
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E6%96%B0%E9%BC%A0%E6%A0%87%E4%BA%88%E5%AE%9A/" rel="next" title="新鼠标予定">
+                  新鼠标予定 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

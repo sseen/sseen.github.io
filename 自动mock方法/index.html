@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在 Vue 前端项目中实现自动存储 Mock 数据，并在无网络环境下切换到 Mock 数据，可以提升应用的可靠性和用户体验。以下是一个综合的解决方案，结合 Axios 拦截器 和 本地存储（如 IndexedDB），实现自动捕获和存储 API 响应，并在网络不可用时使用存储的 Mock 数据。 解决方案概述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动mock方法">
+<meta property="og:url" content="https://sseen.github.io/%E8%87%AA%E5%8A%A8mock%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="在 Vue 前端项目中实现自动存储 Mock 数据，并在无网络环境下切换到 Mock 数据，可以提升应用的可靠性和用户体验。以下是一个综合的解决方案，结合 Axios 拦截器 和 本地存储（如 IndexedDB），实现自动捕获和存储 API 响应，并在网络不可用时使用存储的 Mock 数据。 解决方案概述">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-09T09:52:27.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.826Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="mock">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/%E8%87%AA%E5%8A%A8mock%E6%96%B9%E6%B3%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/%E8%87%AA%E5%8A%A8mock%E6%96%B9%E6%B3%95/","path":"自动mock方法/","title":"自动mock方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>自动mock方法 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">解决方案概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">详细实现步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.</span> <span class="nav-text">1. 安装必要的依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE-LocalForage"><span class="nav-number">2.2.</span> <span class="nav-text">2. 配置 LocalForage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%AE%BE%E7%BD%AE-Axios-%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">3. 设置 Axios 拦截器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%9C%A8-Vue-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8-Axios-%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">4. 在 Vue 项目中使用 Axios 实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%A4%84%E7%90%86%E7%BD%91%E7%BB%9C%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">5. 处理网络状态变化（可选）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%EF%BC%88%E9%AB%98%E7%BA%A7%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">6. 缓存失效与数据同步（高级）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E9%80%89%E6%96%B9%E6%A1%88%EF%BC%9A%E4%BD%BF%E7%94%A8-Service-Worker-%E5%92%8C-Cache-API"><span class="nav-number">3.</span> <span class="nav-text">备选方案：使用 Service Worker 和 Cache API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/%E8%87%AA%E5%8A%A8mock%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="自动mock方法 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自动mock方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-09 09:52:27" itemprop="dateCreated datePublished" datetime="2024-12-09T09:52:27+00:00">2024-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在 Vue 前端项目中实现自动存储 Mock 数据，并在无网络环境下切换到 Mock 数据，可以提升应用的可靠性和用户体验。以下是一个综合的解决方案，结合 <strong>Axios 拦截器</strong> 和 <strong>本地存储（如 IndexedDB）</strong>，实现自动捕获和存储 API 响应，并在网络不可用时使用存储的 Mock 数据。</p>
+<h3 id="解决方案概述">解决方案概述</h3>
+<ol>
+<li>
+<p><strong>使用 Axios 拦截器</strong>：</p>
+<ul>
+<li><strong>响应拦截器</strong>：在正常网络情况下，拦截 API 响应并将数据存储到本地。</li>
+<li><strong>请求拦截器</strong>：在检测到网络不可用时，从本地存储中获取对应的 Mock 数据，返回给前端。</li>
+</ul>
+</li>
+<li>
+<p><strong>本地存储选择</strong>：</p>
+<ul>
+<li>使用 <strong>IndexedDB</strong>（通过 <a target="_blank" rel="noopener" href="https://github.com/localForage/localForage">localForage</a> 封装）来高效地存储和检索大量数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>网络状态检测</strong>：</p>
+<ul>
+<li>使用浏览器的 <code>navigator.onLine</code> 属性和 <code>window</code> 事件监听器来检测网络状态变化。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据同步（可选）</strong>：</p>
+<ul>
+<li>在网络恢复后，可以选择性地同步本地存储的数据与后端。</li>
+</ul>
+</li>
+</ol>
+<h3 id="详细实现步骤">详细实现步骤</h3>
+<h4 id="1-安装必要的依赖">1. 安装必要的依赖</h4>
+<p>首先，安装 <strong>Axios</strong> 和 <strong>localForage</strong>：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> axios localforage</code></pre>
+<h4 id="2-配置-LocalForage">2. 配置 LocalForage</h4>
+<p>创建一个 <code>storage.js</code> 文件，用于配置和导出 LocalForage 实例：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// src/utils/storage.js</span>
+<span class="token keyword">import</span> localforage <span class="token keyword">from</span> <span class="token string">'localforage'</span>
+
+localforage<span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'vue-app'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">storeName</span><span class="token operator">:</span> <span class="token string">'api_responses'</span><span class="token punctuation">,</span> <span class="token comment">// 数据库名称</span>
+  <span class="token literal-property property">description</span><span class="token operator">:</span> <span class="token string">'Store API responses for offline use'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> localforage</code></pre>
+<h4 id="3-设置-Axios-拦截器">3. 设置 Axios 拦截器</h4>
+<p>在项目中创建一个 <code>axios.js</code> 文件，配置 Axios 实例及其拦截器：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// src/utils/axios.js</span>
+<span class="token keyword">import</span> axios <span class="token keyword">from</span> <span class="token string">'axios'</span>
+<span class="token keyword">import</span> storage <span class="token keyword">from</span> <span class="token string">'./storage'</span>
+
+<span class="token comment">// 创建 Axios 实例</span>
+<span class="token keyword">const</span> apiClient <span class="token operator">=</span> axios<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">baseURL</span><span class="token operator">:</span> <span class="token string">'/api'</span><span class="token punctuation">,</span> <span class="token comment">// 根据实际情况配置</span>
+  <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span> <span class="token comment">// 请求超时时间</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 请求拦截器</span>
+apiClient<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>request<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>navigator<span class="token punctuation">.</span>onLine<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 网络不可用，尝试从本地存储获取数据</span>
+    <span class="token keyword">const</span> key <span class="token operator">=</span> <span class="token function">generateCacheKey</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> cachedResponse <span class="token operator">=</span> <span class="token keyword">await</span> storage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cachedResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// 使用 Axios 的自定义适配器返回模拟响应</span>
+      config<span class="token punctuation">.</span><span class="token function-variable function">adapter</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+          <span class="token literal-property property">data</span><span class="token operator">:</span> cachedResponse<span class="token punctuation">.</span>data<span class="token punctuation">,</span>
+          <span class="token literal-property property">status</span><span class="token operator">:</span> cachedResponse<span class="token punctuation">.</span>status<span class="token punctuation">,</span>
+          <span class="token literal-property property">statusText</span><span class="token operator">:</span> <span class="token string">'OK'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">headers</span><span class="token operator">:</span> cachedResponse<span class="token punctuation">.</span>headers<span class="token punctuation">,</span>
+          config<span class="token punctuation">,</span>
+          <span class="token literal-property property">request</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> config
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 响应拦截器</span>
+apiClient<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">response</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>navigator<span class="token punctuation">.</span>onLine<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 网络可用，存储响应数据</span>
+    <span class="token keyword">const</span> key <span class="token operator">=</span> <span class="token function">generateCacheKey</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>config<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> dataToStore <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">data</span><span class="token operator">:</span> response<span class="token punctuation">.</span>data<span class="token punctuation">,</span>
+      <span class="token literal-property property">status</span><span class="token operator">:</span> response<span class="token punctuation">.</span>status<span class="token punctuation">,</span>
+      <span class="token literal-property property">headers</span><span class="token operator">:</span> response<span class="token punctuation">.</span>headers<span class="token punctuation">,</span>
+      <span class="token literal-property property">timestamp</span><span class="token operator">:</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 可选：用于缓存失效控制</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">await</span> storage<span class="token punctuation">.</span><span class="token function">setItem</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> dataToStore<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> response
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 辅助函数：生成缓存键</span>
+<span class="token keyword">function</span> <span class="token function">generateCacheKey</span><span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 可以根据需要自定义键的生成逻辑</span>
+  <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>config<span class="token punctuation">.</span>method<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">_</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>config<span class="token punctuation">.</span>url<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">_</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>params <span class="token operator">||</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">_</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>data <span class="token operator">||</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> apiClient</code></pre>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>
+<p><strong>请求拦截器</strong>：在每次请求前检查网络状态。如果网络不可用，尝试从本地存储中获取对应的响应数据，并通过自定义适配器返回该数据，避免实际发起网络请求。</p>
+</li>
+<li>
+<p><strong>响应拦截器</strong>：在网络可用时，拦截所有成功的响应，并将响应数据存储到本地，以备后续离线使用。</p>
+</li>
+<li>
+<p><strong>缓存键生成</strong>：确保每个 API 请求对应一个唯一的缓存键，通常基于请求的 URL、方法、参数和数据。</p>
+</li>
+</ul>
+<h4 id="4-在-Vue-项目中使用-Axios-实例">4. 在 Vue 项目中使用 Axios 实例</h4>
+<p>在 <code>main.js</code> 中引入并配置 Axios 实例：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// src/main.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> createApp <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">'./App.vue'</span>
+<span class="token keyword">import</span> apiClient <span class="token keyword">from</span> <span class="token string">'./utils/axios'</span>
+
+<span class="token comment">// 将 Axios 实例挂载到全局，便于在组件中使用</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">.</span>globalProperties<span class="token punctuation">.</span>$api <span class="token operator">=</span> apiClient
+
+app<span class="token punctuation">.</span><span class="token function">mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span></code></pre>
+<p>在组件中使用 Axios：</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click&#x3D;&quot;fetchUser&quot;&gt;获取用户信息&lt;&#x2F;button&gt;
+    &lt;div v-if&#x3D;&quot;user&quot;&gt;
+      &lt;p&gt;ID: &#123;&#123; user.id &#125;&#125;&lt;&#x2F;p&gt;
+      &lt;p&gt;姓名: &#123;&#123; user.name &#125;&#125;&lt;&#x2F;p&gt;
+    &lt;&#x2F;div&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+export default &#123;
+  data() &#123;
+    return &#123;
+      user: null,
+    &#125;
+  &#125;,
+  methods: &#123;
+    async fetchUser() &#123;
+      try &#123;
+        const response &#x3D; await this.$api.get(&#39;&#x2F;user&#39;)
+        this.user &#x3D; response.data
+      &#125; catch (error) &#123;
+        console.error(&#39;获取用户信息失败:&#39;, error)
+      &#125;
+    &#125;
+  &#125;
+&#125;
+&lt;&#x2F;script&gt;</code></pre>
+<h4 id="5-处理网络状态变化（可选）">5. 处理网络状态变化（可选）</h4>
+<p>为了提升用户体验，可以监听网络状态的变化，并在 UI 上给予提示：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// src/utils/network.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> reactive <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue'</span>
+
+<span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">online</span><span class="token operator">:</span> navigator<span class="token punctuation">.</span>onLine
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'online'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  state<span class="token punctuation">.</span>online <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'offline'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  state<span class="token punctuation">.</span>online <span class="token operator">=</span> <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> state</code></pre>
+<p>在组件中使用：</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
+  &lt;div&gt;
+    &lt;div v-if&#x3D;&quot;!network.online&quot; class&#x3D;&quot;offline-banner&quot;&gt;
+      当前处于离线状态，部分功能可能无法使用。
+    &lt;&#x2F;div&gt;
+    &lt;!-- 其他内容 --&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import network from &#39;@&#x2F;utils&#x2F;network&#39;
+
+export default &#123;
+  setup() &#123;
+    return &#123;
+      network
+    &#125;
+  &#125;
+&#125;
+&lt;&#x2F;script&gt;
+
+&lt;style&gt;
+.offline-banner &#123;
+  background-color: #ffcc00;
+  padding: 10px;
+  text-align: center;
+&#125;
+&lt;&#x2F;style&gt;</code></pre>
+<h4 id="6-缓存失效与数据同步（高级）">6. 缓存失效与数据同步（高级）</h4>
+<p>为了避免长期使用过时的 Mock 数据，可以设置缓存的失效时间。例如，设置每条缓存数据的有效期为 7 天：</p>
+<p>修改 <code>axios.js</code> 中的响应拦截器：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 在存储数据时添加 timestamp</span>
+<span class="token keyword">const</span> dataToStore <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">data</span><span class="token operator">:</span> response<span class="token punctuation">.</span>data<span class="token punctuation">,</span>
+  <span class="token literal-property property">status</span><span class="token operator">:</span> response<span class="token punctuation">.</span>status<span class="token punctuation">,</span>
+  <span class="token literal-property property">headers</span><span class="token operator">:</span> response<span class="token punctuation">.</span>headers<span class="token punctuation">,</span>
+  <span class="token literal-property property">timestamp</span><span class="token operator">:</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 在请求拦截器中检查缓存是否过期</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>cachedResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> cacheDuration <span class="token operator">=</span> <span class="token number">7</span> <span class="token operator">*</span> <span class="token number">24</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000</span> <span class="token comment">// 7 天</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> cachedResponse<span class="token punctuation">.</span>timestamp <span class="token operator">&lt;</span> cacheDuration<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 缓存有效，使用缓存</span>
+    config<span class="token punctuation">.</span><span class="token function-variable function">adapter</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">data</span><span class="token operator">:</span> cachedResponse<span class="token punctuation">.</span>data<span class="token punctuation">,</span>
+        <span class="token literal-property property">status</span><span class="token operator">:</span> cachedResponse<span class="token punctuation">.</span>status<span class="token punctuation">,</span>
+        <span class="token literal-property property">statusText</span><span class="token operator">:</span> <span class="token string">'OK'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">headers</span><span class="token operator">:</span> cachedResponse<span class="token punctuation">.</span>headers<span class="token punctuation">,</span>
+        config<span class="token punctuation">,</span>
+        <span class="token literal-property property">request</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 缓存过期，删除缓存</span>
+    storage<span class="token punctuation">.</span><span class="token function">removeItem</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><strong>数据同步</strong>：</p>
+<p>在网络恢复后，可以选择自动同步本地数据与后端，或提示用户手动刷新数据。实现方式视具体需求而定。</p>
+<h3 id="备选方案：使用-Service-Worker-和-Cache-API">备选方案：使用 Service Worker 和 Cache API</h3>
+<p>如果项目已经使用了 Service Worker（如通过 Vue CLI PWA 插件），可以进一步利用 Service Worker 的拦截和缓存能力，实现更复杂的离线支持。</p>
+<p><strong>步骤概述</strong>：</p>
+<ol>
+<li><strong>注册 Service Worker</strong>。</li>
+<li><strong>在 Service Worker 中拦截 API 请求</strong>。</li>
+<li><strong>实现网络优先或缓存优先策略</strong>。</li>
+<li><strong>存储 API 响应到 Cache Storage</strong>。</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>更底层的拦截和缓存机制。</li>
+<li>支持离线应用的更多功能（如离线页面、资源缓存等）。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>实现复杂度较高。</li>
+<li>需要更深入的 Service Worker 知识。</li>
+</ul>
+<p><strong>推荐工具</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/workbox">Workbox</a>：Google 提供的强大工具库，用于简化 Service Worker 的开发。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>通过结合 <strong>Axios 拦截器</strong> 和 <strong>本地存储（如 IndexedDB via localForage）</strong>，可以实现以下功能：</p>
+<ul>
+<li><strong>自动捕获和存储</strong>：在正常网络环境下，自动拦截并存储所有 API 响应数据。</li>
+<li><strong>离线访问</strong>：在网络不可用时，自动从本地存储中提取相应的 Mock 数据，确保应用的基本功能不受影响。</li>
+<li><strong>缓存管理</strong>：通过设置缓存的有效期和同步策略，确保数据的时效性和一致性。</li>
+</ul>
+<p>这种方法无需引入额外的 Mock 服务或工具，直接在前端实现，适合需要动态生成和更新 Mock 数据的场景。同时，结合 Vue 的响应式特性和用户界面提示，可以为用户提供流畅的离线体验。</p>
+<p>希望这个解决方案能满足你的需求，提升 Vue 前端项目在不同网络环境下的表现！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/mock/" rel="tag"># mock</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/JAVASCRIPT%20JSON%E6%98%A0%E5%B0%84/" rel="prev" title="JAVASCRIPT JSON映射">
+                  <i class="fa fa-angle-left"></i> JAVASCRIPT JSON映射
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Vue%E5%9F%BA%E6%9C%AC/" rel="next" title="Vue基本">
+                  Vue基本 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

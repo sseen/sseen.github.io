@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="就当前这个时间点，markdown 编辑器已经非常成熟了，很多曾经的桌面端的原生的 markdown 编辑器都已经不更新了，更多的是 web 端的 markdown 编辑器，然后用 electron 来支持桌面端。 有时候查了 ai 之后，虽然结果都是 markdown 格式，但是渲染有不同有的 mermiad 不支持，样式风格都不太一样，尤其是需要慢慢理解的内容，直接拷贝到其他软件看会方便很多。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown Editors in 2025">
+<meta property="og:url" content="https://sseen.github.io/Markdown%20Editors%20in%202025/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="就当前这个时间点，markdown 编辑器已经非常成熟了，很多曾经的桌面端的原生的 markdown 编辑器都已经不更新了，更多的是 web 端的 markdown 编辑器，然后用 electron 来支持桌面端。 有时候查了 ai 之后，虽然结果都是 markdown 格式，但是渲染有不同有的 mermiad 不支持，样式风格都不太一样，尤其是需要慢慢理解的内容，直接拷贝到其他软件看会方便很多。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-02-26T16:42:27.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.835Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Markdown">
+<meta property="article:tag" content="Zed">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sseen.github.io/Markdown%20Editors%20in%202025/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Markdown%20Editors%20in%202025/","path":"Markdown Editors in 2025/","title":"Markdown Editors in 2025"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Markdown Editors in 2025 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-Zed-%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E3%80%8C%E4%BF%9D%E6%8C%81%E6%9C%AA%E4%BF%9D%E5%AD%98%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E3%80%8D%E7%9A%84%E6%80%9D%E8%B7%AF%E5%92%8C%E7%8E%B0%E7%8A%B6"><span class="nav-number">1.</span> <span class="nav-text">关于 Zed 编辑器中「保持未保存文件内容」的思路和现状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8-Auto-Save%EF%BC%88%E8%87%AA%E5%8A%A8%E4%BF%9D%E5%AD%98%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">1. 使用 Auto Save（自动保存）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%80%9F%E5%8A%A9%E5%A4%96%E9%83%A8-%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6%E6%9D%A5%E6%89%8B%E5%8A%A8%E4%BF%9D%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">2. 借助外部&#x2F;临时文件来手动保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%85%B3%E6%B3%A8%E5%AE%98%E6%96%B9%E5%AF%B9-%E2%80%9CHot-Exit%E2%80%9D-%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%8E%E7%BB%AD%E6%94%AF%E6%8C%81"><span class="nav-number">4.</span> <span class="nav-text">3. 关注官方对 “Hot Exit” 功能的后续支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.1.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Markdown%20Editors%20in%202025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Markdown Editors in 2025 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Markdown Editors in 2025
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-02-26 16:42:27" itemprop="dateCreated datePublished" datetime="2025-02-26T16:42:27+00:00">2025-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>就当前这个时间点，markdown 编辑器已经非常成熟了，很多曾经的桌面端的原生的 markdown 编辑器都已经不更新了，更多的是 web 端的 markdown 编辑器，然后用 electron 来支持桌面端。<br>
+有时候查了 ai 之后，虽然结果都是 markdown 格式，但是渲染有不同有的 mermiad 不支持，样式风格都不太一样，尤其是需要慢慢理解的内容，直接拷贝到其他软件看会方便很多。<br>
+当然，vscode 又不是不能用，sublime 又不是不快，zed也算是好看，但不能直接渲染成 html 还是有点不方便。<br>
+其实 obsidian 还是可以的。看到这个有点写不下去了哈，顺便查了下，添加了zed不支持hot exit，知道了这种情况的准确描述，也算是可以。</p>
+<p><strong>一句话总结</strong><br>
+只用 obsidian 就够了。工具再好，没有用来长时间使用积累，都是没有意义的。最多再辅助用一个最后一个免费的 typora 就够了。</p>
+<ul>
+<li>全平台
+<ul>
+<li><a target="_blank" rel="noopener" href="https://obsidian.md/">Obsidian</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marktext/marktext">MarkText</a> 就是太卡，渲染结果不错，挺好看</li>
+</ul>
+</li>
+<li>macos上，开源版本
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/tw93/MiaoYan">MiaoYan</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/MarkEdit-app/MarkEdit">MarkEdit</a> 就是没有preview</li>
+</ul>
+</li>
+</ul>
+<h2 id="关于-Zed-编辑器中「保持未保存文件内容」的思路和现状">关于 Zed 编辑器中「保持未保存文件内容」的思路和现状</h2>
+<p>下面给出一些关于 Zed 编辑器中「保持未保存文件内容」的思路和现状，供你参考。目前（根据官方文档和社区讨论），Zed 还没有像 VS Code 那样成熟的 “hot exit”（关闭编辑器后依然保留未保存内容）功能，也没有专门的设置项让你在关闭编辑器后自动恢复所有未保存的修改。若你只是想<strong>尽量减少丢失编辑内容的风险</strong>，可以考虑以下几点做法：</p>
+<hr>
+<h2 id="1-使用-Auto-Save（自动保存）">1. 使用 Auto Save（自动保存）</h2>
+<p>虽然 Zed 并没有内置“关闭后保留未保存内容”的功能，但你可以通过自动保存的方式尽量减少意外丢失：</p>
+<ol>
+<li>
+<p>打开 <strong>Command Palette</strong>（默认快捷键：<kbd>Ctrl+P</kbd> 或 <kbd>Cmd+P</kbd>），输入 <code>Zed: Settings</code> 并回车，进入配置文件编辑。</p>
+</li>
+<li>
+<p>在右侧 JSON 配置中，添加或修改与 “autoSave” 相关的字段，例如：</p>
+<pre class="language-jsonc" data-language="jsonc"><code class="language-jsonc">&#123;
+  &#x2F;&#x2F; 其他配置...
+  &quot;autoSave&quot;: &quot;onChanged&quot; &#x2F;&#x2F; 或者 &quot;onBlur&quot;, &quot;onIdle&quot; 等（如果 Zed 已支持）
+&#125;</code></pre>
+<blockquote>
+<p><strong>注意</strong>：目前 Zed 的配置可能还在快速迭代中，实际字段名、可选值需要查看当前版本的 Zed 文档或配置文件注释。如果没有找到 <code>autoSave</code> 之类的字段，可能说明当前版本尚未支持此功能。</p>
+</blockquote>
+</li>
+</ol>
+<p>这样做的结果是：<strong>只要你编辑了文件，Zed 会自动保存到磁盘</strong>，从而大大减少丢失的风险。不过它并不是真正意义上的“未保存内容持久化”，而是利用自动保存来避免未保存。</p>
+<hr>
+<h2 id="2-借助外部-临时文件来手动保存">2. 借助外部/临时文件来手动保存</h2>
+<p>如果你暂时找不到配置项或者需要在不想保存到正式文件的情况下保留草稿，可以考虑用以下方法变通：</p>
+<ol>
+<li>
+<p><strong>在“临时工作区”或“临时文件夹”中创建文件</strong>。</p>
+<ul>
+<li>这样你可以随时让 Zed 自动保存到一个临时位置，后续如果不需要也可以删除。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用代码片段管理/片段工具</strong></p>
+<ul>
+<li>如果你只是想暂存某段代码或文本，可以放到某些专门的片段管理工具（比如 Gist、Snippets 管理器等）中，也算是一种“保留未保存内容”的思路。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="3-关注官方对-“Hot-Exit”-功能的后续支持">3. 关注官方对 “Hot Exit” 功能的后续支持</h2>
+<p>Zed 作为一款新编辑器，还在快速迭代中。VS Code 之所以可以在关闭编辑器后保留未保存内容，主要是通过 “hot exit” 机制（也就是把未保存的 buffer 和文件状态持久化在本地缓存里）。Zed 目前（截至 2025 年初）还没有完全实现类似机制，但在社区的 GitHub Issue 中已有相关讨论。</p>
+<p>你可以：</p>
+<ul>
+<li>打开 <a target="_blank" rel="noopener" href="https://github.com/zed-industries/zed">Zed 官方 GitHub 仓库</a> 查看是否有对 “hot exit” 或 “unsaved files persistence” 的开发计划和 Issue。</li>
+<li>关注版本更新日志（Changelog），或参与社区讨论，了解是否有新版本会添加此功能。</li>
+</ul>
+<hr>
+<h3 id="小结">小结</h3>
+<ul>
+<li><strong>Zed 目前并没有像 VS Code “hot exit” 那样直接保留未保存内容的功能</strong>。</li>
+<li><strong>若担心编辑过程中丢失，可先使用自动保存（auto save）或手动将内容暂存到临时位置</strong>，并关注后续版本对 “hot exit” 的支持情况。</li>
+</ul>
+<p>如果你的需求非常强烈，暂时只能用以上方法“曲线救国”。随着 Zed 的迭代，后续可能会陆续推出更完善的功能。可以多留意官方文档和 GitHub Issue。祝你使用愉快！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+              <a href="/tags/Zed/" rel="tag"># Zed</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/AWS%20S3/" rel="prev" title="AWS S3">
+                  <i class="fa fa-angle-left"></i> AWS S3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Aws%20Infrastructure%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9/" rel="next" title="Aws Infrastructureインフラ">
+                  Aws Infrastructureインフラ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

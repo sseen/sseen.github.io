@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sseen.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":false,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":150,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="因为有时候测试的需要，想要改变主代码里的某些全局变量，这时候就想要一个 testing 类似 debug 的宏就解决了不是。 updated，自己感觉没有用起来，然后把代码放到setup方法里规避掉了。 xcode code coverage json 报告">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode单元测试宏">
+<meta property="og:url" content="https://sseen.github.io/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/index.html">
+<meta property="og:site_name" content="许笋的 blog">
+<meta property="og:description" content="因为有时候测试的需要，想要改变主代码里的某些全局变量，这时候就想要一个 testing 类似 debug 的宏就解决了不是。 updated，自己感觉没有用起来，然后把代码放到setup方法里规避掉了。 xcode code coverage json 报告">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sseen.github.io/images/2021/2021-11-03-21-28-07.png">
+<meta property="og:image" content="https://sseen.github.io/images/2021/2021-11-03-21-31-43.png">
+<meta property="og:image" content="https://sseen.github.io/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/2021-11-03-21-32-36.png">
+<meta property="article:published_time" content="2021-11-03T19:45:22.000Z">
+<meta property="article:modified_time" content="2025-12-19T07:19:01.821Z">
+<meta property="article:author" content="sseen">
+<meta property="article:tag" content="Xcode">
+<meta property="article:tag" content="单元测试">
+<meta property="article:tag" content="宏">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sseen.github.io/images/2021/2021-11-03-21-28-07.png">
+
+
+<link rel="canonical" href="https://sseen.github.io/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sseen.github.io/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/","path":"Xcode单元测试宏/","title":"Xcode单元测试宏"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Xcode单元测试宏 | 许笋的 blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+  <div class="innerClipped">
+    <div class="background"></div>
+    <div class="fill"></div>
+    <div class="mask"></div>
+    <div class="shadow"></div>
+    <div class="light"></div>
+    <div class="gloss"></div>
+    <div class="text">许笋的 blog </div>
+  </div>
+</a>
+      <p class="site-subtitle" itemprop="description">大平层</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xcode-code-coverage-json-%E6%8A%A5%E5%91%8A"><span class="nav-number">1.</span> <span class="nav-text">xcode code coverage json 报告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xcode-test-plans"><span class="nav-number">2.</span> <span class="nav-text">xcode test plans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">单元测试宏方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%8CXcode-Conditional-Compilation-for-Unit-Test-Targets"><span class="nav-number">3.1.</span> <span class="nav-text">方法一，Xcode Conditional Compilation for Unit-Test Targets</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Preprocessor-Macros"><span class="nav-number">3.1.1.</span> <span class="nav-text">Preprocessor-Macros</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Schemes-to-the-Rescue"><span class="nav-number">3.1.2.</span> <span class="nav-text">Schemes to the Rescue</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%8C%E5%BB%BA%E7%AB%8B%E4%BA%86unittest%E7%9A%84target%E7%9A%84pch%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">方法二，建立了unittest的target的pch文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sseen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">329</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sseen.github.io/Xcode%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sseen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Xcode单元测试宏 | 许笋的 blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Xcode单元测试宏
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-03 19:45:22" itemprop="dateCreated datePublished" datetime="2021-11-03T19:45:22+00:00">2021-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-19 07:19:01" itemprop="dateModified" datetime="2025-12-19T07:19:01+00:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>因为有时候测试的需要，想要改变主代码里的某些全局变量，这时候就想要一个 testing 类似 debug 的宏就解决了不是。<br>
+updated，自己感觉没有用起来，然后把代码放到setup方法里规避掉了。</p>
+<h2 id="xcode-code-coverage-json-报告">xcode code coverage json 报告</h2>
+<p>xcode 自己的代码覆盖率集成在 xcode 上，如何取得文字版的报告呢。<br>
+如下，每次 <code>command + u</code> 后都会生成一个 <code>*.xcresult</code> 在 build log 里可以找到路径，然后执行如下命令生成。</p>
+<p><code>xcrun xccov view --report --json xx.xcresult &gt; ~/Desktop/test.json</code></p>
+<h2 id="xcode-test-plans">xcode test plans</h2>
+<p>解决多个target测试的问题（比如unittest 和 uiunittest），这样覆盖率可以计算到一起了。</p>
+<h2 id="单元测试宏方法">单元测试宏方法</h2>
+<h3 id="方法一，Xcode-Conditional-Compilation-for-Unit-Test-Targets">方法一，Xcode Conditional Compilation for Unit-Test Targets</h3>
+<p>借由这个机会熟悉下xcode相关的定制。</p>
+<p>When writing unit test cases, you need to distinguish between real use and test runs in your code from time to time. For example, you might want to send all requests to a test server, instead of the production server.</p>
+<p>One possibility to do this is to introduce a boolean property to the class, which you use in all methods that need to differ for testing:</p>
+<pre class="language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">-</span><span class="token punctuation">(</span>NSString <span class="token operator">*</span><span class="token punctuation">)</span>serverUrl
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>testing<span class="token punctuation">)</span> <span class="token operator">?</span> kServerUrlTestServer <span class="token punctuation">:</span> kServerUrlProductionServer
+<span class="token punctuation">&#125;</span></code></pre>
+<p>That’s what I’ve been doing until now, but I don’t like this approach. In order to be able to set the property in the test case, it has to be publicly writeable, which gives rise to potential subtle bugs in case it’s incorrectly set. A better solution would be to define a separate testing interface with a category. Still, you’d have an extra state in your class especially for the tests.全局变量的风险有点高</p>
+<h4 id="Preprocessor-Macros">Preprocessor-Macros</h4>
+<p>Originally, I tried to use a preprocessor statement for this purpose:</p>
+<pre class="language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">-</span><span class="token punctuation">(</span>NSString <span class="token operator">*</span><span class="token punctuation">)</span>serverUrl
+<span class="token punctuation">&#123;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">TESTING<span class="token operator">==</span><span class="token number">1</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">warning</span> <span class="token expression">Testmode</span></span>
+    <span class="token keyword">return</span> IVTestConstants<span class="token punctuation">.</span>serverUrlTestServer<span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+    <span class="token keyword">return</span> IVTestConstants<span class="token punctuation">.</span>serverUrlProductionServer<span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+<span class="token punctuation">&#125;</span>
+</code></pre>
+<p>I just could not figure out how to configure Xcode such that TESTING had the correct value for both, normal compilation and unit tests, though. I’ve asked this question on stackoverflow, but to no avail.</p>
+<p>If you want to know what the difficulties were, checkout my question on <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9370390/xcode-preprocessor-macros-for-conditional-debug-test-code">stackoverflow</a>.</p>
+<p>Basically, it comes down to this: The unit-test target has the whole app as a target dependency, so if you define a preprocessor macro for the unit-test target, it has no effect on the source files that are compiled in the app target.参考我试的第二种方式，就是这样，不起作用</p>
+<p>I was watching WWDC Session 401 (Xcode Core Concepts) today, and when they talked about schemes, it dawned on me that this could be the solution to my problem.</p>
+<h4 id="Schemes-to-the-Rescue">Schemes to the Rescue</h4>
+<p>So here’s how you set up Xcode:</p>
+<ol>
+<li>
+<p>Add a new configuration named ‘Testing’: Go to the project settings, make sure to select the project (and not a target yet). Open up the Info-pane and click the ‘+’<br>
+<img src="https://sseen.github.io/images/2021/2021-11-03-21-28-07.png" alt="1"></p>
+</li>
+<li>
+<p>Add a preprocessor macro to the build settings: Now go to the Build Target, open up the Build Settings and find the Preprocessor Macros option. Add the define TESTING=0 for the configurations Debug and Release and TESTING=1 for the configuration Testing<br>
+<img src="https://sseen.github.io/images/2021/2021-11-03-21-31-43.png" alt="2"></p>
+</li>
+<li>
+<p>Edit the test-scheme to use testing as build configuration: Open up the Edit Schemes view, select the Test scheme and choose the Info tab. As Build Configuration choose the new Testing configuration that you created in step 1.（updated，这一步好像可以不用设置，自己设置的以后，测试报错了，一直提示Could not find test host for xxx: 但是明明测试target已经钩上main target了）<br>
+<img src="2021-11-03-21-32-36.png" alt="3"></p>
+</li>
+</ol>
+<p>I’ve provided a simple sample project on <a target="_blank" rel="noopener" href="https://github.com/iv-mexx/UnitTestConditionalCompilation">github</a> that demonstrates the complete set-up.</p>
+<h3 id="方法二，建立了unittest的target的pch文件">方法二，建立了unittest的target的pch文件</h3>
+<p>不行。<br>
+在pch文件里定义类似 UNITTEST，然后在主target使用。<br>
+这个方案想想简单，但是实际用起来没有效果，每次都用的 UNITTEST 相关的值，主target虽然没有直接定义 UNITTEST 但是还是会走这个判断。</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://medium.com/ynap-tech/managing-ios-build-configurations-and-schemes-for-xctest-791e5ae22484">Managing iOS Build Configurations and Schemes for XCTest</a><br>
+<a target="_blank" rel="noopener" href="https://innovaptor.com/blog/2013/09/02/xcode-preprocessor-macros-for-test-code/">Xcode Conditional Compilation for Unit-Test Targets</a><br>
+<a target="_blank" rel="noopener" href="https://useyourloaf.com/blog/faster-app-setup-for-unit-tests/">Faster App Setup For Unit Tests</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Xcode/" rel="tag"># Xcode</a>
+              <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag"># 单元测试</a>
+              <a href="/tags/%E5%AE%8F/" rel="tag"># 宏</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/M1%E7%BC%96%E8%AF%91/" rel="prev" title="M1编译">
+                  <i class="fa fa-angle-left"></i> M1编译
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/UITest/" rel="next" title="UITest">
+                  UITest <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sseen</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"sseen/my_blog_utterances","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
